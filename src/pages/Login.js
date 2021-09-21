@@ -1,12 +1,10 @@
 import React from 'react';
 import Footer from '../components/Footer';
+import LoginForm from '../components/LoginForm';
 
 function Login() {
   return (
-    <div>
-      <h1>Tela de Login</h1>
-      <Footer />
-    </div>
+    <LoginForm />
   );
 }
 
