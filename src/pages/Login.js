@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
 import Input from '../components/Input';
-import Context from '../context/Context';
+import RecipesContext from '../context/RecipeContext';
 
 function Login({ history }) {
   const [password, setPassword] = useState('');
   const [validLogin, setValid] = useState(false);
-  const { email, setEmail } = useContext(Context);
+  const { email, setEmail } = useContext(RecipesContext);
 
   function validatePassword() {
     const MIN_LENGTH = 6;
