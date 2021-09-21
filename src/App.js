@@ -6,6 +6,8 @@ import Header from './component/Header';
 import SearchBar from './component/SearchBar';
 import Footer from './component/Footer';
 import ExplorePage from './pages/ExplorePage';
+import ExploreFoodPage from './pages/ExploreFoodPage';
+import ExploreDrinkPage from './pages/ExploreDrinkPage';
 
 function App() {
   return (
@@ -14,7 +16,9 @@ function App() {
       <SearchBar />
       <BrowserRouter>
         <Switch>
-          <Route path="/explorar" component={ ExplorePage } />
+          <Route exact path="/explorar" component={ ExplorePage } />
+          <Route exact path="/explorar/comidas" component={ ExploreFoodPage } />
+          <Route exact path="/explorar/bebidas" component={ ExploreDrinkPage } />
         </Switch>
       </BrowserRouter>
       <Footer />

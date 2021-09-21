@@ -4,7 +4,7 @@ import Button from '../mini-components/Button';
 
 function ExplorePage() {
   return (
-    <main data-testid="footer">
+    <main>
       <Link to="/explorar/comidas">
         <Button
           btnText="Explorar Comidas"
