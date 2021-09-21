@@ -5,8 +5,12 @@ function Header() {
     <div>
       <header>
         <h1 data-testid="page-title">Comidas</h1>
-        <button data-testid="profile-top-btn">button1</button>
-        <button data-testid="search-top-btn">button2</button>
+        <button data-testid="profile-top-btn">
+          <img src="src/images/profileIcon.svg" alt="userIcon" />
+        </button>
+        <button data-testid="search-top-btn">
+          <img src="src/images/searchIcon.svg" alt="searchIcon" />
+        </button>
       </header>
     </div>
   );
