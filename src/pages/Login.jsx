@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const INITIAL_STATE = {
   email: '',
@@ -10,6 +11,7 @@ let buttonStats = true;
 function Login() {
   const [state, setState] = useState(INITIAL_STATE);
   const { password, email } = state;
+  const history = useHistory();
   const emailValidator = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const emailValid = emailValidator.test(email);
   const passwordValidator = 6;
@@ -29,6 +31,8 @@ function Login() {
   function handleClick() {
     localStorage.mealsToken = 1;
     localStorage.cocktailsToken = 1;
+    localStorage.user = JSON.stringify({ email });
+    history.push('/comidas');
   }
 
   return (
