@@ -26,7 +26,11 @@ export default function Login() {
   }
 
   useEffect(() => {
-    if (SenhaValidation && EmailValidation) { setButtonDisabled(false); }
+    if (SenhaValidation && EmailValidation) {
+      setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
+    }
   }, [EmailValidation, SenhaValidation]);
 
   function handleSubmit(e) {
