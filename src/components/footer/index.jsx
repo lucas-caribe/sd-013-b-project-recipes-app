@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../../App.css';
 import drinkIcon from '../../images/drinkIcon.svg';
 import exploreIcon from '../../images/exploreIcon.svg';
@@ -10,11 +11,12 @@ function Footer() {
       className="footer"
       data-testid="footer"
     >
-      <div
+      <Link
+        to="/bebidas"
         data-testid="drinks-bottom-btn"
       >
         <img src={ drinkIcon } alt="drink" />
-      </div>
+      </Link>
       <div
         data-testid="explore-bottom-btn"
       >
