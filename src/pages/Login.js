@@ -1,10 +1,9 @@
 import React from 'react';
+import LoginForm from '../components/LoginForm';
 
 function Login() {
   return (
-    <div>
-      <h1>Tela de Login</h1>
-    </div>
+    <LoginForm />
   );
 }
 

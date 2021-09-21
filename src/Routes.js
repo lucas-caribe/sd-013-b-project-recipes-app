@@ -7,7 +7,6 @@ function Routes() {
     <Router>
       <Switch>
         <Route exact path="/" component={ Login } />
-        {/* <Route path="/bebidas" component={ Bebidas } /> */}
       </Switch>
     </Router>
   );
