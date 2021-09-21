@@ -3,11 +3,6 @@ import PropTypes from 'prop-types';
 import Context from './Context';
 
 function Provider({ children }) {
-  // const [login, setLogin] = useState({
-  //   login: '',
-  //   password: '',
-  // });
-
   return (
     <Context.Provider value={ context }>
       {children}
