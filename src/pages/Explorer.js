@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
+// import Footer from '../components/Footer';
 
 export default function Explorer({ history }) {
   const pageTitle = {
@@ -15,7 +15,7 @@ export default function Explorer({ history }) {
       <button
         type="button"
         data-testid="explore-food"
-        onClick={ history.push('/explorar/comidas') }
+        onClick={ () => history.push('/explorar/comidas') }
       >
         Explorar Comidas
       </button>
@@ -23,12 +23,12 @@ export default function Explorer({ history }) {
       <button
         type="button"
         data-testid="explore-drinks"
-        onClick={ history.push('/explorar/bebidas') }
+        onClick={ () => history.push('/explorar/bebidas') }
       >
         Explorar Bebidas
       </button>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
