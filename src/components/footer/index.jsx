@@ -24,11 +24,12 @@ function Footer() {
         <img src={ exploreIcon } alt="explore" />
 
       </Link>
-      <div
+      <Link
+        to="/comidas"
         data-testid="meal-bottom-btn"
       >
         <img src={ mealIcon } alt="meal" />
-      </div>
+      </Link>
     </div>
   );
 }
