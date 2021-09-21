@@ -14,6 +14,7 @@ function App() {
       <Route path="/perfil" component={ Profile } />
       <Route path="/comidas" component={ FoodPage } />
       <Route patch="/bebidas" component={ DrinkPage } />
+
     </Switch>
   );
 }
