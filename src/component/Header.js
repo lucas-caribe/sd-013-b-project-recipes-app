@@ -1,5 +1,5 @@
 import React from 'react';
-import IconButton from './IconButton';
+import IconButton from '../mini-components/IconButton';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
