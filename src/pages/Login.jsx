@@ -10,6 +10,13 @@ let buttonStats = true;
 function Login() {
   const [state, setState] = useState(INITIAL_STATE);
   const { password, email } = state;
+  const emailValidator = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailValid = emailValidator.test(email);
+  const passwordValidator = 6;
+
+  if (emailValid && password.length > passwordValidator) {
+    buttonStats = false;
+  } else buttonStats = true;
 
   function handleChange({ target }) {
     const { value, id } = target;
@@ -19,13 +26,10 @@ function Login() {
     });
   }
 
-  const emailValidator = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const emailValid = emailValidator.test(email);
-  const passwordValidator = 6;
-
-  if (emailValid && password.length > passwordValidator) {
-    buttonStats = false;
-  } else buttonStats = true;
+  function handleClick() {
+    localStorage.mealsToken = 1;
+    localStorage.cocktailsToken = 1;
+  }
 
   return (
     <div>
@@ -45,6 +49,7 @@ function Login() {
       />
       <button
         disabled={ buttonStats }
+        onClick={ handleClick }
         type="button"
         data-testid="login-submit-btn"
       >
