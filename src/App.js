@@ -10,7 +10,7 @@ function App() {
     <Provider>
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route path="/comidas" component={ Foods } />
+        {/* <Route path="/comidas" component={ Foods } />
         <Route path="/bebidas" component={ Drinks } />
         <Route path="/comidas/:id-da-receita" component={ FoodRecipe } />
         <Route path="/bebidas/:id-da-receita" component={ DrinkRecipe } />
@@ -24,7 +24,7 @@ function App() {
         <Route path="/explorar/comidas/area" component={ FoodArea } />
         <Route path="/perfil" component={ Profile } />
         <Route path="/receitas-feitas" component={ DoneRecipes } />
-        <Route path="/receitas-favoritas" component={ FavoriteRecipes } />
+        <Route path="/receitas-favoritas" component={ FavoriteRecipes } /> */}
       </Switch>
     </Provider>
   );

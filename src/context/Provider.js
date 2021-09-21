@@ -3,9 +3,13 @@ import PropTypes from 'prop-types';
 import AppContext from './AppContext';
 
 function Provider({ children }) {
-  const [user, setUser] = useState('');
-  const [password, setPassword] = useState('');
+  const [login, setLogin] = useState({
+    user: '',
+    password: '',
+  });
+
   const contextValue = {
+    setLogin,
   };
 
   return (
