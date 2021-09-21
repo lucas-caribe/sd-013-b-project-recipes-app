@@ -12,13 +12,31 @@ export default function Drinks() {
   const history = useHistory();
   const { recipesState, redirect } = useContext(RecipeContext);
   const getDrinksId = recipesState.map((drink) => drink.idDrink);
+  const limits = 12;
 
   return (
     <div>
       <Header value={ pageTitle } />
       { redirect ? history.push(`/bebidas/${getDrinksId}`) : (
         <div>
-          Drinks
+          {
+            recipesState.map((drink, index) => (
+              (index < limits) && (
+                <div key={ index }>
+                  <div data-testid={ `${index}-recipe-card` }>
+                    <img
+                      src={ drink.strDrinkThumb }
+                      data-testid={ `${index}-card-img` }
+                      alt={ drink.strDrink }
+                    />
+                  </div>
+                  <div>
+                    <span data-testid={ `${index}-card-name` }>{ drink.strDrink }</span>
+                  </div>
+                </div>
+              )
+            ))
+          }
         </div>
       ) }
     </div>

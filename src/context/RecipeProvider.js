@@ -22,24 +22,32 @@ export default function RecipeProvider({ children }) {
   const [redirect, setRedirect] = useState(false);
   const [recipesState, setRecipesState] = useState([]);
 
+  function visibleAlert(data) {
+    if (data === null) {
+      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    } else {
+      setRecipesState(data);
+    }
+  }
+
   async function handleSearchMeals(searchText, filterRadio) {
     let data = [];
     if (filterRadio === 'ingredient') {
       data = await fetchMealsIngredient(searchText);
-      setRecipesState(data);
+      visibleAlert(data);
     }
     if (filterRadio === 'name') {
       data = await fetchMealsName(searchText);
-      setRecipesState(data);
+      visibleAlert(data);
     }
     if (filterRadio === 'firstLetter') {
       if (searchText.length > 1) {
         return alert('Sua busca deve conter somente 1 (um) caracter');
       }
       data = await fetchMealsLetter(searchText);
-      setRecipesState(data);
+      visibleAlert(data);
     }
-    if (data.length === 1) {
+    if (data !== null && data.length === 1) {
       setRedirect(true);
     }
   }
@@ -48,20 +56,20 @@ export default function RecipeProvider({ children }) {
     let data = [];
     if (filterRadio === 'ingredient') {
       data = await fetchDrinksIngredient(searchText);
-      setRecipesState(data);
+      visibleAlert(data);
     }
     if (filterRadio === 'name') {
       data = await fetchDrinksName(searchText);
-      setRecipesState(data);
+      visibleAlert(data);
     }
     if (filterRadio === 'firstLetter') {
       if (searchText.length > 1) {
         return alert('Sua busca deve conter somente 1 (um) caracter');
       }
       data = await fetchDrinksLetter(searchText);
-      setRecipesState(data);
+      visibleAlert(data);
     }
-    if (data.length === 1) {
+    if (data !== null && data.length === 1) {
       setRedirect(true);
     }
   }
