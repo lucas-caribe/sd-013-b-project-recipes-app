@@ -4,6 +4,7 @@ import rockGlass from './images/rockGlass.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './component/Header';
 import SearchBar from './component/SearchBar';
+import Footer from './component/Footer';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           Glass
         </object>
       </div>
+      <Footer />
     </div>
   );
 }

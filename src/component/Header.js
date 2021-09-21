@@ -5,7 +5,7 @@ import searchIcon from '../images/searchIcon.svg';
 
 function Header() {
   return (
-    <div>
+    <header>
       <IconButton
         btnImage={ profileIcon }
         dataTest="profile-top-btn"
@@ -17,7 +17,7 @@ function Header() {
         dataTest="search-top-btn"
         type="button"
       />
-    </div>
+    </header>
   );
 }
 
