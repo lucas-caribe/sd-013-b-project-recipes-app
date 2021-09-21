@@ -1,11 +1,13 @@
 import React from 'react';
 import './App.css';
-// import Provider from './context/Provider';
+import Provider from './context/Provider';
 import Routes from './Routes';
 
 function App() {
   return (
-    <Routes />
+    <Provider>
+      <Routes />
+    </Provider>
   );
 }
 
