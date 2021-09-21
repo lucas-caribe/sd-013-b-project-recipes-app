@@ -24,6 +24,7 @@ function Login() {
 
   return (
     <form>
+      <h1>Faça seu login No Trybe Receitas</h1>
       <input
         data-testid="email-input"
         placeholder="Email"
