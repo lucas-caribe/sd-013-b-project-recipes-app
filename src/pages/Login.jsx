@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 export default function Login({ history }) {
   const [email, setEmail] = useState('');
@@ -52,3 +53,7 @@ export default function Login({ history }) {
     </div>
   );
 }
+
+Login.propTypes = {
+  history: PropTypes.func,
+}.isRequired;
