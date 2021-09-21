@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 export default function Food() {
   const pageTitle = {
@@ -10,6 +11,7 @@ export default function Food() {
     <div>
       <Header value={ pageTitle } />
       FOODS
+      <Footer />
     </div>
   );
 }
