@@ -29,7 +29,7 @@ function Login({ history }) {
   }
 
   return (
-    <div>
+    <main>
       Login
       <div>
         <Input
@@ -65,7 +65,7 @@ function Login({ history }) {
           Entrar
         </button>
       </div>
-    </div>
+    </main>
   );
 }
 
