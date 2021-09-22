@@ -3,7 +3,7 @@ import React from 'react';
 function Card(name, image, id) {
   return (
     <div data-testid={ `${id}-recipe-card` }>
-      <img data-testid={ `${id}-card-img` } src={ image } alt="a" />
+      <img data-testid={ `${id}-card-img` } src={ image } alt="ab" />
       <div data-testid={ `${id}-card-name` }>
         {name}
       </div>
