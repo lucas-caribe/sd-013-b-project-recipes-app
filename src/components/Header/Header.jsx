@@ -1,28 +1,37 @@
 import React from 'react';
 import { useHistory } from 'react-router';
+import PropTypes from 'prop-types';
 
 import { useSearch } from '../../context';
 
+import SearchIcon from '../SearchIcon/SearchIcon';
+import SearchBar from '../SearchBar/SearchBar';
+
 import profileIcon from '../../images/profileIcon.svg';
-import searchIcon from '../../images/searchIcon.svg';
 
 import './Header.css';
 
-function Header() {
+function Header({ pageTitle, showSearchIcon }) {
   const history = useHistory();
-  const { toggleSearchBar } = useSearch();
+  const { toggleSearchBar, isOpen } = useSearch();
 
   return (
-    <header className="header">
-      <button type="button" onClick={ () => history.push('/profile') }>
-        <img src={ profileIcon } data-testid="profile-top-btn" alt="profile-icon" />
-      </button>
-      <h1 data-testid="page-title">Page title</h1>
-      <button type="button" onClick={ toggleSearchBar }>
-        <img src={ searchIcon } data-testid="search-top-btn" alt="search-icon" />
-      </button>
-    </header>
+    <section>
+      <header className="header">
+        <button type="button" onClick={ () => history.push('/perfil') }>
+          <img src={ profileIcon } data-testid="profile-top-btn" alt="profile-icon" />
+        </button>
+        <h1 data-testid="page-title">{pageTitle}</h1>
+        {showSearchIcon && <SearchIcon onClick={ toggleSearchBar } />}
+      </header>
+      {isOpen && <SearchBar />}
+    </section>
   );
 }
+
+Header.propTypes = {
+  pageTitle: PropTypes.string.isRequired,
+  showSearchIcon: PropTypes.bool.isRequired,
+};
 
 export default Header;
