@@ -1,3 +1,6 @@
+const mealListEndPoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+const drinkListEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+
 export function getMealsEndpoint(type, value) {
   switch (type) {
   case 'Ingrediente':
@@ -32,10 +35,21 @@ export function fetchMeals(type, value) {
     .then((data) => data.meals);
 }
 
+export function fetchFullMealsList() {
+  return fetch(mealListEndPoint)
+    .then((res) => res.json())
+    .then((data) => data.meals);
+}
+
 export function fetchDrinks(type, value) {
   const API_URL = getDrinksEndpoint(type, value);
 
   return fetch(API_URL)
+    .then((res) => res.json())
+    .then((data) => data.drinks);
+}
+export function fetchFullDrinksList() {
+  return fetch(drinkListEndPoint)
     .then((res) => res.json())
     .then((data) => data.drinks);
 }
