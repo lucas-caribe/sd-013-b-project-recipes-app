@@ -80,3 +80,14 @@ header {
   height: 39px;
   justify-content: space-between;
 }
+
+footer {
+  background-color: rgb(248, 141, 0);
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  left: 0;
+  position: fixed;
+  text-align: center;
+  width: 100%;
+}
