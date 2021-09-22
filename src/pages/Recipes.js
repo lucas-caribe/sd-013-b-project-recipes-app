@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 
-function Profile() {
+function Recipes() {
   return (
     <div className="recipes-page">
       <Header />
@@ -9,4 +9,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default Recipes;

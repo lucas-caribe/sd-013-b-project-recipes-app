@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Profile from './pages/Profile';
+import Recipes from './pages/Recipes';
 import Login from './pages/Login';
 import Foods from './pages/Foods';
 import Drinks from './pages/Drinks';
@@ -15,6 +17,8 @@ function Routes() {
   return (
     <Router>
       <Switch>
+        <Route exact path="/comidas" component={ Recipes } />
+        <Route exact path="/perfil" component={ Profile } />
         <Route exact path="/" component={ Login } />
         <Route path="/comidas" component={ Foods } />
         <Route path="/bebidas" component={ Drinks } />
