@@ -3,36 +3,37 @@ import React, { useState } from 'react';
 
 const STATE_FAVORITE = {
   buttonFilter: null,
-}
+};
 
 function itemFavorite(item) {
   const { type, area, category, alcoholicOrNot, name, image } = item;
   if (type === 'food') {
     return (
       <div>
-        <img src={ image } alt={ name }/>
+        {/* Quando clicar na imagem, precisa encaminhar para o receita */}
+        <img src={ image } alt={ name } />
         <p>{ name }</p>
         <p>{ category }</p>
         <p>{ area }</p>
-        <button type="button">compartilha</button>
-        <button type="button">desfavoritar</button>
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <img src={ image } alt={ name }/>
-        <p>{ name }</p>
-        <p>{ alcoholicOrNot }</p>
+        {/* aguardando função para remover favorito e copiar link da receita */}
         <button type="button">compartilha</button>
         <button type="button">desfavoritar</button>
       </div>
     );
   }
+  return (
+    <div>
+      <img src={ image } alt={ name } />
+      <p>{ name }</p>
+      <p>{ alcoholicOrNot }</p>
+      <button type="button">compartilha</button>
+      <button type="button">desfavoritar</button>
+    </div>
+  );
 }
 
-function FavoritesRecipes(item) {
-  const [state, setState] = useState(STATE_FAVORITE)
+function FavoritesRecipes() {
+  const [state, setState] = useState(STATE_FAVORITE);
   const { buttonFilter } = state;
   // const { favoriteRecipes } = localStorage;
   const favoriteRecipes = [{
@@ -54,62 +55,105 @@ function FavoritesRecipes(item) {
     image: 'https://cdn.awsli.com.br/800x800/874/874479/produto/40947743/3746fbc716.jpg',
   }];
 
-  if (!favoriteRecipes) { return ( <h1> Não há favoritos</h1> ); }
-  console.log(buttonFilter);
+  if (!favoriteRecipes) { return (<h1> Não há favoritos</h1>); }
 
   if (buttonFilter === 'food') {
     return (
       <div>
-        <button type="button" onClick={ () => (setState({buttonFilter: 'food'})) }>Food</button>
-        <button type="button" onClick={ () => (setState({buttonFilter: 'drink'})) }>Drinks</button>
-        <button type="button" onClick={ () => (setState({buttonFilter: null})) }>All</button>
-        { 
+        <button
+          type="button"
+          onClick={ () => (setState({ buttonFilter: 'food' })) }
+        >
+          Food
+        </button>
+        <button
+          type="button"
+          onClick={ () => (setState({ buttonFilter: 'drink' })) }
+        >
+          Drinks
+        </button>
+        <button
+          type="button"
+          onClick={ () => (setState({ buttonFilter: null })) }
+        >
+          All
+        </button>
+        {
           favoriteRecipes
             .filter((item) => (item.type === 'food'))
             .map((item) => (
-            <div key={ item.id }>
-              { itemFavorite(item) }
-            </div>
+              <div key={ item.id }>
+                { itemFavorite(item) }
+              </div>
             ))
         }
-     </div> 
-    )
+      </div>
+    );
   }
 
   if (buttonFilter === 'drink') {
     return (
       <div>
-        <button type="button" onClick={ () => (setState({buttonFilter: 'food'})) }>Food</button>
-        <button type="button" onClick={ () => (setState({buttonFilter: 'drink'})) }>Drinks</button>
-        <button type="button" onClick={ () => (setState({buttonFilter: null})) }>All</button>
-        { 
+        <button
+          type="button"
+          onClick={ () => (setState({ buttonFilter: 'food' })) }
+        >
+          Food
+        </button>
+        <button
+          type="button"
+          onClick={ () => (setState({ buttonFilter: 'drink' })) }
+        >
+          Drinks
+        </button>
+        <button
+          type="button"
+          onClick={ () => (setState({ buttonFilter: null })) }
+        >
+          All
+        </button>
+        {
           favoriteRecipes
             .filter((item) => (item.type === 'drink'))
-            .map((item) => (
-            <div key={ item.id }>
-              { itemFavorite(item) }
-            </div>
+            .map((item, index) => (
+              <div key={ index }>
+                { itemFavorite(item) }
+              </div>
             ))
         }
-     </div> 
-    )
+      </div>
+    );
   }
 
   return (
     <div>
-      <button type="button" onClick={ () => (setState({buttonFilter: 'food'})) }>Food</button>
-      <button type="button" onClick={ () => (setState({buttonFilter: 'drink'})) }>Drinks</button>
-      <button type="button" onClick={ () => (setState({buttonFilter: null})) }>All</button>
-      { 
+      <button
+        type="button"
+        onClick={ () => (setState({ buttonFilter: 'food' })) }
+      >
+        Food
+      </button>
+      <button
+        type="button"
+        onClick={ () => (setState({ buttonFilter: 'drink' })) }
+      >
+        Drinks
+      </button>
+      <button
+        type="button"
+        onClick={ () => (setState({ buttonFilter: null })) }
+      >
+        All
+      </button>
+      {
         favoriteRecipes.map((item) => (
-        <div key={ item.id }>
-          { itemFavorite(item) }
-        </div>
+          <div key={ item.id }>
+            { itemFavorite(item) }
+          </div>
         ))
       }
-    </div> 
+    </div>
   );
-  
 }
 
 export default FavoritesRecipes;
