@@ -69,3 +69,4 @@ export const fetchSearchThunk = ({ value, type, recipe }) => (dispatch) => {
     }
   }
 };
+// // Thunk

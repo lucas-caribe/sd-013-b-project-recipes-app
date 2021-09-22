@@ -1,3 +1,14 @@
+.footer {
+  bottom: 0;
+  position: fixed;
+}
+
+.meals {
+  align-items: center;
+  background: #0fa36b;
+  color: #464646;
+}
+
 .card-list {
   display: flex;
   flex-wrap: wrap;
