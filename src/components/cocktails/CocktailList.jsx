@@ -28,7 +28,7 @@ export default function CocktailList() {
       const Top12 = cocktailsList.slice(0, THE_LAST_ONE);
       setState({ loading: false, Top12 });
     }
-  }, [cocktailsList]);
+  }, [cocktailsList, history]);
 
   return (
     <div className="card-list">

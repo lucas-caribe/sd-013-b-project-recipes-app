@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import MealCard from './MealCard';
 import { useHistory } from 'react-router';
+import MealCard from './MealCard';
 
 export default function MealList() {
   const THE_LAST_ONE = 12;
@@ -28,7 +28,7 @@ export default function MealList() {
       const Top12 = mealsList.slice(0, THE_LAST_ONE);
       setState({ loading: false, Top12 });
     }
-  }, [mealsList]);
+  }, [mealsList, history]);
 
   return (
     <div className="card-list">

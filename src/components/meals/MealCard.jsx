@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function MealCard({ index, thumb, key, name }) {
+export default function MealCard({ index, thumb, name }) {
   return (
     <div
       className="card-recipe"
