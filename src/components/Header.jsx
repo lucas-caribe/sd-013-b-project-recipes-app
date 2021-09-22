@@ -1,39 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router';
 import { setSearchbar as setSearchbarAction } from '../Redux/actions/index';
+import profileIcon from '../images/profileIcon.svg';
+import searchIcon from '../images/searchIcon.svg';
 
-class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    this.State = {
-
-    };
-    this.openSearchBar = this.openSearchBar.bind(this);
-  }
-
-  openSearchBar() {
-    const { setSearchbar, search } = this.props;
+function Header({ setTitle, setSearchbar, search }) {
+  function openSearchBar() {
     setSearchbar(!search);
     console.log(search);
   }
 
-  render() {
-    return (
-      <div>
-        <button
-          type="submit"
+  const history = useHistory();
+
+  return (
+    <header>
+      <nav>
+        <input
+          type="image"
+          data-testid="profile-top-btn"
+          src={ profileIcon }
+          alt="perfil"
+          onClick={ () => history.push('/perfil') }
+        />
+        <h1 data-testid="page-title">{ setTitle }</h1>
+        <input
+          type="image"
           data-testid="search-top-btn"
-          onClick={ this.openSearchBar }
-        >
-          Pesquisar
-        </button>
-      </div>
-    );
-  }
+          src={ searchIcon }
+          alt="pesquisar"
+          onClick={ openSearchBar }
+        />
+      </nav>
+    </header>
+  );
 }
 
 Header.propTypes = {
+  setTitle: PropTypes.string.isRequired,
   setSearchbar: PropTypes.func.isRequired,
   search: PropTypes.bool.isRequired,
 };

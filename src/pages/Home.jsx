@@ -10,7 +10,7 @@ function Home({ search }) {
   console.log(search);
   return (
     <div>
-      <Header />
+      <Header setTitle="Comidas" />
       {search === true ? <SearchBar /> : null}
       <Footer />
     </div>
