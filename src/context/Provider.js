@@ -8,6 +8,7 @@ function Provider({ children }) {
   const [passwordIsValid, setPasswordIsValid] = useState(false);
   const [currentPage, setCurrentPage] = useState('');
   const [login, setLogin] = useState('');
+  const [showSearchBar, setShowSearchBar] = useState(false);
 
   const contextValue = {
     statusLoginBtn,
@@ -20,6 +21,8 @@ function Provider({ children }) {
     setCurrentPage,
     login,
     setLogin,
+    showSearchBar,
+    setShowSearchBar,
   };
 
   return (

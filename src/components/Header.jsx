@@ -6,7 +6,10 @@ import profile from '../images/profileIcon.svg';
 import search from '../images/searchIcon.svg';
 
 export default function Header({ showSearch }) {
-  const { currentPage } = useContext(Context);
+  const {
+    currentPage,
+    showSearchBar,
+    setShowSearchBar } = useContext(Context);
 
   return (
     <header className="header">
@@ -27,14 +30,16 @@ export default function Header({ showSearch }) {
       </div>
 
       { showSearch && (
-        <Link to="/">
-          <div
-            data-testid="search-top-btn"
-            className="header-icon"
-          >
-            <img src={ search } alt="search" />
-          </div>
-        </Link>
+        <div
+          data-testid="search-top-btn"
+          className="header-icon"
+          role="button"
+          tabIndex="0"
+          onClick={ () => (setShowSearchBar(!showSearchBar)) }
+          onKeyPress={ () => (setShowSearchBar(!showSearchBar)) }
+        >
+          <img src={ search } alt="search" />
+        </div>
       ) }
 
     </header>
