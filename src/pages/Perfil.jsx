@@ -4,7 +4,6 @@ import Button from '../components/Button';
 export default function Perfil() {
   function getStorage() {
     const { email } = JSON.parse(localStorage.getItem('user'));
-    console.log(email);
     return email;
   }
 
@@ -16,7 +15,7 @@ export default function Perfil() {
         dataTest="profile-done-btn"
       />
       <Button
-        text="Receitas Favoritadas"
+        text="Receitas Favoritas"
         dataTest="profile-favorite-btn"
       />
       <Button
