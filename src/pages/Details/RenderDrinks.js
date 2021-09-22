@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import './style.css';
 
 function verifyLocalStorage(param, id) {
@@ -21,6 +22,10 @@ function verifyProgress(id, setState) {
   }
 }
 
+function inProgressRedirect(history, id) {
+  history.push(`/bebidas/${id}/in-progress`);
+}
+
 export default function RenderDrink(id) {
   const [drink, setDrink] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -28,6 +33,7 @@ export default function RenderDrink(id) {
   const [disabled, setDisabled] = useState(true);
   const [done, setDone] = useState(false);
   const [progress, setProgress] = useState(false);
+  const history = useHistory();
   const initial = 6;
   const maxArr = 19;
 
@@ -151,6 +157,7 @@ export default function RenderDrink(id) {
         data-testid="start-recipe-btn"
         className="startRecipe"
         disabled={ done }
+        onClick={ () => inProgressRedirect(history, id) }
       >
         {
           progress

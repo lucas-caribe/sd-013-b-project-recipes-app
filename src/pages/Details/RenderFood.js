@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 function verifyProgress(id, setState) {
   const chaves = Object.keys(localStorage);
@@ -20,6 +21,10 @@ function verifyLocalStorage(param, id) {
   }
 }
 
+function inProgressRedirect(history, id) {
+  history.push(`/comidas/${id}/in-progress`);
+}
+
 export default function RenderFood(id) {
   const [recipe, setRecipe] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,6 +32,7 @@ export default function RenderFood(id) {
   const [disabled, setDisabled] = useState(true);
   const [done, setDone] = useState(false);
   const [progress, setProgress] = useState(false);
+  const history = useHistory();
 
   const initial = 6;
   const maxArr = 19;
@@ -145,6 +151,7 @@ export default function RenderFood(id) {
         data-testid="start-recipe-btn"
         className="startRecipe"
         disabled={ done }
+        onClick={ () => inProgressRedirect(history, id) }
       >
         {
           progress
