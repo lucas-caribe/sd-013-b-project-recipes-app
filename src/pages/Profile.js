@@ -1,19 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import RecipeContext from '../context/RecipeContext';
 
 export default function Profile({ history }) {
-  // const { email, setEmail } = useContext(RecipeContext);
   const pageTitle = {
     pageName: 'Perfil',
     setIcon: false,
   };
 
   const emailObj = JSON.parse(localStorage.getItem('user'));
-  // const { email } = emailObj;
-  // // setEmail(email);
 
   const outPage = () => {
     localStorage.clear();
@@ -52,7 +48,6 @@ export default function Profile({ history }) {
         </button>
       </div>
 
-      {/* terminar o onClick dessa */}
       <div>
         <button
           type="button"
