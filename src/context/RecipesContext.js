@@ -25,7 +25,7 @@ export const RecipesProvider = ({ children }) => (
 );
 
 RecipesProvider.propTypes = {
-  children: PropTypes.objectOf(PropTypes.any).isRequired,
+  children: PropTypes.arrayOf(Proptypes.elements).isRequired,
 };
 
 export const useRecipes = () => useContext(RecipesContext);
