@@ -1,10 +1,14 @@
 import React from 'react';
 
-import Header from '../../components/Header/Header';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 function ExplorarBebidas() {
   return (
-    <Header pageTitle="Explorar Bebidas" showSearchIcon={ false } />
+    <main>
+      <Header pageTitle="Explorar Bebidas" showSearchIcon={ false } />
+      <Footer />
+    </main>
   );
 }
 

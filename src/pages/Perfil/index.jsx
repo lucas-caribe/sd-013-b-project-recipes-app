@@ -1,10 +1,14 @@
 import React from 'react';
 
-import Header from '../../components/Header/Header';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 function Perfil() {
   return (
-    <Header pageTitle="Perfil" showSearchIcon={ false } />
+    <main>
+      <Header pageTitle="Perfil" showSearchIcon={ false } />
+      <Footer />
+    </main>
   );
 }
 

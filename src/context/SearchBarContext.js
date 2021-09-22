@@ -84,7 +84,7 @@ export const SearchBarProvider = ({ children }) => {
 };
 
 SearchBarProvider.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  children: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export const useSearch = () => useContext(SearchBarContext);

@@ -1,10 +1,14 @@
 import React from 'react';
 
-import Header from '../../components/Header/Header';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 function ExplorarIngredientes() {
   return (
-    <Header pageTitle="Explorar Ingredientes" showSearchIcon={ false } />
+    <main>
+      <Header pageTitle="Explorar Ingredientes" showSearchIcon={ false } />
+      <Footer />
+    </main>
   );
 }
 

@@ -17,7 +17,7 @@ export const DetailsProvider = ({ children }) => (
 );
 
 DetailsProvider.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.elements).isRequired,
+  children: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export const useDetails = () => useContext(DetailsContext);
