@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Login from '../Pages/Login';
+import Login from '../pages/Login';
 
 const EMAIL_INPUT = 'email-input';
 const PASS_INPUT = 'password-input';

@@ -17,6 +17,7 @@ function Login() {
     }
     ValidLogin();
   }, [email, password]);
+
   // verificar A FUNCAO LOCALSTORAGE
   function setToLocalStorage() {
     localStorage.setItem('mealsToken', '1');
