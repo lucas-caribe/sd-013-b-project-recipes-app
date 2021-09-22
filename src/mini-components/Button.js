@@ -5,7 +5,7 @@ class Button extends Component {
   render() {
     const { dataTest, btnText, btnFunction } = this.props;
     return (
-      <button onClick={ btnFunction } data-testId={ dataTest } type="button">
+      <button onClick={ btnFunction } data-testid={ dataTest } type="button">
         { btnText }
       </button>
     );
@@ -14,11 +14,12 @@ class Button extends Component {
 
 Button.propTypes = {
   btnText: PropTypes.string.isRequired,
-  dataTest: PropTypes.string.isRequired,
+  dataTest: PropTypes.string,
   btnFunction: PropTypes.func,
 };
 
 Button.defaultProps = {
+  dataTest: undefined,
   btnFunction: undefined,
 };
 
