@@ -11,7 +11,7 @@ import { AuthContext } from './AuthContext';
 //     },
 //   }
 
-const SearchBarContext = createContext();
+export const SearchBarContext = createContext();
 
 export const SearchBarProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);

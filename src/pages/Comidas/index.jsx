@@ -13,6 +13,7 @@ function Comidas() {
   useEffect(() => {
     handleMainPage(pathname);
   }, [handleMainPage, pathname]);
+
   return (
     <main>
       <Header pageTitle="Comidas" showSearchIcon />
