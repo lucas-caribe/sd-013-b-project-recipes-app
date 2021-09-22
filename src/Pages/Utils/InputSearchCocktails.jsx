@@ -11,24 +11,30 @@ export default function InputSearchCocktails() {
   const { api, setApi } = useContext(RecipesContext);
   let drinksList = api.drinks;
   const TWELVE = 12;
+  const NOTFOUND = 'Sinto muito, não encontramos nenhuma receita para esses filtros.';
+
+  const alert = (response) => {
+    if (response.drinks) setApi(response);
+    if (!response.drinks) global.alert(NOTFOUND);
+  };
 
   const handleClick = () => {
     const apiIngredienteRequest = async () => {
       const response = await fetch(`${apiIngredienteUrl}i=${cocktailInput}`)
         .then((resp) => resp.json());
-      setApi(response);
+      alert(response);
     };
 
     const apiNomeRequest = async () => {
       const response = await fetch(`${apiCocktails}s=${cocktailInput}`)
         .then((resp) => resp.json());
-      setApi(response);
+      alert(response);
     };
 
     const apiLetraRequest = async () => {
       const response = await fetch(`${apiCocktails}f=${cocktailInput}`)
         .then((resp) => resp.json());
-      setApi(response);
+      alert(response);
     };
 
     if (search === PRIMEIRA_LETRA && cocktailInput.length !== 1) {

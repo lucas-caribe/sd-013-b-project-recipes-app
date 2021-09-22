@@ -12,24 +12,30 @@ export default function InputSearchMeals() {
   console.log(api);
   const TWELVE = 12;
   let mealsList = api.meals;
+  const NOTFOUND = 'Sinto muito, não encontramos nenhuma receita para esses filtros.';
+
+  const alert = (response) => {
+    if (response.meals) setApi(response);
+    if (!response.meals) global.alert(NOTFOUND);
+  };
 
   const handleClick = () => {
     const apiIngredienteRequest = async () => {
       const response = await fetch(`${apiIngredienteUrl}i=${mealInput}`)
         .then((resp) => resp.json());
-      setApi(response);
+      alert(response);
     };
 
     const apiNomeRequest = async () => {
       const response = await fetch(`${apiMealsUrl}s=${mealInput}`)
         .then((resp) => resp.json());
-      setApi(response);
+      alert(response);
     };
 
     const apiLetraRequest = async () => {
       const response = await fetch(`${apiMealsUrl}f=${mealInput}`)
         .then((resp) => resp.json());
-      setApi(response);
+      alert(response);
     };
 
     if (search === PRIMEIRA_LETRA && mealInput.length !== 1) {
