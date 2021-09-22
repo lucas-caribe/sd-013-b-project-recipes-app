@@ -5,8 +5,14 @@ import RecipesContext from './RecipesContext';
 function RecipesProvider({ children }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [searchBar, setsearchBar] = useState(false);
 
-  const contextValue = { email, setEmail, password, setPassword };
+  const contextValue = { email,
+    setEmail,
+    password,
+    setPassword,
+    searchBar,
+    setsearchBar };
 
   //   useEffect(() => {
   //     async function fetchData() {
