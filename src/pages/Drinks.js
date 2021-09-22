@@ -5,7 +5,6 @@ import { fetchFullDrinksList } from '../services/api';
 // Chamar uma funçao que srá chamada dentro do map, recebendo nome e imagem e retornando o card
 import Card from '../components/Card';
 
-
 function Drinks() {
   const [drinksList, setDrinksList] = useState([]);
   const MAX_ELEMENTS_PER_PAGE = 12;
