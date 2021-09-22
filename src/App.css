@@ -16,3 +16,9 @@
   padding-right: 10px;
   width: 360px;
 }
+
+/* Footer */
+.footer-container {
+  bottom: 0;
+  position: fixed;
+}
