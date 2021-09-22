@@ -6,13 +6,16 @@ function RecipesProvider({ children }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [searchBar, setsearchBar] = useState(false);
+  const [api, setApi] = useState({ meals: [], drinks: [] });
 
   const contextValue = { email,
     setEmail,
     password,
     setPassword,
     searchBar,
-    setsearchBar };
+    setsearchBar,
+    api,
+    setApi };
 
   //   useEffect(() => {
   //     async function fetchData() {

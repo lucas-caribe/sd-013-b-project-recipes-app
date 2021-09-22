@@ -5,8 +5,8 @@ import Footer from '../Components/Footer';
 export default function DrinksPage() {
   return (
     <>
-      <h3 data-testid="page-title">Bebidas</h3>
       <MainFoodPage />
+      <h3 data-testid="page-title">Bebidas</h3>
       <Footer />
     </>
   );
