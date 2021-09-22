@@ -4,8 +4,7 @@ import Header from '../components/Header';
 export default function Comidas() {
   return (
     <div>
-      <Header />
-      <p>Comidas</p>
+      <Header pageTitle="Comidas" />
     </div>
   );
 }
