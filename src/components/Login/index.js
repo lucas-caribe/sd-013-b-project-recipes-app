@@ -14,6 +14,7 @@ export default function Login() {
 
   function handleClick() {
     setLogin({ user, password });
+    localStorage.setItem('user', JSON.stringify({ email: user }));
   }
   // referência para a regex utilizada: https://medium.com/@zackcreach/shred-the-gnar-how-to-write-decode-regex-for-email-validation-9a970fa91641
   const buttonDisabled = () => {
