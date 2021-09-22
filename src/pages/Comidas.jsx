@@ -4,7 +4,7 @@ import Header from '../components/header';
 export default function Comidas() {
   return (
     <div>
-      <Header titlePage="Comidas" />
+      <Header titlePage="Comidas" hasSearchIcon />
     </div>
   );
 }

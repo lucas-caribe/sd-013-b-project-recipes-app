@@ -4,7 +4,7 @@ import Header from '../components/header';
 export default function Bebidas() {
   return (
     <div>
-      <Header titlePage="Bebidas" />
+      <Header titlePage="Bebidas" hasSearchIcon />
     </div>
   );
 }

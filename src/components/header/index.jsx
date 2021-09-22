@@ -5,7 +5,7 @@ import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
 
 function Header(props) {
-  const { titlePage } = props;
+  const { titlePage, hasSearchIcon } = props;
   return (
     <div>
       <header>
@@ -17,7 +17,7 @@ function Header(props) {
             data-testid="profile-top-btn"
           />
         </Link>
-        {!titlePage.includes('Explorar') && <img
+        {hasSearchIcon && <img
           src={ searchIcon }
           alt="searchIcon"
           data-testid="search-top-btn"
@@ -29,6 +29,7 @@ function Header(props) {
 
 Header.propTypes = {
   titlePage: PropTypes.string.isRequired,
+  hasSearchIcon: PropTypes.bool.isRequired,
 };
 
 export default Header;
