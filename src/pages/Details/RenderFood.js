@@ -20,11 +20,17 @@ export default function RenderFood(id) {
     return <h2>Loading</h2>;
   }
   const ingredients = [];
+  const quantity = [];
   const max = 20;
   for (let index = 1; index <= max; index += 1) {
-    const key = `strIngredient${index}`;
-    if (recipe[key] !== '') {
-      ingredients.push(recipe[key]);
+    const keyIngredient = `strIngredient${index}`;
+    const keyMeasure = `strMeasure${index}`;
+
+    if (recipe[keyIngredient] !== '') {
+      ingredients.push(recipe[keyIngredient]);
+    }
+    if (recipe[keyMeasure] !== '') {
+      quantity.push(recipe[keyMeasure]);
     }
   }
   const youtube = 32;
@@ -65,7 +71,7 @@ export default function RenderFood(id) {
               key={ index }
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              { ingredient }
+              { `${ingredient} ${quantity[index] ? quantity[index] : ''}` }
             </p>
           ),
         )

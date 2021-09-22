@@ -19,11 +19,16 @@ export default function RenderDrink(id) {
     return <h2>Loading</h2>;
   }
   const ingredients = [];
+  const quantity = [];
   const max = 20;
   for (let index = 1; index <= max; index += 1) {
     const key = `strIngredient${index}`;
+    const measureKey = `strMeasure${index}`;
     if (drink[key]) {
       ingredients.push(drink[key]);
+    }
+    if (drink[measureKey]) {
+      quantity.push(drink[measureKey]);
     }
   }
   return (
@@ -54,7 +59,7 @@ export default function RenderDrink(id) {
       <h3
         data-testid="recipe-category"
       >
-        { drink.strCategory }
+        { drink.strAlcoholic }
       </h3>
       {
         ingredients.map(
@@ -63,7 +68,7 @@ export default function RenderDrink(id) {
               key={ index }
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              { ingredient }
+              { `${ingredient} ${quantity[index]}` }
             </p>
           ),
         )
