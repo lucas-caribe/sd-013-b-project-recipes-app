@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import { fetchFullDrinksList } from '../services/api';
 // Chamar uma funçao que srá chamada dentro do map, recebendo nome e imagem e retornando o card
 import Card from '../components/Card';
+import FilterButtons from '../components/FilterButtons';
 
 function Drinks() {
   const [drinksList, setDrinksList] = useState([]);
@@ -27,6 +28,7 @@ function Drinks() {
     return (
       <div className="drinks-page">
         <Header />
+        <FilterButtons page="Drinks" />
         { mapDrinks(drinksList) }
         <Footer />
       </div>
@@ -35,6 +37,7 @@ function Drinks() {
   return (
     <div className="drinks-page">
       <Header />
+      <FilterButtons page="Drinks" />
       <h2>Loading...</h2>
       <Footer />
     </div>
