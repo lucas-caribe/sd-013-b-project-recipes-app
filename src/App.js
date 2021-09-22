@@ -4,8 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch } from 'react-router';
 import Login from './pages/Login';
 import Home from './pages/Home';
-
-import { Switch, Route } from 'react-router-dom';
 import Footer from './components/Footer';
 import Login from './pages/Login';
 import Explorer from './pages/Explorer';
