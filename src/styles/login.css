@@ -1,4 +1,4 @@
-#login-form {
+form .login-form {
   background-color: rgb(238, 238, 238);
   border-radius: 10px;
   height: 50vh;
@@ -9,11 +9,11 @@
   width: 95%;
 }
 
-#login-form * {
+form .login-form * {
   margin: 1rem 0;
 }
 
-#login-form input {
+form .login-form input {
   border: 1px solid grey;
   border-radius: 5px;
   display: block;
@@ -25,18 +25,18 @@
   width: 92%;
 }
 
-#login-form button {
+form .login-form button {
   background-color: var(--main-bg-color);
   border: none;
   border-radius: 5px;
   font-size: 20px;
-  margin: 0.4rem 0.4rem;
+  margin: 0.4rem;
   margin-bottom: unset;
   padding: 8px 20px;
   width: 70%;
 }
 
-#login-form button:disabled {
+form .login-form button:disabled {
   color: black;
   opacity: 0.65;
 }

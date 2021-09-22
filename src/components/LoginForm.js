@@ -31,7 +31,7 @@ function Login() {
   if (password.length > 1) passwordTouched = true;
 
   return (
-    <form id="login-form">
+    <form className="login-form">
       <h1>Login</h1>
       <input
         data-testid="email-input"

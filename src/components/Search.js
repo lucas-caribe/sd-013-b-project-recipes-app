@@ -47,6 +47,7 @@ function Search({ page }) {
         data-testid="search-input"
         type="text"
         placeholder="Buscar Receita"
+        className="search-input"
         ref={ searchRef }
       />
       <div className="form-actions">

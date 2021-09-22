@@ -1,8 +1,8 @@
 header {
   background-color: var(--main-bg-color);
   color: rgb(17, 17, 17);
-  max-height: 4.5rem;
   height: 10vh;
+  max-height: 4.5rem;
 }
 
 header h1 {
@@ -23,11 +23,8 @@ header section {
 header button {
   background-color: unset;
   border: none;
-}
-
-header button  {
   max-width: 2.8rem;
-  width: 120%; 
+  width: 120%;
 }
 
 header button img {
@@ -37,7 +34,7 @@ header button img {
 
 .search {
   animation: fade-in 0.2s ease-in;
-  background-color:rgb(221, 221, 221);
+  background-color: rgb(221, 221, 221);
   border-bottom: 2px solid lightgrey;
   min-height: 3rem;
   padding-bottom: 0.1rem;
@@ -45,7 +42,7 @@ header button img {
   z-index: 3;
 }
 
-.search input[type="text"] {
+.search .search-input {
   border: 1px solid grey;
   display: block;
   font-size: 18px;
@@ -60,9 +57,9 @@ header button img {
   background-color: var(--main-bg-color);
   border-radius: 5px;
   font-size: 20px;
-  padding: 5px 16px;
-  margin: 0.4rem 0.4rem;
+  margin: 0.4rem;
   margin-bottom: unset;
+  padding: 5px 16px;
 }
 
 .search label {
@@ -81,4 +78,11 @@ header button img {
   margin: 0.4rem auto;
   max-width: 40rem;
   width: 92%;
+}
+
+@keyframes fade-in {
+
+  from {
+    opacity: 0;
+  }
 }
