@@ -2,22 +2,22 @@ import React from 'react';
 import './Header.css'
 import Icon from './Icon';
 
-class Header extends React.Component {
-    render() {
-        return <div className="header">
+const Header = (props) => {
+    return (
+        <div className="header">
 
             <button data-testid='profile-top-btn'>
-            <Icon icon="profile" />
+                <Icon icon="profile" />
             </button>
 
-            <h2 data-testid='page-title'>Comidas</h2>
+            <h2 data-testid='page-title'>{props.main}</h2>
 
             <button data-testid='search-top-btn'>
-            <Icon icon="search" />
+                <Icon icon="search" />
             </button>
             
-        </div>;
-    }
+        </div>
+    );
 }
 
 export default Header;
