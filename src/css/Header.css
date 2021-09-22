@@ -1,0 +1,10 @@
+.app-header {
+  background-color: grey;
+  display: flex;
+  justify-content: space-between;
+}
+
+.app-header button {
+  background-color: grey;
+  border: none;
+}

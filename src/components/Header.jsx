@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { actionInputHeader } from '../redux/actions';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import '../css/Header.css';
 
 function Header({ pageTitle, actionInpHeader, searchButton }) {
   const [toggleButtonSearch, setToggleButtonSearch] = useState(false);
@@ -26,18 +27,18 @@ function Header({ pageTitle, actionInpHeader, searchButton }) {
   }
 
   return (
-    <div>
-      <h3 data-testid="page-title">{pageTitle}</h3>
+    <header className="app-header">
       <button type="button" data-testid="profile-top-btn">
         <img alt="icone-profile" src={ profileIcon } />
       </button>
+      <h3 data-testid="page-title">{pageTitle}</h3>
       {searchButton && renderButton()}
       {toggleButtonSearch && <input
         onChange={ ({ target }) => setSearchInput(target.value) }
         data-testid="search-input"
         type="text"
       />}
-    </div>
+    </header>
   );
 }
 
