@@ -33,6 +33,7 @@ export const setCocktail = (payload) => ({
 
 export const fetchSearchThunk = ({ value, type, recipe }) => async (dispatch) => {
   if (recipe === 'meal') {
+    console.log('thunk');
     switch (value) {
     case 'ingredient': {
       const response = await fetchMealByIngredient(type);
@@ -53,6 +54,7 @@ export const fetchSearchThunk = ({ value, type, recipe }) => async (dispatch) =>
       break;
     }
   }
+
   if (recipe === 'cocktail') {
     switch (value) {
     case 'ingredient': {
@@ -75,4 +77,3 @@ export const fetchSearchThunk = ({ value, type, recipe }) => async (dispatch) =>
     }
   }
 };
-// // Thunk
