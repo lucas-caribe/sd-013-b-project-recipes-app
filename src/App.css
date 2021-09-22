@@ -22,11 +22,6 @@ input:focus {
   outline: none;
 }
 
-.footer {
-  background-color: gainsboro;
-  bottom: 0;
-}
-
 .meals {
   align-items: center;
   background: #0fa36b;
