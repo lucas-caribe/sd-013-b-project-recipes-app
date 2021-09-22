@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Provider from './context/Provider';
 import Explorar from './pages/Explorar';
-import Login from './components/Login';
+import Login from './pages/Login';
 
 function App() {
   return (
