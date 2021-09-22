@@ -32,57 +32,68 @@ function Comidas({ inputFromHeader }) {
     }
   };
 
-  const pegarDozeElementos = () => resultFetch.splice(0, QUANTIDADE_RECEITAS);
-
-  return (
-    <div>
-      <Header pageTitle="Comidas" />
-      {resultFetch.length === 1 && <Redirect
-        to={ `/comidas/${resultFetch[0].idMeal}` }
-      />}
+  function enviarAlerta() {
+    return (
       <div>
-        <label htmlFor="ingredient">
-          Ingrediente
-          <input
-            type="radio"
-            value="ingrediente"
-            data-testid="ingredient-search-radio"
-            onChange={ ({ target }) => setRadioSelecionado(target.value) }
-            name="radio"
-          />
-        </label>
-        <label htmlFor="name">
-          Nome
-          <input
-            type="radio"
-            value="nome"
-            data-testid="name-search-radio"
-            name="radio"
-            onChange={ ({ target }) => setRadioSelecionado(target.value) }
-          />
-        </label>
-        <label htmlFor="ingredient">
-          Primeira letra
-          <input
-            type="radio"
-            value="firstLetter"
-            data-testid="first-letter-search-radio"
-            onChange={ ({ target }) => setRadioSelecionado(target.value) }
-            name="radio"
-          />
-        </label>
-        <button
-          type="button"
-          onClick={ () => verificaRadioFetch(inputFromHeader.inputHeader) }
-          data-testid="exec-search-btn"
-        >
-          Buscar
-        </button>
-        <br />
-        {resultFetch.length !== 0 && <CardsComida comida={ pegarDozeElementos() } />}
+        <Header pageTitle="Comida" />
+        {global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.')}
       </div>
-    </div>
-  );
+
+    );
+  }
+
+  const pegarDozeElementos = () => resultFetch.splice(0, QUANTIDADE_RECEITAS);
+  if (resultFetch !== null) {
+    return (
+      <div>
+        <Header pageTitle="Comidas" />
+        {resultFetch.length === 1 && <Redirect
+          to={ `/comidas/${resultFetch[0].idMeal}` }
+        />}
+        <div>
+          <label htmlFor="ingredient">
+            Ingrediente
+            <input
+              type="radio"
+              value="ingrediente"
+              data-testid="ingredient-search-radio"
+              onChange={ ({ target }) => setRadioSelecionado(target.value) }
+              name="radio"
+            />
+          </label>
+          <label htmlFor="name">
+            Nome
+            <input
+              type="radio"
+              value="nome"
+              data-testid="name-search-radio"
+              name="radio"
+              onChange={ ({ target }) => setRadioSelecionado(target.value) }
+            />
+          </label>
+          <label htmlFor="ingredient">
+            Primeira letra
+            <input
+              type="radio"
+              value="firstLetter"
+              data-testid="first-letter-search-radio"
+              onChange={ ({ target }) => setRadioSelecionado(target.value) }
+              name="radio"
+            />
+          </label>
+          <button
+            type="button"
+            onClick={ () => verificaRadioFetch(inputFromHeader.inputHeader) }
+            data-testid="exec-search-btn"
+          >
+            Buscar
+          </button>
+          <br />
+          {resultFetch !== null && <CardsComida comida={ pegarDozeElementos() } />}
+        </div>
+      </div>
+    );
+  } return enviarAlerta();
 }
 
 Comidas.propTypes = {
