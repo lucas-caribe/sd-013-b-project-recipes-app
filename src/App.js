@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import store from './Redux/Store';
 import Main from './pages/Main';
 import {Switch, Route} from 'react-router-dom'
+//
 
 function App() {
   return (
