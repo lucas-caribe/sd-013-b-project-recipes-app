@@ -16,6 +16,7 @@ import DrinksDetails from './pages/DrinksDetails';
 import Login from './pages/Login';
 
 import './App.css';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
           <Route exact path="/comidas/:id" component={ MealsDetails } />
           <Route exact path="/bebidas/:id" component={ DrinksDetails } />
           <Route exact path="/perfil" component={ Profile } />
+          <Route component={ NotFound } />
         </Switch>
       </BrowserRouter>
     </RecipeProvider>
