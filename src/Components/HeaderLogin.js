@@ -17,7 +17,7 @@ function HeaderLogin({ storeUser }) {
 
   function validatePassword({ target: { value } }) {
     const minLength = 6;
-    if (value.length >= minLength) {
+    if (value.length > minLength) {
       changePassword(value);
     }
   }
@@ -41,7 +41,7 @@ function HeaderLogin({ storeUser }) {
         data-testid="password-input"
         onChange={ (pass) => validatePassword(pass) }
       />
-      <Link to="/recipes">
+      <Link to="/comidas">
         <button
           type="button"
           disabled={ submit() }
