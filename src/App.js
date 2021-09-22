@@ -4,8 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Switch, Route } from 'react-router-dom';
 import Provider from './context/Provider';
 import Login from './pages/Login';
-import Profile from './pages/Profile';
 import Foods from './pages/Foods';
+import Profile from './pages/Profile';
 
 function App() {
   return (
