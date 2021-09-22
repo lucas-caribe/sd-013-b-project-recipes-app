@@ -47,6 +47,6 @@ function Header({ pageTitle, haveHeader }) {
 export default Header;
 
 Header.propTypes = {
-  pageTitle: PropTypes.string,
-  haveHeader: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-}.isRequired;
+  pageTitle: PropTypes.string.isRequired,
+  haveHeader: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
+};
