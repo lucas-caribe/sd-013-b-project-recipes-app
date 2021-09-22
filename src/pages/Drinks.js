@@ -1,10 +1,12 @@
 import React from 'react';
+
+import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 function Drinks() {
   return (
-    <div>
-      <h1>Página de Bebidas</h1>
+    <div className="drinks-page">
+      <Header />
       <Footer />
     </div>
   );

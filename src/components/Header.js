@@ -1,54 +1,59 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
+
+import '../styles/header.css';
+
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
-import SearchBar from './SearchBar';
+import Search from './Search';
+
+import createHeaderTitle from '../utils/createHeaderTitle';
+import isPageSearchable from '../utils/isPageSearchable';
 
 function Header() {
   const [displaySearchBar, setDisplaySearchBar] = useState(false);
   const history = useHistory();
-  const title = history.location.pathname.slice(1)[0].toUpperCase()
-  + history.location.pathname.slice(2);
+
+  const title = createHeaderTitle(history);
+  const displaySearchButton = isPageSearchable(title);
 
   function handleProfile() {
     history.push('/perfil');
   }
 
   return (
-    <div className="header">
-      <div
-        onKeyPress={ () => console.log('1') }
-        onClick={ handleProfile }
-        role="button"
-        tabIndex="-1"
-      >
-        <img
-          data-testid="profile-top-btn"
-          src={ profileIcon }
-          alt="profile icon"
-        />
-      </div>
-      <h2
-        data-testid="page-title"
-      >
-        { title }
-
-      </h2>
-      <div
-        onKeyPress={ () => console.log('1') }
-        onClick={ () => setDisplaySearchBar(!displaySearchBar) }
-        role="button"
-        tabIndex="-2"
-      >
-        <img
-          data-testid="search-top-btn"
-          src={ searchIcon }
-          alt="searche icon"
-        />
-      </div>
-      {displaySearchBar && <SearchBar />}
-    </div>
-
+    <header data-testid="main-header">
+      <section>
+        <button
+          onClick={ handleProfile }
+          type="button"
+        >
+          <img
+            data-testid="profile-top-btn"
+            src={ profileIcon }
+            alt="profile icon"
+          />
+        </button>
+        <h1
+          data-testid="page-title"
+        >
+          { title }
+        </h1>
+        { displaySearchButton ? (
+          <button
+            onClick={ () => setDisplaySearchBar(!displaySearchBar) }
+            type="button"
+          >
+            <img
+              data-testid="search-top-btn"
+              src={ searchIcon }
+              alt="search icon"
+            />
+          </button>
+        ) : <button type="button">{' '}</button>}
+      </section>
+      {displaySearchBar && <Search page={ title } />}
+    </header>
   );
 }
 
