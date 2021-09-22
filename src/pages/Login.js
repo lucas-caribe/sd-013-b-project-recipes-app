@@ -30,7 +30,7 @@ function Login({ history }) {
   }
 
   return (
-    <div className="login-page">
+    <main className="login-page">
       <header className="login-title">
         <h2>Login</h2>
       </header>
@@ -75,7 +75,7 @@ function Login({ history }) {
           Entrar
         </button>
       </div>
-    </div>
+    </main>
   );
 }
 
