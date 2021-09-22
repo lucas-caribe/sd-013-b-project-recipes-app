@@ -3,6 +3,9 @@ import { useHistory } from 'react-router-dom';
 import Copy from 'clipboard-copy';
 import './style.css';
 
+import WhiteHeart from '../../images/whiteHeartIcon.svg';
+import BlackHeart from '../../images/blackHeartIcon.svg';
+
 function verifyLocalStorage(param, id) {
   const doneRecipes = localStorage.getItem('doneRecipes');
   if (doneRecipes) {
@@ -32,6 +35,16 @@ function shareButton(setState) {
   setState(true);
 }
 
+function verifyFavorite(id, setState) {
+  const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  if (favoriteRecipes) {
+    const isFav = favoriteRecipes.find((rec) => rec.id === id);
+    if (isFav) {
+      setState(true);
+    }
+  }
+}
+
 export default function RenderDrink(id) {
   const [drink, setDrink] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -40,6 +53,7 @@ export default function RenderDrink(id) {
   const [done, setDone] = useState(false);
   const [copied, setCopied] = useState(false);
   const [progress, setProgress] = useState(false);
+  const [favorite, setFavorite] = useState(false);
   const history = useHistory();
   const initial = 6;
   const maxArr = 19;
@@ -60,6 +74,7 @@ export default function RenderDrink(id) {
     }
     getData();
     verifyLocalStorage(setDone, id);
+    verifyFavorite(id, setFavorite);
     verifyProgress(id, setProgress);
   }, []);
 
@@ -103,12 +118,25 @@ export default function RenderDrink(id) {
         copied
         && 'Link copiado!'
       }
-      <button
-        type="button"
-        data-testid="favorite-btn"
-      >
-        Fav
-      </button>
+      {
+        favorite
+          ? (
+            <input
+              type="image"
+              src={ BlackHeart }
+              data-testid="favorite-btn"
+              alt="Favorite"
+            />
+          )
+          : (
+            <input
+              type="image"
+              src={ WhiteHeart }
+              data-testid="favorite-btn"
+              alt="Not Favorite"
+            />
+          )
+      }
       <h3
         data-testid="recipe-category"
       >
