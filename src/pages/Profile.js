@@ -8,14 +8,29 @@ export default function Profile({ history }) {
     pageName: 'Perfil',
     setIcon: false,
   };
+
+  const email = JSON.parse(localStorage.getItem('user'));
+
+  const outPage = () => {
+    localStorage.clear();
+    history.push('/');
+  };
+
   return (
     <div>
       <Header value={ pageTitle } />
+      <div>
+        <h4
+          data-testid="profile-email"
+        >
+          { email.email }
+        </h4>
+      </div>
       Perfil
       <button
         type="button"
         data-testid="profile-done-btn"
-        onClick={ () => history.push('/receitas-favoritas') }
+        onClick={ () => history.push('/receitas-feitas') }
       >
         Receitas Feitas
       </button>
@@ -23,7 +38,7 @@ export default function Profile({ history }) {
       <button
         type="button"
         data-testid="profile-favorite-btn"
-        onClick={ () => history.push('/receitas-feitas') }
+        onClick={ () => history.push('/receitas-favoritas') }
       >
         Receitas Favoritas
       </button>
@@ -32,7 +47,7 @@ export default function Profile({ history }) {
       <button
         type="button"
         data-testid="profile-logout-btn"
-        onClick={ () => history.push('/') }
+        onClick={ () => outPage() }
       >
         Sair
       </button>
