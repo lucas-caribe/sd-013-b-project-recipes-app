@@ -321,7 +321,7 @@ Lembre-se de escrever testes unitários e sinta-se livre para alterar a UI, só 
   * Volte até a [página de _Pull Requests_ do repositório](https://github.com/tryber/sd-013-b-project-recipes-app/pulls) e confira que o seu _Pull Request_ está criado
 
 
-7. Assim que aprovado por pelo menos duas pessoas do seu grupo e o _Linter_ estiver adereçado, acesse **SEU** _Pull Request_ e clique no botão _"Merge pull request"_
+7. Assim que aprovado por pelo menos duas pessoas do seu grupo e o _Linter_ estiver adereçado, acesse **SEU** _Pull Request_ e clique no botão _"Merge pull request"_27 - Implemente os botões de categoria para serem utilizados como filtro
 
 ### Durante o desenvolvimento
 
@@ -333,7 +333,7 @@ Lembre-se de escrever testes unitários e sinta-se livre para alterar a UI, só 
 * Lembre-se de sempre após um (ou alguns) `commits` atualizar o repositório remoto
 
 * Os comandos que você utilizará com mais frequência são:
-
+27 - Implemente os botões de categoria para serem utilizados como filtro
 1. `git status` _(para verificar o que está em vermelho - fora do stage - e o que está em verde - no stage)_
 
 2. `git add` _(para adicionar arquivos ao stage do Git)_
@@ -368,7 +368,7 @@ Este repositório já contem um _template_ com um App React criado, configurado 
 
 Para garantir a qualidade do seu código de forma a tê-lo mais legível, de mais fácil manutenção e seguindo as boas práticas de desenvolvimento nós utilizamos neste projeto o linter `ESLint`. Para rodar o linter localmente no seu projeto, execute o comando abaixo:
 
-```bash
+```bash27 - Implemente os botões de categoria para serem utilizados como filtro
 npm run lint
 ```
 
