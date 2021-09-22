@@ -1,7 +1,11 @@
 import React from 'react';
 import './App.css';
-import rockGlass from './images/rockGlass.svg';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+import Login from './Pages/Login';
+import Comidas from './Pages/Comidas';
+
 import Header from './component/Header';
 import SearchBar from './component/SearchBar';
 import Footer from './component/Footer';
@@ -11,16 +15,12 @@ function App() {
     <div>
       <Header />
       <SearchBar />
-      <div className="meals">
-        <span className="logo">TRYBE</span>
-        <object
-          className="rocksGlass"
-          type="image/svg+xml"
-          data={ rockGlass }
-        >
-          Glass
-        </object>
-      </div>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={ Login } />
+          <Route path="/comidas" component={ Comidas } />
+        </Switch>
+      </BrowserRouter>
       <Footer />
     </div>
   );
