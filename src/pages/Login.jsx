@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Login() {
   const [disabled, setDisabled] = useState(true);
@@ -47,15 +48,16 @@ function Login() {
             onChange={ ({ target }) => setPassword(target.value) }
           />
         </label>
-
-        <button
-          type="button"
-          data-testid="login-submit-btn"
-          disabled={ disabled }
-          onClick={ setToLocalStorage }
-        >
-          Entrar
-        </button>
+        <Link to="/comidas">
+          <button
+            type="button"
+            data-testid="login-submit-btn"
+            disabled={ disabled }
+            onClick={ setToLocalStorage }
+          >
+            Entrar
+          </button>
+        </Link>
       </section>
     </div>
   );

@@ -14,9 +14,24 @@ import ExploreDrinkPage from './pages/ExploreDrinkPage';
 import PerfilPage from './pages/PerfilPage';
 
 function App() {
+  function headerLocationNow() {
+    const local = window.location.pathname;
+    const foodTest = /\/comidas\//;
+    const drinkTest = /\/bebidas\//;
+    if (local === '/' || foodTest.test(local) || drinkTest.test(local)) {
+      const secondFoodTest = /\/explorar\/comidas\//;
+      const secondDrinkTest = /\/explorar\/bebidas\//;
+      if (secondFoodTest.test(local) || secondDrinkTest.test(local)) {
+        return true;
+      }
+      return false;
+    }
+    return true;
+  }
+
   return (
     <div>
-      <Header />
+      { headerLocationNow() ? <Header /> : null }
       <SearchBar />
       <BrowserRouter>
         <Switch>
