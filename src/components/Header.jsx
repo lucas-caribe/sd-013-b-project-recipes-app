@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
@@ -44,3 +45,8 @@ function Header({ pageTitle, haveHeader }) {
 }
 
 export default Header;
+
+Header.propTypes = {
+  pageTitle: PropTypes.string,
+  haveHeader: PropTyp.oneOfType([PropTypes.string, PropTypes.bool]),
+}.isRequired;
