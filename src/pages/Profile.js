@@ -32,13 +32,17 @@ function Profile() {
       <h1 data-testid="profile-email">{ getEmail() }</h1>
       <button
         className="profile-done-btn"
+        data-testid="profile-done-btn"
         type="button"
+        buttonText="Receitas Feitas"
         onClick={ doneRecipes }
       >
         Receitas Feitas
       </button>
       <button
         className="profile-favorite-btn"
+        data-testid="profile-favorite-btn"
+        buttonText="Receitas Favoritas"
         type="button"
         onClick={ favoriteRecipes }
       >
@@ -46,6 +50,8 @@ function Profile() {
       </button>
       <button
         className="profile-logout-btn"
+        data-testid="profile-logout-btn"
+        buttonText="Sair"
         type="button"
         onClick={ loginPage }
       >
