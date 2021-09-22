@@ -4,10 +4,11 @@ import { useHistory } from 'react-router';
 
 function Perfil() {
   const history = useHistory();
+  const { email } = JSON.parse(localStorage.getItem('user'));
   return (
     <div className="wrapper">
       {/* Requisito 82 e 83 */}
-      <p data-testid="profile-email">Email</p>
+      <p data-testid="profile-email">{ email }</p>
       <button
         type="button"
         data-testid="profile-done-btn"
