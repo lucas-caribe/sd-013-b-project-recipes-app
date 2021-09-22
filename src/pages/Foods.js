@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import RecipeContext from '../context/RecipeContext';
+import Footer from '../components/Footer';
 
 export default function Food() {
   const pageTitle = {
@@ -39,6 +40,7 @@ export default function Food() {
           }
         </div>
       ) }
+      <Footer />
     </div>
   );
 }

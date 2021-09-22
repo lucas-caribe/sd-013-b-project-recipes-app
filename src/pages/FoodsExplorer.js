@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 export default function FoodsExplorer() {
   const pageTitle = {
@@ -10,6 +11,7 @@ export default function FoodsExplorer() {
     <div>
       <Header value={ pageTitle } />
       Explorar Comidas
+      <Footer />
     </div>
   );
 }

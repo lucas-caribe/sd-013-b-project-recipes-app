@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
 import Input from '../components/Input';
 import RecipesContext from '../context/RecipeContext';
+import '../css/Login.css';
 
 function Login({ history }) {
   const [password, setPassword] = useState('');
@@ -29,34 +30,43 @@ function Login({ history }) {
   }
 
   return (
-    <main>
-      Login
-      <div>
-        <Input
-          type="text"
-          name="email"
-          id="email-input"
-          value={ email }
-          onChange={ ({ target }) => {
-            setEmail(target.value);
-            validatePassword();
-          } }
-        />
+    <main className="login-page">
+      <header className="login-title">
+        <h2>Login</h2>
+      </header>
+      <div className="form-login">
+        <div>
+          <Input
+            type="text"
+            name="email"
+            id="email-input"
+            className="email-input"
+            placeholder="Digite seu e-mail"
+            value={ email }
+            onChange={ ({ target }) => {
+              setEmail(target.value);
+              validatePassword();
+            } }
+          />
+        </div>
+        <div>
+          <Input
+            type="password"
+            name="password"
+            className="password-input"
+            value={ password }
+            placeholder="Digite sua senha"
+            id="password-input"
+            onChange={ ({ target }) => {
+              setPassword(target.value);
+              validatePassword();
+            } }
+          />
+        </div>
       </div>
-      <div>
-        <Input
-          type="password"
-          name="password"
-          value={ password }
-          id="password-input"
-          onChange={ ({ target }) => {
-            setPassword(target.value);
-            validatePassword();
-          } }
-        />
-      </div>
-      <div>
+      <div className="container-button">
         <button
+          className="submit-login"
           type="button"
           data-testid="login-submit-btn"
           disabled={ !validLogin || !validateEmail() }
