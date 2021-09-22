@@ -1,0 +1,11 @@
+.recomendationsArea {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  width: 340px;
+}
+
+.card {
+  min-width: 180px;
+  background-color: aqua;
+}

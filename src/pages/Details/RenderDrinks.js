@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import './style.css';
 
 export default function RenderDrink(id) {
   const [drink, setDrink] = useState([]);
   const [loading, setLoading] = useState(true);
   const [recomendations, setRecomendations] = useState([]);
+  const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
     async function getData() {
@@ -12,6 +14,9 @@ export default function RenderDrink(id) {
       setDrink(data.drinks[0]);
       const recomendationsFetch = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
       const recomendationsData = await recomendationsFetch.json();
+      const initial = 6;
+      const max = 19;
+      recomendationsData.meals.splice(initial, max);
       setRecomendations(recomendationsData.meals);
       if (drink && recomendations) {
         setLoading(false);
@@ -83,18 +88,26 @@ export default function RenderDrink(id) {
       >
         { drink.strInstructions }
       </p>
-      {
-        recomendations.map(
-          (drinkk, index) => (
-            <h1
-              key={ index }
-              data-testid={ `${index}-recomendation-card` }
-            >
-              { drinkk.strMeal }
-            </h1>
-          ),
-        )
-      }
+      <div className="recomendationsArea" onScroll={ () => setDisabled(false) }>
+        {
+          recomendations.map(
+            (drinkk, index) => (
+              <div
+                key={ index }
+                data-testid={ `${index}-recomendation-card` }
+                className="card"
+                hidden={ index > 1 ? disabled : false }
+              >
+                <h1
+                  data-testid={ `${index}-recomendation-title` }
+                >
+                  { drinkk.strMeal }
+                </h1>
+              </div>
+            ),
+          )
+        }
+      </div>
       <button
         type="button"
         data-testid="start-recipe-btn"

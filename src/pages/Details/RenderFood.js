@@ -4,6 +4,7 @@ export default function RenderFood(id) {
   const [recipe, setRecipe] = useState([]);
   const [loading, setLoading] = useState(true);
   const [recomendations, setRecomendations] = useState([]);
+  const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
     async function getData() {
@@ -11,8 +12,12 @@ export default function RenderFood(id) {
       const data = await response.json();
       setRecipe(data.meals[0]);
       const recomendationsFetch = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-
       const recomendationsData = await recomendationsFetch.json();
+
+      const initial = 6;
+      const max = 19;
+      recomendationsData.drinks.splice(initial, max);
+
       setRecomendations(recomendationsData.drinks);
       setLoading(false);
     }
@@ -91,18 +96,26 @@ export default function RenderFood(id) {
         title="video"
         data-testid="video"
       />
-      {
-        recomendations.map(
-          (receita, index) => (
-            <h1
-              key={ index }
-              data-testid={ `${index}-recomendation-card` }
-            >
-              { receita.strDrink }
-            </h1>
-          ),
-        )
-      }
+      <div className="recomendationsArea" onScroll={ () => setDisabled(false) }>
+        {
+          recomendations.map(
+            (receita, index) => (
+              <div
+                key={ index }
+                data-testid={ `${index}-recomendation-card` }
+                className="card"
+                hidden={ index > 1 ? disabled : false }
+              >
+                <h1
+                  data-testid={ `${index}-recomendation-title` }
+                >
+                  { receita.strDrink }
+                </h1>
+              </div>
+            ),
+          )
+        }
+      </div>
       <button
         type="button"
         data-testid="start-recipe-btn"
