@@ -11,8 +11,6 @@ import {
   Perfil,
   Feitas,
   Favoritas } from './Pages/index';
-import Explorar from './pages/Explorar';
-
 
 function App() {
   return (
@@ -25,7 +23,6 @@ function App() {
         <Route exact path="/perfil" component={ Perfil } />
         <Route exact path="/receitas-feitas" component={ Feitas } />
         <Route exact path="/receitas-favoritas" component={ Favoritas } />
-        <Route path="/explorar" component={ Explorar } />
       </BrowserRouter>
     </Provider>
   );
