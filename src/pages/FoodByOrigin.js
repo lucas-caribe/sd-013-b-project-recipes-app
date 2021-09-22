@@ -46,9 +46,15 @@ export default function FoodsByOrigin() {
         data-testid="explore-by-area-dropdown"
         name="area-dropdown"
         onChange={ ({ target }) => {
-          setChosenArea(target.value);
+          setChosenArea(target.value === 'All' ? '' : target.value);
         } }
       >
+        <option
+          value="All"
+          data-testid="All-option"
+        >
+          All
+        </option>
         {areaOptions.map(({ strArea }) => (
           <option
             value={ strArea }
