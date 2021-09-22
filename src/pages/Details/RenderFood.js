@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import Copy from 'clipboard-copy';
 
 function verifyProgress(id, setState) {
   const chaves = Object.keys(localStorage);
@@ -25,6 +26,11 @@ function inProgressRedirect(history, id) {
   history.push(`/comidas/${id}/in-progress`);
 }
 
+function shareButton(setState) {
+  Copy(window.location.href);
+  setState(true);
+}
+
 export default function RenderFood(id) {
   const [recipe, setRecipe] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,6 +38,7 @@ export default function RenderFood(id) {
   const [disabled, setDisabled] = useState(true);
   const [done, setDone] = useState(false);
   const [progress, setProgress] = useState(false);
+  const [copied, setCopied] = useState(false);
   const history = useHistory();
 
   const initial = 6;
@@ -88,9 +95,14 @@ export default function RenderFood(id) {
       <button
         type="button"
         data-testid="share-btn"
+        onClick={ () => shareButton(setCopied) }
       >
         Share
       </button>
+      {
+        copied
+        && 'Link copiado!'
+      }
       <button
         type="button"
         data-testid="favorite-btn"

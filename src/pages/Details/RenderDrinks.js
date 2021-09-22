@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import Copy from 'clipboard-copy';
 import './style.css';
 
 function verifyLocalStorage(param, id) {
@@ -26,12 +27,18 @@ function inProgressRedirect(history, id) {
   history.push(`/bebidas/${id}/in-progress`);
 }
 
+function shareButton(setState) {
+  Copy(window.location.href);
+  setState(true);
+}
+
 export default function RenderDrink(id) {
   const [drink, setDrink] = useState([]);
   const [loading, setLoading] = useState(true);
   const [recomendations, setRecomendations] = useState([]);
   const [disabled, setDisabled] = useState(true);
   const [done, setDone] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [progress, setProgress] = useState(false);
   const history = useHistory();
   const initial = 6;
@@ -51,19 +58,6 @@ export default function RenderDrink(id) {
         setLoading(false);
       }
     }
-    // const inProgressRecipes = {
-    //   meals: {
-    //   },
-    //   cocktails: {
-    //   },
-    // };
-    // localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
-    // const inProgressRecipes = {
-    //   cocktails: {
-    //     178319: [],
-    //   },
-    // };
-    // localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
     getData();
     verifyLocalStorage(setDone, id);
     verifyProgress(id, setProgress);
@@ -101,9 +95,14 @@ export default function RenderDrink(id) {
       <button
         type="button"
         data-testid="share-btn"
+        onClick={ () => shareButton(setCopied) }
       >
         Share
       </button>
+      {
+        copied
+        && 'Link copiado!'
+      }
       <button
         type="button"
         data-testid="favorite-btn"
