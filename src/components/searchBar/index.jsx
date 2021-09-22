@@ -8,7 +8,7 @@ export default function SearchBar(recipe) {
   const [state, setState] = useState({
     type: '',
     value: '',
-    recipe: recipe.recipe,
+    recipe: { recipe },
   });
 
   function handleChange(event) {
