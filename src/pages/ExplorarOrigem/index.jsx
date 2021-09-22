@@ -3,13 +3,13 @@ import React from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
-function Comidas() {
+function ExplorarOrigem() {
   return (
     <main>
-      <Header pageTitle="Comidas" showSearchIcon />
+      <Header pageTitle="Explorar Origem" showSearchIcon />
       <Footer />
     </main>
   );
 }
 
-export default Comidas;
+export default ExplorarOrigem;
