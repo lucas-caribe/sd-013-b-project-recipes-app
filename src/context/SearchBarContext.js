@@ -9,6 +9,10 @@ const SearchBarContext = createContext({
   },
 });
 
+// const toggleSearchBar = () => {
+
+// }
+
 export const SearchBarProvider = ({ children }) => (
   <SearchBarContext.Provider>
     { children }
@@ -16,7 +20,7 @@ export const SearchBarProvider = ({ children }) => (
 );
 
 SearchBarProvider.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.elements).isRequired,
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
 };
 
 export const useSearch = () => useContext(SearchBarContext);

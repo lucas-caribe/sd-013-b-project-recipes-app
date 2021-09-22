@@ -1,6 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 
+// import { useSearch } from '../../context';
+
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
 
@@ -8,6 +10,7 @@ import './Header.css';
 
 function Header() {
   const history = useHistory();
+  // const { isOpen } = useSearch();
 
   return (
     <header className="header">
