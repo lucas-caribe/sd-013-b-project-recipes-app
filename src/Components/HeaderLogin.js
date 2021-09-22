@@ -28,32 +28,34 @@ function HeaderLogin({ storeUser }) {
   }
 
   return (
-    <section className="login">
-      <input
-        type="text"
-        placeholder="Email"
-        data-testid="email-input"
-        onChange={ (e) => validateEmail(e) }
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        data-testid="password-input"
-        onChange={ (pass) => validatePassword(pass) }
-      />
-      <Link to="/comidas">
-        <button
-          type="button"
-          disabled={ submit() }
-          data-testid="login-submit-btn"
-          onClick={ () => {
-            storeUser(email, password);
-          } }
-        >
-          ENTRAR
-        </button>
-      </Link>
-    </section>
+    <div className="login">
+      <section>
+        <input
+          type="text"
+          placeholder="Email"
+          data-testid="email-input"
+          onChange={ (e) => validateEmail(e) }
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          data-testid="password-input"
+          onChange={ (pass) => validatePassword(pass) }
+        />
+        <Link to="/comidas">
+          <button
+            type="button"
+            disabled={ submit() }
+            data-testid="login-submit-btn"
+            onClick={ () => {
+              storeUser(email, password);
+            } }
+          >
+            ENTRAR
+          </button>
+        </Link>
+      </section>
+    </div>
   );
 }
 
