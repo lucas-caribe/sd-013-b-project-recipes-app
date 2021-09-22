@@ -1,9 +1,10 @@
 import React from 'react';
+import Header from '../components/Header';
 
 export default function Comidas() {
   return (
     <div>
-      <p>Comidas</p>
+      <Header pageTitle="Comidas" />
     </div>
   );
 }
