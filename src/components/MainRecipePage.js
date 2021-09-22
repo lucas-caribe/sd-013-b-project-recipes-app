@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import Card from '../Card';
-import fetchApi from '../../services/fetchApi';
+import Card from './Card';
+import fetchApi from '../services/fetchApi';
 
 const URLS = {
   meals: [
@@ -16,11 +16,11 @@ const URLS = {
   ],
 };
 
-export default function MainRecipePage({ type }) {
+export default function MainRecipePage({ type, recipesState }) {
   const [data, setData] = useState([]);
   const [filters, setFilters] = useState([]);
   const [filter, setFilter] = useState('');
-
+  const isRecipesState = !recipesState.length <= 0;
   useEffect(() => {
     async function getFilters() {
       const newData = await fetchApi(URLS[type][0]);
@@ -68,7 +68,7 @@ export default function MainRecipePage({ type }) {
           </button>
         ))}
       </div>
-      {data.map(({
+      {(isRecipesState ? recipesState : data).map(({
         idMeal = null,
         strMeal = null,
         strMealThumb = null,
@@ -91,4 +91,5 @@ export default function MainRecipePage({ type }) {
 
 MainRecipePage.propTypes = {
   type: PropTypes.string.isRequired,
+  recipesState: PropTypes.arrayOf.isRequired,
 };
