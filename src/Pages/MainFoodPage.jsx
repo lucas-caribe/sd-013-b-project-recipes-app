@@ -26,9 +26,7 @@ export default function MainFoodPage() {
       </header>
       {searchBar
       && <input type="text" name="search" id="search" data-testid="search-input" />}
-      <footer>
-        <Footer />
-      </footer>
+      <Footer />
     </>
   );
 }

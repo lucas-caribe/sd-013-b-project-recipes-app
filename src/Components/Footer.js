@@ -15,7 +15,11 @@ function Footer() {
       <div>
         <Link to="/explorar">
           <button type="button">
-            <img src={ exploreIcon } alt="Icone de explorar" data-testid="explore-bottom-btn" />
+            <img
+              src={ exploreIcon }
+              alt="Icone de explorar"
+              data-testid="explore-bottom-btn"
+            />
           </button>
         </Link>
       </div>
