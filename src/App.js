@@ -7,11 +7,11 @@ import Provider from './context/Provider';
 
 function App() {
   return (
-    <Switch>
-      <Provider>
+    <Provider>
+      <Switch>
         <Route exact path="/" component={ Login } />
-      </Provider>
-    </Switch>
+      </Switch>
+    </Provider>
   );
 }
 
