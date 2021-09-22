@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router';
 import { actionInputHeader } from '../redux/actions';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
@@ -14,12 +15,15 @@ function Header({ pageTitle, actionInpHeader, searchButton }) {
     actionInpHeader(searchInput);
   }, [actionInpHeader, searchInput]);
 
+  const history = useHistory();
+
   function renderButton() {
     return (
       <button
         type="button"
         onClick={ () => setToggleButtonSearch((prevState) => !prevState) }
         data-testid="search-top-btn"
+        src={ searchIcon }
       >
         <img alt="icone-search" src={ searchIcon } />
       </button>
@@ -28,11 +32,19 @@ function Header({ pageTitle, actionInpHeader, searchButton }) {
 
   return (
     <header className="app-header">
-      <button type="button" data-testid="profile-top-btn">
+      <button
+        type="button"
+        data-testid="profile-top-btn"
+        src={ profileIcon }
+        onClick={ () => history.push('/perfil') }
+      >
         <img alt="icone-profile" src={ profileIcon } />
       </button>
+
       <h3 data-testid="page-title">{pageTitle}</h3>
+
       {searchButton && renderButton()}
+
       {toggleButtonSearch && <input
         onChange={ ({ target }) => setSearchInput(target.value) }
         data-testid="search-input"
