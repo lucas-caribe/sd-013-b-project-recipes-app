@@ -11,12 +11,23 @@ function verifyLocalStorage(param, id) {
   }
 }
 
+function verifyProgress(id, setState) {
+  const chaves = Object.keys(localStorage);
+  const cocktails = chaves.includes('inProgressRecipes')
+    ? Object.keys(JSON.parse(localStorage.inProgressRecipes).cocktails)
+    : false;
+  if (cocktails && cocktails.includes(id)) {
+    setState(true);
+  }
+}
+
 export default function RenderDrink(id) {
   const [drink, setDrink] = useState([]);
   const [loading, setLoading] = useState(true);
   const [recomendations, setRecomendations] = useState([]);
   const [disabled, setDisabled] = useState(true);
   const [done, setDone] = useState(false);
+  const [progress, setProgress] = useState(false);
   const initial = 6;
   const maxArr = 19;
 
@@ -34,8 +45,22 @@ export default function RenderDrink(id) {
         setLoading(false);
       }
     }
+    // const inProgressRecipes = {
+    //   meals: {
+    //   },
+    //   cocktails: {
+    //   },
+    // };
+    // localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+    // const inProgressRecipes = {
+    //   cocktails: {
+    //     178319: [],
+    //   },
+    // };
+    // localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
     getData();
     verifyLocalStorage(setDone, id);
+    verifyProgress(id, setProgress);
   }, []);
 
   if (loading) {
@@ -127,7 +152,11 @@ export default function RenderDrink(id) {
         className="startRecipe"
         disabled={ done }
       >
-        Iniciar
+        {
+          progress
+            ? 'Continuar Receita'
+            : 'Iniciar'
+        }
       </button>
     </div>
   );

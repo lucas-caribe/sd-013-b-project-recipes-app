@@ -1,24 +1,35 @@
 import React, { useEffect, useState } from 'react';
 
+function verifyProgress(id, setState) {
+  const chaves = Object.keys(localStorage);
+  const cocktails = chaves.includes('inProgressRecipes')
+    ? Object.keys(JSON.parse(localStorage.inProgressRecipes).meals)
+    : false;
+  if (cocktails && cocktails.includes(id)) {
+    setState(true);
+  }
+}
+
+function verifyLocalStorage(param, id) {
+  const doneRecipes = localStorage.getItem('doneRecipes');
+  if (doneRecipes) {
+    const recipe = doneRecipes.find((rec) => rec.id === id);
+    if (recipe) {
+      param(true);
+    }
+  }
+}
+
 export default function RenderFood(id) {
   const [recipe, setRecipe] = useState([]);
   const [loading, setLoading] = useState(true);
   const [recomendations, setRecomendations] = useState([]);
   const [disabled, setDisabled] = useState(true);
   const [done, setDone] = useState(false);
+  const [progress, setProgress] = useState(false);
 
   const initial = 6;
   const maxArr = 19;
-
-  function verifyLocalStorage(param) {
-    const doneRecipes = localStorage.getItem('doneRecipes');
-    if (doneRecipes) {
-      const recipeFind = doneRecipes.find((rec) => rec.id === id);
-      if (recipeFind) {
-        param(true);
-      }
-    }
-  }
 
   useEffect(() => {
     async function getData() {
@@ -31,9 +42,10 @@ export default function RenderFood(id) {
 
       setRecomendations(recomendationsData.drinks);
       setLoading(false);
-      verifyLocalStorage(setDone);
     }
+    verifyLocalStorage(setDone, id);
     getData();
+    verifyProgress(id, setProgress);
   }, []);
 
   if (loading) {
@@ -134,7 +146,11 @@ export default function RenderFood(id) {
         className="startRecipe"
         disabled={ done }
       >
-        Iniciar
+        {
+          progress
+            ? 'Continuar Receita'
+            : 'Iniciar'
+        }
       </button>
     </div>
   );
