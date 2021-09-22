@@ -9,7 +9,6 @@ function Provider({ children }) {
   const [currentPage, setCurrentPage] = useState('');
   const [login, setLogin] = useState('');
 
-
   const contextValue = {
     statusLoginBtn,
     setStatusLoginBtn,
