@@ -50,7 +50,7 @@ function FavoritesRecipes() {
     type: 'drink',
     category: 'Seafood',
     area: 'British',
-    name: 'cerveja',
+    name: 'Cerveja',
     alcoholicOrNot: 'Alcoholic',
     image: 'https://cdn.awsli.com.br/800x800/874/874479/produto/40947743/3746fbc716.jpg',
   }];
