@@ -48,7 +48,6 @@ export default function Profile({ history }) {
         </button>
       </div>
 
-      {/* terminar o onClick dessa */}
       <div>
         <button
           type="button"
