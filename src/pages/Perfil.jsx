@@ -15,6 +15,11 @@ export default function Perfil() {
     history.push(redirect);
   }
 
+  function getLoginPage() {
+    const redirect = '/';
+    return localStorage.clear() || history.push(redirect);
+  }
+
   function getStorage() {
     const { email } = JSON.parse(localStorage.getItem('user'));
     return email;
@@ -36,6 +41,7 @@ export default function Perfil() {
       <Button
         text="Sair"
         dataTest="profile-logout-btn"
+        onClick={ getLoginPage }
       />
     </div>
   );
