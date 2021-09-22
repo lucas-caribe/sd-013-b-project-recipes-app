@@ -1,5 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import FoodsExploreIngredients from './pages/FoodsExploreIngredients';
+import DrinksExploreIngredients from './pages/DrinksExploreIngredients';
+import FoodsExploreArea from './pages/FoodsExploreArea';
 import Login from './pages/Login';
 import Meals from './pages/Meals';
 import Drinks from './pages/Drinks';
@@ -21,6 +25,18 @@ function Routes() {
         <Route exact path="/bebidas/:id" component={ Details } />
         <Route exact path="/explorar/comidas" component={ ExploreRecipes } />
         <Route exact path="/explorar/bebidas" component={ ExploreRecipes } />
+        <Route
+          path="/explorar/comidas/ingredientes"
+          component={ FoodsExploreIngredients }
+        />
+        <Route
+          path="/explorar/bebidas/ingredientes"
+          component={ DrinksExploreIngredients }
+        />
+        <Route
+          path="/explorar/comidas/area"
+          component={ FoodsExploreArea }
+        />
       </Switch>
     </Router>
   );
