@@ -20,7 +20,10 @@ function FilterButtons({ page }) {
       .slice(0, MAX_CATEGORIES);
     return (
       pageCategories.map((category, index) => (
-        <Button key={ index } data-testid={ `${category}-category-filter` }>
+        <Button
+          key={ index }
+          data-testid={ `${category}-category-filter` }
+        >
           {category}
         </Button>
       ))
