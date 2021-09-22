@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-const AuthContext = createContext({
+export const AuthContext = createContext({
   user: '', // E-mail do usuário conectado,
   tokens: {
     mealsToken: '', // Token de acesso a API de comidas

@@ -8,13 +8,13 @@ import { DetailsProvider } from './DetailsContext';
 
 const Provider = ({ children }) => (
   <AuthProvider>
-    <SearchBarProvider>
-      <RecipesProvider>
+    <RecipesProvider>
+      <SearchBarProvider>
         <DetailsProvider>
           { children }
         </DetailsProvider>
-      </RecipesProvider>
-    </SearchBarProvider>
+      </SearchBarProvider>
+    </RecipesProvider>
   </AuthProvider>
 );
 
