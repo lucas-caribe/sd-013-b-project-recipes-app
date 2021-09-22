@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => (
 );
 
 AuthProvider.propTypes = {
-  children: PropTypes.arrayOf(Proptypes.elements).isRequired,
+  children: PropTypes.arrayOf(PropTypes.elements).isRequired,
 };
 
 export const useAuth = () => useContext(AuthContext);
