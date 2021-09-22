@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 class Button extends Component {
   render() {
-    const { dataTest, btnText } = this.props;
+    const { dataTest, btnText, btnFunction } = this.props;
     return (
-      <button data-testId={ dataTest } type="button">
+      <button onClick={ btnFunction } data-testId={ dataTest } type="button">
         { btnText }
       </button>
     );
@@ -15,6 +15,11 @@ class Button extends Component {
 Button.propTypes = {
   btnText: PropTypes.string.isRequired,
   dataTest: PropTypes.string.isRequired,
+  btnFunction: PropTypes.func,
+};
+
+Button.defaultProps = {
+  btnFunction: undefined,
 };
 
 export default Button;
