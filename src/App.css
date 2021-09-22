@@ -82,12 +82,12 @@ header {
 }
 
 footer {
-  position: fixed;
-  display: flex;
-  justify-content:space-between;
-  left: 0;
-  bottom: 0;
-  width: 100%;
   background-color: rgb(248, 141, 0);
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  left: 0;
+  position: fixed;
   text-align: center;
+  width: 100%;
 }
