@@ -6,7 +6,7 @@ function RecipesProvider({ children }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [searchBar, setsearchBar] = useState(false);
-  const [api, setApi] = useState([]);
+  const [api, setApi] = useState({ meals: [], drinks: [] });
 
   const contextValue = { email,
     setEmail,

@@ -10,6 +10,8 @@ export default function InputSearchMeals() {
   const apiMealsUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?';
   const { api, setApi } = useContext(RecipesContext);
   console.log(api);
+  const TWELVE = 12;
+  let mealsList = api.meals;
 
   const handleClick = () => {
     const apiIngredienteRequest = async () => {
@@ -49,9 +51,11 @@ export default function InputSearchMeals() {
     }
   };
 
-  if (api.meals) {
-    return <Redirect to={ `/comidas/${api.meals[0].idMeal}` } />;
+  if (mealsList.length === 1) {
+    return <Redirect to={ `/comidas/${mealsList[0].idMeal}` } />;
   }
+
+  if (mealsList.length > TWELVE) mealsList = mealsList.splice(0, TWELVE);
 
   return (
     <>
@@ -99,6 +103,15 @@ export default function InputSearchMeals() {
       >
         Buscar
       </button>
+      { api.meals.map((meal, index) => (
+        <div data-testid={ `${index}-recipe-card` } key={ index }>
+          <img
+            data-testid={ `${index}-card-img` }
+            src={ meal.strMealThumb }
+            alt="Meal card"
+          />
+          <p data-testid={ `${index}-card-name` }>{ meal.strMeal }</p>
+        </div>))}
     </>
   );
 }

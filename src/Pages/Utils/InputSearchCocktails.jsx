@@ -9,6 +9,8 @@ export default function InputSearchCocktails() {
   const apiIngredienteUrl = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?';
   const apiCocktails = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?';
   const { api, setApi } = useContext(RecipesContext);
+  let drinksList = api.drinks;
+  const TWELVE = 12;
 
   const handleClick = () => {
     const apiIngredienteRequest = async () => {
@@ -48,9 +50,11 @@ export default function InputSearchCocktails() {
     }
   };
 
-  if (api.drinks) {
-    return <Redirect to={ `/bebidas/${api.drinks[0].idDrink}` } />;
+  if (drinksList.length === 1) {
+    return <Redirect to={ `/bebidas/${drinksList[0].idDrink}` } />;
   }
+
+  if (drinksList.length > TWELVE) drinksList = drinksList.splice(0, TWELVE);
 
   return (
     <>
@@ -98,6 +102,15 @@ export default function InputSearchCocktails() {
       >
         Buscar
       </button>
+      { drinksList.map((drink, index) => (
+        <div data-testid={ `${index}-recipe-card` } key={ index }>
+          <img
+            data-testid={ `${index}-card-img` }
+            src={ drink.strDrinkThumb }
+            alt="Meal card"
+          />
+          <p data-testid={ `${index}-card-name` }>{ drink.strDrink }</p>
+        </div>))}
     </>
   );
 }
