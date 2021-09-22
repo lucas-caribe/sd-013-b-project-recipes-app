@@ -1,23 +1,52 @@
-import React from 'react';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import profileIcon from '../images/profileIcon.svg';
+import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
-function Header(route) {
+export default function Header({ title }) {
+  const [renderSB, setRenderSB] = useState(false);
+
+  function handleClick() {
+    setRenderSB(!renderSB);
+  }
+
   return (
-    <header>
-      <button
-        type="button"
-        data-testids="profile-top-btn"
-      >
-        <img src="../images/profileIcon.svg" alt="profile-icon" />
-      </button>
-      <h2 data-testids="page-title">{route}</h2>
-      <button
-        type="button"
-        data-testids="search-top-btn"
-      >
-        <img src="../images/searchIcon.svg" alt="search-icon" />
-      </button>
-    </header>
+    <div>
+      <header>
+        <Link
+          to="/perfil"
+          type="submit"
+        >
+          <img
+            src={ profileIcon }
+            alt="profile-icon"
+            data-testid="profile-top-btn"
+          />
+        </Link>
+        <h1
+          data-testid="page-title"
+        >
+          { title }
+        </h1>
+        <button
+          type="submit"
+          data-testid="search-top-btn"
+          src={ searchIcon }
+          onClick={ handleClick }
+        >
+          <img
+            src={ searchIcon }
+            alt="search-icon"
+          />
+        </button>
+      </header>
+      { renderSB ? <SearchBar /> : null }
+    </div>
   );
 }
 
-export default Header;
+Header.propTypes = {
+  title: PropTypes.string,
+}.isRequired;
