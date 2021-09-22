@@ -4,3 +4,8 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+.mainfood {
+  background-color: rgb(247, 208, 136);
+  height: 640px;
+}
