@@ -6,17 +6,18 @@ export default function RenderDrink(id) {
   const [loading, setLoading] = useState(true);
   const [recomendations, setRecomendations] = useState([]);
   const [disabled, setDisabled] = useState(true);
+  const initial = 6;
+  const maxArr = 19;
 
   useEffect(() => {
     async function getData() {
       const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
       const data = await response.json();
       setDrink(data.drinks[0]);
+
       const recomendationsFetch = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
       const recomendationsData = await recomendationsFetch.json();
-      const initial = 6;
-      const max = 19;
-      recomendationsData.meals.splice(initial, max);
+      recomendationsData.meals.splice(initial, maxArr);
       setRecomendations(recomendationsData.meals);
       if (drink && recomendations) {
         setLoading(false);
@@ -111,6 +112,7 @@ export default function RenderDrink(id) {
       <button
         type="button"
         data-testid="start-recipe-btn"
+        className="startRecipe"
       >
         Iniciar
       </button>

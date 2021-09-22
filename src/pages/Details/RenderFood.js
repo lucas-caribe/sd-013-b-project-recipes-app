@@ -119,6 +119,7 @@ export default function RenderFood(id) {
       <button
         type="button"
         data-testid="start-recipe-btn"
+        className="startRecipe"
       >
         Iniciar
       </button>
