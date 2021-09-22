@@ -36,7 +36,7 @@ function Meals() {
   return (
     <div className="meals-page">
       <Header />
-        <h2>Loading...</h2>
+      <h2>Loading...</h2>
       <Footer />
     </div>
   );
