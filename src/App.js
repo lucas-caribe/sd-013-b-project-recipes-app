@@ -10,7 +10,7 @@ import {
   Explorar,
   Perfil,
   Feitas,
-  Favoritas } from './Pages/index';
+  Favoritas } from './pages/index';
 
 function App() {
   return (
