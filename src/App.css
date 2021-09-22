@@ -1,5 +1,14 @@
+/* * {
+  margin: 0;
+  padding: 0;
+} */
+
 .footer {
   background-color: gainsboro;
+  bottom: 0;
   display: flex;
   justify-content: space-between;
+  left: 0;
+  position: fixed;
+  width: 100%;
 }
