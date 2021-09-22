@@ -11,21 +11,24 @@ function Perfil() {
       <button
         type="button"
         data-testid="profile-done-btn"
-        onClick={ () => history.pushState('/') }
+        onClick={ () => history.push('/receitas-feitas') }
       >
         Receitas Feitas
       </button>
       <button
         type="button"
         data-testid="profile-favorite-btn"
-        onClick={ () => history.pushState('/') }
+        onClick={ () => history.push('/receitas-favoritas') }
       >
         Receitas Favoritas
       </button>
       <button
         type="button"
         data-testid="profile-logout-btn"
-        onClick={ () => history.pushState('/') }
+        onClick={ () => {
+          localStorage.clear();
+          history.push('/');
+        } }
       >
         Sair
       </button>
