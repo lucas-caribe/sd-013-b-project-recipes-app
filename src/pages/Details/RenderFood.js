@@ -5,6 +5,20 @@ export default function RenderFood(id) {
   const [loading, setLoading] = useState(true);
   const [recomendations, setRecomendations] = useState([]);
   const [disabled, setDisabled] = useState(true);
+  const [done, setDone] = useState(false);
+
+  const initial = 6;
+  const maxArr = 19;
+
+  function verifyLocalStorage(param) {
+    const doneRecipes = localStorage.getItem('doneRecipes');
+    if (doneRecipes) {
+      const recipeFind = doneRecipes.find((rec) => rec.id === id);
+      if (recipeFind) {
+        param(true);
+      }
+    }
+  }
 
   useEffect(() => {
     async function getData() {
@@ -13,13 +27,11 @@ export default function RenderFood(id) {
       setRecipe(data.meals[0]);
       const recomendationsFetch = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
       const recomendationsData = await recomendationsFetch.json();
-
-      const initial = 6;
-      const max = 19;
-      recomendationsData.drinks.splice(initial, max);
+      recomendationsData.drinks.splice(initial, maxArr);
 
       setRecomendations(recomendationsData.drinks);
       setLoading(false);
+      verifyLocalStorage(setDone);
     }
     getData();
   }, []);
@@ -120,6 +132,7 @@ export default function RenderFood(id) {
         type="button"
         data-testid="start-recipe-btn"
         className="startRecipe"
+        disabled={ done }
       >
         Iniciar
       </button>

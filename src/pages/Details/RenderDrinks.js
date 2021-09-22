@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import './style.css';
 
+function verifyLocalStorage(param, id) {
+  const doneRecipes = localStorage.getItem('doneRecipes');
+  if (doneRecipes) {
+    const recipe = doneRecipes.find((rec) => rec.id === id);
+    if (recipe) {
+      param(true);
+    }
+  }
+}
+
 export default function RenderDrink(id) {
   const [drink, setDrink] = useState([]);
   const [loading, setLoading] = useState(true);
   const [recomendations, setRecomendations] = useState([]);
   const [disabled, setDisabled] = useState(true);
+  const [done, setDone] = useState(false);
   const initial = 6;
   const maxArr = 19;
 
@@ -24,6 +35,7 @@ export default function RenderDrink(id) {
       }
     }
     getData();
+    verifyLocalStorage(setDone, id);
   }, []);
 
   if (loading) {
@@ -113,6 +125,7 @@ export default function RenderDrink(id) {
         type="button"
         data-testid="start-recipe-btn"
         className="startRecipe"
+        disabled={ done }
       >
         Iniciar
       </button>
