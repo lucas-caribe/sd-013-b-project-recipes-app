@@ -7,9 +7,9 @@ const INITIAL_STATE = {
 export default function searchReducer(state = INITIAL_STATE, { type, payload }) {
   switch (type) {
   case SET_MEAL:
-    return ({ results: payload });
+    return ({ ...state, results: payload });
   case SET_COCKTAIL:
-    return ({ results: payload });
+    return ({ ...state, results: payload });
   default:
     return state;
   }

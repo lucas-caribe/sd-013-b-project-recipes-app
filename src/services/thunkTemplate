@@ -1,0 +1,56 @@
+ // const Error = 'Sinto muito, não encontramos nenhuma receita para esses filtros.';
+  // if (recipe === 'meal') {
+  //   if (value === 'ingredient') {
+  //     fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${type}`)
+  //       .then((response) => response.json())
+  //       .then((response) => dispatch(setMeal(response)))
+  //       .catch(() => global.alert(Error));
+  //   }
+  //   if (value === 'name') {
+  //     fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${type}`)
+  //       .then((response) => response.json())
+  //       .then((response) => {
+  //         if (!response.meals) {
+  //           return global.alert(Error);
+  //         }
+  //         dispatch(setMeal(response));
+  //       });
+  //   }
+  //   if (value === 'first-letter') {
+  //     if (type.length > 1) {
+  //       return global.alert('Sua busca deve conter somente 1 (um) caracter');
+  //     }
+  //     fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${type}`)
+  //       .then((response) => response.json())
+  //       .then((response) => dispatch(setMeal(response)))
+  //       .catch(() => global.alert(Error));
+  //   }
+  // }
+  // if (recipe === 'cocktail') {
+  //   if (value === 'ingredient') {
+  //     fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${type}`)
+  //       .then((response) => response.json())
+  //       .then((response) => dispatch(setCocktail(response)))
+  //       .catch(() => global.alert(Error));
+  //   }
+  //   if (value === 'name') {
+  //     fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${type}`)
+  //       .then((response) => response.json())
+  //       .then((response) => {
+  //         if (!response.drinks) {
+  //           return global.alert(Error);
+  //         }
+  //         dispatch(setCocktail(response));
+  //       });
+  //   }
+  //   if (value === 'first-letter') {
+  //     if (type.length > 1) {
+  //       return global.alert('Sua busca deve conter somente 1 (um) caracter');
+  //     }
+  //     fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${type}`)
+  //       .then((response) => response.json())
+  //       .then((response) => dispatch(setCocktail(response)))
+  //       .catch(() => global.alert(Error));
+  //   }
+  // }
+  

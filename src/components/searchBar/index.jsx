@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchSearchThunk } from '../redux/action';
+import { fetchSearchThunk } from '../../redux/action';
 
 export default function SearchBar(recipe) {
   const dispatch = useDispatch();
@@ -31,7 +31,10 @@ export default function SearchBar(recipe) {
 
   return (
     <div>
-      <input onChange={ handleInput } />
+      <input
+        data-testid="search-input"
+        onChange={ handleInput }
+      />
       <form onChange={ handleChange }>
         <label htmlFor="ingredient">
           Ingredient

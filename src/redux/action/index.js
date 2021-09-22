@@ -1,3 +1,14 @@
+import {
+  fetchMealByFirstLetter,
+  fetchMealByIngredient,
+  fetchMealByName,
+} from '../../services/fetchMeals';
+import {
+  fetchCocktailByFirstLetter,
+  fetchCocktailByIngredient,
+  fetchCocktailByName,
+} from '../../services/fetchCocktails';
+
 // Type
 
 export const SET_USER = 'SET_USER';
@@ -20,52 +31,47 @@ export const setCocktail = (payload) => ({
 
 // // Thunk
 
-export const fetchSearchThunk = ({ value, type, recipe }) => (dispatch) => {
-  const Error = 'Sinto muito, não encontramos nenhuma receita para esses filtros.';
+export const fetchSearchThunk = ({ value, type, recipe }) => async (dispatch) => {
   if (recipe === 'meal') {
-    if (value === 'ingredient') {
-      fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${type}`)
-        .then((response) => response.json())
-        .then((response) => dispatch(setMeal(response)))
-        .catch(() => global.alert(Error));
+    switch (value) {
+    case 'ingredient': {
+      const response = await fetchMealByIngredient(type);
+      dispatch(setMeal(response));
+      break;
     }
-    if (value === 'name') {
-      fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?s=${type}`)
-        .then((response) => response.json())
-        .then((response) => dispatch(setMeal(response)))
-        .catch(() => global.alert(Error));
+    case 'name': {
+      const response = await fetchMealByName(type);
+      dispatch(setMeal(response));
+      break;
     }
-    if (value === 'first-letter') {
-      if (type.length > 1) {
-        return global.alert('Sua busca deve conter somente 1 (um) caracter');
-      }
-      fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?f=${type}`)
-        .then((response) => response.json())
-        .then((response) => dispatch(setMeal(response)))
-        .catch(() => global.alert(Error));
+    case 'first-letter': {
+      const response = await fetchMealByFirstLetter(type);
+      dispatch(setMeal(response));
+      break;
+    }
+    default:
+      break;
     }
   }
   if (recipe === 'cocktail') {
-    if (value === 'ingredient') {
-      fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${type}`)
-        .then((response) => response.json())
-        .then((response) => dispatch(setCocktail(response)))
-        .catch(() => global.alert(Error));
+    switch (value) {
+    case 'ingredient': {
+      const response = await fetchCocktailByIngredient(type);
+      dispatch(setCocktail(response));
+      break;
     }
-    if (value === 'name') {
-      fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?s=${type}`)
-        .then((response) => response.json())
-        .then((response) => dispatch(setCocktail(response)))
-        .catch(() => global.alert(Error));
+    case 'name': {
+      const response = await fetchCocktailByName(type);
+      dispatch(setCocktail(response));
+      break;
     }
-    if (value === 'first-letter') {
-      if (type.length > 1) {
-        return global.alert('Sua busca deve conter somente 1 (um) caracter');
-      }
-      fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?f=${type}`)
-        .then((response) => response.json())
-        .then((response) => dispatch(setCocktail(response)))
-        .catch(() => global.alert(Error));
+    case 'first-letter': {
+      const response = await fetchCocktailByFirstLetter(type);
+      dispatch(setCocktail(response));
+      break;
+    }
+    default:
+      break;
     }
   }
 };
