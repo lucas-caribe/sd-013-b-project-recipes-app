@@ -48,5 +48,5 @@ export default Header;
 
 Header.propTypes = {
   pageTitle: PropTypes.string,
-  haveHeader: PropTyp.oneOfType([PropTypes.string, PropTypes.bool]),
+  haveHeader: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 }.isRequired;
