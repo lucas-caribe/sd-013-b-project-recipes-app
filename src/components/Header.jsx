@@ -1,23 +1,37 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-// import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { useHistory } from 'react-router';
+import { setSearchbar as setSearchbarAction } from '../Redux/actions/index';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
-function Header({ setTitle }) {
+function Header({ setTitle, setSearchbar, search }) {
+  function openSearchBar() {
+    setSearchbar(!search);
+    console.log(search);
+  }
+
+  const history = useHistory();
+
   return (
     <header>
       <nav>
-        {/* <Link to="/perfil" data-testid="profile-top-btn">
-          <img src={ profileIcon } alt="perfil" />
-        </Link> */}
-        <input type="image" data-testid="profile-top-btn" src={ profileIcon } alt="perfil" />
+        <input
+          type="image"
+          data-testid="profile-top-btn"
+          src={ profileIcon }
+          alt="perfil"
+          onClick={ () => history.push('/perfil') }
+        />
         <h1 data-testid="page-title">{ setTitle }</h1>
-
-        <input type="image" data-testid="search-top-btn" src={ searchIcon } alt="pesquisar" />
-        {/* <button type="button" data-testid="search-top-btn">
-          <img src={ searchIcon } alt="pesquisar" />
-        </button> */}
+        <input
+          type="image"
+          data-testid="search-top-btn"
+          src={ searchIcon }
+          alt="pesquisar"
+          onClick={ openSearchBar }
+        />
       </nav>
     </header>
   );
@@ -25,6 +39,16 @@ function Header({ setTitle }) {
 
 Header.propTypes = {
   setTitle: PropTypes.string.isRequired,
+  setSearchbar: PropTypes.func.isRequired,
+  search: PropTypes.bool.isRequired,
 };
 
-export default Header;
+const mapStateToProps = (state) => ({
+  search: state.search,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setSearchbar: (payload) => dispatch(setSearchbarAction(payload)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
