@@ -6,6 +6,7 @@ function ReceitasFeitas() {
     <div>
       <Header pageTitle="Receitas Feitas" haveHeader={ false } />
       <div>Receitas Feitas</div>
+
     </div>
   );
 }
