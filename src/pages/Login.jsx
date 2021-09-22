@@ -33,6 +33,7 @@ export default function Login({ history }) {
         name="email"
         onChange={ handleChange }
         value={ email }
+        placeholder="e-mail"
       />
       <input
         required
@@ -40,6 +41,7 @@ export default function Login({ history }) {
         type="password"
         name="password"
         onChange={ handleChange }
+        placeholder="senha"
       />
       <button
         data-testid="login-submit-btn"
