@@ -1,34 +1,34 @@
 import React, { useState } from 'react';
 
-export default function InputSearch() {
+export default function InputSearchCocktails() {
   const [search, setSearch] = useState('');
   const [api, setApi] = useState([]);
   console.log(api);
-  const [mealInput, setMealInput] = useState('');
+  const [cocktailInput, setCocktailInput] = useState('');
   const PRIMEIRA_LETRA = 'Primeira letra';
-  const apiIngredienteUrl = 'https://www.themealdb.com/api/json/v1/1/filter.php?';
-  const apiMealsUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?';
+  const apiIngredienteUrl = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?';
+  const apiCocktails = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?';
 
   const handleClick = () => {
     const apiIngredienteRequest = async () => {
-      const response = await fetch(`${apiIngredienteUrl}i=${mealInput}`)
+      const response = await fetch(`${apiIngredienteUrl}i=${cocktailInput}`)
         .then((resp) => resp.json());
       setApi(response);
     };
 
     const apiNomeRequest = async () => {
-      const response = await fetch(`${apiMealsUrl}s=${mealInput}`)
+      const response = await fetch(`${apiCocktails}s=${cocktailInput}`)
         .then((resp) => resp.json());
       setApi(response);
     };
 
     const apiLetraRequest = async () => {
-      const response = await fetch(`${apiMealsUrl}f=${mealInput}`)
+      const response = await fetch(`${apiCocktails}f=${cocktailInput}`)
         .then((resp) => resp.json());
       setApi(response);
     };
 
-    if (search === PRIMEIRA_LETRA && mealInput.length !== 1) {
+    if (search === PRIMEIRA_LETRA && cocktailInput.length !== 1) {
       global.alert('Sua busca deve conter somente 1 (um) caracter');
     }
 
@@ -54,7 +54,7 @@ export default function InputSearch() {
         name="search"
         id="search"
         data-testid="search-input"
-        onChange={ (ev) => setMealInput(ev.target.value) }
+        onChange={ (ev) => setCocktailInput(ev.target.value) }
       />
       <label htmlFor="Ingrediente">
         <input
