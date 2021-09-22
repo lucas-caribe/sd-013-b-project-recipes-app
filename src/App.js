@@ -5,13 +5,48 @@ import { Route, Switch } from 'react-router';
 import Login from './pages/Login';
 import Home from './pages/Home';
 
+import { Switch, Route } from 'react-router-dom';
+import Footer from './components/Footer';
+import Login from './pages/Login';
+import Explorer from './pages/Explorer';
+import ExplorerCountries from './pages/ExplorerCountries';
+import FavoritesRecipes from './pages/FavoritesRecipes';
+import RecipesMade from './pages/RecipesMade';
+import Perfil from './pages/Perfil';
+
 function App() {
   return (
-    <Switch>
-      <Route exact path="/" component={ Login } />
-      <Route path="/comidas" component={ Home } />
-    </Switch>
+
+    <div className="wrapper">
+      <Switch>
+        <Route exact path="/" component={ Login } />
+        <Route exact path="/comidas" component={ Home } />
+        <Route exact path="/bebidas" component={ Login } />
+        <Route exact path="/comidas/:id" component={ Login } />
+        <Route exact path="/bebidas/:id" component={ Login } />
+        <Route exact path="/comidas/:id/in-progress" component={ Login } />
+        <Route exact path="/bebidas/id/in-progress" component={ Login } />
+        <Route exact path="/explorar" component={ Explorer } />
+        <Route exact path="/explorar/comidas" component={ Login } />
+        <Route exact path="/explorar/bebidas" component={ Login } />
+        <Route exact path="/explorar/comidas/ingredientes" component={ Login } />
+        <Route exact path="/explorar/bebidas/ingredientes" component={ Login } />
+        <Route exact path="/explorar/comidas/area" component={ ExplorerCountries } />
+        <Route exact path="/perfil" component={ Perfil } />
+        <Route exact path="/receitas-feitas" component={ RecipesMade } />
+        <Route exact path="/receitas-favoritas" component={ FavoritesRecipes } />
+      </Switch>
+
+      <Footer />
+    </div>
   );
 }
 
 export default App;
+
+/*
+
+Obs:
+A medida que formos desenvolvendo, vamos alterando o que será renderizado em cada Rota
+
+*/
