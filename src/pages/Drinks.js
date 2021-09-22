@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import RecipeContext from '../context/RecipeContext';
 import Footer from '../components/Footer';
+import MainRecipePage from '../components/MainRecipePage';
 
 export default function Drinks() {
   const pageTitle = {
@@ -14,31 +15,16 @@ export default function Drinks() {
   const { recipesState, redirect } = useContext(RecipeContext);
   const getDrinksId = recipesState.map((drink) => drink.idDrink);
   const limits = 12;
+  const newRecipe = [];
+  if (recipesState.length > 0 && !redirect) {
+    newRecipe.push(...recipesState.slice(0, limits));
+  }
 
   return (
     <div>
       <Header value={ pageTitle } />
       { redirect ? history.push(`/bebidas/${getDrinksId}`) : (
-        <div>
-          {
-            recipesState.map((drink, index) => (
-              (index < limits) && (
-                <div key={ index }>
-                  <div data-testid={ `${index}-recipe-card` }>
-                    <img
-                      src={ drink.strDrinkThumb }
-                      data-testid={ `${index}-card-img` }
-                      alt={ drink.strDrink }
-                    />
-                  </div>
-                  <div>
-                    <span data-testid={ `${index}-card-name` }>{ drink.strDrink }</span>
-                  </div>
-                </div>
-              )
-            ))
-          }
-        </div>
+        <MainRecipePage type="drinks" recipesState={ newRecipe } />
       ) }
       <Footer />
     </div>
