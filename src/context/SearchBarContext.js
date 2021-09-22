@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import { AuthContext } from './AuthContext';
+// import { AuthContext } from './AuthContext';
 
 //   {
 //     isOpen: false, // Flag para indicar se a searchBar está visível ou não
