@@ -5,4 +5,11 @@ const actionLogin = (email) => ({
   },
 });
 
+export const actionInputHeader = (inpHeader) => ({
+  type: 'ACTION_INPUT_HEADER',
+  payload: {
+    inpHeader,
+  },
+});
+
 export default actionLogin;
