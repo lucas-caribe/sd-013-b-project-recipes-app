@@ -1,10 +1,24 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import '../styles/login.css';
+
+import { validateEmail, validatePassword } from '../utils/auth';
+
+const BORDER_DANGER = '2px solid rgba(255, 0, 0, 0.4)';
+
 function Login() {
   const [email, setEmail] = useState([]);
   const [password, setPassword] = useState([]);
   const history = useHistory();
+
+  const validPassword = validatePassword(password);
+  const validEmail = validateEmail(email);
+
+  const isValid = validEmail && validPassword;
+
+  let emailTouched = false;
+  let passwordTouched = false;
 
   function handleClick() {
     localStorage.setItem('mealsToken', 1);
@@ -13,24 +27,19 @@ function Login() {
     history.push('/comidas');
   }
 
-  function isValid() {
-    const passwordLength = 7;
-    const validPassword = password.length >= passwordLength;
-    const validEmail = (
-      /^[a-z0-9_]+@[a-z]+\.[a-z]{2,3}(?:\.[a-z]{2})?$/i
-    ).test(email);
-    return (validEmail && validPassword);
-  }
+  if (email.length > 1) emailTouched = true;
+  if (password.length > 1) passwordTouched = true;
 
   return (
-    <form>
-      <h1>Faça seu login No Trybe Receitas</h1>
+    <form id="login-form">
+      <h1>Login</h1>
       <input
         data-testid="email-input"
         placeholder="Email"
         value={ email }
         onChange={ (e) => setEmail(e.target.value) }
         name="email"
+        style={ { border: !validEmail && emailTouched ? BORDER_DANGER : '' } }
       />
       <input
         data-testid="password-input"
@@ -39,12 +48,13 @@ function Login() {
         onChange={ (e) => setPassword(e.target.value) }
         name="password"
         type="password"
+        style={ { border: !validPassword && passwordTouched ? BORDER_DANGER : '' } }
       />
       <button
         data-testid="login-submit-btn"
         onClick={ handleClick }
         type="button"
-        disabled={ !isValid() }
+        disabled={ !isValid }
       >
         Entrar
       </button>
