@@ -9,7 +9,7 @@ function Provider({ children }) {
   });
 
   const contextValue = {
-    setLogin,
+    login, setLogin,
   };
 
   return (
