@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import LoginForm from '../components/login';
 import validateEmail from '../helpers/validationEmail';
 
 export default function Login() {
@@ -46,10 +46,36 @@ export default function Login() {
   }
 
   return (
-    <LoginForm
-      handleSubmit={ handleSubmit }
-      handleChangeInput={ handleChangeInput }
-      ButtonDisabled={ ButtonDisabled }
-    />
+    <form onSubmit={ handleSubmit }>
+      <h1>Login</h1>
+      <label htmlFor="email">
+        Email:
+        <input
+          onChange={ handleChangeInput }
+          type="text"
+          name="Email"
+          id="email"
+          data-testid="email-input"
+        />
+      </label>
+      <label htmlFor="senha">
+        Senha:
+        <input
+          onChange={ handleChangeInput }
+          type="text"
+          name="Senha"
+          id="senha"
+          data-testid="password-input"
+        />
+      </label>
+      <Button
+        variant="primary"
+        data-testid="login-submit-btn"
+        disabled={ ButtonDisabled }
+        type="submit"
+      >
+        Entrar
+      </Button>
+    </form>
   );
 }
