@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { setSearchbar as setSearchbarAction } from '../Redux/actions/index';
 
 class Header extends React.Component {
   constructor(props) {
@@ -6,14 +9,23 @@ class Header extends React.Component {
     this.State = {
 
     };
+    this.openSearchBar = this.openSearchBar.bind(this);
+  }
+
+  openSearchBar() {
+    const { setSearchbar, search } = this.props;
+    setSearchbar(!search);
+    console.log(search);
   }
 
   render() {
-    this.openSearchBar = this.state;
-    console.log(this.openSearchBar);
     return (
       <div>
-        <button type="button" dat-testid="search-top-btn">
+        <button
+          type="submit"
+          data-testid="search-top-btn"
+          onClick={ this.openSearchBar }
+        >
           Pesquisar
         </button>
       </div>
@@ -21,4 +33,17 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+Header.propTypes = {
+  setSearchbar: PropTypes.func.isRequired,
+  search: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  search: state.search,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setSearchbar: (payload) => dispatch(setSearchbarAction(payload)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
