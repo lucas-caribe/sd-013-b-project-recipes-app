@@ -3,17 +3,13 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 function Header({ pageTitle, haveHeader }) {
   const [searchBarActive, setSearchBarActive] = useState(false);
 
-  const searchBar = (
-    <input data-testid="search-input" />
-  );
-
   const searchTopBtn = () => {
     if (!haveHeader) return;
-
     return (
       <button
         type="button"
@@ -30,16 +26,20 @@ function Header({ pageTitle, haveHeader }) {
 
   return (
     <div>
-      <Link to="/perfil">
-        <img
-          data-testid="profile-top-btn"
-          src={ profileIcon }
-          alt="botão para entrar na página de perfil"
-        />
-      </Link>
-      <h1 data-testid="page-title">{ pageTitle }</h1>
-      { searchTopBtn() }
-      { searchBarActive ? searchBar : null}
+      <div style={ { display: 'flex ' } }>
+        <Link to="/perfil">
+          <img
+            data-testid="profile-top-btn"
+            src={ profileIcon }
+            alt="botão para entrar na página de perfil"
+          />
+        </Link>
+        <h1 data-testid="page-title">{ pageTitle }</h1>
+        { searchTopBtn() }
+      </div>
+      <div style={ { display: 'block' } }>
+        { searchBarActive ? <SearchBar pageTitle={ pageTitle } /> : null}
+      </div>
     </div>
   );
 }
