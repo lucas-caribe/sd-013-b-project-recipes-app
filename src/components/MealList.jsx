@@ -26,7 +26,7 @@ export default function MealList() {
   }, [mealsList]);
 
   return (
-    <div>
+    <div className="card-list">
       { state.loading || handleMeals() }
     </div>
   );

@@ -33,7 +33,7 @@ export default function SearchBar(recipe) {
     <div>
       <input onChange={ handleInput } />
       <form onChange={ handleChange }>
-        <label htmlFor="search">
+        <label htmlFor="ingredient">
           Ingredient
           <input
             type="radio"
@@ -42,7 +42,7 @@ export default function SearchBar(recipe) {
             id="ingredient"
           />
         </label>
-        <label htmlFor="search">
+        <label htmlFor="name">
           Name
           <input
             type="radio"
@@ -51,7 +51,7 @@ export default function SearchBar(recipe) {
             id="name"
           />
         </label>
-        <label htmlFor="search">
+        <label htmlFor="first-letter">
           First Letter
           <input
             type="radio"

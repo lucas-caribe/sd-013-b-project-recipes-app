@@ -21,38 +21,51 @@ export const setCocktail = (payload) => ({
 // // Thunk
 
 export const fetchSearchThunk = ({ value, type, recipe }) => (dispatch) => {
+  const Error = 'Sinto muito, não encontramos nenhuma receita para esses filtros.';
   if (recipe === 'meal') {
     if (value === 'ingredient') {
       fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${type}`)
         .then((response) => response.json())
-        .then((response) => dispatch(setMeal(response)));
+        .then((response) => dispatch(setMeal(response)))
+        .catch(() => global.alert(Error));
     }
     if (value === 'name') {
       fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?s=${type}`)
         .then((response) => response.json())
-        .then((response) => dispatch(setMeal(response)));
+        .then((response) => dispatch(setMeal(response)))
+        .catch(() => global.alert(Error));
     }
-    if (value === 'frist-letter') {
+    if (value === 'first-letter') {
+      if (type.length > 1) {
+        return global.alert('Sua busca deve conter somente 1 (um) caracter');
+      }
       fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?f=${type}`)
         .then((response) => response.json())
-        .then((response) => dispatch(setMeal(response)));
+        .then((response) => dispatch(setMeal(response)))
+        .catch(() => global.alert(Error));
     }
   }
   if (recipe === 'cocktail') {
     if (value === 'ingredient') {
       fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${type}`)
         .then((response) => response.json())
-        .then((response) => dispatch(setCocktail(response)));
+        .then((response) => dispatch(setCocktail(response)))
+        .catch(() => global.alert(Error));
     }
     if (value === 'name') {
       fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?s=${type}`)
         .then((response) => response.json())
-        .then((response) => dispatch(setCocktail(response)));
+        .then((response) => dispatch(setCocktail(response)))
+        .catch(() => global.alert(Error));
     }
-    if (value === 'frist-letter') {
+    if (value === 'first-letter') {
+      if (type.length > 1) {
+        return global.alert('Sua busca deve conter somente 1 (um) caracter');
+      }
       fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?f=${type}`)
         .then((response) => response.json())
-        .then((response) => dispatch(setCocktail(response)));
+        .then((response) => dispatch(setCocktail(response)))
+        .catch(() => global.alert(Error));
     }
   }
 };

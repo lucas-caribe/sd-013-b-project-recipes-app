@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 
 export default function CocktailCard({ index, thumb, key, name }) {
   return (
-    <div data-testid={ `${index}-recipe-card` }>
+    <div
+      className="card-recipe"
+      data-testid={ `${index}-recipe-card` }
+    >
       <img
+        className="card-img"
         src={ `${thumb}` }
         alt={ name }
         data-testid={ `${index}-card-img` }
