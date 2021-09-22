@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-const SearchBarContext = createContext({
+export const SearchBarContext = createContext({
   isOpen: false, // Flag para indicar se a searchBar está visível ou não
   searchInfo: {
     term: '', // Valor do input de texto da searchBar
