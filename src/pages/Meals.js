@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
-import { fetchFullMealsList } from '../services/api';
-// Chamar uma funçao que srá chamada dentro do map, recebendo nome e imagem e retornando o card
+import Footer from '../components/Footer';
 import Card from '../components/Card';
+
+import { fetchFullMealsList } from '../services/api';
 
 function Meals() {
   const [mealList, setMealList] = useState([]);
@@ -28,6 +29,7 @@ function Meals() {
         <Header />
         {console.log(mealList)}
         { mapMeals(mealList) }
+        <Footer />
       </div>
     );
   }
@@ -35,6 +37,7 @@ function Meals() {
     <div className="meals-page">
       <Header />
       <h2>Loading...</h2>
+      <Footer />
     </div>
   );
 }
