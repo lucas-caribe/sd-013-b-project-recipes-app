@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import dataDrinks from './data';
 
 export default function RenderDrink(id) {
   const [drink, setDrink] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [recomendations, setRecomendations] = useState([]);
 
   useEffect(() => {
     async function getData() {
       const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
       const data = await response.json();
       setDrink(data.drinks[0]);
-      setLoading(false);
+      const recomendationsFetch = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      const recomendationsData = await recomendationsFetch.json();
+      setRecomendations(recomendationsData.meals);
+      if (drink && recomendations) {
+        setLoading(false);
+      }
     }
     getData();
   }, []);
@@ -79,13 +84,13 @@ export default function RenderDrink(id) {
         { drink.strInstructions }
       </p>
       {
-        dataDrinks.map(
+        recomendations.map(
           (drinkk, index) => (
             <h1
               key={ index }
               data-testid={ `${index}-recomendation-card` }
             >
-              { drinkk.strDrink }
+              { drinkk.strMeal }
             </h1>
           ),
         )

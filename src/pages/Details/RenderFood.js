@@ -1,16 +1,19 @@
-import React, { useEffect, useState, useContext } from 'react';
-import recipesContext from '../../context/recipesContext';
+import React, { useEffect, useState } from 'react';
 
 export default function RenderFood(id) {
-  const { recipes } = useContext(recipesContext);
   const [recipe, setRecipe] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [recomendations, setRecomendations] = useState([]);
 
   useEffect(() => {
     async function getData() {
       const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
       const data = await response.json();
       setRecipe(data.meals[0]);
+      const recomendationsFetch = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+
+      const recomendationsData = await recomendationsFetch.json();
+      setRecomendations(recomendationsData.drinks);
       setLoading(false);
     }
     getData();
@@ -89,13 +92,13 @@ export default function RenderFood(id) {
         data-testid="video"
       />
       {
-        recipes.map(
+        recomendations.map(
           (receita, index) => (
             <h1
               key={ index }
               data-testid={ `${index}-recomendation-card` }
             >
-              { receita.strMeal }
+              { receita.strDrink }
             </h1>
           ),
         )
