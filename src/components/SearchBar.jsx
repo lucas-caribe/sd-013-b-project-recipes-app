@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { fetchSearchThunk } from '../redux/action';
 
-function SearchBar() {
+export default function SearchBar(recipe) {
   const dispatch = useDispatch();
   const [state, setState] = useState({
     type: '',
     value: '',
+    recipe: recipe.recipe,
   });
 
   function handleChange(event) {
@@ -70,4 +72,6 @@ function SearchBar() {
   );
 }
 
-export default SearchBar;
+SearchBar.protoType = {
+  recipe: PropTypes.string.isRequired,
+};
