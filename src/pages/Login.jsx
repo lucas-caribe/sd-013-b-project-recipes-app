@@ -1,6 +1,9 @@
 // Tela de Login: requisitos 2 a 8;
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { cocktailsTokenAction, mealsTokenAction, userAction } from '../Redux/actions';
 
 const INITIAL_STATE = {
   email: '',
@@ -9,7 +12,8 @@ const INITIAL_STATE = {
 
 let buttonStats = true;
 
-function Login() {
+function Login(props) {
+  const { setEmail, setMealsToken, setCocktailsToken } = props;
   const [state, setState] = useState(INITIAL_STATE);
   const { password, email } = state;
   const history = useHistory();
@@ -30,6 +34,9 @@ function Login() {
   }
 
   function handleClick() {
+    setEmail(email);
+    setMealsToken(1);
+    setCocktailsToken(1);
     localStorage.mealsToken = 1;
     localStorage.cocktailsToken = 1;
     localStorage.user = JSON.stringify({ email });
@@ -64,4 +71,16 @@ function Login() {
   );
 }
 
-export default Login;
+Login.propTypes = {
+  setEmail: PropTypes.func,
+  setMealsToken: PropTypes.func,
+  setCocktailsToken: PropTypes.func,
+}.isRequired;
+
+const mapDispatchToProps = (dispatch) => ({
+  setEmail: (email) => dispatch(userAction(email)),
+  setMealsToken: (mealsToken) => dispatch(mealsTokenAction(mealsToken)),
+  setCocktailsToken: (cocktailsToken) => dispatch(cocktailsTokenAction(cocktailsToken)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
