@@ -1,25 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 function Header({ value }) {
   const { pageName, setIcon } = value;
   const history = useHistory();
-  const [showInput, setShowInput] = useState(false);
+  const [showSearchBar, setShowSearchBar] = useState(false);
+
+  useEffect(() => () => {
+    setShowSearchBar(false);
+  }, [setShowSearchBar]);
 
   function isVerified() {
-    if (showInput === false) {
-      return setShowInput(true);
+    if (showSearchBar === false) {
+      return setShowSearchBar(true);
     }
-    return setShowInput(false);
+    return setShowSearchBar(false);
   }
 
   function hiddenInput() {
-    if (showInput) {
+    if (showSearchBar) {
       return (
-        <input type="text" data-testid="search-input" />
+        <SearchBar />
       );
     }
   }
@@ -48,8 +53,8 @@ function Header({ value }) {
       >
         <img
           data-testid="profile-top-btn"
-          src={ profileIcon }
           alt="User"
+          src={ profileIcon }
         />
       </button>
       <h1 data-testid="page-title">{ pageName }</h1>
@@ -59,7 +64,10 @@ function Header({ value }) {
 }
 
 Header.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.shape({
+    pageName: PropTypes.string,
+    setIcon: PropTypes.bool,
+  }).isRequired,
 };
 
 export default Header;

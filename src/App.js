@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
-import RecipesProvider from './context/RecipeProvider';
+import RecipeProvider from './context/RecipeProvider';
 import Food from './pages/Foods';
 import Drinks from './pages/Drinks';
 import DrinksExplorer from './pages/DrinksExplorer';
@@ -11,13 +11,15 @@ import ExploreByIngredients from './pages/ExploreByIngredients';
 import CompletedRecipes from './pages/CompletedRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import Profile from './pages/Profile';
+import MealsDetails from './pages/MealsDetails';
+import DrinksDetails from './pages/DrinksDetails';
 import Login from './pages/Login';
 
 import './App.css';
 
 function App() {
   return (
-    <RecipesProvider>
+    <RecipeProvider>
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={ Login } />
@@ -39,10 +41,12 @@ function App() {
             path="/explorar/bebidas/ingredientes"
             component={ ExploreByIngredients }
           />
+          <Route exact path="/comidas/:id" component={ MealsDetails } />
+          <Route exact path="/bebidas/:id" component={ DrinksDetails } />
           <Route exact path="/perfil" component={ Profile } />
         </Switch>
       </BrowserRouter>
-    </RecipesProvider>
+    </RecipeProvider>
   );
 }
 
