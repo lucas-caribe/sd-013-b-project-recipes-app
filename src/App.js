@@ -6,7 +6,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 // Início
 import RecipesProvider from './Context/RecipesProvider';
 import DrinksPage from './Pages/DrinksPage';
-import MainFoodPage from './Pages/HeaderWithSearch';
+import MainFoodPage from './Pages/MainFoodPage';
 import ProfilePage from './Pages/ProfilePage';
 import Login from './Pages/Login';
 import ExplorePage from './Pages/ExplorePage';
