@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import Header from '../components/Header';
 import RecipesContext from '../context/RecipesContext';
 import RecipeCard from '../components/RecipeCard';
+import Footer from '../components/Footer';
 
 function Bebidas() {
   const { drinks } = useContext(RecipesContext);
@@ -23,6 +24,7 @@ function Bebidas() {
       <Header pageTitle="Bebidas" haveHeader="active" />
       <div>Bebidas</div>
       { drinks && renderDrinks() }
+      <Footer />
     </div>
   );
 }
