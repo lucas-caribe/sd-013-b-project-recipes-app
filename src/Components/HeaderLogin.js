@@ -1,73 +1,68 @@
-import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { storeUser as storeUserAction } from '../Redux/Actions';
 
-class HeaderLogin extends Component {
-  constructor() {
-    super();
+function HeaderLogin({ storeUser }) {
+  const [email, changeEmail] = useState('');
+  const [password, changePassword] = useState('');
 
-    this.state = {
-      email: '',
-      password: '',
-    };
-
-    this.validateEmail = this.validateEmail.bind(this);
-    this.validatePassword = this.validatePassword.bind(this);
-    this.submit = this.submit.bind(this);
-  }
-
-  validateEmail({ target: { value } }) {
+  function validateEmail({ target: { value } }) {
     const validEmail = /\S+@\S+\.\S+/;
     if (validEmail.test(value) === true) {
-      this.setState({
-        email: value,
-      });
+      changeEmail(value);
     }
   }
 
-  validatePassword({ target: { value } }) {
+  function validatePassword({ target: { value } }) {
     const minLength = 6;
     if (value.length >= minLength) {
-      this.setState({
-        password: value,
-      });
+      changePassword(value);
     }
   }
 
-  submit() {
-    const { email, password } = this.state;
+  function submit() {
     if (email && password) return false;
-
     return true;
   }
 
-  render() {
-    return (
-      <section className="login">
-        <input
-          type="text"
-          placeholder="Email"
-          data-testid="email-input"
-          onChange={ (email) => this.validateEmail(email) }
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          data-testid="password-input"
-          onChange={ (pass) => this.validatePassword(pass) }
-        />
-        {/* <Link to=" "> */}
+  return (
+    <section className="login">
+      <input
+        type="text"
+        placeholder="Email"
+        data-testid="email-input"
+        onChange={ (e) => validateEmail(e) }
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        data-testid="password-input"
+        onChange={ (pass) => validatePassword(pass) }
+      />
+      <Link to="/recipes">
         <button
           type="button"
-          disabled={ this.submit() }
+          disabled={ submit() }
           data-testid="login-submit-btn"
-          // onClick={  }
+          onClick={ () => {
+            storeUser(email, password);
+          } }
         >
           ENTRAR
         </button>
-        {/* </Link> */}
-      </section>
-    );
-  }
+      </Link>
+    </section>
+  );
 }
 
-export default HeaderLogin;
+HeaderLogin.propTypes = {
+  storeUser: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  storeUser: (email, password) => dispatch(storeUserAction(email, password)),
+});
+
+export default connect(null, mapDispatchToProps)(HeaderLogin);
