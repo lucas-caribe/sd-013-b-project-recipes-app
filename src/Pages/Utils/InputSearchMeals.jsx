@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { Redirect } from 'react-router';
+import RecipesContext from '../../Context/RecipesContext';
 
 export default function InputSearchMeals() {
   const [search, setSearch] = useState('');
-  const [api, setApi] = useState([]);
-  console.log(api);
   const [mealInput, setMealInput] = useState('');
   const PRIMEIRA_LETRA = 'Primeira letra';
   const apiIngredienteUrl = 'https://www.themealdb.com/api/json/v1/1/filter.php?';
   const apiMealsUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?';
+  const { api, setApi } = useContext(RecipesContext);
+  console.log(api);
 
   const handleClick = () => {
     const apiIngredienteRequest = async () => {
@@ -46,6 +48,10 @@ export default function InputSearchMeals() {
       break;
     }
   };
+
+  if (api.meals) {
+    return <Redirect to={ `/comidas/${api.meals[0].idMeal}` } />;
+  }
 
   return (
     <>

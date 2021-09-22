@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { Redirect } from 'react-router';
+import RecipesContext from '../../Context/RecipesContext';
 
 export default function InputSearchCocktails() {
   const [search, setSearch] = useState('');
-  const [api, setApi] = useState([]);
-  console.log(api);
   const [cocktailInput, setCocktailInput] = useState('');
   const PRIMEIRA_LETRA = 'Primeira letra';
   const apiIngredienteUrl = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?';
   const apiCocktails = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?';
+  const { api, setApi } = useContext(RecipesContext);
 
   const handleClick = () => {
     const apiIngredienteRequest = async () => {
@@ -46,6 +47,10 @@ export default function InputSearchCocktails() {
       break;
     }
   };
+
+  if (api.drinks) {
+    return <Redirect to={ `/bebidas/${api.drinks[0].idDrink}` } />;
+  }
 
   return (
     <>

@@ -24,8 +24,8 @@ export default function MainFoodPage() {
         </h3>
         <SearchButton />
       </header>
-      {searchBar && location === '/comidas'
-        ? <InputSearchMeals /> : <InputSearchCocktails />}
+      {searchBar && location === '/comidas' ? <InputSearchMeals /> : null}
+      {searchBar && location === '/bebidas' ? <InputSearchCocktails /> : null}
     </>
   );
 }
