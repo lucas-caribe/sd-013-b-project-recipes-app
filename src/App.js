@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import { Switch, Route } from 'react-router-dom';
-import Footer from './components/Footer';
+import { Route, Switch } from 'react-router';
 import Login from './pages/Login';
+import Home from './pages/Home';
+import Footer from './components/Footer';
 import Explorer from './pages/Explorer';
 import ExplorerCountries from './pages/ExplorerCountries';
 import FavoritesRecipes from './pages/FavoritesRecipes';
@@ -13,10 +13,11 @@ import Perfil from './pages/Perfil';
 
 function App() {
   return (
+
     <div className="wrapper">
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route exact path="/comidas" component={ Login } />
+        <Route exact path="/comidas" component={ Home } />
         <Route exact path="/bebidas" component={ Login } />
         <Route exact path="/comidas/:id" component={ Login } />
         <Route exact path="/bebidas/:id" component={ Login } />
