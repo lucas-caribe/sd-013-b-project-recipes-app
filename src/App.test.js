@@ -48,3 +48,32 @@ describe('Login screen', () => {
     expect(history.location.pathname).toBe('/comidas');
   });
 });
+
+describe('Footer Component', () => {
+  it('there is footer', ()=>{
+    const { history } = renderWithRouter(<App />);
+    history.push('/comidas');
+    const footer = screen.getByTestId('footer');
+    expect(footer).toBeInTheDocument();
+  });
+
+   it('the icons work', ()=>{
+    const { history } = renderWithRouter(<App />);
+    history.push('/comidas');
+   
+    
+    const DrinksIcon= screen.getByTestId('drinks-bottom-btn');
+    userEvent.click(DrinksIcon);
+    expect(history.location.pathname).toBe('/bebidas');
+
+    const ExploreIcon = screen.getByTestId('explore-bottom-btn');
+     userEvent.click(ExploreIcon);
+    expect(history.location.pathname).toBe('/explorar');
+
+     const FoodIcon = screen.getByTestId('food-bottom-btn');
+     userEvent.click(FoodIcon);
+    expect(history.location.pathname).toBe('/comidas');
+    
+  });
+});
+
