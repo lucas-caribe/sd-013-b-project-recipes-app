@@ -1,4 +1,9 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback } from 'react';
+import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 
 import { AuthContext } from './AuthContext';
@@ -14,6 +19,7 @@ import { AuthContext } from './AuthContext';
 export const SearchBarContext = createContext();
 
 export const SearchBarProvider = ({ children }) => {
+  const history = useHistory();
   const [isOpen, setIsOpen] = useState(false);
   const [term, setTerm] = useState('');
   const [option, setOption] = useState('');
@@ -28,17 +34,28 @@ export const SearchBarProvider = ({ children }) => {
     setOption(searchOption);
   };
 
-  const fetchByOption = async (url, searchOption, searchTerm) => {
+  const checkResult = useCallback((result) => {
+    if (result.meals && result.meals.length === 1) {
+      history.push(`/comidas/${result.meals[0].idMeal}`);
+    }
+    if (result.drinks.length === 1) {
+      history.push(`/bebidas/${result.drinks[0].idDrink}`);
+    }
+  }, [history]);
+
+  const fetchByOption = useCallback(async (url, searchOption, searchTerm) => {
     switch (searchOption) {
     case 'ingredient': {
       const response = await fetch(`https://www.${url}.com/api/json/v1/1/filter.php?i=${searchTerm}`);
       const result = await response.json();
-      return result;
+      checkResult(result);
+      break;
     }
     case 'name': {
       const response = await fetch(`https://www.${url}.com/api/json/v1/1/search.php?s=${searchTerm}`);
       const result = await response.json();
-      return result;
+      checkResult(result);
+      break;
     }
     case 'first-letter': {
       if (searchTerm.length > 1) {
@@ -46,12 +63,13 @@ export const SearchBarProvider = ({ children }) => {
         return null;
       } const response = await fetch(`https://www.${url}.com/api/json/v1/1/search.php?f=${searchTerm}`);
       const result = await response.json();
-      return result;
+      checkResult(result);
+      break;
     }
     default:
       return null;
     }
-  };
+  }, [checkResult]);
 
   useEffect(() => {
     switch (page) {
@@ -68,7 +86,7 @@ export const SearchBarProvider = ({ children }) => {
     default:
       break;
     }
-  }, [page, term, option]);
+  }, [page, term, option, fetchByOption]);
 
   return (
     <SearchBarContext.Provider
