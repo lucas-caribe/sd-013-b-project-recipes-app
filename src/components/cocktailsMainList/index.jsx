@@ -49,7 +49,7 @@ export default function CocktailsMainList() {
     if (mainListInGlobal && mainListInGlobal.length === 1 && hasFilter) {
       history.push(`/bebidas/${mainListInGlobal[0].idDrink}`);
     }
-  }, [mainListInGlobal, history]);
+  }, [mainListInGlobal, history, hasFilter]);
 
   return (
     <div>
