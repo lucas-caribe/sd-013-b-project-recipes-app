@@ -2,13 +2,20 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../mini-components/Button';
 
-function ExploreDrinkPage() {
+function ExploreFoods() {
   return (
     <main data-testid="footer">
-      <Link to="/explorar/bebidas/ingredientes">
+      <Link to="/explorar/comidas/ingredientes">
         <Button
           btnText="Por Ingredientes"
           dataTest="explore-by-ingredient"
+          type="button"
+        />
+      </Link>
+      <Link to="/explorar/comidas/area">
+        <Button
+          btnText="Por Local de Origem"
+          dataTest="explore-by-area"
           type="button"
         />
       </Link>
@@ -21,4 +28,4 @@ function ExploreDrinkPage() {
   );
 }
 
-export default ExploreDrinkPage;
+export default ExploreFoods;
