@@ -21,6 +21,7 @@ export default function RecipeProvider({ children }) {
 
   const [redirect, setRedirect] = useState(false);
   const [recipesState, setRecipesState] = useState([]);
+  const [ingredientFilter, setIngredientFilter] = useState('');
 
   function visibleAlert(data) {
     if (data === null) {
@@ -92,6 +93,8 @@ export default function RecipeProvider({ children }) {
     handleSearch,
     recipesState,
     redirect,
+    ingredientFilter,
+    setIngredientFilter,
   };
 
   return (

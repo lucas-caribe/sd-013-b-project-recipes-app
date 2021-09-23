@@ -17,7 +17,7 @@ export async function fetchMealsLetter(letter) {
 }
 
 export async function fetchDrinksIngredient(ingredient) {
-  const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`);
+  const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/list.php?i=${ingredient}`);
   const data = await response.json();
   return data.ingredients;
 }
