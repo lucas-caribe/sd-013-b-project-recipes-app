@@ -20,6 +20,9 @@ function Explorar() {
           Explorar Bebidas
         </button>
       </Link>
+      <label htmlFor="a">
+        <input type="checkbox" name="a" id="a" />
+      </label>
     </div>
   );
 }
