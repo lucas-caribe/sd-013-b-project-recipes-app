@@ -17,6 +17,7 @@
   background-color: rgb(247, 208, 136);
   height: 640px;
 }
+
 textarea:focus, input:focus {
   outline: none;
 }
