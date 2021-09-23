@@ -6,7 +6,9 @@ function Provider({ children }) {
   const [statusLoginBtn, setStatusLoginBtn] = useState(true);
   const [emailIsValid, setEmailIsValid] = useState(false);
   const [passwordIsValid, setPasswordIsValid] = useState(false);
+  const [currentPage, setCurrentPage] = useState('');
   const [login, setLogin] = useState('');
+  const [showSearchBar, setShowSearchBar] = useState(false);
 
   const contextValue = {
     statusLoginBtn,
@@ -15,8 +17,12 @@ function Provider({ children }) {
     setEmailIsValid,
     passwordIsValid,
     setPasswordIsValid,
+    currentPage,
+    setCurrentPage,
     login,
     setLogin,
+    showSearchBar,
+    setShowSearchBar,
   };
 
   return (
