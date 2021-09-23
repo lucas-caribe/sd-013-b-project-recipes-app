@@ -11,7 +11,7 @@ const TYPE_FIRST_LETTER = 'Primeira letra';
 const ERR_MESSAGE_1 = 'Sua busca deve conter somente 1 (um) caracter';
 const ERR_MESSAGE_2 = 'Sinto muito, não encontramos nenhuma receita para esses filtros.';
 
-function Search({ page }) {
+function Search({ page, onSearch }) {
   const [type, setType] = useState('');
   const searchRef = useRef();
   const history = useHistory();
@@ -36,8 +36,10 @@ function Search({ page }) {
           const id = isMeal ? item.idMeal : item.idDrink;
           const route = isMeal ? '/comidas/' : '/bebidas/';
 
-          history.push(route + id);
+          return history.push(route + id);
         }
+
+        onSearch(results);
       });
   }
 
@@ -98,6 +100,7 @@ function Search({ page }) {
 
 Search.propTypes = {
   page: PropTypes.string.isRequired,
+  onSearch: PropTypes.func.isRequired,
 };
 
 export default Search;

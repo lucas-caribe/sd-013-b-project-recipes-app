@@ -1,42 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import Card from '../components/Card';
 
-import { fetchFullMealsList } from '../services/api';
+import Header from '../components/Header';
+import RecipesList from '../components/RecipesList';
+import Footer from '../components/Footer';
+
+import { fetchFullMealsList, fetchMealsByCategory } from '../services/api';
 
 function Meals() {
   const [mealList, setMealList] = useState([]);
-  const MAX_ELEMENTS_PER_PAGE = 12;
 
   useEffect(() => {
     const callMealsFetch = async () => {
       const list = await fetchFullMealsList();
       setMealList(list);
     };
+
     callMealsFetch();
   }, []);
 
-  const mapMeals = (list) => list.map(
-    (food, index) => Card(food.strMeal, food.strMealThumb, index),
-  ).slice(0, MAX_ELEMENTS_PER_PAGE);
+  function filterHandler(filter) {
+    if (!filter || filter === 'all') {
+      return fetchFullMealsList().then((list) => setMealList(list));
+    }
 
-  const readyToLoad = mealList.length > 0;
-
-  if (readyToLoad) {
-    return (
-      <div className="meals-page">
-        <Header />
-        {console.log(mealList)}
-        { mapMeals(mealList) }
-        <Footer />
-      </div>
-    );
+    if (filter) fetchMealsByCategory(filter).then((list) => setMealList(list));
   }
+
+  function searchHandler(results) {
+    setMealList(results);
+  }
+
   return (
     <div className="meals-page">
-      <Header />
-      <h2>Loading...</h2>
+      <Header onSearch={ searchHandler } />
+      { mealList && (
+        <RecipesList list={ mealList } category="meals" onFilter={ filterHandler } />
+      ) }
       <Footer />
     </div>
   );

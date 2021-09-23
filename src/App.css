@@ -11,7 +11,8 @@
 }
 
 body {
-  background-color: lightgray;
+  background-color: lightyellow;
+  margin-top: 10vh;
 }
 
 button {
