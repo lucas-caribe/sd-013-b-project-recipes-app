@@ -12,6 +12,7 @@ import Details from './pages/Details';
 import Explore from './pages/Explore';
 import DrinksExplore from './pages/DrinksExplore';
 import FoodsExplore from './pages/FoodsExplore';
+import FavoriteRecipes from './pages/FavoriteRecipes';
 
 function Routes() {
   return (
@@ -38,6 +39,7 @@ function Routes() {
           path="/explorar/comidas/area"
           component={ FoodsExploreArea }
         />
+        <Route path="/receitas-favoritas" component={ FavoriteRecipes } />
       </Switch>
     </Router>
   );

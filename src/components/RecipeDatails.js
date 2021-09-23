@@ -6,6 +6,7 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 function RecipeDetails() {
   const [recipeFoodDetail] = useState([0]);
   const [recomendationCard] = useState([0]);
+
   return (
     <div className="details-page">
       <h1>Detalhes comidas</h1>
