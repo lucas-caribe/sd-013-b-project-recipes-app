@@ -30,7 +30,11 @@ export default function Perfil() {
   return (
     <main className="main-content">
       <Header pageTitle="Perfil" searchButton={ false } />
-      <h4 data-testid="profile-email">{ getStorage() }</h4>
+      <h4
+        data-testid="profile-email"
+      >
+        { localStorage.getItem('user') && getStorage() }
+      </h4>
       <Button
         text="Receitas Feitas"
         dataTest="profile-done-btn"
