@@ -50,11 +50,8 @@ export const fetchSearchThunk = ({ value, type, recipe }) => async (dispatch) =>
       break;
     }
     case 'first-letter': {
-      const response = await fetchMealByFirstLetter(type);
-      if (response) {
-        const { meals } = response;
-        dispatch(setItensOfFetch(meals));
-      }
+      const { meals } = await fetchMealByFirstLetter(type);
+      dispatch(setItensOfFetch(meals));
       break;
     }
     default:
@@ -75,11 +72,8 @@ export const fetchSearchThunk = ({ value, type, recipe }) => async (dispatch) =>
       break;
     }
     case 'first-letter': {
-      const response = await fetchCocktailByFirstLetter(type);
-      if (response) {
-        const { drinks } = response;
-        dispatch(setItensOfFetch(drinks));
-      }
+      const { drinks } = await fetchCocktailByFirstLetter(type);
+      dispatch(setItensOfFetch(drinks));
       break;
     }
     default:

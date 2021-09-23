@@ -18,7 +18,8 @@ export function fetchCocktailByName(type) {
 }
 export function fetchCocktailByFirstLetter(type) {
   if (type.length > 1) {
-    return global.alert('Sua busca deve conter somente 1 (um) caracter');
+    global.alert('Sua busca deve conter somente 1 (um) caracter');
+    return { drinks: [] };
   }
   return fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${type}`)
     .then((response) => response.json())

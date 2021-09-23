@@ -3,8 +3,8 @@ const Error = 'Sinto muito, não encontramos nenhuma receita para esses filtros.
 export function fetchMealByIngredient(type) {
   return fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${type}`)
     .then((response) => response.json())
-    .then((response) => response)
-    .catch(() => global.alert(Error));
+    .then((response) => response);
+  // .catch(() => global.alert(Error));
 }
 export function fetchMealByName(type) {
   return fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${type}`)
@@ -18,10 +18,15 @@ export function fetchMealByName(type) {
 }
 export function fetchMealByFirstLetter(type) {
   if (type.length > 1) {
-    return global.alert('Sua busca deve conter somente 1 (um) caracter');
+    global.alert('Sua busca deve conter somente 1 (um) caracter');
+    return { meals: [] };
   }
+
   return fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${type}`)
     .then((response) => response.json())
     .then((response) => response)
-    .catch(() => global.alert(Error));
+    .catch(() => {
+      global.alert(Error);
+      return [];
+    });
 }
