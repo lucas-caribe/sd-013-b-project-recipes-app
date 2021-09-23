@@ -6,6 +6,5 @@ function Details({ match: { params: { id }, path } }) {
     return RenderFood(id);
   }
   return RenderDrink(id);
-}
 
 export default Details;
