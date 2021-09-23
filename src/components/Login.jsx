@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Context from '../context/Context';
 
-function Login() {
+function Login({ history }) {
   const six = 6;
   const {
     statusLoginBtn,
@@ -32,6 +32,10 @@ function Login() {
     }
   }
 
+  const handleOnClickLogin = () => {
+    history.push('/SearchBar');
+  };
+
   return (
     <div>
       <form>
@@ -49,6 +53,7 @@ function Login() {
           type="submit"
           data-testid="login-submit-btn"
           disabled={ statusLoginBtn }
+          onClick={ handleOnClickLogin }
         >
           Login
         </button>

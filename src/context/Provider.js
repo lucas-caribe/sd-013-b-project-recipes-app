@@ -7,6 +7,10 @@ function Provider({ children }) {
   const [emailIsValid, setEmailIsValid] = useState(false);
   const [passwordIsValid, setPasswordIsValid] = useState(false);
 
+  const [inputText, setInputText] = useState('');
+  const [inputRadio, setInputRadio] = useState('');
+  const [apiRadio, setApiRadio] = useState({});
+
   const contextValue = {
     statusLoginBtn,
     setStatusLoginBtn,
@@ -14,6 +18,12 @@ function Provider({ children }) {
     setEmailIsValid,
     passwordIsValid,
     setPasswordIsValid,
+    inputText,
+    setInputText,
+    inputRadio,
+    setInputRadio,
+    apiRadio,
+    setApiRadio,
   };
 
   return (
