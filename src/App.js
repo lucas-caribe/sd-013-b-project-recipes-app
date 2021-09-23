@@ -1,14 +1,34 @@
 import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Switch, Route } from 'react-router';
+import { Switch, Route } from 'react-router-dom';
+import Main from './pages/Main';
+import Explore from './pages/Explore';
+import Perfil from './pages/Perfil';
+import DoneRecipes from './pages/DoneRecipes';
+import FavoriteRecipes from './pages/FavoriteRecipes';
 import Login from './Pages/Login';
 
 function App() {
   return (
-    <Switch>
-      <Route exact path="/" component={ Login } />
-    </Switch>
+      <Switch>
+    <Route exact path="/" component={ Login } />
+        <Route path="/explorar/:type?/:filter?">
+          <Explore />
+        </Route>
+        <Route path="/perfil" exact>
+          <Perfil />
+        </Route>
+        <Route path="/receitas-feitas" exact>
+          <DoneRecipes />
+        </Route>
+        <Route path="/receitas-favoritas" exact>
+          <FavoriteRecipes />
+        </Route>
+        <Route path="/:type/:id?/:status?">
+          <Main />
+        </Route>
+      </Switch>
   );
 }
 

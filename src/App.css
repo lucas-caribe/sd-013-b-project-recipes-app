@@ -13,6 +13,10 @@
   flex-direction: column;
 }
 
+.mainfood {
+  background-color: rgb(247, 208, 136);
+  height: 640px;
+}
 textarea:focus, input:focus {
   outline: none;
 }
@@ -36,4 +40,3 @@ textarea:focus, input:focus {
   margin-top: 30px;
   padding: 10px;
 }
-
