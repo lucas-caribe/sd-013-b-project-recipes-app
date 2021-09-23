@@ -53,7 +53,7 @@ function Login() {
       <button
         data-testid="login-submit-btn"
         onClick={ handleClick }
-        type="button"
+        type="submit"
         disabled={ !isValid }
       >
         Entrar

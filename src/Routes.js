@@ -10,7 +10,8 @@ import Drinks from './pages/Drinks';
 import Profile from './pages/Profile';
 import Details from './pages/Details';
 import Explore from './pages/Explore';
-import ExploreRecipes from './pages/ExploreRecipes';
+import DrinksExplore from './pages/DrinksExplore';
+import FoodsExplore from './pages/FoodsExplore';
 
 function Routes() {
   return (
@@ -23,8 +24,8 @@ function Routes() {
         <Route exact path="/explorar" component={ Explore } />
         <Route exact path="/comidas/:id" component={ Details } />
         <Route exact path="/bebidas/:id" component={ Details } />
-        <Route exact path="/explorar/comidas" component={ ExploreRecipes } />
-        <Route exact path="/explorar/bebidas" component={ ExploreRecipes } />
+        <Route exact path="/explorar/comidas" component={ FoodsExplore } />
+        <Route exact path="/explorar/bebidas" component={ DrinksExplore } />
         <Route
           path="/explorar/comidas/ingredientes"
           component={ FoodsExploreIngredients }

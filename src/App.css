@@ -11,7 +11,8 @@
 }
 
 body {
-  background-color: lightgray;
+  background-color: lightyellow;
+  margin-top: 10vh;
 }
 
 button {
@@ -20,11 +21,6 @@ button {
 
 input:focus {
   outline: none;
-}
-
-.footer {
-  background-color: gainsboro;
-  bottom: 0;
 }
 
 .meals {
