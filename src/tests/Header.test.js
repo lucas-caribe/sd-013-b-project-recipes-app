@@ -28,6 +28,9 @@ describe('Testing whether header has been rendered on pages comidas and perfil',
     const { history } = renderWithRouter(<App />);
     history.push('/comidas');
 
+    const title = screen.getByRole('heading');
+    expect(title).toHaveTextContent('Comidas');
+
     const searchBtn = screen.getByAltText('search-icon');
     expect(searchBtn).toBeInTheDocument();
     userEvent.click(searchBtn);
@@ -40,6 +43,9 @@ describe('Testing whether header has been rendered on pages comidas and perfil',
   it('should render search btn on perfil page that enable search input', () => {
     const { history } = renderWithRouter(<App />);
     history.push('/perfil');
+
+    const title = screen.getByRole('heading');
+    expect(title).toHaveTextContent('Perfil');
 
     const searchBtn = screen.getByAltText('search-icon');
     expect(searchBtn).toBeInTheDocument();
