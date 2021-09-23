@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
-import { Redirect } from 'react-router';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { fetchIngredienteBeb, fetchNameBeb,
   fetchPrimeiraLetraBeb, getDrinksCategory } from '../services/fetchRadioBebidas';
@@ -13,6 +13,7 @@ const QUANTIDADE_RECEITAS = 12;
 function Bebidas({ inputHeader }) {
   const [radioSelecionado, setRadioSelecionado] = useState('');
   const [resultFetch, setResultFetch] = useState([]);
+  const { push } = useHistory();
   const [categoryList, setCategoryList] = useState([]);
 
   const componentLoad = async () => {
@@ -41,6 +42,10 @@ function Bebidas({ inputHeader }) {
     default:
       return null;
     }
+    const resultFetchName = await fetchNameBeb(input);
+    if (resultFetchName.length === 1) {
+      push(`/bebidas/${resultFetchName[0].idDrink}`);
+    }
   };
 
   const pegarDozeElementos = () => resultFetch.splice(0, QUANTIDADE_RECEITAS);
@@ -51,16 +56,11 @@ function Bebidas({ inputHeader }) {
         <Header pageTitle="Comida" />
         {global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.')}
       </div>
-
     );
   }
   if (resultFetch !== null) {
     return (
       <div>
-        {resultFetch.length === 1 && <Redirect
-          to={ `/bebidas/${resultFetch[0].idDrink}` }
-        />}
-        {console.log(resultFetch)}
         <Header pageTitle="Bebidas" />
         <div>
           <label htmlFor="ingredient">
@@ -101,8 +101,8 @@ function Bebidas({ inputHeader }) {
             Buscar
           </button>
         </div>
+        {resultFetch.length > 1 && <CardsDrinks drinks={ pegarDozeElementos() } />}
         <Category categories={ categoryList } />
-        {resultFetch.length !== 0 && <CardsDrinks drinks={ pegarDozeElementos() } />}
       </div>
     );
   } return enviarAlerta();

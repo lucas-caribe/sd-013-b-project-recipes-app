@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 function CardsComida({ comidas }) {
+  console.log(comidas);
   return (
     <div className="cards">
       {comidas.map((comida, index) => (
