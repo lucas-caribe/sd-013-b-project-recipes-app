@@ -5,7 +5,7 @@ import Button from './Button';
 
 const CATEGORY_QUANTITY = 5;
 
-function Category({ categories }) {
+function Category({ categories, onClick }) {
   const categoryList = categories.slice(0, CATEGORY_QUANTITY);
   return (
     <div className="category-body">
@@ -14,6 +14,7 @@ function Category({ categories }) {
         <Button
           dataTest={ `${category.strCategory}-category-filter` }
           text={ category.strCategory }
+          onClick={ () => onClick(category.strCategory) }
           key={ category.strCategory }
         />
       ))}
@@ -23,6 +24,7 @@ function Category({ categories }) {
 
 Category.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default Category;

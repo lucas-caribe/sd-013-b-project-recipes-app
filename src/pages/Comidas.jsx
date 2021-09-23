@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { fetchIngrediente, fetchName,
-  fetchPrimeiraLetra, getMealdCategory } from '../services/fetchRadioComidas';
+  fetchPrimeiraLetra, getMealCategoriesList,
+  getMealCategoryFilter } from '../services/fetchRadioComidas';
 import Header from '../components/Header';
 import CardsComida from '../components/CardsComida';
 import Footer from '../components/Footer';
@@ -16,13 +17,17 @@ function Comidas() {
   const [categoryList, setCategoryList] = useState([]);
 
   const componentLoad = async () => {
-    setCategoryList(await getMealdCategory());
+    setCategoryList(await getMealCategoriesList());
     setResultFetch(await fetchName(''));
   };
 
   useEffect(() => {
     componentLoad();
   }, []);
+
+  const selectCategoryFilter = async (category) => {
+    setResultFetch(await getMealCategoryFilter(category));
+  };
 
   const verificaRadioFetch = async (input) => {
     switch (radioSelecionado) {
@@ -67,8 +72,11 @@ function Comidas() {
           pageTitle="Comidas"
           searchFuncs={ { setRadioSelecionado, verificaRadioFetch } }
         />
-        <Category categories={ categoryList } />
-        {resultFetch.length > 1 && <CardsComida comidas={ pegarDozeElementos() } />}
+        <Category
+          categories={ categoryList }
+          onClick={ selectCategoryFilter }
+        />
+        {resultFetch.length >= 1 && <CardsComida comidas={ pegarDozeElementos() } />}
         <Footer />
       </main>
     );
