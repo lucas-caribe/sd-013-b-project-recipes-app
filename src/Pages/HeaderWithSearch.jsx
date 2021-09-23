@@ -6,6 +6,7 @@ import SearchButton from './Utils/SearchButton';
 import '../App.css';
 import InputSearchMeals from './Utils/InputSearchMeals';
 import InputSearchCocktails from './Utils/InputSearchCocktails';
+import Footer from '../Components/Footer';
 
 export default function MainFoodPage() {
   const { searchBar } = useContext(RecipesContext);
@@ -26,6 +27,7 @@ export default function MainFoodPage() {
       </header>
       {searchBar && location === '/comidas' ? <InputSearchMeals /> : null}
       {searchBar && location === '/bebidas' ? <InputSearchCocktails /> : null}
+      <Footer />
     </>
   );
 }

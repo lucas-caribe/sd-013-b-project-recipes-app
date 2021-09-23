@@ -9,7 +9,6 @@ export default function InputSearchMeals() {
   const apiIngredienteUrl = 'https://www.themealdb.com/api/json/v1/1/filter.php?';
   const apiMealsUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?';
   const { api, setApi } = useContext(RecipesContext);
-  console.log(api);
   const TWELVE = 12;
   let mealsList = api.meals;
   const NOTFOUND = 'Sinto muito, não encontramos nenhuma receita para esses filtros.';

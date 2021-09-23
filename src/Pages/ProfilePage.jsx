@@ -4,7 +4,8 @@ import HeaderWithoutSearch from './HeaderWithoutSearch';
 import Footer from '../Components/Footer';
 
 export default function ProfilePage() {
-  const currentEmail = JSON.parse(localStorage.getItem('user'));
+  let currentEmail = JSON.parse(localStorage.getItem('user'));
+  if (!currentEmail) currentEmail = { email: '' };
   return (
     <>
       <HeaderWithoutSearch />
