@@ -12,4 +12,11 @@ export const actionInputHeader = (inpHeader) => ({
   },
 });
 
+export const sendRecipeToGlobal = (recipe) => ({
+  type: 'SEND_RECIPE_TO_GLOBAL',
+  payload: {
+    recipe,
+  },
+});
+
 export default actionLogin;
