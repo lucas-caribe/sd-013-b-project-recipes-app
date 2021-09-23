@@ -42,7 +42,7 @@ export default function Header({ title }) {
           />
         </button>
       </header>
-      { renderSB ? <SearchBar /> : null }
+      { renderSB ? <SearchBar page={ title } /> : null }
     </div>
   );
 }

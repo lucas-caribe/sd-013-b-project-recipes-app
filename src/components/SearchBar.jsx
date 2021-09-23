@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import React, { useContext, useEffect, useState } from 'react';
+import { Redirect } from 'react-router';
 import { ingredientAPI, nameAPI, fistLetterAPI } from '../services/foodAPI';
+import { ingredientDrinkAPI,
+  nameDrinkAPI, fistLetterDrinkAPI } from '../services/drinksAPI';
+import FoodContext from '../context/FoodContext';
 
-export default function SearchBar() {
+export default function SearchBar({ page }) {
   const [text, setText] = useState('');
   const [ingredient, setIngredient] = useState(false);
   const [name, setName] = useState(false);
   const [letter, setLetter] = useState(false);
+  const { foodState, setFoodState, setDrinkState } = useContext(FoodContext);
+  // const history = useHistory();
 
   const checkLetter = (input) => {
     if (input.length !== 1) {
@@ -35,24 +42,64 @@ export default function SearchBar() {
 
   async function iAPI(i) {
     const ingredientSearch = await ingredientAPI(i);
-    console.log(ingredientSearch);
+    setFoodState(ingredientSearch);
   }
 
   async function nAPI(n) {
     const nameSearch = await nameAPI(n);
-    console.log(nameSearch);
+    setFoodState(nameSearch);
   }
 
   async function lAPI(l) {
     const letterSearch = await fistLetterAPI(l);
-    console.log(letterSearch);
+    setFoodState(letterSearch);
   }
 
-  function handleClick() {
+  async function idrinkAPI(i) {
+    const drinkIngredient = await ingredientDrinkAPI(i);
+    setDrinkState(drinkIngredient);
+  }
+
+  async function ndrinkAPI(i) {
+    const drinkName = await nameDrinkAPI(i);
+    setDrinkState(drinkName);
+  }
+
+  async function ldrinkAPI(i) {
+    const drinkLetter = await fistLetterDrinkAPI(i);
+    setDrinkState(drinkLetter);
+  }
+
+  function foodPageAPI() {
     if (ingredient) iAPI(text);
     if (name) nAPI(text);
     if (letter) lAPI(text);
   }
+
+  function drinkPageAPI() {
+    if (ingredient) idrinkAPI(text);
+    if (name) ndrinkAPI(text);
+    if (letter) ldrinkAPI(text);
+  }
+
+  function handleClick() {
+    if (page === 'Comidas') {
+      foodPageAPI();
+    }
+    if (page === 'Bebidas') {
+      drinkPageAPI();
+    }
+  }
+
+  useEffect(() => {
+    if (Object.keys(foodState).length === 1) {
+      return (<Redirect
+        to={
+          `/comidas/${foodState.meals[0].idMeal}`
+        }
+      />);
+    }
+  }, [foodState]);
 
   return (
     <div>
@@ -102,3 +149,7 @@ export default function SearchBar() {
     </div>
   );
 }
+
+SearchBar.propTypes = {
+  page: PropTypes.string,
+}.isRequired;
