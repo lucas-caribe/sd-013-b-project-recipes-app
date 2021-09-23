@@ -3,18 +3,22 @@ import React from 'react';
 
 function CardsDrinks({ drinks }) {
   return (
-    <>
+    <div className="cards">
       {drinks.map((drink, index) => (
-        <div key={ index } data-testid={ `${index}-recipe-card` }>
+        <div
+          key={ index }
+          data-testid={ `${index}-recipe-card` }
+          className="card-body"
+        >
           <img
             data-testid={ `${index}-card-img` }
-            alt="imagemComida"
+            alt={ `Foto ${drink.strDrink}` }
             src={ drink.strDrinkThumb }
           />
-          <p data-testid={ `${index}-card-name` }>{drink.strDrink}</p>
+          <h4 data-testid={ `${index}-card-name` }>{drink.strDrink}</h4>
         </div>
       ))}
-    </>
+    </div>
   );
 }
 

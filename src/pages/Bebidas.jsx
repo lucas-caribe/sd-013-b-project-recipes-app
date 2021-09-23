@@ -1,17 +1,29 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { fetchIngredienteBeb, fetchNameBeb,
-  fetchPrimeiraLetraBeb } from '../services/fetchRadioBebidas';
+  fetchPrimeiraLetraBeb, getDrinksCategory } from '../services/fetchRadioBebidas';
 import Header from '../components/Header';
 import CardsDrinks from '../components/CardsDrinks';
 import Footer from '../components/Footer';
+import Category from '../components/Category';
 
 const QUANTIDADE_RECEITAS = 12;
+
 function Bebidas({ inputHeader }) {
   const [radioSelecionado, setRadioSelecionado] = useState('');
   const [resultFetch, setResultFetch] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
+
+  const componentLoad = async () => {
+    setCategoryList(await getDrinksCategory());
+    setResultFetch(await fetchNameBeb(''));
+  };
+
+  useEffect(() => {
+    componentLoad();
+  }, []);
 
   const verificaRadioFetch = async (input) => {
     switch (radioSelecionado) {
@@ -91,8 +103,9 @@ function Bebidas({ inputHeader }) {
             Buscar
           </button>
         </div>
-        <Footer />
+        <Category categories={ categoryList } />
         {resultFetch.length !== 0 && <CardsDrinks drinks={ pegarDozeElementos() } />}
+        <Footer />
       </main>
     );
   } return enviarAlerta();
