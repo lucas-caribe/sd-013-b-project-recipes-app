@@ -10,7 +10,7 @@ function Bebidas() {
   const { handleMainPage } = useAuth();
   const { location: { pathname } } = useHistory();
 
-  const { list } = useRecipes();
+  const { context: { cocktails: { list } } } = useRecipes();
 
   useEffect(() => {
     handleMainPage(pathname);

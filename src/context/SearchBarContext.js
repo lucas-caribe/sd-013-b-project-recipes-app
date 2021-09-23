@@ -27,7 +27,7 @@ export const SearchBarProvider = ({ children }) => {
   const [option, setOption] = useState('');
 
   const { page } = useContext(AuthContext);
-  const { getRecipesList } = useContext(RecipesContext);
+  const { context: { setMealsList, setCocktailsList } } = useContext(RecipesContext);
 
   const toggleSearchBar = () => {
     setIsOpen((prevState) => !prevState);
@@ -46,10 +46,10 @@ export const SearchBarProvider = ({ children }) => {
       history.push(`/bebidas/${result.drinks[0].idDrink}`);
     }
     if (result.meals && result.meals.length > 1) {
-      getRecipesList(result.meals);
+      setMealsList(result.meals);
     }
     if (result.drinks && result.drinks.length > 1) {
-      getRecipesList(result.drinks);
+      setCocktailsList(result.drinks);
     }
     if (result.meals === null) {
       global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
@@ -59,7 +59,7 @@ export const SearchBarProvider = ({ children }) => {
       global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       return null;
     }
-  }, [history, getRecipesList]);
+  }, [history, setMealsList, setCocktailsList]);
 
   const fetchByOption = useCallback(async (url, searchOption, searchTerm) => {
     switch (searchOption) {

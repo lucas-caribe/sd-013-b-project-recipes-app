@@ -1,41 +1,40 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import Header from './index';
-import Comidas from '../../pages/Comidas';
+import ExplorarOrigem from '../../pages/ExplorarOrigem';
 
-import renderWithRouter from '../../helpers/renderWithRouter';
+import renderWithRouterAndContext from '../../utils/renderWithRouterAndContext';
 
 describe('Header.jsx tests should', () => {
   it('render the profile icon', () => {
-    render(<Header />);
+    renderWithRouterAndContext(<Header />);
 
     const profileIcon = screen.getByTestId('profile-top-btn');
     expect(profileIcon).toBeInTheDocument();
   });
 
   it('render the page title', () => {
-    render(<Header />);
+    renderWithRouterAndContext(<Header />);
 
     const pageTitle = screen.getByTestId('page-title');
     expect(pageTitle).toBeInTheDocument();
   });
 
   it('render the search bar icon', () => {
-    render(<Header />);
+    renderWithRouterAndContext(<ExplorarOrigem />);
 
     const searchBarIcon = screen.getByTestId('search-top-btn');
     expect(searchBarIcon).toBeInTheDocument();
   });
 
   it('redirect to the profile page after clicking on the profile icon', () => {
-    const { history } = renderWithRouter(<Comidas />);
-
+    const { history } = renderWithRouterAndContext(<ExplorarOrigem />);
     const profileIcon = screen.getByTestId('profile-top-btn');
     userEvent.click(profileIcon);
     const { pathname } = history.location;
 
-    expect(pathname).toBe('/profile');
+    expect(pathname).toBe('/perfil');
   });
 });
