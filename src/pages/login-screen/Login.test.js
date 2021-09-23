@@ -23,5 +23,6 @@ describe('testes da page de login', () => {
     userEvent.click(loginSubmitButton);
     const mealsScreenHeaderText = screen.getByText(/comidas/i);
     expect(mealsScreenHeaderText).toBeInTheDocument();
+    expect(window.location.pathname).toBe('/comidas');
   });
 });
