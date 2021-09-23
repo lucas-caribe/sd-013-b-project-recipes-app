@@ -1,4 +1,5 @@
 import React from 'react';
+<<<<<<< HEAD
 import { useHistory } from 'react-router-dom';
 import { getFoodOrDrinkProperties } from '../helpers/getFoodOrDrinkProperties';
 
@@ -15,8 +16,12 @@ function Card(food, i, category) {
       state: food,
     });
   };
+=======
+import '../styles/cards.css';
+>>>>>>> d50177841de5726fc199638ffe1d98d82a9368f3
 
   return (
+<<<<<<< HEAD
     <div
       key={ i }
       onClick={ () => handleClick() }
@@ -31,6 +36,16 @@ function Card(food, i, category) {
       {console.log(id)} */}
       <img data-testid={ `${i}-card-img` } src={ image } alt="ab" />
       <h4 data-testid={ `${i}-card-name` }>
+=======
+    <div data-testid={ `${id}-recipe-card` }>
+      <img
+        className="img-Card"
+        data-testid={ `${id}-card-img` }
+        src={ image }
+        alt={ name }
+      />
+      <div data-testid={ `${id}-card-name` }>
+>>>>>>> d50177841de5726fc199638ffe1d98d82a9368f3
         {name}
       </h4>
     </div>
