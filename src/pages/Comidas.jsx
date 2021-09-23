@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import { fetchIngrediente, fetchName,
   fetchPrimeiraLetra } from '../services/fetchRadioComidas';
 import Header from '../components/Header';
@@ -13,6 +13,13 @@ function Comidas({ inputFromHeader }) {
   const [radioSelecionado, setRadioSelecionado] = useState('');
   const [resultFetch, setResultFetch] = useState([]);
 
+  const redirecionarParaDetalhes = (array) => {
+    if (array.length === 1) {
+      return (
+        <Redirect to="/bebidas" />
+      );
+    }
+  };
   const verificaRadioFetch = async (input) => {
     switch (radioSelecionado) {
     case 'ingrediente':
@@ -30,6 +37,8 @@ function Comidas({ inputFromHeader }) {
     default:
       return null;
     }
+    const resultFetchName = await fetchName(input);
+    redirecionarParaDetalhes(resultFetchName);
   };
 
   function enviarAlerta() {
