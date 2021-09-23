@@ -23,9 +23,7 @@ function CardsComida({ comidas }) {
 }
 
 CardsComida.propTypes = {
-  comidas: PropTypes.shape({
-    map: PropTypes.func,
-  }).isRequired,
+  comidas: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 export default CardsComida;

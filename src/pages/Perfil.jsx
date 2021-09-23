@@ -1,5 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 import Button from '../components/Button';
 
 export default function Perfil() {
@@ -26,8 +28,13 @@ export default function Perfil() {
   }
 
   return (
-    <div>
-      <h4 data-testid="profile-email">{ getStorage() }</h4>
+    <main className="main-content">
+      <Header pageTitle="Perfil" searchButton={ false } />
+      <h4
+        data-testid="profile-email"
+      >
+        { localStorage.getItem('user') && getStorage() }
+      </h4>
       <Button
         text="Receitas Feitas"
         dataTest="profile-done-btn"
@@ -43,6 +50,7 @@ export default function Perfil() {
         dataTest="profile-logout-btn"
         onClick={ getLoginPage }
       />
-    </div>
+      <Footer />
+    </main>
   );
 }
