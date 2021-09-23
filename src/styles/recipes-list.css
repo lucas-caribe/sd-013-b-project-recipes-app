@@ -22,7 +22,7 @@
 
 .category-list .highlight {
   border-bottom: 5px solid orange;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .recipes-list {
@@ -31,13 +31,14 @@
   flex-wrap: wrap;
   justify-content: space-around;
   max-width: 60rem;
-  padding-top: 3vh;
   padding-bottom: 12vh;
+  padding-top: 3vh;
   width: 100%;
 }
 
-@media (max-width: 340px) {
+@media ( max-width : 340px ) {
+
   .recipes-list {
-    padding-top: 0vh;
+    padding-top: 0;
   }
 }

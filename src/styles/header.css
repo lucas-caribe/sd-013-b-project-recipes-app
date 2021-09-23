@@ -39,7 +39,7 @@ header section button img {
   animation: fade-in 0.2s ease-in;
   background-color: rgb(221, 221, 221);
   border-bottom: 2px solid lightgrey;
-  box-shadow: 1px 8px 15px 5px rgba(0,0,0,0.3);
+  box-shadow: 1px 8px 15px 5px rgba(0, 0, 0, 0.3);
   min-height: 3rem;
   padding-bottom: 0.1rem;
   padding-top: 0.6rem;
