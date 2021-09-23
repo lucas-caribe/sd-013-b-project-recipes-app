@@ -18,9 +18,12 @@ function ExplorarComidasOuBebidas() {
         showSearchIcon={ false }
       />
       <main className="explore-type-container">
-        <Link to="/" data-testid="explore-by-ingredient" />
-        { type === 'comidas' && <Link to="/" data-testid="explore-by-area" /> }
-        <Link to="/" data-testid="explore-surprise" />
+        <Link to="/" data-testid="explore-by-ingredient">Por Ingredientes</Link>
+        { type === 'comidas' && (
+          <Link to="/" data-testid="explore-by-area">
+            Por Local de Origem
+          </Link>) }
+        <Link to="/" data-testid="explore-surprise">Me Surpreenda!</Link>
       </main>
       <Footer />
     </main>
