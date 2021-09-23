@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Provider } from 'react-redux';
-import store from './Redux/Store';
+import { Switch, Route } from 'react-router';
+import Login from './Pages/Login';
 
 function App() {
   return (
-    <Provider store={ store }>
-      <div>a</div>
-    </Provider>
+    <Switch>
+      <Route exact path="/" component={ Login } />
+    </Switch>
   );
 }
 
