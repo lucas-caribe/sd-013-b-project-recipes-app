@@ -27,8 +27,6 @@ function Home({ search }) {
     setFetch();
   }, [pathname]);
 
-  // console.log(drinks);
-
   if (foods === [] || drinks === []) {
     return (
       <div>
