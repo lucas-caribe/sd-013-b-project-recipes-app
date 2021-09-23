@@ -19,16 +19,16 @@ export const AuthProvider = ({ children }) => {
   const handleMainPage = useCallback((pageSelected) => {
     setPage(pageSelected);
   }, []);
-  
+
   function handleEmail(hotmail) {
     setEmail(hotmail);
   }
- 
+
   const context = {
     email,
     handleEmail,
     page,
-    handleMainPage
+    handleMainPage,
   };
 
   return (

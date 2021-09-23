@@ -10,7 +10,7 @@ function Comidas() {
   const { handleMainPage } = useAuth();
   const { location: { pathname } } = useHistory();
 
-  const { context: { meals: { list } } } = useRecipes();
+  const { meals: { list } } = useRecipes();
 
   useEffect(() => {
     handleMainPage(pathname);

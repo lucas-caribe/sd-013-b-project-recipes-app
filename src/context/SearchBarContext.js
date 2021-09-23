@@ -3,6 +3,7 @@ import React, { createContext,
   useState,
   useEffect,
   useCallback } from 'react';
+
 import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 
@@ -27,7 +28,7 @@ export const SearchBarProvider = ({ children }) => {
   const [option, setOption] = useState('');
 
   const { page } = useContext(AuthContext);
-  const { context: { setMealsList, setCocktailsList } } = useContext(RecipesContext);
+  const { setMealsList, setCocktailsList } = useContext(RecipesContext);
 
   const toggleSearchBar = () => {
     setIsOpen((prevState) => !prevState);
