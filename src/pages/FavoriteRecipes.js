@@ -19,7 +19,8 @@ function FavoriteRecipes() {
         </button>
       </div>
 
-      {/* Pegar as informações da receita que foi marcada como favorita e fazer um spread */}
+      {/*
+      Pegar as informações da receita que foi marcada como favorita e fazer um spread */}
     </div>
   );
 }
