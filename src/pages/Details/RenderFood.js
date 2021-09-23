@@ -1,79 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import Copy from 'clipboard-copy';
+import helper from './helper';
 
 import WhiteHeart from '../../images/whiteHeartIcon.svg';
 import BlackHeart from '../../images/blackHeartIcon.svg';
 
-function verifyProgress(id, setState, chave) {
-  const chaves = Object.keys(localStorage);
-  const cocktails = chaves.includes('inProgressRecipes')
-    ? Object.keys(JSON.parse(localStorage.inProgressRecipes)[chave])
-    : false;
-  if (cocktails && cocktails.includes(id)) {
-    setState(true);
-  }
-}
-
-function verifyLocalStorage(param, id) {
-  const doneRecipes = localStorage.getItem('doneRecipes');
-  if (doneRecipes) {
-    const recipe = doneRecipes.find((rec) => rec.id === id);
-    if (recipe) {
-      param(true);
-    }
-  }
-}
-
-function verifyFavorite(id, setState) {
-  const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  if (favoriteRecipes) {
-    const isFav = favoriteRecipes.find((rec) => rec.id === id);
-    if (isFav) {
-      setState(true);
-    }
-  }
-}
-
 function inProgressRedirect(history, id) {
   history.push(`/comidas/${id}/in-progress`);
-}
-
-function shareButton(setState) {
-  Copy(window.location.href);
-  setState(true);
-}
-
-function saveFavoriteLocalstorage(recipe, isFavorite, setState) {
-  let favoritas = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  let indexFinal = null;
-  if (favoritas) {
-    for (let index = 0; index < favoritas.length; index += 1) {
-      if (favoritas[index].id === recipe.idMeal) {
-        indexFinal = index;
-      }
-    }
-  } else {
-    favoritas = [];
-  }
-  const obj = {
-    id: recipe.idMeal,
-    type: 'comida',
-    area: recipe.strArea,
-    category: recipe.strCategory,
-    alcoholicOrNot: '',
-    name: recipe.strMeal,
-    image: recipe.strMealThumb,
-  };
-  if (isFavorite) {
-    favoritas.splice(indexFinal, 1);
-    localStorage.setItem('favoriteRecipes', JSON.stringify(favoritas));
-    setState(!isFavorite);
-  } else {
-    favoritas.push(obj);
-    localStorage.setItem('favoriteRecipes', JSON.stringify(favoritas));
-    setState(!isFavorite);
-  }
 }
 
 export default function RenderFood(id) {
@@ -95,17 +28,18 @@ export default function RenderFood(id) {
       const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
       const data = await response.json();
       setRecipe(data.meals[0]);
+
       const recomendationsFetch = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
       const recomendationsData = await recomendationsFetch.json();
       recomendationsData.drinks.splice(initial, maxArr);
-
       setRecomendations(recomendationsData.drinks);
+
       setLoading(false);
     }
-    verifyLocalStorage(setDone, id);
     getData();
-    verifyProgress(id, setProgress, 'meals');
-    verifyFavorite(id, setFavorite);
+    helper.verifyLocalStorage(setDone, id);
+    helper.verifyProgress(id, setProgress, 'meals');
+    helper.verifyFavorite(id, setFavorite);
   }, []);
 
   if (loading) {
@@ -142,7 +76,7 @@ export default function RenderFood(id) {
       <button
         type="button"
         data-testid="share-btn"
-        onClick={ () => shareButton(setCopied) }
+        onClick={ () => helper.shareButton(setCopied) }
       >
         Share
       </button>
@@ -155,7 +89,9 @@ export default function RenderFood(id) {
         src={ favorite ? BlackHeart : WhiteHeart }
         data-testid="favorite-btn"
         alt="Favorite"
-        onClick={ () => saveFavoriteLocalstorage(recipe, favorite, setFavorite) }
+        onClick={
+          () => helper.saveFavoriteLocalstorage(recipe, favorite, setFavorite, 'idMeal')
+        }
       />
       <h3
         data-testid="recipe-category"

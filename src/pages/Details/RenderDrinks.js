@@ -1,81 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import Copy from 'clipboard-copy';
 import './style.css';
+import helper from './helper';
 
 import WhiteHeart from '../../images/whiteHeartIcon.svg';
 import BlackHeart from '../../images/blackHeartIcon.svg';
 
-function verifyLocalStorage(param, id) {
-  const doneRecipes = localStorage.getItem('doneRecipes');
-  if (doneRecipes) {
-    const recipe = doneRecipes.find((rec) => rec.id === id);
-    if (recipe) {
-      param(true);
-    }
-  }
-}
-
-function verifyProgress(id, setState) {
-  const chaves = Object.keys(localStorage);
-  const cocktails = chaves.includes('inProgressRecipes')
-    ? Object.keys(JSON.parse(localStorage.inProgressRecipes).cocktails)
-    : false;
-  if (cocktails && cocktails.includes(id)) {
-    setState(true);
-  }
-}
-
 function inProgressRedirect(history, id) {
   history.push(`/bebidas/${id}/in-progress`);
-}
-
-function shareButton(setState) {
-  Copy(window.location.href);
-  setState(true);
-}
-
-function saveFavoriteLocalstorage(recipe, isFavorite, setState) {
-  let favoritas = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  let indexFinal = null;
-  if (favoritas) {
-    for (let index = 0; index < favoritas.length; index += 1) {
-      if (favoritas[index].id === recipe.idDrink) {
-        indexFinal = index;
-      }
-    }
-  } else {
-    favoritas = [];
-  }
-  const obj = {
-    id: recipe.idDrink,
-    type: 'bebida',
-    area: '',
-    category: recipe.strCategory,
-    alcoholicOrNot: recipe.strAlcoholic,
-    name: recipe.strDrink,
-    image: recipe.strDrinkThumb,
-  };
-  console.log(indexFinal, 'index');
-  if (isFavorite) {
-    favoritas.splice(indexFinal, 1);
-    localStorage.setItem('favoriteRecipes', JSON.stringify(favoritas));
-    setState(!isFavorite);
-  } else {
-    favoritas.push(obj);
-    localStorage.setItem('favoriteRecipes', JSON.stringify(favoritas));
-    setState(!isFavorite);
-  }
-}
-
-function verifyFavorite(id, setState) {
-  const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  if (favoriteRecipes) {
-    const isFav = favoriteRecipes.find((rec) => rec.id === id);
-    if (isFav) {
-      setState(true);
-    }
-  }
 }
 
 export default function RenderDrink(id) {
@@ -96,20 +28,20 @@ export default function RenderDrink(id) {
       const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
       const data = await response.json();
       setDrink(data.drinks[0]);
-      console.log(data.drinks[0]);
 
       const recomendationsFetch = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
       const recomendationsData = await recomendationsFetch.json();
       recomendationsData.meals.splice(initial, maxArr);
       setRecomendations(recomendationsData.meals);
+
       if (drink && recomendations) {
         setLoading(false);
       }
     }
     getData();
-    verifyLocalStorage(setDone, id);
-    verifyFavorite(id, setFavorite);
-    verifyProgress(id, setProgress);
+    helper.verifyLocalStorage(setDone, id);
+    helper.verifyProgress(id, setProgress, 'cocktails');
+    helper.verifyFavorite(id, setFavorite);
   }, []);
 
   if (loading) {
@@ -144,7 +76,7 @@ export default function RenderDrink(id) {
       <button
         type="button"
         data-testid="share-btn"
-        onClick={ () => shareButton(setCopied) }
+        onClick={ () => helper.shareButton(setCopied) }
       >
         Share
       </button>
@@ -152,27 +84,15 @@ export default function RenderDrink(id) {
         copied
         && 'Link copiado!'
       }
-      {
-        favorite
-          ? (
-            <input
-              type="image"
-              src={ BlackHeart }
-              data-testid="favorite-btn"
-              alt="Favorite"
-              onClick={ () => saveFavoriteLocalstorage(drink, favorite, setFavorite) }
-            />
-          )
-          : (
-            <input
-              type="image"
-              src={ WhiteHeart }
-              data-testid="favorite-btn"
-              alt="Not Favorite"
-              onClick={ () => saveFavoriteLocalstorage(drink, favorite, setFavorite) }
-            />
-          )
-      }
+      <input
+        type="image"
+        src={ favorite ? BlackHeart : WhiteHeart }
+        data-testid="favorite-btn"
+        alt="Favorite"
+        onClick={
+          () => helper.saveFavoriteLocalstorage(drink, favorite, setFavorite, 'idDrink')
+        }
+      />
       <h3
         data-testid="recipe-category"
       >
