@@ -1,16 +1,18 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import './header.css';
 import perfilIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
+import Explorer from '../Explorer';
 
 const Header = ({ searchRender, titlePage }) => {
+  const [explorerRender, setExplorerRender] = useState(false);
   function title(mainTitlePage) {
     return (
       <div className="title-header">
-        <p data-testid="page-title">{ mainTitlePage }</p>
+        <p data-testid="page-title">{mainTitlePage}</p>
       </div>
     );
   }
@@ -18,31 +20,46 @@ const Header = ({ searchRender, titlePage }) => {
     return (
       <div className="perfil-icon">
         <Link to="/perfil">
-          <img src={ perfilIcon } alt="Perfil Icon" data-testid="profile-top-btn" />
+          <img
+            src={ perfilIcon }
+            alt="Perfil Icon"
+            data-testid="profile-top-btn"
+          />
         </Link>
       </div>
-
     );
   }
+
+  
+
   function search(render) {
     return render ? (
       <div className="icon-Search">
-        <Link to="/explorar">
+        {/* <Link to="/explorar">
           <img src={ searchIcon } alt="Perfil Icon" data-testid="search-top-btn" />
-        </Link>
+        </Link> */}
+        <button
+          type="button"
+          onClick={ () => setExplorerRender(!explorerRender) }
+        >
+          <img
+            src={ searchIcon }
+            alt="Perfil Icon"
+            data-testid="search-top-btn"
+          />
+        </button>
       </div>
     ) : (
-      <div className="icon-Search">
-        { }
-      </div>
+      <div className="icon-Search">{}</div>
     );
   }
 
   return (
     <div className="main-header">
-      { perfil() }
-      { title(titlePage) }
-      { search(searchRender) }
+      {perfil()}
+      {title(titlePage)}
+      {search(searchRender)}
+      {searchBar(titlePage)}
     </div>
   );
 };
