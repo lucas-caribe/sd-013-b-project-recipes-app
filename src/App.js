@@ -15,7 +15,8 @@ import {
   ExplorarBebidasIngredientes as ExplBebidasIng,
   Perfil,
   Feitas,
-  Favoritas } from './pages/index';
+  Favoritas,
+  NotFound } from './pages/index';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route exact path="/perfil" component={ Perfil } />
         <Route exact path="/receitas-feitas" component={ Feitas } />
         <Route exact path="/receitas-favoritas" component={ Favoritas } />
+        <Route exact path="/explorar/bebidas/area" component={ NotFound } />
       </BrowserRouter>
     </Provider>
   );
