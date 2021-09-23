@@ -5,10 +5,10 @@ import Copy from 'clipboard-copy';
 import WhiteHeart from '../../images/whiteHeartIcon.svg';
 import BlackHeart from '../../images/blackHeartIcon.svg';
 
-function verifyProgress(id, setState) {
+function verifyProgress(id, setState, chave) {
   const chaves = Object.keys(localStorage);
   const cocktails = chaves.includes('inProgressRecipes')
-    ? Object.keys(JSON.parse(localStorage.inProgressRecipes).meals)
+    ? Object.keys(JSON.parse(localStorage.inProgressRecipes)[chave])
     : false;
   if (cocktails && cocktails.includes(id)) {
     setState(true);
@@ -44,6 +44,38 @@ function shareButton(setState) {
   setState(true);
 }
 
+function saveFavoriteLocalstorage(recipe, isFavorite, setState) {
+  let favoritas = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  let indexFinal = null;
+  if (favoritas) {
+    for (let index = 0; index < favoritas.length; index += 1) {
+      if (favoritas[index].id === recipe.idMeal) {
+        indexFinal = index;
+      }
+    }
+  } else {
+    favoritas = [];
+  }
+  const obj = {
+    id: recipe.idMeal,
+    type: 'comida',
+    area: recipe.strArea,
+    category: recipe.strCategory,
+    alcoholicOrNot: '',
+    name: recipe.strMeal,
+    image: recipe.strMealThumb,
+  };
+  if (isFavorite) {
+    favoritas.splice(indexFinal, 1);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoritas));
+    setState(!isFavorite);
+  } else {
+    favoritas.push(obj);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoritas));
+    setState(!isFavorite);
+  }
+}
+
 export default function RenderFood(id) {
   const [recipe, setRecipe] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -72,7 +104,7 @@ export default function RenderFood(id) {
     }
     verifyLocalStorage(setDone, id);
     getData();
-    verifyProgress(id, setProgress);
+    verifyProgress(id, setProgress, 'meals');
     verifyFavorite(id, setFavorite);
   }, []);
 
@@ -118,25 +150,13 @@ export default function RenderFood(id) {
         copied
         && 'Link copiado!'
       }
-      {
-        favorite
-          ? (
-            <input
-              type="image"
-              src={ BlackHeart }
-              data-testid="favorite-btn"
-              alt="Favorite"
-            />
-          )
-          : (
-            <input
-              type="image"
-              src={ WhiteHeart }
-              data-testid="favorite-btn"
-              alt="Not Favorite"
-            />
-          )
-      }
+      <input
+        type="image"
+        src={ favorite ? BlackHeart : WhiteHeart }
+        data-testid="favorite-btn"
+        alt="Favorite"
+        onClick={ () => saveFavoriteLocalstorage(recipe, favorite, setFavorite) }
+      />
       <h3
         data-testid="recipe-category"
       >

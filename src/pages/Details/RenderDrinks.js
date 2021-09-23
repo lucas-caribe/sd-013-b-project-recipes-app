@@ -35,6 +35,39 @@ function shareButton(setState) {
   setState(true);
 }
 
+function saveFavoriteLocalstorage(recipe, isFavorite, setState) {
+  let favoritas = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  let indexFinal = null;
+  if (favoritas) {
+    for (let index = 0; index < favoritas.length; index += 1) {
+      if (favoritas[index].id === recipe.idDrink) {
+        indexFinal = index;
+      }
+    }
+  } else {
+    favoritas = [];
+  }
+  const obj = {
+    id: recipe.idDrink,
+    type: 'bebida',
+    area: '',
+    category: recipe.strCategory,
+    alcoholicOrNot: recipe.strAlcoholic,
+    name: recipe.strDrink,
+    image: recipe.strDrinkThumb,
+  };
+  console.log(indexFinal, 'index');
+  if (isFavorite) {
+    favoritas.splice(indexFinal, 1);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoritas));
+    setState(!isFavorite);
+  } else {
+    favoritas.push(obj);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoritas));
+    setState(!isFavorite);
+  }
+}
+
 function verifyFavorite(id, setState) {
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
   if (favoriteRecipes) {
@@ -63,6 +96,7 @@ export default function RenderDrink(id) {
       const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
       const data = await response.json();
       setDrink(data.drinks[0]);
+      console.log(data.drinks[0]);
 
       const recomendationsFetch = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
       const recomendationsData = await recomendationsFetch.json();
@@ -126,6 +160,7 @@ export default function RenderDrink(id) {
               src={ BlackHeart }
               data-testid="favorite-btn"
               alt="Favorite"
+              onClick={ () => saveFavoriteLocalstorage(drink, favorite, setFavorite) }
             />
           )
           : (
@@ -134,6 +169,7 @@ export default function RenderDrink(id) {
               src={ WhiteHeart }
               data-testid="favorite-btn"
               alt="Not Favorite"
+              onClick={ () => saveFavoriteLocalstorage(drink, favorite, setFavorite) }
             />
           )
       }
