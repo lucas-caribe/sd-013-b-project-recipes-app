@@ -84,7 +84,6 @@ export default function ExploreByIngredients() {
           .slice(0, TWELVE)
           .map(({ strIngredient, idIngredient }, index) => (
             <Link
-              // type="button"
               key={ idIngredient }
               to="/comidas"
               onClick={ () => setIngredientFilter(strIngredient) }
@@ -109,9 +108,3 @@ export default function ExploreByIngredients() {
     </div>
   );
 }
-
-// ExploreByIngredients.propTypes = {
-//   history: PropTypes.shape({
-//     push: PropTypes.func,
-//   }).isRequired,
-// };
