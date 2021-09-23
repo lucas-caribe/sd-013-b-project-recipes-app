@@ -11,7 +11,7 @@ function App() {
     <Provider>
       <BrowserRouter>
         <Route exact path="/" component={ Login } />
-        <Route exact path="/SearchBar" component={ SearchBar } />
+        <Route exact path="/comidas" component={ SearchBar } />
       </BrowserRouter>
     </Provider>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import imgProfile from '../images/profileIcon.svg';
 import imgSearch from '../images/searchIcon.svg';
 import SearchInputs from './SearchInputs';

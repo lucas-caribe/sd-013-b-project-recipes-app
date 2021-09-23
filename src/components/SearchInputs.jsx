@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Context from '../context/Context';
 import searchBarTextFetch from '../services/searchBarTextFetch';
 
-function SearchInputs() {
+function SearchInputs({ history }) {
   const {
     inputRadio,
     inputText,
@@ -11,8 +11,15 @@ function SearchInputs() {
     setInputText,
     setApiRadio,
   } = useContext(Context);
+
   const handleClickFiltrarReceita = () => {
-    console.log(inputRadio, inputText, apiRadio);
+    // console.log(inputRadio, inputText, apiRadio);
+    console.log(apiRadio.meals);
+    if (apiRadio.meals.length === 1) {
+      const id = apiRadio.meals[0].idMeal;
+      // history.push(`${window.location.pathname}/${id}`);
+      console.log(`${window.location.pathname}/${id}`);
+    }
   };
 
   const handleOnChangeRadio = ({ target: { value } }) => {

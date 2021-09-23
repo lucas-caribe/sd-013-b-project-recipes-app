@@ -33,7 +33,7 @@ function Login({ history }) {
   }
 
   const handleOnClickLogin = () => {
-    history.push('/SearchBar');
+    history.push('/comidas');
   };
 
   return (
