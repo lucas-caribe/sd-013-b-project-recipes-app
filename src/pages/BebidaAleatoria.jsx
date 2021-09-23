@@ -26,7 +26,7 @@ function BebidaAleatoria() {
       <p>{ drink.strAlcoholic }</p>
       <div>
         { drink && Object.keys(drink)
-          .filter((key) => key.includes('strIngredient') && Object.values(key) !== null)
+          .filter((key) => key.includes('strIngredient'))
           .map((item, key) => (
             <ul key={ key }>
               <li key={ key }>
