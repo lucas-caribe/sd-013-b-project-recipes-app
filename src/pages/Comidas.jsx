@@ -1,6 +1,4 @@
-import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchIngrediente, fetchName,
   fetchPrimeiraLetra, getMealdCategory } from '../services/fetchRadioComidas';
@@ -11,7 +9,7 @@ import Category from '../components/Category';
 
 const QUANTIDADE_RECEITAS = 12;
 
-function Comidas({ inputFromHeader }) {
+function Comidas() {
   const [radioSelecionado, setRadioSelecionado] = useState('');
   const [resultFetch, setResultFetch] = useState([]);
   const { push } = useHistory();
@@ -44,7 +42,7 @@ function Comidas({ inputFromHeader }) {
       return null;
     }
     const resultFetchName = await fetchName(input);
-    if (resultFetchName) {
+    if (resultFetchName.length === 1) {
       push(`/comidas/${resultFetchName[0].idMeal}`);
     }
   };
@@ -60,68 +58,21 @@ function Comidas({ inputFromHeader }) {
     );
   }
 
-  const pegarDozeElementos = () => resultFetch.splice(0, QUANTIDADE_RECEITAS);
+  const pegarDozeElementos = () => resultFetch.slice(0, QUANTIDADE_RECEITAS);
 
   if (resultFetch !== null) {
     return (
       <main className="main-content">
-        <Header pageTitle="Comidas" />
-        <div>
-          <label htmlFor="ingredient">
-            Ingrediente
-            <input
-              type="radio"
-              value="ingrediente"
-              data-testid="ingredient-search-radio"
-              onChange={ ({ target }) => setRadioSelecionado(target.value) }
-              name="radio"
-            />
-          </label>
-          <label htmlFor="name">
-            Nome
-            <input
-              type="radio"
-              value="nome"
-              data-testid="name-search-radio"
-              name="radio"
-              onChange={ ({ target }) => setRadioSelecionado(target.value) }
-            />
-          </label>
-          <label htmlFor="ingredient">
-            Primeira letra
-            <input
-              type="radio"
-              value="firstLetter"
-              data-testid="first-letter-search-radio"
-              onChange={ ({ target }) => setRadioSelecionado(target.value) }
-              name="radio"
-            />
-          </label>
-          <button
-            type="button"
-            onClick={ () => verificaRadioFetch(inputFromHeader.inputHeader) }
-            data-testid="exec-search-btn"
-          >
-            Buscar
-          </button>
-          <br />
-          <Category categories={ categoryList } />
-          {resultFetch.length > 1 && <CardsComida comidas={ pegarDozeElementos() } />}
-        </div>
+        <Header
+          pageTitle="Comidas"
+          searchFuncs={ { setRadioSelecionado, verificaRadioFetch } }
+        />
+        <Category categories={ categoryList } />
+        {resultFetch.length > 1 && <CardsComida comidas={ pegarDozeElementos() } />}
         <Footer />
       </main>
     );
   } return enviarAlerta();
 }
 
-Comidas.propTypes = {
-  inputFromHeader: PropTypes.shape({
-    inputHeader: PropTypes.string,
-  }).isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  inputFromHeader: state.reducerHeader,
-});
-
-export default connect(mapStateToProps)(Comidas);
+export default Comidas;

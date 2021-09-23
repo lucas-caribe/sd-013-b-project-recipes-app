@@ -6,13 +6,13 @@ import Button from './Button';
 const CATEGORY_QUANTITY = 5;
 
 function Category({ categories }) {
-  const categoryList = categories.splice(0, CATEGORY_QUANTITY);
+  const categoryList = categories.slice(0, CATEGORY_QUANTITY);
   return (
     <div className="category-body">
       <Button text="All" />
       { categoryList.map((category) => (
         <Button
-          data-testid={ `${category.strCategory}-category-filter` }
+          dataTest={ `${category.strCategory}-category-filter` }
           text={ category.strCategory }
           key={ category.strCategory }
         />
@@ -22,7 +22,7 @@ function Category({ categories }) {
 }
 
 Category.propTypes = {
-  categories: PropTypes.shape([]).isRequired,
+  categories: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 export default Category;
