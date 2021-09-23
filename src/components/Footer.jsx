@@ -12,7 +12,7 @@ function Footer() {
       <div>
 
         <a
-          href="/"
+          href="/bebidas"
           src={ drinkIcon }
           data-testid="drinks-bottom-btn"
         >
@@ -20,7 +20,7 @@ function Footer() {
         </a>
 
         <a
-          href="/"
+          href="/explorar"
           src={ exploreIcon }
           data-testid="explore-bottom-btn"
         >
@@ -28,7 +28,7 @@ function Footer() {
         </a>
 
         <a
-          href="/"
+          href="/comidas"
           src={ mealIcon }
           data-testid="food-bottom-btn"
         >
