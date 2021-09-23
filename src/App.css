@@ -22,3 +22,28 @@
 .card-img {
   width: 100%;
 }
+
+
+.main-conteiner-list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+  margin: auto;
+}
+
+.main-card {
+  text-align: center;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-around;
+  margin: 5px;
+  align-items: center;
+  width: 150px;
+  height: 150px;
+  border: 2px solid black;
+}
+
+.main-card-image {
+  width: 20%;
+}
