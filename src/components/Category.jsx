@@ -5,11 +5,15 @@ import Button from './Button';
 
 const CATEGORY_QUANTITY = 5;
 
-function Category({ categories, onClick }) {
+function Category({ categories, onClick, onClickAll }) {
   const categoryList = categories.slice(0, CATEGORY_QUANTITY);
   return (
     <div className="category-body">
-      <Button text="All" />
+      <Button
+        text="All"
+        onClick={ onClickAll }
+        dataTest="All-category-filter"
+      />
       { categoryList.map((category) => (
         <Button
           dataTest={ `${category.strCategory}-category-filter` }
@@ -25,6 +29,7 @@ function Category({ categories, onClick }) {
 Category.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   onClick: PropTypes.func.isRequired,
+  onClickAll: PropTypes.func.isRequired,
 };
 
 export default Category;

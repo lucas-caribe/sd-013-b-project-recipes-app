@@ -75,6 +75,7 @@ function Comidas() {
         <Category
           categories={ categoryList }
           onClick={ selectCategoryFilter }
+          onClickAll={ componentLoad }
         />
         {resultFetch.length >= 1 && <CardsComida comidas={ pegarDozeElementos() } />}
         <Footer />

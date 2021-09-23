@@ -74,6 +74,7 @@ function Bebidas() {
         <Category
           categories={ categoryList }
           onClick={ selectCategoryFilter }
+          onClickAll={ componentLoad }
         />
         {resultFetch.length > 1 && <CardsDrinks drinks={ pegarDozeElementos() } />}
         <Footer />
