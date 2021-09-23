@@ -28,10 +28,7 @@ function CardList({ object: { meals, drinks } }) {
 }
 
 CardList.propTypes = {
-  object: PropTypes.shape({
-    meals: PropTypes.objectOf(PropTypes.object),
-    drinks: PropTypes.objectOf(PropTypes.object),
-  }).isRequired,
-};
+  object: PropTypes.objectOf(PropTypes.object),
+}.isRequired;
 
 export default CardList;
