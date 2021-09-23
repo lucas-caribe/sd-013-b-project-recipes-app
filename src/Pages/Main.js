@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import Header from '../components/Header';
+import Header from '../Components/Header';
 
 const Main = () => {
   const { id, type, status } = useParams();
