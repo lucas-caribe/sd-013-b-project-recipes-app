@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Comidas from './pages/Comidas';
 import Bebidas from './pages/Bebidas';
+import Detalhes from './pages/Detalhes';
 import Explorar from './pages/Explorar';
 import ExplorarBebidas from './pages/ExplorarBebidas';
 import ExplorarComidas from './pages/ExplorarComidas';
@@ -33,7 +34,9 @@ function App() {
         <Route exact path="/explorar/comidas/area" component={ ExplorarOrigem } />
         <Route exact path="/explorar/comidas" component={ ExplorarComidas } />
         <Route exact path="/explorar/bebidas" component={ ExplorarBebidas } />
+        <Route exact path="/comidas/:id" component={ Detalhes } />
         <Route exact path="/comidas" component={ Comidas } />
+        <Route exact path="/bebidas/:id" component={ Detalhes } />
         <Route exact path="/bebidas" component={ Bebidas } />
         <Route exact path="/explorar" component={ Explorar } />
         <Route exact path="/perfil" component={ Perfil } />
