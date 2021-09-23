@@ -45,13 +45,11 @@ function Bebidas({ inputHeader }) {
         <Header pageTitle="Comida" />
         {global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.')}
       </div>
-
     );
   }
   if (resultFetch !== null) {
     return (
       <div>
-        {console.log(resultFetch)}
         <Header pageTitle="Bebidas" />
         <div>
           <label htmlFor="ingredient">
