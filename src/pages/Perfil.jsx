@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import useCurrentPage from '../context/hooks/useCurrentPage';
-import PropTypes from 'prop-types';
 
 function Perfil({ history }) {
   const [localEmail, setLocalEmail] = useState('');
@@ -21,7 +20,6 @@ function Perfil({ history }) {
   return (
     <div className="page">
       <Header />
-      <Footer />
       <h4 data-testid="profile-email">{localEmail}</h4>
       <button type="button" data-testid="profile-done-btn" onClick={ buttons.doneBtn }>
         Receitas Feitas
@@ -36,6 +34,7 @@ function Perfil({ history }) {
       <button type="button" data-testid="profile-logout-btn" onClick={ buttons.leaveBtn }>
         Sair
       </button>
+      <Footer />
     </div>
   );
 }
