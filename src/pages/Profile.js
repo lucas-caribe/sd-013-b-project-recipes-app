@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../mini-components/Button';
 
-function PerfilPage() {
+function Profile() {
   function getEmail() {
     const localStorageEmail = JSON.parse(localStorage.getItem('user'));
     return localStorageEmail.email;
@@ -38,4 +38,4 @@ function PerfilPage() {
   );
 }
 
-export default PerfilPage;
+export default Profile;

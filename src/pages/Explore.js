@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../mini-components/Button';
 
-function ExplorePage() {
+function Explore() {
   return (
     <main>
       <Link to="/explorar/comidas">
@@ -23,4 +23,4 @@ function ExplorePage() {
   );
 }
 
-export default ExplorePage;
+export default Explore;

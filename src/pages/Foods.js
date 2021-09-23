@@ -1,10 +1,10 @@
 import React from 'react';
 
-function Comidas() {
+function Foods() {
   return (
     <div>
       <h1>COMIDAS</h1>
     </div>
   );
 }
-export default Comidas;
+export default Foods;
