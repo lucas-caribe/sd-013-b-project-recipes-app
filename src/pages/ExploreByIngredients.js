@@ -1,3 +1,4 @@
+// import PropTypes from 'prop-types';
 import React, { useEffect, useState, useContext } from 'react';
 // import { Link } from 'react-router-dom';
 import { useLocation, Link } from 'react-router-dom';
@@ -51,7 +52,7 @@ export default function ExploreByIngredients() {
             .map(({ strIngredient1 }, index) => (
               <Link
                 key={ index }
-                to="/comidas"
+                to="/bebidas"
                 data-testid={ `${index}-ingredient-card` }
                 onClick={ () => setIngredientFilter(strIngredient1) }
               >
@@ -83,6 +84,7 @@ export default function ExploreByIngredients() {
           .slice(0, TWELVE)
           .map(({ strIngredient, idIngredient }, index) => (
             <Link
+              // type="button"
               key={ idIngredient }
               to="/comidas"
               onClick={ () => setIngredientFilter(strIngredient) }
@@ -107,3 +109,9 @@ export default function ExploreByIngredients() {
     </div>
   );
 }
+
+// ExploreByIngredients.propTypes = {
+//   history: PropTypes.shape({
+//     push: PropTypes.func,
+//   }).isRequired,
+// };
