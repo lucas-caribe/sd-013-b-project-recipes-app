@@ -1,7 +1,14 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback } from 'react';
+
+import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 
-// import { AuthContext } from './AuthContext';
+import { AuthContext } from './AuthContext';
+import { RecipesContext } from './RecipesContext';
 
 //   {
 //     isOpen: false, // Flag para indicar se a searchBar está visível ou não
@@ -14,11 +21,14 @@ import PropTypes from 'prop-types';
 export const SearchBarContext = createContext();
 
 export const SearchBarProvider = ({ children }) => {
+  const history = useHistory();
+
   const [isOpen, setIsOpen] = useState(false);
   const [term, setTerm] = useState('');
   const [option, setOption] = useState('');
-  // const { page } = useContext(AuthContext);
-  const page = 'comidas';
+
+  const { page } = useContext(AuthContext);
+  const { setMealsList, setCocktailsList } = useContext(RecipesContext);
 
   const toggleSearchBar = () => {
     setIsOpen((prevState) => !prevState);
@@ -29,39 +39,65 @@ export const SearchBarProvider = ({ children }) => {
     setOption(searchOption);
   };
 
-  const fetchByOption = async (url, searchOption, searchTerm) => {
+  const checkResult = useCallback((result) => {
+    if (result.meals && result.meals.length === 1) {
+      history.push(`/comidas/${result.meals[0].idMeal}`);
+    }
+    if (result.drinks && result.drinks.length === 1) {
+      history.push(`/bebidas/${result.drinks[0].idDrink}`);
+    }
+    if (result.meals && result.meals.length > 1) {
+      setMealsList(result.meals);
+    }
+    if (result.drinks && result.drinks.length > 1) {
+      setCocktailsList(result.drinks);
+    }
+    if (result.meals === null) {
+      global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      return null;
+    }
+    if (result.drinks === null) {
+      global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      return null;
+    }
+  }, [history, setMealsList, setCocktailsList]);
+
+  const fetchByOption = useCallback(async (url, searchOption, searchTerm) => {
     switch (searchOption) {
     case 'ingredient': {
       const response = await fetch(`https://www.${url}.com/api/json/v1/1/filter.php?i=${searchTerm}`);
       const result = await response.json();
-      return result;
+      checkResult(result);
+      break;
     }
     case 'name': {
-      const response = await fetch(`https://www.${url}.com/api/json/v1/1/filter.php?s=${searchTerm}`);
+      const response = await fetch(`https://www.${url}.com/api/json/v1/1/search.php?s=${searchTerm}`);
       const result = await response.json();
-      return result;
+      checkResult(result);
+      break;
     }
     case 'first-letter': {
       if (searchTerm.length > 1) {
         global.alert('Sua busca deve conter somente 1 (um) caracter');
         return null;
-      } const response = await fetch(`https://www.${url}.com/api/json/v1/1/filter.php?f=${searchTerm}`);
+      } const response = await fetch(`https://www.${url}.com/api/json/v1/1/search.php?f=${searchTerm}`);
       const result = await response.json();
-      return result;
+      checkResult(result);
+      break;
     }
     default:
       return null;
     }
-  };
+  }, [checkResult]);
 
   useEffect(() => {
     switch (page) {
-    case 'comidas': {
+    case '/comidas': {
       const mealURL = 'themealdb';
       fetchByOption(mealURL, option, term);
       break;
     }
-    case 'bebidas': {
+    case '/bebidas': {
       const cocktailURL = 'thecocktaildb';
       fetchByOption(cocktailURL, option, term);
       break;
@@ -69,7 +105,7 @@ export const SearchBarProvider = ({ children }) => {
     default:
       break;
     }
-  }, [term, option]);
+  }, [page, term, option, fetchByOption]);
 
   return (
     <SearchBarContext.Provider
