@@ -3,9 +3,6 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Provider from './context/Provider';
-import ExplorarComidas from './pages/ExplorarComidas';
-import ExplorarBebidas from './pages/ExplorarBebidas';
-import BebidaAleatoria from './pages/BebidaAleatoria';
 import {
   Login,
   Comidas,
@@ -13,7 +10,10 @@ import {
   Explorar,
   Perfil,
   Feitas,
-  Favoritas } from './pages/index';
+  Favoritas,
+  ExplorarComidas,
+  ExplorarBebidas,
+  BebidaAleatoria } from './pages/index';
 
 function App() {
   return (
