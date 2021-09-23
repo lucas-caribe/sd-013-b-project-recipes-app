@@ -20,9 +20,6 @@ export default function Food() {
   const getMealId = recipesState.map((meal) => meal.idMeal);
   const limits = 12;
   const newRecipe = [];
-  if (recipesState.length > 0 && !redirect) {
-    newRecipe.push(...recipesState.slice(0, limits));
-  }
 
   useEffect(() => {
     async function fetchIngredients() {
@@ -37,7 +34,11 @@ export default function Food() {
     if (ingredientFilter !== '') {
       fetchIngredients();
     }
-  }, []);
+  }, [ingredientFilter]);
+
+  if (recipesState.length > 0 && !redirect) {
+    newRecipe.push(...recipesState.slice(0, limits));
+  }
 
   return (
     <div>

@@ -19,9 +19,6 @@ export default function Drinks() {
   const getDrinksId = recipesState.map((drink) => drink.idDrink);
   const limits = 12;
   const newRecipe = [];
-  if (recipesState.length > 0 && !redirect) {
-    newRecipe.push(...recipesState.slice(0, limits));
-  }
 
   useEffect(() => {
     async function fetchDrinksIngredient() {
@@ -35,7 +32,11 @@ export default function Drinks() {
     if (ingredientFilter !== '') {
       fetchDrinksIngredient();
     }
-  }, []);
+  }, [ingredientFilter]);
+
+  if (recipesState.length > 0 && !redirect) {
+    newRecipe.push(...recipesState.slice(0, limits));
+  }
 
   return (
     <div>
