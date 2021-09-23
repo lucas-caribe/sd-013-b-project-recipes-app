@@ -12,7 +12,7 @@ function RecipeDetails(props) {
   const history = useHistory();
   // console.log(history);
   const info = getFoodOrDrinkRecipe(history.location.state);
-  // console.log(info);
+  // console.log(infoas);
 
   return (
     <div className="details-page">
