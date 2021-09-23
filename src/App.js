@@ -10,6 +10,7 @@ import {
   Explorar,
   ExplorarComidas,
   ExplorarBebidas,
+  ExplorarComidasIngredientes as ExplComidasIng,
   Perfil,
   Feitas,
   Favoritas } from './pages/index';
@@ -23,6 +24,7 @@ function App() {
         <Route exact path="/bebidas" component={ Bebidas } />
         <Route exact path="/explorar" component={ Explorar } />
         <Route exact path="/explorar/comidas" component={ ExplorarComidas } />
+        <Route exact path="/explorar/comidas/ingredientes" component={ ExplComidasIng } />
         <Route exact path="/explorar/bebidas" component={ ExplorarBebidas } />
         <Route exact path="/perfil" component={ Perfil } />
         <Route exact path="/receitas-feitas" component={ Feitas } />
