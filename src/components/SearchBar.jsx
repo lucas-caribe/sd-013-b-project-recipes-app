@@ -12,7 +12,7 @@ export default function SearchBar({ page }) {
   const [name, setName] = useState(false);
   const [letter, setLetter] = useState(false);
   const { foodState, setFoodState, setDrinkState } = useContext(FoodContext);
-  const history = useHistory();
+  // const history = useHistory();
 
   const checkLetter = (input) => {
     if (input.length !== 1) {
@@ -92,7 +92,13 @@ export default function SearchBar({ page }) {
   }
 
   useEffect(() => {
-    if (Object.keys(foodState).length === 1) return (<Redirect to={ `/comidas/${foodState.meals[0].idMeal}` } />);
+    if (Object.keys(foodState).length === 1) {
+      return (<Redirect
+        to={
+          `/comidas/${foodState.meals[0].idMeal}`
+        }
+      />);
+    }
   }, [foodState]);
 
   return (
