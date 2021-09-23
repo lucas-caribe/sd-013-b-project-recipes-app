@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router';
-import Footer from '../../components/Footer';
 import AppContext from '../../context/AppContext';
 
 export default function Login() {
