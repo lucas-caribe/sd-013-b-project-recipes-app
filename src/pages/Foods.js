@@ -12,17 +12,17 @@ export default function Food() {
     setIcon: true,
   };
   const { ingredientFilter } = useContext(RecipeContext);
-  const [useIngredient, setUseIngredient] = useState([]);
+  const [useIngredient, setUseIngredient] = useState(false);
 
   const history = useHistory();
 
   const { recipesState, redirect } = useContext(RecipeContext);
   const getMealId = recipesState.map((meal) => meal.idMeal);
   const limits = 12;
-  // const newRecipe = [];
-  // if (recipesState.length > 0 && !redirect) {
-  //   newRecipe.push(...recipesState.slice(0, limits));
-  // }
+  const newRecipe = [];
+  if (recipesState.length > 0 && !redirect) {
+    newRecipe.push(...recipesState.slice(0, limits));
+  }
 
   useEffect(() => {
     async function fetchIngredients() {
@@ -42,8 +42,8 @@ export default function Food() {
   return (
     <div>
       <Header value={ pageTitle } />
-      { redirect && useIngredient.length === 0 ? history.push(`/comidas/${getMealId}`) : (
-        <MainRecipePage type="meals" recipesState={ useIngredient } />
+      { redirect ? history.push(`/comidas/${getMealId}`) : (
+        <MainRecipePage type="meals" recipesState={ useIngredient || newRecipe } />
       ) }
       <Footer />
     </div>
