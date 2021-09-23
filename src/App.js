@@ -10,7 +10,7 @@ import {
   Explorar,
   ExplorarComidas,
   ExplorarComidasIngredientes as ExplComidasIng,
-  ExplorarComidasLocal,
+  ExplorarComidasArea,
   ExplorarBebidas,
   ExplorarBebidasIngredientes as ExplBebidasIng,
   Perfil,
@@ -27,7 +27,7 @@ function App() {
         <Route exact path="/explorar" component={ Explorar } />
         <Route exact path="/explorar/comidas" component={ ExplorarComidas } />
         <Route exact path="/explorar/comidas/ingredientes" component={ ExplComidasIng } />
-        <Route exact path="/explorar/comidas/area" component={ ExplorarComidasLocal } />
+        <Route exact path="/explorar/comidas/area" component={ ExplorarComidasArea } />
         <Route exact path="/explorar/bebidas" component={ ExplorarBebidas } />
         <Route exact path="/explorar/bebidas/ingredientes" component={ ExplBebidasIng } />
         <Route exact path="/perfil" component={ Perfil } />
