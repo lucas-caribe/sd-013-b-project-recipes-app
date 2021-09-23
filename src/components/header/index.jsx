@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
+import SearchBar from '../searchBar';
 
 function Header(props) {
+  const [TogleeInput, setTogleeInput] = useState(false);
+  const [RecipeBarInput, setRecipeBarInput] = useState('');
+  const history = useHistory();
+
+  useEffect(() => {
+    const { location: { pathname } } = history;
+    if (pathname === '/comidas') { setRecipeBarInput('meal'); }
+    if (pathname === '/bebidas') { setRecipeBarInput('cocktail'); }
+  }, [history]);
   const { titlePage, hasSearchIcon } = props;
+  const handleClick = () => { setTogleeInput((prevState) => !prevState); };
   return (
     <div>
       <header>
@@ -17,11 +28,22 @@ function Header(props) {
             data-testid="profile-top-btn"
           />
         </Link>
-        {hasSearchIcon && <img
-          src={ searchIcon }
-          alt="searchIcon"
-          data-testid="search-top-btn"
-        />}
+        {
+          hasSearchIcon
+        && (
+          <button
+            type="button"
+            onClick={ handleClick }
+          >
+            <img
+              src={ searchIcon }
+              alt="searchIcon"
+              data-testid="search-top-btn"
+            />
+          </button>
+        )
+        }
+        {TogleeInput && <SearchBar recipe={ RecipeBarInput } />}
       </header>
     </div>
   );
