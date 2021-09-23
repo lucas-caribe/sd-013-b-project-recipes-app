@@ -51,6 +51,14 @@ export const SearchBarProvider = ({ children }) => {
     if (result.drinks && result.drinks.length > 1) {
       getRecipesList(result.drinks);
     }
+    if (result.meals === null) {
+      global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      return null;
+    }
+    if (result.drinks === null) {
+      global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      return null;
+    }
   }, [history, getRecipesList]);
 
   const fetchByOption = useCallback(async (url, searchOption, searchTerm) => {
