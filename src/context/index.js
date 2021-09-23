@@ -8,18 +8,18 @@ import { DetailsProvider } from './DetailsContext';
 
 const Provider = ({ children }) => (
   <AuthProvider>
-    <SearchBarProvider>
-      <RecipesProvider>
+    <RecipesProvider>
+      <SearchBarProvider>
         <DetailsProvider>
           { children }
         </DetailsProvider>
-      </RecipesProvider>
-    </SearchBarProvider>
+      </SearchBarProvider>
+    </RecipesProvider>
   </AuthProvider>
 );
 
 Provider.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  children: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default Provider;

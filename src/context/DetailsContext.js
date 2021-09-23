@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-const DetailsContext = createContext({
+export const DetailsContext = createContext({
   item: {
     // Todas as chaves da API.
     isFavorite: false, // Indica se a receita foi favoritada ou não
@@ -17,7 +17,7 @@ export const DetailsProvider = ({ children }) => (
 );
 
 DetailsProvider.propTypes = {
-  children: PropTypes.arrayOf(Proptypes.elements).isRequired,
+  children: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export const useDetails = () => useContext(DetailsContext);

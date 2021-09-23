@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-const RecipesContext = createContext({
+export const RecipesContext = createContext({
   meals: {
     categories: [], // Lista de categorias recuperadas pela API
     list: [], // Lista de comidas recuperadas pela API
@@ -25,7 +25,7 @@ export const RecipesProvider = ({ children }) => (
 );
 
 RecipesProvider.propTypes = {
-  children: PropTypes.arrayOf(Proptypes.elements).isRequired,
+  children: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export const useRecipes = () => useContext(RecipesContext);
