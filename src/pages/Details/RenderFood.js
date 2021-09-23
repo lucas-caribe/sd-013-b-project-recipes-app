@@ -44,7 +44,7 @@ export default function RenderFood(id) {
 
   if (loading) {
     return <h2>Loading</h2>;
-  }// teste git
+  }// teste git 
   const ingredients = [];
   const quantity = [];
   const max = 20;
