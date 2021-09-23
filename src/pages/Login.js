@@ -16,7 +16,7 @@ export default function Login({ history }) {
     localStorage.setItem('user', JSON.stringify(userEmail));
     history.push('/comidas');
   }
-  console.log(history);
+  console.log(setLogin);
   const number = 6;
   let handleButton = true;
   if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/
