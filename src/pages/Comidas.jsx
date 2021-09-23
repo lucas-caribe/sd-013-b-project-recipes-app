@@ -10,7 +10,7 @@ export default function Comidas() {
     <div>
       <Header titlePage="Comidas" hasSearchIcon />
       <SearchBar recipe="meal" />
-      <MealList />
+      {/* <MealList /> */}
       <MainCategorys />
       <MealsMainList />
     </div>

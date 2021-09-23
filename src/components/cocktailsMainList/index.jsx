@@ -1,26 +1,22 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import { fetchCocktailArray } from '../../services/fetchitens';
 import MainList from '../mainList';
 
-const NUMBER_FOOD_CARD_MAIN = 12;
+const THE_LAST_ONE = 12;
 
 export default function CocktailsMainList() {
   const [CockTailListState, setCockTailList] = useState([]);
-  const mainListFilterByCategory = useSelector((state) => state.mainListFilter);
-
-  const forEach = (arrayForLooop) => {
-    arrayForLooop.forEach((meal, index) => {
-      if (index < NUMBER_FOOD_CARD_MAIN) {
-        setCockTailList((prevState) => ([...prevState, meal]));
-      }
-    });
-  };
+  const mainListInGlobal = useSelector((state) => state.itensFilter.results);
+  const hasFilter = useSelector((state) => state.categoryFilter);
+  const history = useHistory();
 
   const fetchRandoCockTail = useCallback(
     async () => {
       const { drinks } = await fetchCocktailArray();
-      forEach(drinks);
+      const drinksListArray = drinks.slice(0, THE_LAST_ONE);
+      setCockTailList([...drinksListArray]);
     }, [],
   );
 
@@ -29,15 +25,30 @@ export default function CocktailsMainList() {
   }, [fetchRandoCockTail]);
 
   useEffect(() => {
-    if (mainListFilterByCategory.length > 0) {
+    if (mainListInGlobal.length > 0) {
       setCockTailList([]);
-      forEach(mainListFilterByCategory);
+      const drinksListArray = mainListInGlobal.slice(0, THE_LAST_ONE);
+      setCockTailList([...drinksListArray]);
     }
-  }, [mainListFilterByCategory]);
+  }, [mainListInGlobal]);
+
+  useEffect(() => {
+    if (mainListInGlobal.length > 0) {
+      setCockTailList([]);
+      const mealsListArray = mainListInGlobal.slice(0, THE_LAST_ONE);
+      setCockTailList([...mealsListArray]);
+    }
+  }, [mainListInGlobal]);
+
+  useEffect(() => {
+    if (mainListInGlobal && mainListInGlobal.length === 1 && !hasFilter) {
+      history.push(`/comidas/${mainListInGlobal[0].idMeal}`);
+    }
+  }, [mainListInGlobal, history]);
 
   return (
     <div>
-      <MainList arrayForMap={ CockTailListState } limitArray={ NUMBER_FOOD_CARD_MAIN } />
+      <MainList arrayForMap={ CockTailListState } limitArray={ THE_LAST_ONE } />
     </div>
   );
 }

@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import MealCard from './MealCard';
+import MainList from '../mainList';
 
 export default function MealList() {
   const THE_LAST_ONE = 12;
-  const mealsList = useSelector((state) => state.searchReducer.results.meals);
+  const mealsList = useSelector((state) => state.searchReducer.results);
   const [state, setState] = useState({ loading: true, Top12: [] });
   const history = useHistory();
 
@@ -32,7 +33,9 @@ export default function MealList() {
 
   return (
     <div className="card-list">
-      { state.loading || handleMeals() }
+      { state.loading || (
+        <MainList arrayForMap={ state.Top12 } limitArray={ THE_LAST_ONE } />
+      ) }
     </div>
   );
 }

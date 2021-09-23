@@ -9,7 +9,7 @@ import {
   fetchCocktailsItensByCategory, fetchMealsItensByCategory,
 } from '../../services/fetchItensByCategory';
 
-import { setMainListFilterCategory } from '../../redux/action';
+import { setItensOfFetch, SeFilterByCategory } from '../../redux/action';
 
 const LIMIT_CATEGORIES = 5;
 
@@ -20,18 +20,11 @@ export default function MainCategorys() {
 
   const dispatch = useDispatch();
 
-  const setState = (arrayForEach) => {
-    arrayForEach.forEach(({ strCategory }, index) => {
-      if (index < LIMIT_CATEGORIES) {
-        setCategoriesState((prevState) => ([...prevState, strCategory]));
-      }
-    });
-  };
-
   const fetchCategoriesMeals = useCallback(
     async () => {
       const { meals } = await fetchCategorysMeals();
-      setState(meals);
+      const categorysArray = meals.slice(0, LIMIT_CATEGORIES);
+      setCategoriesState([...categorysArray]);
     },
     [],
   );
@@ -39,7 +32,8 @@ export default function MainCategorys() {
   const fetchCategoriesCocktails = useCallback(
     async () => {
       const { drinks } = await fetchCategorysCoctails();
-      setState(drinks);
+      const categorysArray = drinks.slice(0, LIMIT_CATEGORIES);
+      setCategoriesState([...categorysArray]);
     },
     [],
   );
@@ -52,25 +46,27 @@ export default function MainCategorys() {
   const handlerClickFilterCategory = async ({ target: { innerHTML } }) => {
     if (pathname === '/comidas') {
       const { meals } = await fetchMealsItensByCategory(innerHTML);
-      dispatch(setMainListFilterCategory(meals));
+      dispatch(setItensOfFetch(meals));
+      dispatch(SeFilterByCategory(true));
     }
     if (pathname === '/bebidas') {
       const { drinks } = await fetchCocktailsItensByCategory(innerHTML);
-      dispatch(setMainListFilterCategory(drinks));
+      dispatch(setItensOfFetch(drinks));
+      dispatch(SeFilterByCategory(true));
     }
   };
 
   return (
     <div>
       {
-        CategoriesState.map((category) => (
+        CategoriesState.map(({ strCategory }) => (
           <button
-            key={ category }
+            key={ strCategory }
             type="button"
-            data-testid={ `${category}-category-filter` }
+            data-testid={ `${strCategory}-category-filter` }
             onClick={ handlerClickFilterCategory }
           >
-            {category}
+            {strCategory}
           </button>
         ))
       }

@@ -1,43 +1,52 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 import { fetchMealsArray } from '../../services/fetchitens';
+import { setItensOfFetch } from '../../redux/action';
 import MainList from '../mainList';
 
-const NUMBER_FOOD_CARD_MAIN = 12;
+const THE_LAST_ONE = 12;
 
 export default function MealsMainList() {
   const [MealsList, setMealsList] = useState([]);
-  const mainListFilterByCategory = useSelector((state) => state.mainListFilter);
-
-  const forEach = (arrayForLooop) => {
-    arrayForLooop.forEach((meal, index) => {
-      if (index < NUMBER_FOOD_CARD_MAIN) {
-        setMealsList((prevState) => ([...prevState, meal]));
-      }
-    });
-  };
+  const mainListInGlobal = useSelector((state) => state.itensFilter.results);
+  const hasFilter = useSelector((state) => state.categoryFilter);
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   const fetchRandoMeal = useCallback(
     async () => {
       const { meals } = await fetchMealsArray();
-      forEach(meals);
+      const mealsListArray = meals.slice(0, THE_LAST_ONE);
+      setMealsList([...mealsListArray]);
     }, [],
   );
 
   useEffect(() => {
     fetchRandoMeal();
-  }, [fetchRandoMeal]);
+    return () => {
+      dispatch(setItensOfFetch([]));
+    };
+  }, [fetchRandoMeal, dispatch]);
 
   useEffect(() => {
-    if (mainListFilterByCategory.length > 0) {
+    if (mainListInGlobal.length > 0) {
       setMealsList([]);
-      forEach(mainListFilterByCategory);
+      const mealsListArray = mainListInGlobal.slice(0, THE_LAST_ONE);
+      setMealsList([...mealsListArray]);
     }
-  }, [mainListFilterByCategory]);
+  }, [mainListInGlobal]);
+
+  useEffect(() => {
+    console.log(hasFilter);
+    if (mainListInGlobal && mainListInGlobal.length === 1 && hasFilter) {
+      history.push(`/comidas/${mainListInGlobal[0].idMeal}`);
+    }
+  }, [mainListInGlobal, history]);
 
   return (
     <div>
-      <MainList arrayForMap={ MealsList } limitArray={ NUMBER_FOOD_CARD_MAIN } />
+      <MainList arrayForMap={ MealsList } limitArray={ THE_LAST_ONE } />
     </div>
   );
 }
