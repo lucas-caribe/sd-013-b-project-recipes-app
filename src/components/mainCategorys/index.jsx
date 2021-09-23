@@ -46,11 +46,21 @@ export default function MainCategorys() {
     if (pathname === '/bebidas') { fetchCategoriesCocktails(); }
   }, [fetchCategoriesCocktails, fetchCategoriesMeals, pathname]);
 
+  const filterAllCategoryMeal = async () => {
+    dispatch(SetFilterByCategory({ hasFilter: true, filterBy: '' }));
+    const { meals } = await fetchMealsArray();
+    dispatch(setItensOfFetch(meals));
+  };
+
+  const filterAllCategoryCocktail = async () => {
+    dispatch(SetFilterByCategory({ hasFilter: true, filterBy: '' }));
+    const { drinks } = await fetchCocktailArray();
+    dispatch(setItensOfFetch(drinks));
+  };
+
   const filterCategoryMeal = async (filterBy) => {
     if (categoryFilter.filterBy === filterBy) {
-      dispatch(SetFilterByCategory({ hasFilter: true, filterBy: '' }));
-      const { meals } = await fetchMealsArray(filterBy);
-      dispatch(setItensOfFetch(meals));
+      filterAllCategoryMeal();
     } else {
       dispatch(SetFilterByCategory({ hasFilter: true, filterBy }));
       const { meals } = await fetchMealsItensByCategory(filterBy);
@@ -60,9 +70,7 @@ export default function MainCategorys() {
 
   const filterCategoryCocktail = async (filterBy) => {
     if (categoryFilter.filterBy === filterBy) {
-      dispatch(SetFilterByCategory({ hasFilter: true, filterBy: '' }));
-      const { drinks } = await fetchCocktailArray(filterBy);
-      dispatch(setItensOfFetch(drinks));
+      filterAllCategoryCocktail();
     } else {
       dispatch(SetFilterByCategory({ hasFilter: true, filterBy }));
       const { drinks } = await fetchCocktailsItensByCategory(filterBy);
@@ -79,8 +87,24 @@ export default function MainCategorys() {
     }
   };
 
+  const handlerClickFilterAll = async () => {
+    if (pathname === '/comidas') {
+      filterAllCategoryMeal();
+    }
+    if (pathname === '/bebidas') {
+      filterAllCategoryCocktail();
+    }
+  };
+
   return (
     <div>
+      <button
+        type="button"
+        onClick={ handlerClickFilterAll }
+        data-testId="All-category-filter"
+      >
+        All
+      </button>
       {
         CategoriesState.map(({ strCategory }) => (
           <button

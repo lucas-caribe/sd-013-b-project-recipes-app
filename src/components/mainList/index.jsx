@@ -7,12 +7,18 @@ export default function MainList({ arrayForMap = [], limitArray }) {
   const history = useHistory();
   const { location: { pathname } } = history;
 
+  const handlerCLickLink = (id) => {
+    history.push(`${pathname}/${id}`);
+  };
+
   const renderMeal = () => (
     arrayForMap.map(({ idMeal, strMealThumb, strMeal }, index) => (
       <li
         key={ idMeal }
         data-testid={ `${index}-recipe-card` }
         className="main-card"
+        onClick={ () => handlerCLickLink(idMeal) }
+        aria-hidden="true"
       >
         <img
           src={ strMealThumb }
@@ -37,6 +43,8 @@ export default function MainList({ arrayForMap = [], limitArray }) {
         key={ idDrink }
         data-testid={ `${index}-recipe-card` }
         className="main-card"
+        onClick={ () => handlerCLickLink(idDrink) }
+        aria-hidden="true"
       >
         <img
           src={ strDrinkThumb }
