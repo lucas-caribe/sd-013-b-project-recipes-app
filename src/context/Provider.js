@@ -7,9 +7,19 @@ function Provider({ children }) {
     user: '',
     password: '',
   });
+  const [currentFoodFilter, setCurrentFoodFilter] = useState('');
+  const [currentDrinkFilter, setCurrentDrinkFilter] = useState('');
+  const [page, setPage] = useState('Comidas');
 
   const contextValue = {
-    login, setLogin,
+    login,
+    setLogin,
+    currentFoodFilter,
+    setCurrentFoodFilter,
+    currentDrinkFilter,
+    setCurrentDrinkFilter,
+    page,
+    setPage,
   };
 
  
