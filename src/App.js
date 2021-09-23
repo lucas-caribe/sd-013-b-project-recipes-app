@@ -13,7 +13,9 @@ import Perfil from './pages/Perfil';
 import ReceitasFeitas from './pages/ReceitasFeitas';
 import ReceitasFavoritas from './pages/ReceitasFavoritas';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import DetalhesBebida from './pages/DetalhesBebida';
 import DetalhesComida from './pages/DetalhesComida';
+import './App.css';
 
 function App() {
   return (
@@ -21,8 +23,9 @@ function App() {
       <Switch>
         <Route exact path="/" component={ Login } />
         <Route exact path="/comidas" component={ Comidas } />
-        <Route exact path="/comidas/:id" component={ DetalhesComida } />
+        <Route path="/comidas/id" component={ DetalhesComida } />
         <Route exact path="/bebidas" component={ Bebidas } />
+        <Route exact path="/bebidas/:id" component={ DetalhesBebida } />
         <Route exact path="/explorar" component={ Explorar } />
         <Route exact path="/explorar/comidas" component={ ExplorarComidas } />
         <Route exact path="/explorar/bebidas" component={ ExplorarBebidas } />
