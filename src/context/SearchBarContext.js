@@ -7,6 +7,7 @@ import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 
 import { AuthContext } from './AuthContext';
+import { RecipesContext } from './RecipesContext';
 
 //   {
 //     isOpen: false, // Flag para indicar se a searchBar está visível ou não
@@ -20,10 +21,13 @@ export const SearchBarContext = createContext();
 
 export const SearchBarProvider = ({ children }) => {
   const history = useHistory();
+
   const [isOpen, setIsOpen] = useState(false);
   const [term, setTerm] = useState('');
   const [option, setOption] = useState('');
+
   const { page } = useContext(AuthContext);
+  const { getRecipesList } = useContext(RecipesContext);
 
   const toggleSearchBar = () => {
     setIsOpen((prevState) => !prevState);
@@ -38,10 +42,16 @@ export const SearchBarProvider = ({ children }) => {
     if (result.meals && result.meals.length === 1) {
       history.push(`/comidas/${result.meals[0].idMeal}`);
     }
-    if (result.drinks.length === 1) {
+    if (result.drinks && result.drinks.length === 1) {
       history.push(`/bebidas/${result.drinks[0].idDrink}`);
     }
-  }, [history]);
+    if (result.meals && result.meals.length > 1) {
+      getRecipesList(result.meals);
+    }
+    if (result.drinks && result.drinks.length > 1) {
+      getRecipesList(result.drinks);
+    }
+  }, [history, getRecipesList]);
 
   const fetchByOption = useCallback(async (url, searchOption, searchTerm) => {
     switch (searchOption) {
