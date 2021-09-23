@@ -1,21 +1,21 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { AiOutlineLoading3Quarters } from 'react-icons/all';
-import { fetchCocktailRandom } from '../../services/fetchRandomItens';
+import { fetchCocktailArray } from '../../services/fetchitens';
+import MainList from '../mainList';
 
 const NUMBER_FOOD_CARD_MAIN = 12;
 
 export default function CocktailsMainList() {
   const [CockTailListState, setCockTailList] = useState([]);
 
-  const setState = async () => {
-    const response = await fetchCocktailRandom();
-    setCockTailList((prevState) => ([...prevState, response.drinks[0]]));
+  const setState = async (index) => {
+    const response = await fetchCocktailArray();
+    setCockTailList((prevState) => ([...prevState, response.drinks[index]]));
   };
 
   const fetchRandoCockTail = useCallback(
     () => {
       for (let index = 0; index < NUMBER_FOOD_CARD_MAIN; index += 1) {
-        setState();
+        setState(index);
       }
     }, [],
   );
@@ -26,33 +26,7 @@ export default function CocktailsMainList() {
 
   return (
     <div>
-      <ul className="main-conteiner-list">
-        {
-          CockTailListState.length === NUMBER_FOOD_CARD_MAIN ? (
-            CockTailListState.map(({ idDrink, strDrinkThumb, strDrink }, index) => (
-              <li
-                key={ idDrink }
-                data-testid={ `${index}-recipe-card` }
-                className="main-card"
-              >
-                <img
-                  src={ strDrinkThumb }
-                  alt={ strDrink }
-                  data-testid={ `${index}-card-img` }
-                  className="main-card-image"
-                />
-                <p
-                  data-testid={ `${index}-card-name` }
-                  className="main-card-name"
-                >
-                  {strDrink}
-
-                </p>
-              </li>
-            ))
-          ) : <AiOutlineLoading3Quarters className="spinner-main" />
-        }
-      </ul>
+      <MainList arrayForMap={ CockTailListState } limitArray={ NUMBER_FOOD_CARD_MAIN } />
     </div>
   );
 }
