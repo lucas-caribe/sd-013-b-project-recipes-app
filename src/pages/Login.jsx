@@ -11,7 +11,7 @@ export default function Login() {
 
   const history = useHistory();
 
-  function handleChangeInput({ target: { name, value } }) {
+  const handleChangeInput = ({ target: { name, value } }) => {
     const objectLiteral = {
       Email() {
         setEmailValidation(validateEmail(value));
@@ -23,7 +23,7 @@ export default function Login() {
     };
     objectLiteral[name]();
     setInfosForms({ ...InfosForms, [name]: value });
-  }
+  };
 
   useEffect(() => {
     if (SenhaValidation && EmailValidation) {
@@ -33,7 +33,7 @@ export default function Login() {
     }
   }, [EmailValidation, SenhaValidation]);
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     localStorage.setItem('mealsToken', 1);
@@ -43,7 +43,7 @@ export default function Login() {
     localStorage.setItem('user', JSON.stringify({ email: InfosForms.Email }));
 
     history.push('/comidas');
-  }
+  };
 
   return (
     <LoginForm
