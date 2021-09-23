@@ -1,20 +1,36 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Card from './Card';
 
-function CardList({ foods }) {
-  console.log(foods);
+function CardList({ object: { meals, drinks } }) {
   return (
     <div>
-      {(foods !== undefined) ? foods.map((food, index) => (
-        <li key={ index }>{food.strMeal}</li>
+      {(meals) ? meals.map((food, index) => (
+        <Card
+          key={ index }
+          id={ index }
+          image={ food.strMealThumb }
+          name={ food.strMeal }
+        />
       )) : null}
+
+      {(drinks) ? drinks.map((drink, index) => (
+        <Card
+          key={ index }
+          id={ index }
+          image={ drink.strDrinkThumb }
+          name={ drink.strDrink }
+        />
+      )) : null}
+
     </div>
   );
 }
 
 CardList.propTypes = {
-  foods: PropTypes.shape({
-    map: PropTypes.func,
+  object: PropTypes.shape({
+    meals: PropTypes.objectOf(PropTypes.object),
+    drinks: PropTypes.objectOf(PropTypes.object),
   }).isRequired,
 };
 

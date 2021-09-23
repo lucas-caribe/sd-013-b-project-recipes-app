@@ -37,13 +37,18 @@ function Home({ search }) {
 
   return (
     <div>
-      {console.log(foods)}
       {
         (pathname === '/comidas')
           ? <Header setTitle="Comidas" /> : <Header setTitle="Bebidas" />
       }
 
-      {(foods.length > 0) ? <CardList foods={ foods } /> : <CardList drinks={ drinks } />}
+      {/* {(foods) ? <CardList object={ foods } /> : <CardList object={ drinks } /> } */}
+
+      {' '}
+      <CardList object={ foods } />
+
+      {' '}
+      <CardList object={ drinks } />
       {/* <Header setTitle="Comidas" /> */}
       {search === true ? <SearchBar /> : null}
 

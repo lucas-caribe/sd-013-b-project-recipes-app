@@ -22,3 +22,9 @@
   bottom: 0;
   position: fixed;
 }
+
+/* Card */
+.card-container img {
+  height: 100px;
+  width: 50%;
+}
