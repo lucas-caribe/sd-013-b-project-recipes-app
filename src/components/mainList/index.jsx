@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router';
-import { AiOutlineLoading3Quarters } from 'react-icons/all';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import PropTypes from 'prop-types';
 
 export default function MainList({ arrayForMap = [], limitArray }) {
