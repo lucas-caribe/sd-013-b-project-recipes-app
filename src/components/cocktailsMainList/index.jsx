@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { setItensOfFetch } from '../../redux/action';
-import { fetchCocktailArray } from '../../services/fetchitens';
+import { fetchCocktailArray } from '../../services/fetchItens';
 import MainList from '../mainList';
 
 const THE_LAST_ONE = 12;

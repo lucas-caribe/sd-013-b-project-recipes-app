@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
-import { fetchMealsArray } from '../../services/fetchitens';
+import { fetchMealsArray } from '../../services/fetchItens';
 import { setItensOfFetch } from '../../redux/action';
 import MainList from '../mainList';
 
@@ -10,7 +10,7 @@ const THE_LAST_ONE = 12;
 export default function MealsMainList() {
   const [MealsList, setMealsList] = useState([]);
   const mainListInGlobal = useSelector((state) => state.itensFilter.results);
-  const hasFilter = useSelector((state) => state.categoryFilter);
+  const { hasFilter } = useSelector((state) => state.categoryFilter);
   const history = useHistory();
   const dispatch = useDispatch();
 

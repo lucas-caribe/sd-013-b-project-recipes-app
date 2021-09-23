@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchCategorysMeals, fetchCategorysCoctails,
 } from '../../services/fetchCategorys';
@@ -11,10 +11,13 @@ import {
 
 import { setItensOfFetch, SetFilterByCategory } from '../../redux/action';
 
+import { fetchCocktailArray, fetchMealsArray } from '../../services/fetchItens';
+
 const LIMIT_CATEGORIES = 5;
 
 export default function MainCategorys() {
   const [CategoriesState, setCategoriesState] = useState([]);
+  const categoryFilter = useSelector((state) => state.categoryFilter);
   const history = useHistory();
   const { location: { pathname } } = history;
 
@@ -43,16 +46,36 @@ export default function MainCategorys() {
     if (pathname === '/bebidas') { fetchCategoriesCocktails(); }
   }, [fetchCategoriesCocktails, fetchCategoriesMeals, pathname]);
 
-  const handlerClickFilterCategory = async ({ target: { innerHTML } }) => {
-    if (pathname === '/comidas') {
-      dispatch(SetFilterByCategory(true));
-      const { meals } = await fetchMealsItensByCategory(innerHTML);
+  const filterCategoryMeal = async (filterBy) => {
+    if (categoryFilter.filterBy === filterBy) {
+      dispatch(SetFilterByCategory({ hasFilter: true, filterBy: '' }));
+      const { meals } = await fetchMealsArray(filterBy);
+      dispatch(setItensOfFetch(meals));
+    } else {
+      dispatch(SetFilterByCategory({ hasFilter: true, filterBy }));
+      const { meals } = await fetchMealsItensByCategory(filterBy);
       dispatch(setItensOfFetch(meals));
     }
-    if (pathname === '/bebidas') {
-      dispatch(SetFilterByCategory(true));
-      const { drinks } = await fetchCocktailsItensByCategory(innerHTML);
+  };
+
+  const filterCategoryCocktail = async (filterBy) => {
+    if (categoryFilter.filterBy === filterBy) {
+      dispatch(SetFilterByCategory({ hasFilter: true, filterBy: '' }));
+      const { drinks } = await fetchCocktailArray(filterBy);
       dispatch(setItensOfFetch(drinks));
+    } else {
+      dispatch(SetFilterByCategory({ hasFilter: true, filterBy }));
+      const { drinks } = await fetchCocktailsItensByCategory(filterBy);
+      dispatch(setItensOfFetch(drinks));
+    }
+  };
+
+  const handlerClickFilterCategory = async ({ target: { innerHTML } }) => {
+    if (pathname === '/comidas') {
+      filterCategoryMeal(innerHTML);
+    }
+    if (pathname === '/bebidas') {
+      filterCategoryCocktail(innerHTML);
     }
   };
 
