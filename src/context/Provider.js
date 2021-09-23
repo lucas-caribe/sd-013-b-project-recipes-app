@@ -9,7 +9,7 @@ function Provider({ children }) {
   });
   const [currentFoodFilter, setCurrentFoodFilter] = useState('');
   const [currentDrinkFilter, setCurrentDrinkFilter] = useState('');
-  const [page, setPage] = useState('comidas');
+  const [page, setPage] = useState('Comidas');
 
   const contextValue = {
     login,

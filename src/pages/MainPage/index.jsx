@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import DrinksMenu from '../../components/DrinksMenu';
-import MealsMenu from '../../components/MealsMenu';
+import RecipesMenu from '../../components/RecipesMenu';
 import AppContext from '../../context/AppContext';
 import fetchAPI from '../../services';
 
@@ -70,10 +69,10 @@ export default function MainPage() {
     }
   }, [currentDrinkFilter]);
 
-  if (history.location.pathname.includes('/comidas')) {
-    return <MealsMenu meals={ meals } mealsCategories={ mealsCategories } />;
-  }
-  if (history.location.pathname.includes('/bebidas')) {
-    return <DrinksMenu drinks={ drinks } drinksCategories={ drinksCategories } />;
-  }
+  return (history.location.pathname.includes('/comidas') ? (
+    <RecipesMenu route="Comidas" array={ meals } arrayCategories={ mealsCategories } />
+  ) : (
+    <RecipesMenu route="Bebidas" array={ drinks } arrayCategories={ drinksCategories } />
+  )
+  );
 }

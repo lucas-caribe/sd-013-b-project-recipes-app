@@ -5,7 +5,7 @@ import AppContext from '../../context/AppContext';
 
 export default function RecipeCard({ details, index }) {
   const { page } = useContext(AppContext);
-  if (page === 'comidas') {
+  if (page === 'Comidas') {
     return (
       <Link to={ `/comidas/${details.idMeal}` }>
         <div data-testid={ `${index}-recipe-card` } className="card">
@@ -19,7 +19,7 @@ export default function RecipeCard({ details, index }) {
       </Link>
     );
   }
-  if (page === 'bebidas') {
+  if (page === 'Bebidas') {
     return (
       <Link to={ `/bebidas/${details.idDrink}` }>
         <div data-testid={ `${index}-recipe-card` } className="card">
