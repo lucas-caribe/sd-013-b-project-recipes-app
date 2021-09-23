@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { Switch, Route } from 'react-router';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import LoginScreen from './pages/LoginScreen';
+import LoginScreen from './pages/login-screen';
 
 function App() {
   return (
