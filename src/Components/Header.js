@@ -1,15 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Icon from './Icon';
 
 const Header = (props) => {
-  const [showSearch, toggleSearch] = useState(false);
-  const { main, left, right } = props;
-  const searchClick = () => {
-    toggleSearch(!showSearch);
-  };
+  const { main, left, right, fright } = props;
 
   const renderIcon = (icon) => {
     if (icon === 'profile') {
@@ -20,14 +16,17 @@ const Header = (props) => {
       );
     } if (icon === 'search') {
       return (
-        <button type="button" onClick={ searchClick }>
-          <Icon icon={ icon } testid={ `${icon}-top-btn` } />
+        <button
+          type="button"
+          onClick={ () => {
+            fright();
+          } }
+        >
+          <Icon icon={ icon } testid="search-top-btn" />
         </button>
       );
     }
   };
-
-  const renderSearchBar = () => <input type="test" data-testid="search-input" />;
 
   return (
     <div>
@@ -41,8 +40,6 @@ const Header = (props) => {
 
       </div>
 
-      {showSearch ? renderSearchBar() : null}
-
     </div>
   );
 };
@@ -51,6 +48,7 @@ Header.propTypes = {
   main: PropTypes.string.isRequired,
   left: PropTypes.string.isRequired,
   right: PropTypes.string.isRequired,
+  fright: PropTypes.func.isRequired,
 };
 
 export default Header;
