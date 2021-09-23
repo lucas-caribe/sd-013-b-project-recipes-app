@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { fetchIngredienteBeb, fetchNameBeb,
-  fetchPrimeiraLetraBeb, getDrinksCategory } from '../services/fetchRadioBebidas';
+  fetchPrimeiraLetraBeb, getDrinksCategoriesList,
+  getDrinksCategoryFilter } from '../services/fetchRadioBebidas';
 import Header from '../components/Header';
 import CardsDrinks from '../components/CardsDrinks';
 import Footer from '../components/Footer';
@@ -14,15 +15,25 @@ function Bebidas() {
   const [resultFetch, setResultFetch] = useState([]);
   const { push } = useHistory();
   const [categoryList, setCategoryList] = useState([]);
+  const [alreadySelectedCategory, setAlreadySelectedCategory] = useState('');
 
   const componentLoad = async () => {
-    setCategoryList(await getDrinksCategory());
+    setCategoryList(await getDrinksCategoriesList());
     setResultFetch(await fetchNameBeb(''));
   };
 
   useEffect(() => {
     componentLoad();
   }, []);
+
+  const selectCategoryFilter = async (category) => {
+    if (alreadySelectedCategory === category) {
+      componentLoad();
+    } else {
+      setResultFetch(await getDrinksCategoryFilter(category));
+      setAlreadySelectedCategory(category);
+    }
+  };
 
   const verificaRadioFetch = async (input) => {
     switch (radioSelecionado) {
@@ -66,7 +77,11 @@ function Bebidas() {
           pageTitle="Bebidas"
           searchFuncs={ { setRadioSelecionado, verificaRadioFetch } }
         />
-        <Category categories={ categoryList } />
+        <Category
+          categories={ categoryList }
+          onClick={ selectCategoryFilter }
+          onClickAll={ componentLoad }
+        />
         {resultFetch.length > 1 && <CardsDrinks drinks={ pegarDozeElementos() } />}
         <Footer />
       </main>

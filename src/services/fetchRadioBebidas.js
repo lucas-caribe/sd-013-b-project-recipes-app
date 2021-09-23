@@ -18,8 +18,14 @@ export const fetchPrimeiraLetraBeb = async (input) => {
   return data.drinks;
 };
 
-export const getDrinksCategory = async () => {
+export const getDrinksCategoriesList = async () => {
   const response = await fetch(`${URL_BASE_API}/list.php?c=list`);
+  const data = await response.json();
+  return data.drinks;
+};
+
+export const getDrinksCategoryFilter = async (drink) => {
+  const response = await fetch(`${URL_BASE_API}/filter.php?c=${drink}`);
   const data = await response.json();
   return data.drinks;
 };

@@ -1,22 +1,27 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function CardsComida({ comidas }) {
   return (
     <div className="cards">
       {comidas.map((comida, index) => (
-        <div
+        <Link
+          to={ `/comidas/${comida.idMeal}` }
           key={ index }
-          data-testid={ `${index}-recipe-card` }
-          className="card-body"
         >
-          <img
-            data-testid={ `${index}-card-img` }
-            alt={ `Foto ${comida.strMeal}` }
-            src={ comida.strMealThumb }
-          />
-          <h4 data-testid={ `${index}-card-name` }>{comida.strMeal}</h4>
-        </div>
+          <div
+            data-testid={ `${index}-recipe-card` }
+            className="card-body"
+          >
+            <img
+              data-testid={ `${index}-card-img` }
+              alt={ `Foto ${comida.strMeal}` }
+              src={ comida.strMealThumb }
+            />
+            <h4 data-testid={ `${index}-card-name` }>{comida.strMeal}</h4>
+          </div>
+        </Link>
       ))}
     </div>
   );
