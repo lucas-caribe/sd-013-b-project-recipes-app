@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Login.css';
 import PropTypes from 'prop-types';
 import Input from './Input';
 import { useAuth } from '../../context';
@@ -28,35 +29,37 @@ function Login({ history }) {
     history.push('/comidas');
   }
   return (
-    <div>
-      <Input
-        type="text"
-        id="email-input"
-        name="email"
-        value={ email }
-        onChange={ ({ target }) => {
-          handleEmail(target.value);
-          passwordValidated();
-        } }
-      />
-      <Input
-        type="password"
-        id="password-input"
-        name="password"
-        value={ password }
-        onChange={ ({ target }) => {
-          setPassword(target.value);
-          passwordValidated();
-        } }
-      />
-      <button
-        onClick={ () => saveStorage() }
-        type="button"
-        data-testid="login-submit-btn"
-        disabled={ !loginValidated || !emailValidated() }
-      >
-        Entrar
-      </button>
+    <div className="login">
+      <fieldset>
+        <Input
+          type="text"
+          id="email-input"
+          name="email"
+          value={ email }
+          onChange={ ({ target }) => {
+            handleEmail(target.value);
+            passwordValidated();
+          } }
+        />
+        <Input
+          type="password"
+          id="password-input"
+          name="password"
+          value={ password }
+          onChange={ ({ target }) => {
+            setPassword(target.value);
+            passwordValidated();
+          } }
+        />
+        <button
+          onClick={ () => saveStorage() }
+          type="button"
+          data-testid="login-submit-btn"
+          disabled={ !loginValidated || !emailValidated() }
+        >
+          Entrar
+        </button>
+      </fieldset>
     </div>
   );
 }
