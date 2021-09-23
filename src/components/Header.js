@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
+import PropTypes from 'prop-types';
 
 import '../styles/header.css';
 
@@ -10,7 +11,7 @@ import Search from './Search';
 import createHeaderTitle from '../utils/createHeaderTitle';
 import isPageSearchable from '../utils/isPageSearchable';
 
-function Header() {
+function Header({ onSearch }) {
   const [displaySearchBar, setDisplaySearchBar] = useState(false);
   const history = useHistory();
 
@@ -19,6 +20,11 @@ function Header() {
 
   function handleProfile() {
     history.push('/perfil');
+  }
+
+  function searchHandler(results) {
+    onSearch(results);
+    setDisplaySearchBar(false);
   }
 
   return (
@@ -52,9 +58,13 @@ function Header() {
           </button>
         ) : <button type="button">{' '}</button>}
       </section>
-      {displaySearchBar && <Search page={ title } />}
+      {displaySearchBar && <Search onSearch={ searchHandler } page={ title } />}
     </header>
   );
 }
+
+Header.propTypes = {
+  onSearch: PropTypes.func.isRequired,
+};
 
 export default Header;
