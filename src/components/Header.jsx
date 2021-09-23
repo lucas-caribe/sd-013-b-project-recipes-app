@@ -32,18 +32,22 @@ function Header({ pageTitle, actionInpHeader, searchButton }) {
 
   return (
     <header className="app-header">
-      <button
-        type="button"
-        data-testid="profile-top-btn"
-        src={ profileIcon }
-        onClick={ () => history.push('/perfil') }
-      >
-        <img alt="icone-profile" src={ profileIcon } />
-      </button>
+      <div className="header-Items-container">
+        <button
+          type="button"
+          data-testid="profile-top-btn"
+          src={ profileIcon }
+          onClick={ () => history.push('/perfil') }
+        >
+          <img alt="icone-profile" src={ profileIcon } />
+        </button>
 
-      <h3 data-testid="page-title">{pageTitle}</h3>
+        <h3 data-testid="page-title">{pageTitle}</h3>
 
-      {searchButton && renderButton()}
+        <div>
+          {searchButton && renderButton()}
+        </div>
+      </div>
 
       {toggleButtonSearch && <input
         onChange={ ({ target }) => setSearchInput(target.value) }

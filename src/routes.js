@@ -19,7 +19,7 @@ import ReceitasFeitas from './pages/ReceitasFeitas';
 
 function Routes() {
   return (
-    <div className="main-content">
+    <div>
       <Switch className="test">
         <Route exact path="/" component={ Login } />
         <Route exact path="/comidas/:id/in-progress" component={ ProgressoComida } />

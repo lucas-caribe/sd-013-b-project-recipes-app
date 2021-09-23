@@ -3,8 +3,8 @@ import Header from '../components/Header';
 
 export default function ReceitasFeitas() {
   return (
-    <div>
+    <main className="main-content">
       <Header pageTitle="Receitas Feitas" searchButton={ false } />
-    </div>
+    </main>
   );
 }

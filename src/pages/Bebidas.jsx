@@ -4,9 +4,9 @@ import Header from '../components/Header';
 
 export default function Bebidas() {
   return (
-    <>
+    <main className="main-content">
       <Header pageTitle="Bebidas" />
       <Footer />
-    </>
+    </main>
   );
 }
