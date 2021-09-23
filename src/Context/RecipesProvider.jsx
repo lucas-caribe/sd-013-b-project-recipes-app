@@ -7,6 +7,7 @@ function RecipesProvider({ children }) {
   const [password, setPassword] = useState('');
   const [searchBar, setsearchBar] = useState(false);
   const [api, setApi] = useState({ meals: [], drinks: [] });
+  const [randomMeal, setRandomMeal] = useState({});
 
   const contextValue = { email,
     setEmail,
@@ -15,7 +16,9 @@ function RecipesProvider({ children }) {
     searchBar,
     setsearchBar,
     api,
-    setApi };
+    setApi,
+    randomMeal,
+    setRandomMeal };
 
   //   useEffect(() => {
   //     async function fetchData() {
