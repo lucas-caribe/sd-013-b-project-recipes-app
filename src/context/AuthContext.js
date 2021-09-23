@@ -14,13 +14,25 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [page, setPage] = useState('');
+  const [email, setEmail] = useState('');
 
   const handleMainPage = useCallback((pageSelected) => {
     setPage(pageSelected);
   }, []);
+  
+  function handleEmail(hotmail) {
+    setEmail(hotmail);
+  }
+ 
+  const context = {
+    email,
+    handleEmail,
+    page,
+    handleMainPage
+  };
 
   return (
-    <AuthContext.Provider value={ { page, handleMainPage } }>
+    <AuthContext.Provider value={ context }>
       { children }
     </AuthContext.Provider>
   );
