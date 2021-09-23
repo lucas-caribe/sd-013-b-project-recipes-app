@@ -59,12 +59,12 @@ export default function MainList({ arrayForMap = [], limitArray }) {
     <ul>
       {
 
-        arrayForMap.length !== limitArray && (
+        arrayForMap.length === 0 && (
           <AiOutlineLoading3Quarters className="spinner-main" />
         )
       }
       {
-        arrayForMap.length === limitArray && (
+        arrayForMap.length <= limitArray && (
           pathname === '/comidas' ? renderMeal() : renderCockTails()
         )
       }

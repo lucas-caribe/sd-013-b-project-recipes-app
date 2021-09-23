@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { fetchCocktailArray } from '../../services/fetchitens';
 import MainList from '../mainList';
 
@@ -6,23 +7,33 @@ const NUMBER_FOOD_CARD_MAIN = 12;
 
 export default function CocktailsMainList() {
   const [CockTailListState, setCockTailList] = useState([]);
+  const mainListFilterByCategory = useSelector((state) => state.mainListFilter);
 
-  const setState = async (index) => {
-    const response = await fetchCocktailArray();
-    setCockTailList((prevState) => ([...prevState, response.drinks[index]]));
+  const forEach = (arrayForLooop) => {
+    arrayForLooop.forEach((meal, index) => {
+      if (index < NUMBER_FOOD_CARD_MAIN) {
+        setCockTailList((prevState) => ([...prevState, meal]));
+      }
+    });
   };
 
   const fetchRandoCockTail = useCallback(
-    () => {
-      for (let index = 0; index < NUMBER_FOOD_CARD_MAIN; index += 1) {
-        setState(index);
-      }
+    async () => {
+      const { drinks } = await fetchCocktailArray();
+      forEach(drinks);
     }, [],
   );
 
   useEffect(() => {
     fetchRandoCockTail();
   }, [fetchRandoCockTail]);
+
+  useEffect(() => {
+    if (mainListFilterByCategory.length > 0) {
+      setCockTailList([]);
+      forEach(mainListFilterByCategory);
+    }
+  }, [mainListFilterByCategory]);
 
   return (
     <div>

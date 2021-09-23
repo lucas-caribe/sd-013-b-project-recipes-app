@@ -3,6 +3,7 @@ import {
   fetchMealByIngredient,
   fetchMealByName,
 } from '../../services/fetchMeals';
+
 import {
   fetchCocktailByFirstLetter,
   fetchCocktailByIngredient,
@@ -14,6 +15,7 @@ import {
 export const SET_USER = 'SET_USER';
 export const SET_MEAL = 'SET_MEAL';
 export const SET_COCKTAIL = 'SET_COCKTAIL';
+export const SET_MAIN_LIST_FILTER_CATEGORY = 'SET_MAIN_LIST_FILTER_CATEGORY';
 
 // //Actions Creator
 
@@ -29,7 +31,11 @@ export const setCocktail = (payload) => ({
   payload,
 });
 
-// // Thunk
+export const setMainListFilterCategory = (payload) => (
+  { type: SET_MAIN_LIST_FILTER_CATEGORY, payload }
+);
+
+// Thunk
 
 export const fetchSearchThunk = ({ value, type, recipe }) => async (dispatch) => {
   if (recipe === 'meal') {

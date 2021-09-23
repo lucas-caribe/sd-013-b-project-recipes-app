@@ -1,8 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import { useDispatch } from 'react-redux';
 import {
   fetchCategorysMeals, fetchCategorysCoctails,
 } from '../../services/fetchCategorys';
+
+import {
+  fetchCocktailsItensByCategory, fetchMealsItensByCategory,
+} from '../../services/fetchItensByCategory';
+
+import { setMainListFilterCategory } from '../../redux/action';
 
 const LIMIT_CATEGORIES = 5;
 
@@ -10,6 +17,8 @@ export default function MainCategorys() {
   const [CategoriesState, setCategoriesState] = useState([]);
   const history = useHistory();
   const { location: { pathname } } = history;
+
+  const dispatch = useDispatch();
 
   const setState = (arrayForEach) => {
     arrayForEach.forEach(({ strCategory }, index) => {
@@ -36,10 +45,20 @@ export default function MainCategorys() {
   );
 
   useEffect(() => {
-    console.log(pathname);
     if (pathname === '/comidas') { fetchCategoriesMeals(); }
     if (pathname === '/bebidas') { fetchCategoriesCocktails(); }
-  }, []);
+  }, [fetchCategoriesCocktails, fetchCategoriesMeals, pathname]);
+
+  const handlerClickFilterCategory = async ({ target: { innerHTML } }) => {
+    if (pathname === '/comidas') {
+      const { meals } = await fetchMealsItensByCategory(innerHTML);
+      dispatch(setMainListFilterCategory(meals));
+    }
+    if (pathname === '/bebidas') {
+      const { drinks } = await fetchCocktailsItensByCategory(innerHTML);
+      dispatch(setMainListFilterCategory(drinks));
+    }
+  };
 
   return (
     <div>
@@ -49,6 +68,7 @@ export default function MainCategorys() {
             key={ category }
             type="button"
             data-testid={ `${category}-category-filter` }
+            onClick={ handlerClickFilterCategory }
           >
             {category}
           </button>
