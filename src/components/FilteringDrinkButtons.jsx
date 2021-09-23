@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import RecipesContext from '../context/RecipesContext';
 import { fetchDrinksFilters } from '../services/fetchDrinks';
-import generateButtons from '../helpers/generateButtons';
+import GenerateButtons from './GenerateButtons';
 
 function FilteringDrinkButtons() {
   const {
@@ -17,7 +17,7 @@ function FilteringDrinkButtons() {
 
   return (
     <div>
-      { drinks && filterDrinkButtons ? generateButtons(filterDrinkButtons) : null }
+      { drinks && filterDrinkButtons ? GenerateButtons(filterDrinkButtons, '') : null }
     </div>
   );
 }
