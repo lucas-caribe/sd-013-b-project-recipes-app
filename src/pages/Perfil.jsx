@@ -1,7 +1,7 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import { useHistory } from 'react-router-dom';
 import Button from '../components/Button';
 
 export default function Perfil() {
@@ -30,9 +30,6 @@ export default function Perfil() {
   return (
     <main className="main-content">
       <Header pageTitle="Perfil" searchButton={ false } />
-      <Footer />
-    </main>
-    <div>
       <h4 data-testid="profile-email">{ getStorage() }</h4>
       <Button
         text="Receitas Feitas"
@@ -49,6 +46,7 @@ export default function Perfil() {
         dataTest="profile-logout-btn"
         onClick={ getLoginPage }
       />
-    </div>
+      <Footer />
+    </main>
   );
 }
