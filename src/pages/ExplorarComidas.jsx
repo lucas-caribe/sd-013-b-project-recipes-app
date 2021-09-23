@@ -1,9 +1,12 @@
 import React from 'react';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 export default function ExplorarComidas() {
   return (
-    <div>
-      <p>Explorar comidas</p>
-    </div>
+    <main className="main-content">
+      <Header pageTitle="Explorar Comidas" searchButton={ false } />
+      <Footer />
+    </main>
   );
 }

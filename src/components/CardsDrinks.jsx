@@ -23,7 +23,7 @@ function CardsDrinks({ drinks }) {
 }
 
 CardsDrinks.propTypes = {
-  drinks: PropTypes.string.isRequired,
+  drinks: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 export default CardsDrinks;

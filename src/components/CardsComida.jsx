@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 function CardsComida({ comidas }) {
-  console.log(comidas);
   return (
     <div className="cards">
       {comidas.map((comida, index) => (
@@ -24,9 +23,7 @@ function CardsComida({ comidas }) {
 }
 
 CardsComida.propTypes = {
-  comidas: PropTypes.shape({
-    map: PropTypes.func,
-  }).isRequired,
+  comidas: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 export default CardsComida;
