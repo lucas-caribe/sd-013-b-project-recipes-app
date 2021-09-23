@@ -38,11 +38,10 @@ export default function MealsMainList() {
   }, [mainListInGlobal]);
 
   useEffect(() => {
-    console.log(hasFilter);
-    if (mainListInGlobal && mainListInGlobal.length === 1 && hasFilter) {
+    if (mainListInGlobal && mainListInGlobal.length === 1 && !hasFilter) {
       history.push(`/comidas/${mainListInGlobal[0].idMeal}`);
     }
-  }, [mainListInGlobal, history]);
+  }, [mainListInGlobal, history, hasFilter]);
 
   return (
     <div>

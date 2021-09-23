@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import { setItensOfFetch } from '../../redux/action';
 import { fetchCocktailArray } from '../../services/fetchitens';
 import MainList from '../mainList';
 
@@ -11,6 +12,7 @@ export default function CocktailsMainList() {
   const mainListInGlobal = useSelector((state) => state.itensFilter.results);
   const hasFilter = useSelector((state) => state.categoryFilter);
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const fetchRandoCockTail = useCallback(
     async () => {
@@ -22,7 +24,10 @@ export default function CocktailsMainList() {
 
   useEffect(() => {
     fetchRandoCockTail();
-  }, [fetchRandoCockTail]);
+    return () => {
+      dispatch(setItensOfFetch([]));
+    };
+  }, [dispatch, fetchRandoCockTail]);
 
   useEffect(() => {
     if (mainListInGlobal.length > 0) {
@@ -41,8 +46,8 @@ export default function CocktailsMainList() {
   }, [mainListInGlobal]);
 
   useEffect(() => {
-    if (mainListInGlobal && mainListInGlobal.length === 1 && !hasFilter) {
-      history.push(`/comidas/${mainListInGlobal[0].idMeal}`);
+    if (mainListInGlobal && mainListInGlobal.length === 1 && hasFilter) {
+      history.push(`/bebidas/${mainListInGlobal[0].idDrink}`);
     }
   }, [mainListInGlobal, history]);
 

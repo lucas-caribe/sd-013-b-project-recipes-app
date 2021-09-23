@@ -11,7 +11,8 @@ export function fetchCocktailByName(type) {
     .then((response) => response.json())
     .then((response) => {
       if (!response.drinks) {
-        return global.alert(Error);
+        global.alert(Error);
+        return { drinks: [] };
       }
       return response;
     });

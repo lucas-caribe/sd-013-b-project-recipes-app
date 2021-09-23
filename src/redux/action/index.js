@@ -30,7 +30,7 @@ export const setMainListFilterCategory = (payload) => (
   { type: SET_MAIN_LIST_FILTER_CATEGORY, payload }
 );
 
-export const SeFilterByCategory = (payload) => (
+export const SetFilterByCategory = (payload) => (
   { type: SET_MAIN_LIST_FILTER_CATEGORY, payload }
 );
 

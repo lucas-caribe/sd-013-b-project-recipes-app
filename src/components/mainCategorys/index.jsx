@@ -9,7 +9,7 @@ import {
   fetchCocktailsItensByCategory, fetchMealsItensByCategory,
 } from '../../services/fetchItensByCategory';
 
-import { setItensOfFetch, SeFilterByCategory } from '../../redux/action';
+import { setItensOfFetch, SetFilterByCategory } from '../../redux/action';
 
 const LIMIT_CATEGORIES = 5;
 
@@ -45,14 +45,14 @@ export default function MainCategorys() {
 
   const handlerClickFilterCategory = async ({ target: { innerHTML } }) => {
     if (pathname === '/comidas') {
+      dispatch(SetFilterByCategory(true));
       const { meals } = await fetchMealsItensByCategory(innerHTML);
       dispatch(setItensOfFetch(meals));
-      dispatch(SeFilterByCategory(true));
     }
     if (pathname === '/bebidas') {
+      dispatch(SetFilterByCategory(true));
       const { drinks } = await fetchCocktailsItensByCategory(innerHTML);
       dispatch(setItensOfFetch(drinks));
-      dispatch(SeFilterByCategory(true));
     }
   };
 

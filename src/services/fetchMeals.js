@@ -3,15 +3,16 @@ const Error = 'Sinto muito, não encontramos nenhuma receita para esses filtros.
 export function fetchMealByIngredient(type) {
   return fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${type}`)
     .then((response) => response.json())
-    .then((response) => response);
-  // .catch(() => global.alert(Error));
+    .then((response) => response)
+    .catch(() => global.alert(Error));
 }
 export function fetchMealByName(type) {
   return fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${type}`)
     .then((response) => response.json())
     .then((response) => {
       if (!response.meals) {
-        return global.alert(Error);
+        global.alert(Error);
+        return { meals: [] };
       }
       return response;
     });
