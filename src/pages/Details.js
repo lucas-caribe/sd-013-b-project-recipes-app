@@ -1,11 +1,13 @@
 import React from 'react';
+import RecipeDetails from '../components/RecipeDatails';
 
 import '../styles/details.css';
 
 function Details() {
   return (
-    <div className="details-page">
-      <h1>Detalhes</h1>
+    <div>
+      <h1>Detalhe da receita</h1>
+      <RecipeDetails />
     </div>
   );
 }
