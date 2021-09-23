@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { Redirect, useHistory } from 'react-router';
 import { ingredientAPI, nameAPI, fistLetterAPI } from '../services/foodAPI';
 import { ingredientDrinkAPI,
   nameDrinkAPI, fistLetterDrinkAPI } from '../services/drinksAPI';
 import FoodContext from '../context/FoodContext';
-import { useHistory } from 'react-router';
 
 export default function SearchBar({ page }) {
   const [text, setText] = useState('');
   const [ingredient, setIngredient] = useState(false);
   const [name, setName] = useState(false);
   const [letter, setLetter] = useState(false);
-  const { setFoodState, setDrinkState } = useContext(FoodContext);
+  const { foodState, setFoodState, setDrinkState } = useContext(FoodContext);
   const history = useHistory();
 
   const checkLetter = (input) => {
@@ -85,12 +85,15 @@ export default function SearchBar({ page }) {
   function handleClick() {
     if (page === 'Comidas') {
       foodPageAPI();
-      history.push('/comidas/id');
     }
     if (page === 'Bebidas') {
       drinkPageAPI();
     }
   }
+
+  useEffect(() => {
+    if (Object.keys(foodState).length === 1) return (<Redirect to={ `/comidas/${foodState.meals[0].idMeal}` } />);
+  }, [foodState]);
 
   return (
     <div>
