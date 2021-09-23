@@ -1,23 +1,56 @@
-import React from 'react';
-import './Header.css'
+import React, { useState } from 'react';
+import './Header.css';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Icon from './Icon';
 
 const Header = (props) => {
-    return (
-        <div className="header">
+  const [showSearch, toggleSearch] = useState(false);
+  const { main, left, right } = props;
+  const searchClick = () => {
+    toggleSearch(!showSearch);
+  };
 
-            <button data-testid='profile-top-btn'>
-                <Icon icon="profile" />
-            </button>
+  const renderIcon = (icon) => {
+    if (icon === 'profile') {
+      return (
+        <Link to="/perfil">
+          <Icon icon={ icon } testid={ `${icon}-top-btn` } />
+        </Link>
+      );
+    } if (icon === 'search') {
+      return (
+        <button type="button" onClick={ searchClick }>
+          <Icon icon={ icon } testid={ `${icon}-top-btn` } />
+        </button>
+      );
+    }
+  };
 
-            <h2 data-testid='page-title'>{props.main}</h2>
+  const renderSearchBar = () => <input type="test" data-testid="search-input" />;
 
-            <button data-testid='search-top-btn'>
-                <Icon icon="search" />
-            </button>
-            
-        </div>
-    );
-}
+  return (
+    <div>
+      <div className="header">
+
+        {left !== 'none' ? renderIcon(left) : <div />}
+
+        <h2 data-testid="page-title">{main}</h2>
+
+        {right !== 'none' ? renderIcon(right) : <div />}
+
+      </div>
+
+      {showSearch ? renderSearchBar() : null}
+
+    </div>
+  );
+};
+
+Header.propTypes = {
+  main: PropTypes.string.isRequired,
+  left: PropTypes.string.isRequired,
+  right: PropTypes.string.isRequired,
+};
 
 export default Header;

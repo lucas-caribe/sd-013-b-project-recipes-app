@@ -1,37 +1,48 @@
 import React from 'react';
-import {blackheart, drink, explore, meal, profile, rockglass, search, share, whiteheart} from './svg'
+import PropTypes from 'prop-types';
+import BlackHeart from '../images/blackHeartIcon.svg';
+import Drink from '../images/drinkIcon.svg';
+import Explore from '../images/exploreIcon.svg';
+import Meal from '../images/mealIcon.svg';
+import Profile from '../images/profileIcon.svg';
+import RockGlass from '../images/rockGlass.svg';
+import Search from '../images/searchIcon.svg';
+import Share from '../images/shareIcon.svg';
+import WhiteHeart from '../images/whiteHeartIcon.svg';
 
-
-class Icon extends React.Component {
-  renderIcon = () => {
-    switch (this.props.icon) {
-      case 'blackheart':
-        return blackheart;
-      case 'drink':
-        return drink;
-      case 'explore':
-        return explore;
-      case 'meal':
-        return meal;
-      case 'profile':
-        return profile;
-      case 'rockglass':
-        return rockglass
-      case 'search':
-        return search
-      case 'share':
-        return share
-      case 'whiteheart':
-        return whiteheart                                      
-            
-
-      default:
-        return <div></div>;
+const Icon = (props) => {
+  const { icon, testid } = props;
+  const renderIcon = () => {
+    switch (icon) {
+    case 'blackheart':
+      return BlackHeart;
+    case 'drink':
+      return Drink;
+    case 'explore':
+      return Explore;
+    case 'meal':
+      return Meal;
+    case 'profile':
+      return Profile;
+    case 'rockglass':
+      return RockGlass;
+    case 'search':
+      return Search;
+    case 'share':
+      return Share;
+    case 'whiteheart':
+      return WhiteHeart;
+    default:
+      return <div />;
     }
   };
-  render() {
-    return <React.Fragment>{this.renderIcon()}</React.Fragment>;
-  }
-}
+
+  return <img alt="icon" data-testid={ testid } src={ renderIcon() } />;
+};
+
+Icon.propTypes = {
+  icon: PropTypes.string.isRequired,
+  testid: PropTypes.string.isRequired,
+};
 
 export default Icon;
