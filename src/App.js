@@ -12,6 +12,7 @@ import {
   ExplorarComidasIngredientes as ExplComidasIng,
   ExplorarComidasLocal,
   ExplorarBebidas,
+  ExplorarBebidasIngredientes as ExplBebidasIng,
   Perfil,
   Feitas,
   Favoritas } from './pages/index';
@@ -28,6 +29,7 @@ function App() {
         <Route exact path="/explorar/comidas/ingredientes" component={ ExplComidasIng } />
         <Route exact path="/explorar/comidas/local" component={ ExplorarComidasLocal } />
         <Route exact path="/explorar/bebidas" component={ ExplorarBebidas } />
+        <Route exact path="/explorar/bebidas/ingredientes" component={ ExplBebidasIng } />
         <Route exact path="/perfil" component={ Perfil } />
         <Route exact path="/receitas-feitas" component={ Feitas } />
         <Route exact path="/receitas-favoritas" component={ Favoritas } />
