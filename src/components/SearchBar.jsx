@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
-import { Redirect, useHistory } from 'react-router';
+import { Redirect } from 'react-router';
 import { ingredientAPI, nameAPI, fistLetterAPI } from '../services/foodAPI';
 import { ingredientDrinkAPI,
   nameDrinkAPI, fistLetterDrinkAPI } from '../services/drinksAPI';
