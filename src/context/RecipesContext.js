@@ -23,7 +23,7 @@ export const RecipesContext = createContext();
 export const RecipesProvider = ({ children }) => {
   const [list, setList] = useState([]);
 
-  const getRecipesList = (recipesList) => {
+  const setRecipesList = (recipesList) => {
     setList(recipesList);
   };
 
