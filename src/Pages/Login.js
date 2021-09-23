@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import RecipesContext from '../Context/RecipesContext';
+import '../App.css';
 
 export default function Login() {
   const { email, setEmail, password, setPassword } = useContext(RecipesContext);
@@ -22,14 +23,31 @@ export default function Login() {
   }
 
   return (
-    <>
+    <div className="loginBG">
+      <div className="container">
+        <div className="animate six">
+          <span>R</span>
+          <span>E</span>
+          <span>C</span>
+          <span>I</span>
+          <span>P</span>
+          <span>E</span>
+          <span>S</span>
+          {' '}
+          <span>A</span>
+          <span>P</span>
+          <span>P</span>
+        </div>
+      </div>
       <input
+        className="textInput"
         type="email"
         placeholder="Email"
         data-testid="email-input"
         onChange={ (ev) => setEmail(ev.target.value) }
       />
       <input
+        className="textInput"
         type="password"
         placeholder="Password"
         data-testid="password-input"
@@ -37,6 +55,7 @@ export default function Login() {
       />
       <Link to="/comidas">
         <button
+          className="textInput"
           type="button"
           data-testid="login-submit-btn"
           disabled={ validateButton() }
@@ -45,6 +64,6 @@ export default function Login() {
           Login
         </button>
       </Link>
-    </>
+    </div>
   );
 }
