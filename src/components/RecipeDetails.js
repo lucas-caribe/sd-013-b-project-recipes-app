@@ -1,22 +1,33 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Video from './Video';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import { getFoodOrDrinkRecipe } from '../helpers/getFoodOrDrinkProperties';
+import '../styles/card.css';
 
-function RecipeDetails() {
+function RecipeDetails(props) {
   const [recipeFoodDetail] = useState([0]);
   const [recomendationCard] = useState([0]);
+  const history = useHistory();
+  // console.log(history);
+  const info = getFoodOrDrinkRecipe(history.location.state);
+  // console.log(info);
+
   return (
     <div className="details-page">
+      {console.log(props)}
       <h1>Detalhes comidas</h1>
       <img
+        className="card"
         data-testid="recipe-photo"
         alt="imagem da receita"
+        src={ info.image }
       />
       <title
         data-testid="recipe-title"
       >
-        Comida
+        {info.name}
       </title>
       <button
         type="button"
@@ -43,7 +54,7 @@ function RecipeDetails() {
       </p>
       <ul>
         {
-          recipeFoodDetail.map((value, index) => (
+          info.ingredients.map((value, index) => (
             <li
               key={ index }
               data-testid={ `${index}-ingredient-name-and-measure` }
@@ -51,12 +62,21 @@ function RecipeDetails() {
               { value }
             </li>
           ))
+          // recipeFoodDetail.map((value, index) => (
+          //   <li
+          //     key={ index }
+          //     data-testid={ `${index}-ingredient-name-and-measure` }
+          //   >
+          //     { value }
+          //   </li>
+          // ))
         }
       </ul>
       <p
         data-testid="instructions"
       >
-        Instruções
+        Instruções:
+        {info.instructions}
       </p>
       <div data-testid="video">
         <Video />

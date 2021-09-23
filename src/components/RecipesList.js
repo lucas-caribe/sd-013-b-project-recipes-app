@@ -29,10 +29,11 @@ function RecipesList({ list, category, onFilter }) {
   const mapRecipes = (arr) => (
     arr.map((food, i) => {
       if (category === 'meals') {
-        return Card(food.strMeal, food.strMealThumb, food.idMeal, { i, category });
+        return Card(food, i, category);
+        // Passando o card e diferenciando categoria no próprio card, ou numa função separada
       }
       if (category === 'drinks') {
-        return Card(food.strDrink, food.strDrinkThumb, food.idDrink, { i, category });
+        return Card(food, i, category);
       }
 
       return food;
