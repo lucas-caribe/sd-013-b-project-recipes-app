@@ -25,29 +25,29 @@
 
 
 .main-conteiner-list {
+  align-items: center;
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
-  align-items: center;
   margin: auto;
 }
 
 .main-card {
-  text-align: center;
+  align-items: center;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-flow: column wrap;
+  height: 150px;
   justify-content: space-around;
   margin: 5px;
-  align-items: center;
+  text-align: center;
+  transition: 0.5s;
   width: 150px;
-  height: 150px;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, .1);
-  transition: .5s;
 }
 
 .main-card:hover {
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
   transform: scale(1.2);
-  box-shadow: 0 10px 10px rgba(0, 0, 0, .2);
 }
 
 .main-card-image {
@@ -55,12 +55,13 @@
 }
 
 .spinner-main {
-  margin: 2rem;
-  font-size: 100px;
   animation: myRotartion 1s linear infinite;
+  font-size: 100px;
+  margin: 2rem;
 }
 
 @keyframes myRotartion {
+
   to {
     transform: rotate(360deg);
   }
