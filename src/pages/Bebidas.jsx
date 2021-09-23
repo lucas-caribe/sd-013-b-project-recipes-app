@@ -24,7 +24,7 @@ function Bebidas() {
   return (
     <div className="page">
       <Header showSearch />
-    
+
       <div className="home-cards">
         <HomeRecipeCard />
       </div>
