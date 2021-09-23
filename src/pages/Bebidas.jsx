@@ -15,6 +15,7 @@ function Bebidas() {
   const [resultFetch, setResultFetch] = useState([]);
   const { push } = useHistory();
   const [categoryList, setCategoryList] = useState([]);
+  const [alreadySelectedCategory, setAlreadySelectedCategory] = useState('');
 
   const componentLoad = async () => {
     setCategoryList(await getDrinksCategoriesList());
@@ -26,7 +27,12 @@ function Bebidas() {
   }, []);
 
   const selectCategoryFilter = async (category) => {
-    setResultFetch(await getDrinksCategoryFilter(category));
+    if (alreadySelectedCategory === category) {
+      componentLoad();
+    } else {
+      setResultFetch(await getDrinksCategoryFilter(category));
+      setAlreadySelectedCategory(category);
+    }
   };
 
   const verificaRadioFetch = async (input) => {
