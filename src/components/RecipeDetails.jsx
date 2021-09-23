@@ -1,12 +1,9 @@
 import React, { useContext } from 'react';
-import { useParams } from 'react-router';
 import foodContext from '../context/FoodContext';
 
 export default function RecipeDetails() {
   const { foodState } = useContext(foodContext);
   const recipe = foodState.meals;
-  const { id } = useParams();
-  console.log(id);
 
   return (
     <div>
