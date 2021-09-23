@@ -1,11 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Header from '../components/Header';
 import RecipesContext from '../context/RecipesContext';
 import RecipeCard from '../components/RecipeCard';
 import Footer from '../components/Footer';
+import { fetchInitialDrinks } from '../services/fetchDrinks';
 
 function Bebidas() {
-  const { drinks } = useContext(RecipesContext);
+  const { drinks, setDrinks } = useContext(RecipesContext);
+
+  useEffect(() => {
+    fetchInitialDrinks()
+      .then((data) => setDrinks([...data]));
+  }, [setDrinks]);
+
+  // useEffect(() => {
+  //   const request = async () => {
+  //     const response = await fetchInitialDrinks();
+  //     return response;
+  //   };
+  //   request().then((response) => setDrinks([...response]));
+  // }, [setDrinks]);
 
   const renderDrinks = () => (
     drinks.map(({ strDrink, strDrinkThumb }, index) => (

@@ -1,4 +1,4 @@
-async function fetchMeals(inputValue, radioValue) {
+export default async function fetchMeals(inputValue, radioValue) {
   const mealsEndpoints = {
     ingredientSearch: `https://www.themealdb.com/api/json/v1/1/filter.php?i=${inputValue}`,
     nameSearch: `https://www.themealdb.com/api/json/v1/1/search.php?s=${inputValue}`,
@@ -17,4 +17,10 @@ async function fetchMeals(inputValue, radioValue) {
   }
 }
 
-export default fetchMeals;
+export async function fetchInitialMeals() {
+  const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+  const data = await response.json();
+  return data.meals;
+}
+
+// export default { fetchMeals, fetchInitialMeals };
