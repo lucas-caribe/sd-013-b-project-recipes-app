@@ -16,10 +16,10 @@ export default function CategoriesFilterBar({ categories }) {
         data-testid="All-category-filter"
         type="button"
         onClick={ () => {
-          if (page === 'comidas') {
+          if (page === 'Comidas') {
             setCurrentFoodFilter('');
           }
-          if (page === 'bebidas') {
+          if (page === 'Bebidas') {
             setCurrentDrinkFilter('');
           }
         } }

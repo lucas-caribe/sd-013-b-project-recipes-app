@@ -6,14 +6,14 @@ export default function CategoryButton({ category }) {
   const { currentFoodFilter, setCurrentFoodFilter,
     currentDrinkFilter, setCurrentDrinkFilter, page } = useContext(AppContext);
   function handleClick(categoryName) {
-    if (page === 'comidas') {
+    if (page === 'Comidas') {
       if (currentFoodFilter === categoryName) {
         setCurrentFoodFilter('');
       } if (currentFoodFilter !== categoryName) {
         setCurrentFoodFilter(categoryName);
       }
     }
-    if (page === 'bebidas') {
+    if (page === 'Bebidas') {
       if (currentDrinkFilter === categoryName) {
         setCurrentDrinkFilter('');
       } if (currentDrinkFilter !== categoryName) {
