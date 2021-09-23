@@ -3,17 +3,20 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { fetchIngrediente, fetchName,
-  fetchPrimeiraLetra } from '../services/fetchRadioComidas';
+  fetchPrimeiraLetra, getMealdCategory } from '../services/fetchRadioComidas';
 import Header from '../components/Header';
 import CardsComida from '../components/CardsComida';
+import Category from '../components/Category';
 
 const QUANTIDADE_RECEITAS = 12;
 
 function Comidas({ inputFromHeader }) {
   const [radioSelecionado, setRadioSelecionado] = useState('');
   const [resultFetch, setResultFetch] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
 
   const componentLoad = async () => {
+    setCategoryList(await getMealdCategory());
     setResultFetch(await fetchName(''));
   };
 
@@ -51,6 +54,7 @@ function Comidas({ inputFromHeader }) {
   }
 
   const pegarDozeElementos = () => resultFetch.splice(0, QUANTIDADE_RECEITAS);
+
   if (resultFetch !== null) {
     return (
       <div>
@@ -97,6 +101,7 @@ function Comidas({ inputFromHeader }) {
             Buscar
           </button>
           <br />
+          <Category categories={ categoryList } />
           {resultFetch !== null && <CardsComida comidas={ pegarDozeElementos() } />}
         </div>
       </div>

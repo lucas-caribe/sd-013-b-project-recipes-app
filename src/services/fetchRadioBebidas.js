@@ -17,3 +17,9 @@ export const fetchPrimeiraLetraBeb = async (input) => {
   const data = await response.json();
   return data.drinks;
 };
+
+export const getDrinksCategory = async () => {
+  const response = await fetch(`${URL_BASE_API}/list.php?c=list`);
+  const data = await response.json();
+  return data.drinks;
+};
