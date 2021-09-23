@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { Redirect } from 'react-router';
+import { useHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { fetchIngredienteBeb, fetchNameBeb,
   fetchPrimeiraLetraBeb } from '../services/fetchRadioBebidas';
@@ -11,6 +11,7 @@ const QUANTIDADE_RECEITAS = 12;
 function Bebidas({ inputHeader }) {
   const [radioSelecionado, setRadioSelecionado] = useState('');
   const [resultFetch, setResultFetch] = useState([]);
+  const { push } = useHistory();
 
   const verificaRadioFetch = async (input) => {
     switch (radioSelecionado) {
@@ -29,6 +30,11 @@ function Bebidas({ inputHeader }) {
     default:
       return null;
     }
+    const resultFetchName = await fetchNameBeb(input);
+    console.log(resultFetchName);
+    if (resultFetchName.length === 1) {
+      push(`/bebidas/${resultFetchName[0].idDrink}`);
+    }
   };
 
   const pegarDozeElementos = () => resultFetch.splice(0, QUANTIDADE_RECEITAS);
@@ -45,9 +51,6 @@ function Bebidas({ inputHeader }) {
   if (resultFetch !== null) {
     return (
       <div>
-        {resultFetch.length === 1 && <Redirect
-          to={ `/bebidas/${resultFetch[0].idDrink}` }
-        />}
         {console.log(resultFetch)}
         <Header pageTitle="Bebidas" />
         <div>
@@ -89,7 +92,7 @@ function Bebidas({ inputHeader }) {
             Buscar
           </button>
         </div>
-        {resultFetch.length !== 0 && <CardsDrinks drinks={ pegarDozeElementos() } />}
+        {resultFetch.length > 1 && <CardsDrinks drinks={ pegarDozeElementos() } />}
       </div>
     );
   } return enviarAlerta();
