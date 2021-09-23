@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { fetchIngrediente, fetchName,
@@ -12,6 +12,14 @@ const QUANTIDADE_RECEITAS = 12;
 function Comidas({ inputFromHeader }) {
   const [radioSelecionado, setRadioSelecionado] = useState('');
   const [resultFetch, setResultFetch] = useState([]);
+
+  const componentLoad = async () => {
+    setResultFetch(await fetchName(''));
+  };
+
+  useEffect(() => {
+    componentLoad();
+  }, []);
 
   const verificaRadioFetch = async (input) => {
     switch (radioSelecionado) {
@@ -89,7 +97,7 @@ function Comidas({ inputFromHeader }) {
             Buscar
           </button>
           <br />
-          {resultFetch !== null && <CardsComida comida={ pegarDozeElementos() } />}
+          {resultFetch !== null && <CardsComida comidas={ pegarDozeElementos() } />}
         </div>
       </div>
     );

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { fetchIngredienteBeb, fetchNameBeb,
@@ -8,9 +8,18 @@ import Header from '../components/Header';
 import CardsDrinks from '../components/CardsDrinks';
 
 const QUANTIDADE_RECEITAS = 12;
+
 function Bebidas({ inputHeader }) {
   const [radioSelecionado, setRadioSelecionado] = useState('');
   const [resultFetch, setResultFetch] = useState([]);
+
+  const componentLoad = async () => {
+    setResultFetch(await fetchNameBeb(''));
+  };
+
+  useEffect(() => {
+    componentLoad();
+  }, []);
 
   const verificaRadioFetch = async (input) => {
     switch (radioSelecionado) {
