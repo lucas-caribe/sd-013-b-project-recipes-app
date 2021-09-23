@@ -4,6 +4,7 @@ import RecipesContext from '../context/RecipesContext';
 import RecipeCard from '../components/RecipeCard';
 import Footer from '../components/Footer';
 import { fetchInitialDrinks } from '../services/fetchDrinks';
+import FilteringDrinkButtons from '../components/FilteringDrinkButtons';
 
 function Bebidas() {
   const { drinks, setDrinks } = useContext(RecipesContext);
@@ -39,6 +40,7 @@ function Bebidas() {
       <div>Bebidas</div>
       { drinks && renderDrinks() }
       <Footer />
+      <FilteringDrinkButtons />
     </div>
   );
 }

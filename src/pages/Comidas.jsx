@@ -4,6 +4,7 @@ import RecipesContext from '../context/RecipesContext';
 import RecipeCard from '../components/RecipeCard';
 import Footer from '../components/Footer';
 import { fetchInitialMeals } from '../services/fetchMeals';
+import FilteringMealsButtons from '../components/FilteringMealsButtons';
 
 function Comidas() {
   const { meals, setMeals } = useContext(RecipesContext);
@@ -39,6 +40,7 @@ function Comidas() {
       <div>comidas</div>
       { meals && renderMeals() }
       <Footer />
+      <FilteringMealsButtons />
     </div>
   );
 }
