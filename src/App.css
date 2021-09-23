@@ -29,20 +29,21 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
-  margin: auto;
 }
 
 .main-card {
   align-items: center;
+  border-radius: 20px;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-flow: column wrap;
   height: 150px;
   justify-content: space-around;
-  margin: 5px;
+  margin: 2rem 0;
   text-align: center;
   transition: 0.5s;
   width: 150px;
+
 }
 
 .main-card:hover {
@@ -51,7 +52,8 @@
 }
 
 .main-card-image {
-  width: 20%;
+  border-radius: 20px;
+  width: 70%;
 }
 
 .spinner-main {

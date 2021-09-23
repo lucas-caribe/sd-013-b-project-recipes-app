@@ -64,7 +64,7 @@ export default function MainList({ arrayForMap = [], limitArray }) {
   );
 
   return (
-    <ul>
+    <ul className="main-conteiner-list">
       {
 
         arrayForMap.length === 0 && (
