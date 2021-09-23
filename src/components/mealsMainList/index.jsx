@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Spinner } from 'react-bootstrap';
+import { AiOutlineLoading3Quarters } from 'react-icons/all';
 import { fetchMealRandom } from '../../services/fetchRandomItens';
 
 const NUMBER_FOOD_CARD_MAIN = 12;
@@ -50,7 +50,7 @@ export default function MealsMainList() {
                 </p>
               </li>
             ))
-          ) : <Spinner animation="border" variant="primary" className="spinner-main" />
+          ) : <AiOutlineLoading3Quarters className="spinner-main" />
         }
       </ul>
     </div>

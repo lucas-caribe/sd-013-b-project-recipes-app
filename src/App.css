@@ -41,9 +41,26 @@
   align-items: center;
   width: 150px;
   height: 150px;
-  border: 2px solid black;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, .1);
+}
+
+.main-card:hover {
+  transform: scale(1.2);
+  box-shadow: 0 10px 10px rgba(0, 0, 0, .2);
 }
 
 .main-card-image {
   width: 20%;
+}
+
+.spinner-main {
+  margin: 2rem;
+  font-size: 100px;
+  animation: myRotartion 1s linear infinite;
+}
+
+@keyframes myRotartion {
+  to {
+    transform: rotate(360deg);
+  }
 }
