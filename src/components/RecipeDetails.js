@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import Video from './Video';
+
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+
+import Video from './Video';
 
 function RecipeDetails() {
   const [recipeFoodDetail] = useState([0]);
   const [recomendationCard] = useState([0]);
+
   return (
     <div className="details-page">
       <h1>Detalhes comidas</h1>

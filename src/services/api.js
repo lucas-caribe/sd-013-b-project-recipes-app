@@ -4,6 +4,9 @@ const drinkListEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.ph
 const MEAL_CATEGORIES_URL = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
 const DRINK_CATEGORIES_URL = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
 
+const MEAL_INGREDIENTS_URL = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
+const DRINK_INGREDIENTS_URL = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list';
+
 export function getMealsEndpoint(type, value) {
   switch (type) {
   case 'Ingrediente':
@@ -59,25 +62,42 @@ export function fetchFullDrinksList() {
 }
 
 export function fetchResults(type, value, page) {
-  if (page.includes('Comidas')) return fetchMeals(type, value);
-  if (page.includes('Bebidas')) return fetchDrinks(type, value);
+  if (page.includes('comidas')) return fetchMeals(type, value);
+  if (page.includes('bebidas')) return fetchDrinks(type, value);
 }
 
-export function fetchMealCategories() {
+export function fetchMealsCategories() {
   return fetch(MEAL_CATEGORIES_URL)
     .then((res) => res.json())
     .then((data) => data.meals);
 }
 
-export function fetchDrinkCategories() {
+export function fetchDrinksCategories() {
   return fetch(DRINK_CATEGORIES_URL)
     .then((res) => res.json())
     .then((data) => data.drinks);
 }
 
 export function fetchCategories(category) {
-  if (category === 'meals') return fetchMealCategories();
-  if (category === 'drinks') return fetchDrinkCategories();
+  if (category === 'meals') return fetchMealsCategories();
+  if (category === 'drinks') return fetchDrinksCategories();
+}
+
+export function fetchMealsIngredients() {
+  return fetch(MEAL_INGREDIENTS_URL)
+    .then((res) => res.json())
+    .then((data) => data.meals);
+}
+
+export function fetchDrinksIngredients() {
+  return fetch(DRINK_INGREDIENTS_URL)
+    .then((res) => res.json())
+    .then((data) => data.drinks);
+}
+
+export function fetchIngredients(isMeal) {
+  if (isMeal) return fetchMealsIngredients();
+  if (!isMeal) return fetchDrinksIngredients();
 }
 
 export function fetchMealsByCategory(filter) {
@@ -90,4 +110,45 @@ export function fetchDrinksByCategory(filter) {
   return fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${filter}`)
     .then((res) => res.json())
     .then((data) => data.drinks);
+}
+
+export function fetchRandomMeal() {
+  return fetch('https://www.themealdb.com/api/json/v1/1/random.php')
+    .then((res) => res.json())
+    .then((data) => data.meals[0].idMeal);
+}
+
+export function fetchRandomDrink() {
+  return fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
+    .then((res) => res.json())
+    .then((data) => data.drinks[0].idDrink);
+}
+
+export function fetchRandom(isMeal) {
+  if (isMeal) return fetchRandomMeal();
+  if (!isMeal) return fetchRandomDrink();
+}
+
+export function fetchMealsByIngredient(ingredient) {
+  return fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`)
+    .then((res) => res.json())
+    .then((data) => data.meals);
+}
+
+export function fetchDrinksByIngredient(ingredient) {
+  return fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`)
+    .then((res) => res.json())
+    .then((data) => data.drinks);
+}
+
+export function fetchMealsAreas() {
+  return fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list')
+    .then((res) => res.json())
+    .then((data) => data.meals);
+}
+
+export function fetchMealsByArea(area) {
+  return fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${area}`)
+    .then((res) => res.json())
+    .then((data) => data.meals);
 }
