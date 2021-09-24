@@ -1,8 +1,24 @@
-import React from 'react';
+import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import fetchIdBebidas from '../services/fetchIdBebidas';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import { sendRecipeToGlobalDrinks } from '../redux/actions';
 
-function DetalhesBebidas() {
+function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal }) {
+  const [objIdReceita, setObjIdReceita] = useState();
+  const fetchId = async () => {
+    setObjIdReceita(await fetchIdBebidas(id));
+  };
+  useEffect(() => {
+    fetchId();
+  }, []);
+
+  useEffect(() => {
+    sendObjToGlobal(objIdReceita);
+  }, [objIdReceita]);
+
   return (
     <div>
       Detalhes das bebidas
@@ -27,4 +43,13 @@ function DetalhesBebidas() {
   );
 }
 
-export default DetalhesBebidas;
+DetalhesBebidas.propTypes = {
+  match: PropTypes.shape(PropTypes.shape({})).isRequired,
+  sendObjToGlobal: PropTypes.shape(PropTypes.shape({})).isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  sendObjToGlobal: (drinks) => dispatch(sendRecipeToGlobalDrinks(drinks)),
+});
+
+export default connect(null, mapDispatchToProps)(DetalhesBebidas);

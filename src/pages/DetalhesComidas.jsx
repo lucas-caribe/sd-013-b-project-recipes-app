@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { sendRecipeToGlobal } from '../redux/actions';
+import { sendRecipeToGlobalMeal } from '../redux/actions';
 import fetchIdComidas from '../services/fetchIdComidas';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -48,10 +48,11 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal }) {
 
 DetalhesComidas.propTypes = {
   match: PropTypes.shape(PropTypes.shape({})).isRequired,
+  sendObjToGlobal: PropTypes.shape(PropTypes.shape({})).isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  sendObjToGlobal: (obj) => dispatch(sendRecipeToGlobal(obj)),
+  sendObjToGlobal: (obj) => dispatch(sendRecipeToGlobalMeal(obj)),
 });
 
 export default connect(null, mapDispatchToProps)(DetalhesComidas);

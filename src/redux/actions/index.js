@@ -12,10 +12,17 @@ export const actionInputHeader = (inpHeader) => ({
   },
 });
 
-export const sendRecipeToGlobal = (recipe) => ({
-  type: 'SEND_RECIPE_TO_GLOBAL',
+export const sendRecipeToGlobalMeal = (meals) => ({
+  type: 'SEND_RECIPE_TO_GLOBAL_MEALS',
   payload: {
-    recipe,
+    meals,
+  },
+});
+
+export const sendRecipeToGlobalDrinks = (drinks) => ({
+  type: 'SEND_RECIPE_TO_GLOBAL_DRINKS',
+  payload: {
+    drinks,
   },
 });
 

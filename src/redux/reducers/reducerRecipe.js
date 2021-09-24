@@ -1,13 +1,19 @@
 const INITIAL_STATE = {
-  recipe: {},
+  recipeMeal: {},
+  recipeDrink: {},
 };
 
 const reducerRecipe = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case 'SEND_RECIPE_TO_GLOBAL':
+  case 'SEND_RECIPE_TO_GLOBAL_MEALS':
     return {
       ...state,
-      recipe: action.payload.recipe,
+      recipeMeal: action.payload.meals,
+    };
+  case 'SEND_RECIPE_TO_GLOBAL_DRINKS':
+    return {
+      ...state,
+      recipeDrink: action.payload.drinks,
     };
   default:
     return state;
