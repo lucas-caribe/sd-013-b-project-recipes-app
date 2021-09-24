@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import FavoriteButton from '../../components/FavoriteButton';
 import RecommendationCard from '../../components/RecommendationCard';
 import StartOrContinueButton from '../../components/StartOrContinueButton';
@@ -8,8 +9,8 @@ import { useDetails } from '../../context/DetailsContext';
 
 import blackHeart from '../../images/blackHeartIcon.svg';
 import whiteHeart from '../../images/whiteHeartIcon.svg';
-
-const copy = require('clipboard-copy');
+import shareIcon from '../../images/shareIcon.svg';
+import ShareButton from '../../components/ShareButton';
 
 function Detalhes({ location: { pathname }, history }) {
   const [isCopied, setIsCopied] = useState(false);
@@ -30,6 +31,10 @@ function Detalhes({ location: { pathname }, history }) {
 
     return setIsCopied(false);
   }, [pathname]);
+
+  const handleCopy = (bool) => {
+    setIsCopied(bool);
+  };
 
   const renderIngredients = () => ingredients.map((ingredient, index) => (
     <li
@@ -68,13 +73,15 @@ function Detalhes({ location: { pathname }, history }) {
     );
   };
 
-  const checkFavorites = () => {
+  const checkFavorites = (recipe, type) => {
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (favorites) {
       return (
         <FavoriteButton
           colorBeforeClick={ blackHeart }
           colorAfterClick={ whiteHeart }
+          recipe={ recipe }
+          type={ type }
         />
       );
     }
@@ -82,6 +89,8 @@ function Detalhes({ location: { pathname }, history }) {
       <FavoriteButton
         colorBeforeClick={ whiteHeart }
         colorAfterClick={ blackHeart }
+        recipe={ recipe }
+        type={ type }
       />
     );
   };
@@ -99,18 +108,14 @@ function Detalhes({ location: { pathname }, history }) {
           width="300px"
         />
         <h1 data-testid="recipe-title">{ item[type][0][`str${property}`] }</h1>
-        <button
-          data-testid="share-btn"
-          type="button"
-          onClick={ () => {
-            copy(`http://localhost:3000/${path}/${item[type][0][`id${property}`]}`);
-            setIsCopied(true);
-          } }
-        >
-          Share
-        </button>
-        {isCopied && <span>Link copiado!</span> }
-        {checkFavorites()}
+        <ShareButton
+          path={ path }
+          id={ item[type][0][`id${property}`] }
+          icon={ shareIcon }
+          handleCopy={ handleCopy }
+        />
+        {checkFavorites(item[type][0], type)}
+        {isCopied && <p>Link copiado!</p> }
         <h2 data-testid="recipe-category">
           { item[type][0].strAlcoholic
             ? item[type][0].strAlcoholic : item[type][0].strCategory }
