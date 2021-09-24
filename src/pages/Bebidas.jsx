@@ -1,12 +1,14 @@
 import React from 'react';
 import Header from '../components/header';
-import CocktailList from '../components/cocktails/CocktailList';
+import CocktailsMainList from '../components/cocktailsMainList';
+import MainCategorys from '../components/mainCategorys';
 
 export default function Bebidas() {
   return (
     <div>
       <Header titlePage="Bebidas" hasSearchIcon />
-      <CocktailList />
+      <MainCategorys />
+      <CocktailsMainList />
     </div>
   );
 }

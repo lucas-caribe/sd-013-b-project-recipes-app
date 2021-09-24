@@ -3,6 +3,7 @@ import {
   fetchMealByIngredient,
   fetchMealByName,
 } from '../../services/fetchMeals';
+
 import {
   fetchCocktailByFirstLetter,
   fetchCocktailByIngredient,
@@ -12,42 +13,45 @@ import {
 // Type
 
 export const SET_USER = 'SET_USER';
-export const SET_MEAL = 'SET_MEAL';
-export const SET_COCKTAIL = 'SET_COCKTAIL';
+export const SET_ITENS_OF_FETCH = 'SET_ITENS_OF_FETCH';
+export const SET_NEW_FITLER_BY_CATEGORY = 'SET_NEW_FITLER_BY_CATEGORY';
+export const SET_MAIN_LIST_FILTER_CATEGORY = 'SET_MAIN_LIST_FILTER_CATEGORY';
 
-// //Actions Creator
+// Actions Creator
 
 export const setUser = (payload) => ({ type: SET_USER, payload });
 
-export const setMeal = (payload) => ({
-  type: SET_MEAL,
+export const setItensOfFetch = (payload) => ({
+  type: SET_ITENS_OF_FETCH,
   payload,
 });
 
-export const setCocktail = (payload) => ({
-  type: SET_COCKTAIL,
-  payload,
-});
+export const setMainListFilterCategory = (payload) => (
+  { type: SET_MAIN_LIST_FILTER_CATEGORY, payload }
+);
 
-// // Thunk
+export const SetFilterByCategory = (payload) => (
+  { type: SET_MAIN_LIST_FILTER_CATEGORY, payload }
+);
+
+// Thunk
 
 export const fetchSearchThunk = ({ value, type, recipe }) => async (dispatch) => {
   if (recipe === 'meal') {
-    console.log('thunk');
     switch (value) {
     case 'ingredient': {
-      const response = await fetchMealByIngredient(type);
-      dispatch(setMeal(response));
+      const { meals } = await fetchMealByIngredient(type);
+      dispatch(setItensOfFetch(meals));
       break;
     }
     case 'name': {
-      const response = await fetchMealByName(type);
-      dispatch(setMeal(response));
+      const { meals } = await fetchMealByName(type);
+      dispatch(setItensOfFetch(meals));
       break;
     }
     case 'first-letter': {
-      const response = await fetchMealByFirstLetter(type);
-      dispatch(setMeal(response));
+      const { meals } = await fetchMealByFirstLetter(type);
+      dispatch(setItensOfFetch(meals));
       break;
     }
     default:
@@ -58,18 +62,18 @@ export const fetchSearchThunk = ({ value, type, recipe }) => async (dispatch) =>
   if (recipe === 'cocktail') {
     switch (value) {
     case 'ingredient': {
-      const response = await fetchCocktailByIngredient(type);
-      dispatch(setCocktail(response));
+      const { drinks } = await fetchCocktailByIngredient(type);
+      dispatch(setItensOfFetch(drinks));
       break;
     }
     case 'name': {
-      const response = await fetchCocktailByName(type);
-      dispatch(setCocktail(response));
+      const { drinks } = await fetchCocktailByName(type);
+      dispatch(setItensOfFetch(drinks));
       break;
     }
     case 'first-letter': {
-      const response = await fetchCocktailByFirstLetter(type);
-      dispatch(setCocktail(response));
+      const { drinks } = await fetchCocktailByFirstLetter(type);
+      dispatch(setItensOfFetch(drinks));
       break;
     }
     default:

@@ -1,12 +1,15 @@
 import React from 'react';
 import Header from '../components/header';
-import MealList from '../components/meals/MealList';
+import MealsMainList from '../components/mealsMainList';
+import MainCategorys from '../components/mainCategorys';
 
 export default function Comidas() {
   return (
     <div>
       <Header titlePage="Comidas" hasSearchIcon />
-      <MealList />
+      <MainCategorys />
+      <MealsMainList />
+
     </div>
   );
 }
