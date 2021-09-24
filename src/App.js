@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Header from './component/Header';
 import Login from './pages/Login';
 import Details from './pages/Details';
 import Explore from './pages/Explore';
@@ -14,7 +13,6 @@ import Loading from './component/Loading';
 function App() {
   return (
     <Switch>
-      <Route path="/header" component={ Header } />
       <Route exact path="/" component={ Login } />
       <Route exact path="/comidas" component={ Main } />
       <Route exact path="/bebidas" component={ Main } />
