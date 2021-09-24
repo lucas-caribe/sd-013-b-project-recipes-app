@@ -17,8 +17,13 @@ import ExploreDrinksByIngredient from './Pages/ExploreDrinksByIngredient';
 import ExploreMealsByArea from './Pages/ExploreMealsByArea';
 import DoneRecipes from './Pages/DoneRecipes';
 import FavoriteRecipes from './Pages/FavoriteRecipes';
+import DrinkDetails from './Pages/DrinkDetails';
+import MealDetails from './Pages/MealDetails';
+// import RecipesContext from './Context/RecipesContext';
 
 function App() {
+  // const { randomMeal } = useContext(RecipesContext);
+  // const { idMeal } = randomMeal;
   return (
     <RecipesProvider>
       <BrowserRouter>
@@ -29,6 +34,8 @@ function App() {
           <Route exact path="/bebidas" component={ DrinksPage } />
           <Route exact path="/explorar" component={ ExplorePage } />
           <Route exact path="/explorar/comidas" component={ ExploreMealsPage } />
+          <Route exact path="/comidas/:idMeal" component={ MealDetails } />
+          <Route exact path="/bebidas/:idDrink" component={ DrinkDetails } />
           <Route
             exact
             path="/explorar/comidas/ingredientes"
