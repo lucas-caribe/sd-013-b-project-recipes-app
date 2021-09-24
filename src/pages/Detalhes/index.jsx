@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useDetails } from '../../context/DetailsContext';
 
 function Detalhes({ location: { pathname } }) {
@@ -70,7 +69,7 @@ function Detalhes({ location: { pathname } }) {
         <h1 data-testid="recipe-title">{ item.drink[0].strDrink }</h1>
         <button data-testid="share-btn" type="button">Share</button>
         <button data-testid="favorite-btn" type="button">Favorite</button>
-        <h2 data-testid="recipe-category">{ item.drink[0].strAlcoholic}</h2>
+        <h2 data-testid="recipe-category">{ item.drink[0].strAlcoholic }</h2>
         <ul>
           {renderIngredients()}
         </ul>
