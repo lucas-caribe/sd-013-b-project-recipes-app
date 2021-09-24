@@ -14,13 +14,13 @@ function Login() {
   // const getCockToken = () => localStorage.getItem(cocktailsToken);
 
   const loginmeals = (token) => {
-    localStorage.setItem('mealsToken', token);
+    localStorage.setItem('mealsToken', JSON.stringify(token));
   };
   const loginCock = (token) => {
-    localStorage.setItem('cocktailsToken', token);
+    localStorage.setItem('cocktailsToken', JSON.stringify(token));
   };
   const emailStorage = (usemail) => {
-    localStorage.setItem('user', usemail);
+    localStorage.setItem('user', JSON.stringify({ email: usemail }));
   };
   // caso precisem remover do storage
   // const logout = () => {
@@ -46,7 +46,7 @@ function Login() {
     const passwordLength = 7;
     let loginValidado = true;
 
-    if (email.includes('@' && '.com') && password.length > passwordLength) {
+    if (email.includes('@' && '.com') && password.length >= passwordLength) {
       loginValidado = false;
     } else {
       loginValidado = true;
