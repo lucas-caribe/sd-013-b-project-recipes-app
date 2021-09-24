@@ -10,16 +10,23 @@ export default function InProgress() {
   const { location: { pathname } } = history;
 
   const renderIngredients = () => (
-    <ul>
+    <>
       {Ingredients.map((Ingredient, index) => (
-        <li
+        <label
+          htmlFor={ Ingredient }
           key={ index }
           data-testid={ `${index}-ingredient-step` }
         >
+          <input
+            type="checkbox"
+            value={ Ingredient }
+            id={ Ingredient }
+            name={ Ingredient }
+          />
           {Ingredient}
-        </li>
+        </label>
       ))}
-    </ul>
+    </>
   );
 
   const renderMealsComponents = () => (
