@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useState, useContext } from 'react';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import Input from './Input';
 import fetchAPI from '../../services';
 import AppContext from '../../context/AppContext';
