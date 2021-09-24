@@ -1,7 +1,5 @@
-// import React, { useContext, useState } from 'react';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-// import AppContext from '../context/AppContext';
 
 const INITIAL_LOGIN_STATE = {
   login: '',
@@ -45,7 +43,7 @@ export default function Login() {
     <div>
       <h2>Login</h2>
       <label htmlFor="login">
-        Login:
+        Email:
         <input
           type="email"
           data-testid="email-input"
