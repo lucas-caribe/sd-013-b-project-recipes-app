@@ -1,158 +1,145 @@
 // Tela de receitas favoritas: requisitos 60 a 66;
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import ButtonFavorite from '../components/ButtonFavorite';
 
 const STATE_FAVORITE = {
   buttonFilter: null,
 };
 
-function itemFavorite(item) {
-  const { type, area, category, alcoholicOrNot, name, image } = item;
-  if (type === 'food') {
-    return (
-      <div>
-        {/* Quando clicar na imagem, precisa encaminhar para o receita */}
-        <img src={ image } alt={ name } />
-        <p>{ name }</p>
-        <p>{ category }</p>
-        <p>{ area }</p>
-        {/* aguardando função para remover favorito e copiar link da receita */}
-        <button type="button">compartilha</button>
-        <button type="button">desfavoritar</button>
-      </div>
-    );
-  }
+function buttonChangeFilter(setState) {
   return (
-    <div>
-      <img src={ image } alt={ name } />
-      <p>{ name }</p>
-      <p>{ alcoholicOrNot }</p>
-      <button type="button">compartilha</button>
-      <button type="button">desfavoritar</button>
-    </div>
-  );
-}
-
-function FavoritesRecipes() {
-  const [state, setState] = useState(STATE_FAVORITE);
-  const { buttonFilter } = state;
-  // const { favoriteRecipes } = localStorage;
-  const favoriteRecipes = [{
-    id: 1,
-    type: 'food',
-    category: 'Seafood',
-    area: 'British',
-    name: 'brigadeiro',
-    alcoholicOrNot: 'Alcoholic',
-    image: 'https://pbs.twimg.com/profile_images/741823527825866752/zQ6foqOT_400x400.jpg',
-  },
-  {
-    id: 2,
-    type: 'drink',
-    category: 'Seafood',
-    area: 'British',
-    name: 'Cerveja',
-    alcoholicOrNot: 'Alcoholic',
-    image: 'https://cdn.awsli.com.br/800x800/874/874479/produto/40947743/3746fbc716.jpg',
-  }];
-
-  if (!favoriteRecipes) { return (<h1> Não há favoritos</h1>); }
-
-  if (buttonFilter === 'food') {
-    return (
-      <div>
-        <button
-          type="button"
-          onClick={ () => (setState({ buttonFilter: 'food' })) }
-        >
-          Food
-        </button>
-        <button
-          type="button"
-          onClick={ () => (setState({ buttonFilter: 'drink' })) }
-        >
-          Drinks
-        </button>
-        <button
-          type="button"
-          onClick={ () => (setState({ buttonFilter: null })) }
-        >
-          All
-        </button>
-        {
-          favoriteRecipes
-            .filter((item) => (item.type === 'food'))
-            .map((item) => (
-              <div key={ item.id }>
-                { itemFavorite(item) }
-              </div>
-            ))
-        }
-      </div>
-    );
-  }
-
-  if (buttonFilter === 'drink') {
-    return (
-      <div>
-        <button
-          type="button"
-          onClick={ () => (setState({ buttonFilter: 'food' })) }
-        >
-          Food
-        </button>
-        <button
-          type="button"
-          onClick={ () => (setState({ buttonFilter: 'drink' })) }
-        >
-          Drinks
-        </button>
-        <button
-          type="button"
-          onClick={ () => (setState({ buttonFilter: null })) }
-        >
-          All
-        </button>
-        {
-          favoriteRecipes
-            .filter((item) => (item.type === 'drink'))
-            .map((item, index) => (
-              <div key={ index }>
-                { itemFavorite(item) }
-              </div>
-            ))
-        }
-      </div>
-    );
-  }
-
-  return (
-    <div>
+    <>
       <button
+        data-testid="filter-by-food-btn"
         type="button"
-        onClick={ () => (setState({ buttonFilter: 'food' })) }
+        onClick={ () => (setState({ buttonFilter: 'comida' })) }
       >
         Food
       </button>
       <button
+        data-testid="filter-by-drink-btn"
         type="button"
-        onClick={ () => (setState({ buttonFilter: 'drink' })) }
+        onClick={ () => (setState({ buttonFilter: 'bebida' })) }
       >
         Drinks
       </button>
       <button
+        data-testid="filter-by-all-btn"
         type="button"
         onClick={ () => (setState({ buttonFilter: null })) }
       >
         All
       </button>
+    </>
+  );
+}
+
+function FavoritesRecipes() {
+  const history = useHistory();
+
+  function itemFavorite(item, index) {
+    const { id, type, area, category, alcoholicOrNot, name, image } = item;
+    if (type === 'comida') {
+      return (
+        <div id={ id }>
+          <input
+            type="image"
+            width="150px"
+            data-testid={ `${index}-horizontal-image` }
+            src={ image }
+            alt={ name }
+            onClick={ () => (history.push(`/comidas/${id}`)) }
+          />
+          <br />
+          <button
+            type="button"
+            onClick={ () => (history.push(`/comidas/${id}`)) }
+            data-testid={ `${index}-horizontal-name` }
+          >
+            { name }
+          </button>
+          <p data-testid={ `${index}-horizontal-top-text` }>{`${area} - ${category}`}</p>
+          <ButtonFavorite id={ id } index={ index } />
+        </div>
+      );
+    }
+    return (
+      <div id={ id }>
+        <input
+          type="image"
+          width="150px"
+          data-testid={ `${index}-horizontal-image` }
+          src={ image }
+          alt={ name }
+          onClick={ () => (history.push(`/bebidas/${id}`)) }
+        />
+        <br />
+        <button
+          type="button"
+          onClick={ () => (history.push(`/bebidas/${id}`)) }
+          data-testid={ `${index}-horizontal-name` }
+        >
+          { name }
+        </button>
+        <p>{ category }</p>
+        <p data-testid={ `${index}-horizontal-top-text` }>{ alcoholicOrNot }</p>
+        <ButtonFavorite id={ id } index={ index } />
+      </div>
+    );
+  }
+
+  const [state, setState] = useState(STATE_FAVORITE);
+  const { buttonFilter } = state;
+  const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+
+  if (favoriteRecipes.length === 0) { return (<h1> Não há favoritos</h1>); }
+
+  if (buttonFilter === 'comida') {
+    return (
+      <>
+        { buttonChangeFilter(setState) }
+        {
+          favoriteRecipes
+            .filter((item) => (item.type === 'comida'))
+            .map((item, index) => (
+              <div key={ item.id }>
+                { itemFavorite(item, index) }
+              </div>
+            ))
+        }
+      </>
+    );
+  }
+
+  if (buttonFilter === 'bebida') {
+    return (
+      <>
+        { buttonChangeFilter(setState) }
+        {
+          favoriteRecipes
+            .filter((item) => (item.type === 'bebida'))
+            .map((item, index) => (
+              <div key={ index }>
+                { itemFavorite(item, index) }
+              </div>
+            ))
+        }
+      </>
+    );
+  }
+
+  return (
+    <>
+      { buttonChangeFilter(setState) }
       {
-        favoriteRecipes.map((item) => (
+        favoriteRecipes.map((item, index) => (
           <div key={ item.id }>
-            { itemFavorite(item) }
+            { itemFavorite(item, index) }
           </div>
         ))
       }
-    </div>
+    </>
   );
 }
 
