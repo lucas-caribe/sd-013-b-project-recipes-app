@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
 
 function Login() {
   const history = useHistory();
@@ -88,10 +87,10 @@ function Login() {
   );
 }
 
-Login.propTypes = {
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
-  userEmail: PropTypes.func.isRequired,
-};
+// Login.propTypes = {
+//   // history: PropTypes.objectOf(PropTypes.any).isRequired,
+//   // userEmail: PropTypes.func.isRequired,
+// };
 
 // const mapDispatchToProps = (dispatch) => ({
 //   // userEmail: (email) => dispatch(userAction(email)),
