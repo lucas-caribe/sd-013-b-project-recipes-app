@@ -14,16 +14,12 @@ function GenerateButtons(filterButtons, type) {
   } = useContext(RecipesContext);
 
   function handleClick(category, btnType) {
-    if (currentCategory === category && btnType === 'meal') {
+    if ((currentCategory === category) || btnType === 'all') {
       fetchInitialMeals()
         .then((data) => {
           setMeals([...data]);
           setCurrentCategory('');
         });
-      return;
-    }
-
-    if (currentCategory === category && btnType === 'drink') {
       fetchInitialDrinks()
         .then((data) => {
           setDrinks([...data]);
@@ -43,16 +39,25 @@ function GenerateButtons(filterButtons, type) {
 
   const categories = filterButtons.map(({ strCategory }) => strCategory);
   return (
-    categories.slice(0, NUMBER_OF_BUTTONS).map((category) => (
+    <div>
       <button
         type="button"
-        key={ category }
-        data-testid={ `${category}-category-filter` }
-        onClick={ () => handleClick(category, type) }
+        data-testid="All-category-filter"
+        onClick={ () => handleClick('', 'all') }
       >
-        { category }
+        All
       </button>
-    ))
+      {categories.slice(0, NUMBER_OF_BUTTONS).map((category) => (
+        <button
+          type="button"
+          key={ category }
+          data-testid={ `${category}-category-filter` }
+          onClick={ () => handleClick(category, type) }
+        >
+          { category }
+        </button>
+      ))}
+    </div>
   );
 }
 

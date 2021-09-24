@@ -1,0 +1,101 @@
+body {
+  background-image: url('./dish.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #a7a599;
+  font: 13px/20px Open Sans , Tahoma , Verdana , sans-serif;
+  height: 400px;
+}
+
+.login {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.2);
+  height: 200px;
+  margin: 100px auto;
+  position: relative;
+  width: 300px;
+}
+
+.login h1 {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.2);
+  color: 'white';
+  font-family: Open Sans , Tahoma , Verdana , sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 55px;
+  margin-top: 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.form {
+  width: 100%;
+}
+
+.form .field {
+  margin: 0 50px;
+  position: relative;
+}
+
+input::placeholder {
+  color: white;
+  font-family: Open Sans, sans-serif;
+  text-align: center;
+}
+
+.input-form {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.2);
+  border: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgb(255, 255, 255);
+  font-family: "Open Sans", Calibri, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  height: 24px;
+  padding: 10px;
+  text-align: center;
+  width: 200px;
+  transition: color 0.3s ease-out;
+}
+
+.form input[type="text"] {
+  margin-bottom: 15px;
+}
+
+.button-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.button {
+  margin-top: 15px;
+  width: 270px;
+  text-align: center;
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: bold;
+  padding: 12px 0;
+
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.2);
+
+  text-transform: uppercase;
+  border: none;
+
+  margin-bottom: 20px;
+}

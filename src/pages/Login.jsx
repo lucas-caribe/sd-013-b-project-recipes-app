@@ -27,28 +27,30 @@ export default function Login({ history }) {
   return (
     <div>
       <input
+        className="input-form"
         required
         data-testid="email-input"
         type="text"
         name="email"
-        onChange={ handleChange }
-        value={ email }
+        onChange={handleChange}
+        value={email}
         placeholder="e-mail"
       />
       <input
+        className="input-form"
         required
         data-testid="password-input"
         type="password"
         name="password"
-        onChange={ handleChange }
+        onChange={handleChange}
         placeholder="senha"
       />
       <button
         data-testid="login-submit-btn"
         type="submit"
-        value={ password }
-        disabled={ !(emailValidator.test(email) && password.length > minLenghtPassword) }
-        onClick={ handleClick }
+        value={password}
+        disabled={!(emailValidator.test(email) && password.length > minLenghtPassword)}
+        onClick={handleClick}
       >
         Entrar
       </button>
