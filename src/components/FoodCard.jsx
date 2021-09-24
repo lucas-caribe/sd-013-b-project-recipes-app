@@ -14,7 +14,7 @@ function FoodCard() {
 
   return (
     <div>
-      {foodState.map(({ idMeal, strMealThumb, strMeal }, index) => (
+      {foodState ? foodState.map(({ idMeal, strMealThumb, strMeal }, index) => (
         <div
           data-testid={ `${index}-recipe-card` }
           key={ idMeal }
@@ -26,7 +26,7 @@ function FoodCard() {
           />
           <p data-testid={ `${index}-card-name` }>{strMeal}</p>
         </div>))
-        .slice(0, MAX_NUMBER)}
+        .slice(0, MAX_NUMBER) : null }
     </div>
   );
 }

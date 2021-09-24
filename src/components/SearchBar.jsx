@@ -10,8 +10,7 @@ export default function SearchBar({ page }) {
   const [ingredient, setIngredient] = useState(false);
   const [name, setName] = useState(false);
   const [letter, setLetter] = useState(false);
-  const { foodState, drinkState, setFoodState, setDrinkState } = useContext(FoodContext);
-  // const history = useHistory();
+  const { setFoodState, setDrinkState } = useContext(FoodContext);
 
   const checkLetter = (input) => {
     if (input.length !== 1) {
@@ -85,17 +84,9 @@ export default function SearchBar({ page }) {
   function handleClick() {
     if (page === 'Comidas') {
       foodPageAPI();
-      if (foodState === null) {
-        return global
-          .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-      }
     }
     if (page === 'Bebidas') {
       drinkPageAPI();
-      if (page === 'Bebidas' && drinkState === null) {
-        return global
-          .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-      }
     }
   }
 
