@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import useRecipeStatus from '../hook/useRecipeStatus';
+import { verificatioinProgressRecipe,
+  verificationDoneRecipe } from '../helper/recipeStatus';
 import Header from '../components/detailPageComponents/Header';
 import Recommendations from '../components/detailPageComponents/Recommendations';
 import IngredientsAndMeasures from
@@ -13,7 +14,8 @@ function DrinksDetails() {
 
   const [recipe, setRecipe] = useState([]);
   const [recommendation, setRecommendation] = useState([]);
-  const [doneRecipe, progressRecipe] = useRecipeStatus(id);
+  const [doneRecipe, setDoneRecipe] = useState(true);
+  const [progressRecipe, setProgressRecipe] = useState(false);
 
   const { fetchMealsRecommendation,
     fetchDrinkDetails } = required;
@@ -22,13 +24,18 @@ function DrinksDetails() {
     async function waitingForReturn() {
       setRecipe(await fetchDrinkDetails(id));
       setRecommendation(await fetchMealsRecommendation());
+      setDoneRecipe(verificationDoneRecipe(id));
+      setProgressRecipe(verificatioinProgressRecipe(id));
     }
     waitingForReturn();
-  }, [id, fetchMealsRecommendation, fetchDrinkDetails]);
+  }, [id, fetchDrinkDetails, fetchMealsRecommendation]);
 
   const handleRedirect = () => {
     push(`/bebidas/${id}/in-progress`);
   };
+
+  const footerStyle = { position: 'fixed',
+    bottom: '0px' };
 
   if (recipe.length === 0) {
     return <h1> Carregando... </h1>;
@@ -58,6 +65,7 @@ function DrinksDetails() {
       <div>
         {!doneRecipe && (
           <button
+            style={ footerStyle }
             type="button"
             data-testid="start-recipe-btn"
             onClick={ handleRedirect }

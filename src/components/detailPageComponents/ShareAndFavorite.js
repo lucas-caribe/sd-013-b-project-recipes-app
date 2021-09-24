@@ -1,17 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import { string, objectOf } from 'prop-types';
-import { useLocation } from 'react-router';
-import useRecipeStatus from '../../hook/useRecipeStatus';
+import { verificationIsFavorite } from '../../helper/recipeStatus';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import shareIcon from '../../images/shareIcon.svg';
 import favoriteRecipes from '../../helper/setLocalStorage';
 
 function ShareAndFavorite({ recipe, type, id }) {
-  const [isFavorite, setIsFavorite] = useRecipeStatus(id);
+  const [isFavorite, setIsFavorite] = useState(false);
   const [show, setShow] = useState(false);
-  const { pathname } = useLocation();
+
+  useEffect(() => {
+    let bool;
+    console.log(type, recipe);
+    if (type === 'comida') {
+      bool = verificationIsFavorite(recipe.idMeal);
+    } else {
+      bool = verificationIsFavorite(recipe.idDrink);
+    }
+    setIsFavorite(bool);
+  }, [recipe, type]);
 
   const handleFavorite = () => {
     setIsFavorite(!isFavorite);
@@ -19,11 +28,15 @@ function ShareAndFavorite({ recipe, type, id }) {
       JSON.stringify(favoriteRecipes(recipe, type)));
   };
 
-  const handleShare = () => {
+  const handleShare = async () => {
     const time = 2000;
-    navigator.clipboard.writeText(pathname);
+    if (type === 'comida') {
+      navigator.clipboard.writeText(`http://localhost:3000/comidas/${id}`);
+    } else {
+      navigator.clipboard.writeText(`http://localhost:3000/bebidas/${id}`);
+    }
     setShow(true);
-    setTimeout(() => setShow(false), time);
+    await setTimeout(() => setShow(false), time);
   };
 
   return (

@@ -1,25 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { objectOf, string } from 'prop-types';
-import useRedoRecipe from '../../hook/useRedoRecipe';
+// import useRedoRecipe from '../../hook/useRedoRecipe';
+import createIngredientsAndMesure from '../../helper/redoRecipe';
 
 function IngredientsAndMeasures({ recipe }) {
-  const [ingredient, measure] = useRedoRecipe(recipe);
+  // const [ingredient, measure] = useRedoRecipe(recipe);
+  const [ingredient, setIngredient] = useState([]);
+  const [measure, setMeasure] = useState([]);
 
-  const createRecipe = (item, key) => (
-    <li
-      key={ key }
-      data-testid={ `${key}-ingredient-name-and-measure` }
-    >
-      {`${item} - ${measure[key]}`}
-    </li>
-  );
-
+  useEffect(() => {
+    setIngredient(createIngredientsAndMesure(recipe, 'ingredients'));
+    setMeasure(createIngredientsAndMesure(recipe, 'measure'));
+  }, [recipe]);
   return (
     <section className="ing-details">
       <h1>Ingredients</h1>
       <div>
         <ul>
-          {ingredient.map((item, key) => createRecipe(item, key))}
+          {ingredient.map((item, key) => (
+            <li
+              key={ key }
+              data-testid={ `${key}-ingredient-name-and-measure` }
+            >
+              {`${item} - ${measure[key]}`}
+            </li>
+          ))}
         </ul>
       </div>
     </section>

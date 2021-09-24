@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import ReactPlayer from 'react-player';
-import useRecipeStatus from '../hook/useRecipeStatus';
 import Header from '../components/detailPageComponents/Header';
 import Recommendations from '../components/detailPageComponents/Recommendations';
+import * as required from '../services/index';
+import { verificatioinProgressRecipe,
+  verificationDoneRecipe } from '../helper/recipeStatus';
 import IngredientsAndMeasures from
   '../components/detailPageComponents/IngredientsAndMeasures';
-import * as required from '../services/index';
 
 function MealsDetails() {
   const { id } = useParams();
   const { push } = useHistory();
 
-  const [recipe, setRecipe] = useState([]);
+  const [recipe, setRecipe] = useState({});
   const [recommendation, setRecommendation] = useState([]);
-  const [doneRecipe, progressRecipe] = useRecipeStatus(id);
-  console.log({ recommendation });
+  const [doneRecipe, setDoneRecipe] = useState(true);
+  const [progressRecipe, setProgressRecipe] = useState(false);
+
   const { fetchDrinksRecommendation,
     fetchMealDetails } = required;
 
@@ -23,13 +25,18 @@ function MealsDetails() {
     async function waitingForReturn() {
       setRecipe(await fetchMealDetails(id));
       setRecommendation(await fetchDrinksRecommendation());
+      setDoneRecipe(verificationDoneRecipe(id));
+      setProgressRecipe(verificatioinProgressRecipe(id));
     }
     waitingForReturn();
-  }, [id, fetchDrinksRecommendation, fetchMealDetails]);
+  }, [id, fetchMealDetails, fetchDrinksRecommendation]);
 
   const handleRedirect = () => {
     push(`/comidas/${id}/in-progress`);
   };
+
+  const footerStyle = { position: 'fixed',
+    bottom: '0px' };
 
   if (recipe.length === 0) {
     return <h1> Carregando... </h1>;
@@ -66,6 +73,7 @@ function MealsDetails() {
       <div>
         {!doneRecipe && (
           <button
+            style={ footerStyle }
             type="button"
             data-testid="start-recipe-btn"
             onClick={ handleRedirect }
