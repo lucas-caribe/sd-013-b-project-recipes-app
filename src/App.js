@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-
 import Comidas from './pages/Comidas';
 import Bebidas from './pages/Bebidas';
 import Detalhes from './pages/Detalhes';
@@ -13,7 +12,7 @@ import Login from './pages/Login-Screen/Login';
 import Perfil from './pages/Perfil';
 import ReceitasFeitas from './pages/ReceitasFeitas';
 import ReceitasFavoritas from './pages/ReceitasFavoritas';
-
+import NotFound from './pages/NotFound';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -43,6 +42,7 @@ function App() {
         <Route exact path="/receitas-feitas" component={ ReceitasFeitas } />
         <Route exact path="/receitas-favoritas" component={ ReceitasFavoritas } />
         <Route exact path="/" component={ Login } />
+        <Route path="*" component={ NotFound } />
       </Switch>
     </div>
   );

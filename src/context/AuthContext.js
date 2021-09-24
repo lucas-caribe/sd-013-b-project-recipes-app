@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 // {
@@ -13,7 +13,12 @@ import PropTypes from 'prop-types';
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const [page, setPage] = useState('');
   const [email, setEmail] = useState('');
+
+  const handleMainPage = useCallback((pageSelected) => {
+    setPage(pageSelected);
+  }, []);
 
   function handleEmail(hotmail) {
     setEmail(hotmail);
@@ -22,6 +27,8 @@ export const AuthProvider = ({ children }) => {
   const context = {
     email,
     handleEmail,
+    page,
+    handleMainPage,
   };
 
   return (
