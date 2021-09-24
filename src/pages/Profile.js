@@ -27,31 +27,28 @@ function Profile() {
   };
 
   return (
-    <div className="recipes-page">
+    <div className="explore-page">
       <Header title="Perfil" />
-      <h1 data-testid="profile-email">{ getEmail() }</h1>
+      <h3 data-testid="profile-email">{ getEmail() }</h3>
       <button
-        className="profile-done-btn"
+        className="profile-done-btn btn-explore"
         data-testid="profile-done-btn"
         type="button"
-        buttonText="Receitas Feitas"
         onClick={ doneRecipes }
       >
         Receitas Feitas
       </button>
       <button
-        className="profile-favorite-btn"
+        className="profile-favorite-btn btn-explore"
         data-testid="profile-favorite-btn"
-        buttonText="Receitas Favoritas"
         type="button"
         onClick={ favoriteRecipes }
       >
         Receitas Favoritas
       </button>
       <button
-        className="profile-logout-btn"
+        className="profile-logout-btn btn-explore"
         data-testid="profile-logout-btn"
-        buttonText="Sair"
         type="button"
         onClick={ loginPage }
       >

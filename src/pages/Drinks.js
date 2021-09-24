@@ -1,41 +1,50 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router';
+
 import Header from '../components/Header';
+import Filters from '../components/Filters';
+import RecipesList from '../components/RecipesList';
 import Footer from '../components/Footer';
-import { fetchFullDrinksList } from '../services/api';
-// Chamar uma funçao que srá chamada dentro do map, recebendo nome e imagem e retornando o card
-import Card from '../components/Card';
+
+import {
+  fetchDrinksByCategory,
+  fetchFullDrinksList,
+  fetchDrinksByIngredient,
+} from '../services/api';
 
 function Drinks() {
   const [drinksList, setDrinksList] = useState([]);
-  const MAX_ELEMENTS_PER_PAGE = 12;
+  const ingredient = new URLSearchParams(useLocation().search).get('ingredient');
 
   useEffect(() => {
     const callDrinksFetch = async () => {
+      if (ingredient) return setDrinksList(await fetchDrinksByIngredient(ingredient));
+
       const list = await fetchFullDrinksList();
       setDrinksList(list);
     };
     callDrinksFetch();
-  }, []);
+  }, [ingredient]);
 
-  const mapDrinks = (list) => list.map(
-    (drink, index) => Card(drink.strDrink, drink.strDrinkThumb, index),
-  ).slice(0, MAX_ELEMENTS_PER_PAGE);
+  function filterHandler(filter) {
+    if (!filter || filter === 'all') {
+      return fetchFullDrinksList().then((list) => setDrinksList(list));
+    }
 
-  const readyToLoad = drinksList.length > 0;
-
-  if (readyToLoad) {
-    return (
-      <div className="drinks-page">
-        <Header />
-        { mapDrinks(drinksList) }
-        <Footer />
-      </div>
-    );
+    if (filter) fetchDrinksByCategory(filter).then((list) => setDrinksList(list));
   }
+
+  function searchHandler(results) {
+    setDrinksList(results);
+  }
+
   return (
     <div className="drinks-page">
-      <Header />
-      <h2>Loading...</h2>
+      <Header onSearch={ searchHandler } />
+      <Filters category="drinks" onFilter={ filterHandler } />
+      { drinksList && (
+        <RecipesList list={ drinksList } category="drinks" onFilter={ filterHandler } />
+      ) }
       <Footer />
     </div>
   );

@@ -3,10 +3,14 @@ header {
   color: rgb(17, 17, 17);
   height: 10vh;
   max-height: 4.5rem;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 header h1 {
   font-size: 36px;
+  text-align: center;
 }
 
 header section {
@@ -20,14 +24,14 @@ header section {
   z-index: 10;
 }
 
-header button {
+header section button {
   background-color: unset;
   border: none;
   max-width: 2.8rem;
   width: 120%;
 }
 
-header button img {
+header section button img {
   max-width: 2.8rem;
   width: 120%;
 }
@@ -36,6 +40,7 @@ header button img {
   animation: fade-in 0.2s ease-in;
   background-color: rgb(221, 221, 221);
   border-bottom: 2px solid lightgrey;
+  box-shadow: 1px 8px 15px 5px rgba(0, 0, 0, 0.3);
   min-height: 3rem;
   padding-bottom: 0.1rem;
   padding-top: 0.6rem;
@@ -55,6 +60,7 @@ header button img {
 
 .search button {
   background-color: var(--main-bg-color);
+  border: none;
   border-radius: 5px;
   font-size: 20px;
   margin: 0.4rem;
@@ -86,3 +92,16 @@ header button img {
     opacity: 0;
   }
 }
+
+@media ( max-width : 600px ) {
+
+  header h1 {
+    font-size: 22px;
+    line-height: 1.8rem;
+  }
+
+  header section button img {
+    max-width: 2.1rem;
+  }
+}
+

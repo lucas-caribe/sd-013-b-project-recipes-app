@@ -1,5 +1,5 @@
-form .login-form {
-  background-color: rgb(238, 238, 238);
+.login-form {
+  background-color: rgba(238, 238, 238, 0.52);
   border-radius: 10px;
   height: 50vh;
   margin: 25vh auto;
@@ -9,11 +9,11 @@ form .login-form {
   width: 95%;
 }
 
-form .login-form * {
+.login-form * {
   margin: 1rem 0;
 }
 
-form .login-form input {
+.login-form input {
   border: 1px solid grey;
   border-radius: 5px;
   display: block;
@@ -25,7 +25,7 @@ form .login-form input {
   width: 92%;
 }
 
-form .login-form button {
+.login-form button {
   background-color: var(--main-bg-color);
   border: none;
   border-radius: 5px;
@@ -36,7 +36,7 @@ form .login-form button {
   width: 70%;
 }
 
-form .login-form button:disabled {
+.login-form button:disabled {
   color: black;
   opacity: 0.65;
 }

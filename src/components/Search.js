@@ -11,19 +11,20 @@ const TYPE_FIRST_LETTER = 'Primeira letra';
 const ERR_MESSAGE_1 = 'Sua busca deve conter somente 1 (um) caracter';
 const ERR_MESSAGE_2 = 'Sinto muito, não encontramos nenhuma receita para esses filtros.';
 
-function Search({ page }) {
+function Search({ onSearch }) {
   const [type, setType] = useState('');
   const searchRef = useRef();
   const history = useHistory();
 
   function handleSearch() {
     const { value } = searchRef.current;
+    const { pathname } = history.location;
     const valueLength = value.trim().length;
 
     if (valueLength === 0 || !type) return;
     if (type === TYPE_FIRST_LETTER && valueLength > 1) global.alert(ERR_MESSAGE_1);
 
-    fetchResults(type, value, page)
+    fetchResults(type, value, pathname)
       .then((results) => {
         console.log(results);
 
@@ -31,13 +32,15 @@ function Search({ page }) {
 
         if (results.length === 1) {
           const item = results[0];
-          const isMeal = page.includes('Comidas');
+          const isMeal = pathname.includes('comidas');
 
           const id = isMeal ? item.idMeal : item.idDrink;
           const route = isMeal ? '/comidas/' : '/bebidas/';
 
-          history.push(route + id);
+          return history.push(route + id);
         }
+
+        onSearch(results);
       });
   }
 
@@ -97,7 +100,7 @@ function Search({ page }) {
 }
 
 Search.propTypes = {
-  page: PropTypes.string.isRequired,
+  onSearch: PropTypes.func.isRequired,
 };
 
 export default Search;
