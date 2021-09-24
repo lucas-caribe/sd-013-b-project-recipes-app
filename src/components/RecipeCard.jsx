@@ -1,20 +1,23 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import shareIcon from '../images/shareIcon.svg';
 
 function RecipeCard({ recipe, index }) {
   const {
-    type, alcoholicOrNot, area, category, name, image, doneDate, tags,
+    id, type, alcoholicOrNot, area, category, name, image, doneDate, tags,
   } = recipe;
   return (
     <div className="recipes-done-card">
-      <img
-        className="recipes-done-card-img"
-        data-testid={ `${index}-horizontal-image` }
-        src={ image }
-        alt={ `Foto ${name}` }
-      />
+      <Link to={ type === 'comida' ? `/comidas/${id}` : `/bebidas/${id}` }>
+        <img
+          className="recipes-done-card-img"
+          data-testid={ `${index}-horizontal-image` }
+          src={ image }
+          alt={ `Foto ${name}` }
+        />
+      </Link>
       <div>
         <h5
           data-testid={ `${index}-horizontal-top-text` }
@@ -22,7 +25,9 @@ function RecipeCard({ recipe, index }) {
           { type === 'bebida' && alcoholicOrNot }
           { type === 'comida' && `${area} - ${category}` }
         </h5>
-        <h4 data-testid={ `${index}-horizontal-name` }>{ name }</h4>
+        <Link to={ type === 'comida' ? `/comidas/${id}` : `/bebidas/${id}` }>
+          <h4 data-testid={ `${index}-horizontal-name` }>{ name }</h4>
+        </Link>
         <p>
           { 'Feita em: ' }
           <span data-testid={ `${index}-horizontal-done-date` }>
@@ -53,6 +58,7 @@ function RecipeCard({ recipe, index }) {
 
 RecipeCard.propTypes = {
   recipe: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     alcoholicOrNot: PropTypes.string.isRequired,
     area: PropTypes.string.isRequired,
