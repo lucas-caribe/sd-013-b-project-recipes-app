@@ -11,10 +11,10 @@ const DRINK_CATEGORIES_ENDPOINT = 'https://www.thecocktaildb.com/api/json/v1/1/l
 
 export default function MainPage() {
   const history = useHistory();
-  const { currentFoodFilter, currentDrinkFilter } = useContext(AppContext);
-  const [meals, setMeals] = useState([]);
+  const { currentFoodFilter, currentDrinkFilter,
+    meals, drinks, setMeals, setDrinks } = useContext(AppContext);
+
   const [mealsCategories, setMealsCategories] = useState([]);
-  const [drinks, setDrinks] = useState([]);
   const [drinksCategories, setDrinksCategories] = useState([]);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function MainPage() {
       setDrinks(drinkResponse.drinks);
     }
     getMealsAndCategories();
-  }, []);
+  }, [setDrinks, setMeals]);
 
   useEffect(() => {
     async function getMeals() {
@@ -48,7 +48,7 @@ export default function MainPage() {
     if (currentFoodFilter !== '') {
       getFilteredMeals(currentFoodFilter);
     }
-  }, [currentFoodFilter]);
+  }, [setMeals, currentFoodFilter]);
 
   useEffect(() => {
     async function getDrinks() {
@@ -67,7 +67,7 @@ export default function MainPage() {
     if (currentDrinkFilter !== '') {
       getFilteredDrinks(currentDrinkFilter);
     }
-  }, [currentDrinkFilter]);
+  }, [setDrinks, currentDrinkFilter]);
 
   return (history.location.pathname.includes('/comidas') ? (
     <RecipesMenu route="Comidas" array={ meals } arrayCategories={ mealsCategories } />
