@@ -89,8 +89,8 @@ function Login() {
 }
 
 Login.propTypes = {
-  // history: PropTypes.objectOf(PropTypes.any).isRequired,
-  // userEmail: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  userEmail: PropTypes.func.isRequired,
 };
 
 // const mapDispatchToProps = (dispatch) => ({
