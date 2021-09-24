@@ -20,7 +20,7 @@ const RecipeDetails = () => {
   const [object, setObject] = useState();
   const { id } = useParams();
   const typeOffood = window.location.href;
-  const foodOrDrink = typeOffood.includes('comida') ? 'comida' : 'bebida';
+  const isFoodOrDrink = typeOffood.includes('comida') ? 'comida' : 'bebida';
 
   useEffect(() => {
     if (foodOrDrink === 'comida') {
@@ -40,7 +40,7 @@ const RecipeDetails = () => {
     }
   }, []);
 
-  if (object) data = { ...getFoodOrDrinkRecipe(object, foodOrDrink) };
+  if (object) data = { ...getFoodOrDrinkRecipe(object, isFoodOrDrink) };
   const { image, name, subCategory, instructions, ingredients, video } = data;
 
   console.log('data', data);
@@ -118,7 +118,7 @@ const RecipeDetails = () => {
 
                 <br />
 
-                { foodOrDrink === 'comida'
+                { isFoodOrDrink === 'comida'
                   && <iframe
                     data-testid="video"
                     width="420"
