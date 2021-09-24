@@ -23,7 +23,7 @@ const RecipeDetails = () => {
   const foodOrDrink = typeOffood.includes('comida') ? 'comida' : 'bebida';
 
   useEffect(() => {
-    if (isFoodOrDrink === 'comida') {
+    if (foodOrDrink === 'comida') {
       const getFetchComida = () => {
         fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
           .then((resp) => resp.json())
