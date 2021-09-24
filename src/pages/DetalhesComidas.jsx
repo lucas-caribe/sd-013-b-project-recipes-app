@@ -20,9 +20,10 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal }) {
     fetchId();
   }, []);
 
-  useEffect(() => {
-    sendObjToGlobal(objIdReceita);
-  }, [objIdReceita]);
+  const objToReducer = {
+    id,
+    inProgress: true,
+  };
 
   const getIngredient = () => {
     if (objIdReceita !== undefined) {
@@ -125,6 +126,7 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal }) {
         className="buttonStart"
         type="button"
         data-testid="start-recipe-btn"
+        onClick={ () => sendObjToGlobal(objIdReceita, objToReducer) }
       >
         Start
       </button>
@@ -138,7 +140,7 @@ DetalhesComidas.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  sendObjToGlobal: (obj) => dispatch(sendRecipeToGlobalMeal(obj)),
+  sendObjToGlobal: (obj, obj2) => dispatch(sendRecipeToGlobalMeal(obj, obj2)),
 });
 
 export default connect(null, mapDispatchToProps)(DetalhesComidas);

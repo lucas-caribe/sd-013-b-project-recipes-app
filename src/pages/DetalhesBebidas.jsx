@@ -21,9 +21,10 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal }) {
     fetchId();
   }, []);
 
-  useEffect(() => {
-    sendObjToGlobal(objIdReceita);
-  }, [objIdReceita]);
+  const objToReducer = {
+    id,
+    inProgress: true,
+  };
 
   const getIngredient = () => {
     if (objIdReceita !== undefined) {
@@ -114,6 +115,7 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal }) {
         className="buttonStart"
         type="button"
         data-testid="start-recipe-btn"
+        onClick={ () => sendObjToGlobal(objIdReceita, objToReducer) }
       >
         Start
       </button>
@@ -127,7 +129,7 @@ DetalhesBebidas.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  sendObjToGlobal: (drinks) => dispatch(sendRecipeToGlobalDrinks(drinks)),
+  sendObjToGlobal: (drinks, status) => dispatch(sendRecipeToGlobalDrinks(drinks, status)),
 });
 
 export default connect(null, mapDispatchToProps)(DetalhesBebidas);
