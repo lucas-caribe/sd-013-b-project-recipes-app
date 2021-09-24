@@ -4,7 +4,7 @@ import foodContext from '../context/FoodContext';
 
 function FoodCard() {
   const { foodState } = useContext(foodContext);
-  const NUMBER_TWELVE = 12;
+  const MAX_NUMBER = 12;
 
   if (foodState.length === 1) {
     return (
@@ -20,12 +20,13 @@ function FoodCard() {
           key={ idMeal }
         >
           <img
+            data-testid={ `${index}-card-img` }
             src={ strMealThumb }
             alt={ strMeal }
-            data-testid={ `${index}-card-img` }
           />
-          <h3 data-testid={ `${index}-card-name` }>{strMeal}</h3>
-        </div>)).slice(0, NUMBER_TWELVE)}
+          <p data-testid={ `${index}-card-name` }>{strMeal}</p>
+        </div>))
+        .slice(0, MAX_NUMBER)}
     </div>
   );
 }
