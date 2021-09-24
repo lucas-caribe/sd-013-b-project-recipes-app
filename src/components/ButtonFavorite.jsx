@@ -15,7 +15,7 @@ async function buttonCopy(event) {
   } else {
     copy(`http://localhost:3000/comidas/${id}`);
   }
-  return (window.alert('Link copiado!'));
+  // return (window.alert('Link copiado!'));
 }
 
 function ButtonFavorite(props) {
