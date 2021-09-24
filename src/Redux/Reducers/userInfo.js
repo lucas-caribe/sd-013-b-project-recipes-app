@@ -1,4 +1,4 @@
-const STORE_USER_INFO = 'STORE_USER_INFO';
+import { STORE_USER_INFO } from '../Actions';
 
 const INITIAL_STATE = {
   email: '',

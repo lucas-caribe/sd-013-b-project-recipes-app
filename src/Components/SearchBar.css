@@ -1,0 +1,16 @@
+.searchBar {
+  background-color: rosybrown;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.radio-options {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 5px;
+}
+
+.radio-options input {
+  margin-right: 5px;
+}
