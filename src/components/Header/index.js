@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import './header.css';
 import perfilIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
-import Explorer from '../Explorer';
+import AppContext from '../../context/AppContext';
 
 const Header = ({ searchRender, titlePage }) => {
-  const [explorerRender, setExplorerRender] = useState(false);
+  const { setSearching, searching } = useContext(AppContext);
   function title(mainTitlePage) {
     return (
       <div className="title-header">
@@ -30,18 +30,10 @@ const Header = ({ searchRender, titlePage }) => {
     );
   }
 
-  
-
   function search(render) {
     return render ? (
       <div className="icon-Search">
-        {/* <Link to="/explorar">
-          <img src={ searchIcon } alt="Perfil Icon" data-testid="search-top-btn" />
-        </Link> */}
-        <button
-          type="button"
-          onClick={ () => setExplorerRender(!explorerRender) }
-        >
+        <button type="button" onClick={ () => setSearching(!searching) }>
           <img
             src={ searchIcon }
             alt="Perfil Icon"
@@ -59,7 +51,6 @@ const Header = ({ searchRender, titlePage }) => {
       {perfil()}
       {title(titlePage)}
       {search(searchRender)}
-      {searchBar(titlePage)}
     </div>
   );
 };

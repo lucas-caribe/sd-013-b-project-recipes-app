@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { Redirect } from 'react-router-dom';
 import Input from './Input';
 import fetchAPI from '../../services';
+import AppContext from '../../context/AppContext';
 
-const Explorer = ({ foodOrDrink }) => {
+const SearchBar = ({ option }) => {
   const SEARCH_TERM = 'searchTerm';
   const [inputSearch, setInputSearch] = useState('');
   const [inputRadio, setInputRadio] = useState('');
+  const { setMeals, setDrinks } = useContext(AppContext);
   const handleChange = ({ target }) => (target.name === 'searchBar'
     ? setInputSearch(target.value)
     : setInputRadio(target.id));
@@ -15,10 +18,9 @@ const Explorer = ({ foodOrDrink }) => {
     if (searchInput.length > 1 && radio === 'firstLetter') {
       return global.alert('Sua busca deve conter somente 1 (um) caracter');
     }
-
     const drinkOrFood = {
-      drink: 'thecocktaildb',
-      food: 'themealdb',
+      Bebidas: 'thecocktaildb',
+      Comidas: 'themealdb',
     };
 
     const radioCriteria = {
@@ -27,12 +29,26 @@ const Explorer = ({ foodOrDrink }) => {
       firstLetter: `https://www.${drinkOrFood[type]}.com/api/json/v1/1/search.php?f=${searchInput}`,
     };
 
-    if (type === 'food') {
+    if (type === 'Comidas') {
       const { meals } = await fetchAPI(radioCriteria[radio]);
-      return meals;
+      // if (meals.length === 1) {
+      //   return <Redirect to={ `/comidas}/${meals[0].idMeal}` } />;
+      // }
+      return meals !== null
+        ? setMeals(meals)
+        : global.alert(
+          'Sinto muito, não encontramos nenhuma receita para esses filtros.',
+        );
     }
     const { drinks } = await fetchAPI(radioCriteria[radio]);
-    return drinks;
+    // if (drinks.length === 1) {
+    //   return <Redirect to={ `/bebidas/${drinks[0].idDrink}` } />;
+    // }
+    return drinks !== null
+      ? setDrinks(drinks)
+      : global.alert(
+        'Sinto muito, não encontramos nenhuma receita para esses filtros.',
+      );
   };
 
   return (
@@ -85,7 +101,7 @@ const Explorer = ({ foodOrDrink }) => {
       <button
         type="button"
         data-testid="exec-search-btn"
-        onClick={ () => searchCriteria(inputSearch, inputRadio, foodOrDrink) }
+        onClick={ () => searchCriteria(inputSearch, inputRadio, option) }
       >
         Buscar
       </button>
@@ -93,7 +109,7 @@ const Explorer = ({ foodOrDrink }) => {
   );
 };
 
-Explorer.propTypes = {
-  foodOrDrink: PropTypes.string.isRequired,
+SearchBar.propTypes = {
+  option: PropTypes.string.isRequired,
 };
-export default Explorer;
+export default SearchBar;

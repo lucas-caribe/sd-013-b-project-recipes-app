@@ -10,6 +10,9 @@ function Provider({ children }) {
   const [currentFoodFilter, setCurrentFoodFilter] = useState('');
   const [currentDrinkFilter, setCurrentDrinkFilter] = useState('');
   const [page, setPage] = useState('Comidas');
+  const [searching, setSearching] = useState(false);
+  const [meals, setMeals] = useState([]);
+  const [drinks, setDrinks] = useState([]);
 
   const contextValue = {
     login,
@@ -20,14 +23,16 @@ function Provider({ children }) {
     setCurrentDrinkFilter,
     page,
     setPage,
+    searching,
+    setSearching,
+    meals,
+    setMeals,
+    drinks,
+    setDrinks,
   };
 
- 
-
   return (
-    <AppContext.Provider value={ contextValue }>
-      {children}
-    </AppContext.Provider>
+    <AppContext.Provider value={ contextValue }>{children}</AppContext.Provider>
   );
 }
 
