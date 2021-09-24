@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import searchIcon from '../images/searchIcon.svg';
 import profileIcon from '../images/profileIcon.svg';
+import SearchBar from './SearchBar';
 
 export default function Header() {
   const [showFilters, setShowFilters] = useState(false);
@@ -10,8 +11,7 @@ export default function Header() {
 
   function renderFilters() {
     return (
-      <input type="text" data-testid="search-input" />
-
+      <SearchBar history={ history } />
     );
   }
 

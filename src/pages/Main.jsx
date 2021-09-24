@@ -1,10 +1,9 @@
 import React from 'react';
-import Header from '../component/Header';
+import Header from '../components/Header';
 
 export default function Main() {
   return (
     <div>
-      <h2>Main</h2>
       <Header />
     </div>
   );
