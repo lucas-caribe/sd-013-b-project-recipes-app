@@ -7,6 +7,7 @@ function Login() {
   const [email, setUserEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // caso precisem pegar algo no local storage;
   // const mealisAuthenticated = () => localStorage.getItem(mealsToken) !== null;
   // const cockisAuthenticated = () => localStorage.getItem(cocktailsToken) !== null;
   // const getMealsToken = () => localStorage.getItem(mealsToken);
@@ -21,6 +22,7 @@ function Login() {
   const emailStorage = (usemail) => {
     localStorage.setItem('user', usemail);
   };
+  // caso precisem remover do storage
   // const logout = () => {
   //   localStorage.removeItem(meals, cocktail);
   // };
@@ -41,7 +43,7 @@ function Login() {
   };
 
   const validaLogin = () => {
-    const passwordLength = 6;
+    const passwordLength = 7;
     let loginValidado = true;
 
     if (email.includes('@' && '.com') && password.length > passwordLength) {
@@ -78,6 +80,7 @@ function Login() {
 
       <button
         type="submit"
+        data-testid="login-submit-btn"
         onClick={ redirectToTarget }
         disabled={ validaLogin() }
       >
