@@ -8,3 +8,4 @@ export { default as Perfil } from './Perfil';
 export { default as ExplorarComidas } from './ExplorarComidas';
 export { default as ExplorarBebidas } from './ExplorarBebidas';
 export { default as BebidaAleatoria } from './BebidaAleatoria';
+export { default as ExplorarComidaIngredientes } from './ExplorarComidaIngredientes';
