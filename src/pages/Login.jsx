@@ -39,7 +39,6 @@ export default function Login() {
     localStorage.setItem('mealsToken', '1');
     localStorage.setItem('cocktailsToken', '1');
     history.push('/comidas');
-
   };
 
   return (
