@@ -76,7 +76,7 @@ const RecipeDetails = () => {
         <h3
           data-testid="recipe-category"
         >
-          {/* {category || isAlcoholic} */}
+          {obj[0].subcategory}
         </h3>
         Ingredients
         <ul>
