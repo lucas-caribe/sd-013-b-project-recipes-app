@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
-export default function CompletedAndFavoriteCard({ recipe, isFavoriteRecipe, index }) {
+export default function CompletedAndFavoriteCard({
+  recipe, isFavoriteRecipe, index,
+}) {
   const {
-    id, type, area, category, alcoholicOrNot, name, image, doneDate, tags,
+    id, type, area, category, alcoholicOrNot, name, image, doneDate, tags = null,
   } = recipe;
-  const [tag1, tag2] = tags;
 
   const [isCopied, setIsCopied] = useState(false);
   let clearMessage = null;
@@ -17,6 +18,12 @@ export default function CompletedAndFavoriteCard({ recipe, isFavoriteRecipe, ind
     await navigator.clipboard.writeText(`http://localhost:3000/${type}s/${id}`);
     const TIME = 1500;
     clearMessage = setTimeout(() => setIsCopied(false), TIME);
+  };
+
+  const removeFavorite = () => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    favoriteRecipes.splice(index, 1);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
   };
 
   useEffect(() => clearTimeout(clearMessage));
@@ -37,13 +44,19 @@ export default function CompletedAndFavoriteCard({ recipe, isFavoriteRecipe, ind
       </span>
       {isFavoriteRecipe
         ? (
-          <img src={ blackHeartIcon } alt="Favorite Button" />
+          <Link to="/receitas-favoritas" onClick={ () => removeFavorite() }>
+            <img
+              src={ blackHeartIcon }
+              alt="Favorite Button"
+              data-testid={ `${index}-horizontal-favorite-btn` }
+            />
+          </Link>
         )
         : (
           <>
             <span data-testid={ `${index}-horizontal-done-date` }>{doneDate}</span>
-            <span data-testid={ `${index}-${tag1}-horizontal-tag` }>{tag1}</span>
-            <span data-testid={ `${index}-${tag2}-horizontal-tag` }>{tag2}</span>
+            <span data-testid={ `${index}-${tags[0]}-horizontal-tag` }>{tags[0]}</span>
+            <span data-testid={ `${index}-${tags[1]}-horizontal-tag` }>{tags[1]}</span>
           </>
         )}
       <button type="button" onClick={ () => copy() }>
@@ -71,7 +84,17 @@ export default function CompletedAndFavoriteCard({ recipe, isFavoriteRecipe, ind
         {alcoholicOrNot}
       </span>
       {isFavoriteRecipe
-        ? (<img src={ blackHeartIcon } alt="Favorite Button" />)
+        ? (
+          <Link
+            to="/receitas-favoritas"
+            onClick={ () => removeFavorite() }
+          >
+            <img
+              src={ blackHeartIcon }
+              alt="Favorite Button"
+              data-testid={ `${index}-horizontal-favorite-btn` }
+            />
+          </Link>)
         : (<span data-testid={ `${index}-horizontal-done-date` }>{doneDate}</span>)}
       <button type="button" onClick={ () => copy() }>
         <img
