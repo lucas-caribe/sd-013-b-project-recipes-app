@@ -44,7 +44,7 @@ export default function MainRecipePage({ type, recipesState }) {
 
   return (
     <div>
-      <div>
+      <div className="category-buttons">
         <button
           data-testid="All-category-filter"
           type="button"

@@ -19,7 +19,7 @@ function Recommendations({ recommendation }) {
           />
           <Carousel.Caption>
             <div>
-              <span data-testid={ `${index}-card-name` }>
+              <span data-testid={ `${index}-recomendation-title` }>
                 { item.strMeal && item.strDrink }
               </span>
               <span>

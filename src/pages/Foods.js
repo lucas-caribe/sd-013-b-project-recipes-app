@@ -5,6 +5,7 @@ import RecipeContext from '../context/RecipeContext';
 import Footer from '../components/Footer';
 import MainRecipePage from '../components/MainRecipePage';
 import fetchApi from '../services/fetchApi';
+import '../css/Foods.css';
 
 export default function Food() {
   const pageTitle = {

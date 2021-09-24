@@ -1,0 +1,72 @@
+body {
+  background-color: #79B4B7;
+}
+
+header {
+  display: flex;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: gainsboro;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+}
+
+header button {
+  background-color: gainsboro;
+  /* display: flex; */
+  height: 50px;
+  border: none;
+}
+
+.category-buttons {
+  background-color: #79B4B7;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin: 15px 3px 5px;
+}
+
+.category-buttons button {
+  border: 1px solid gray;
+  border-radius: 5px;
+  background-color: gainsboro;
+  font-size: 20px;
+  width: 100px;
+  margin: 3px;
+}
+
+.cards {
+  display: inline-flex;
+  border: 2px solid gainsboro;
+  width: 45%;
+  align-items: center;
+  border-radius: 10px;
+  justify-content: space-evenly;
+  background-color: gainsboro;
+  margin: 7px;
+}
+
+.images {
+  width: 100%;
+  border-radius: 7px 7px 0px 0px;
+}
+
+.card-name {
+  display: flex;
+  justify-content: center;
+  color: black;
+  text-decoration:none;
+  font-size: 20px;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+footer {
+  display: flex;
+  background-color: gainsboro;
+  justify-content: space-around;
+  align-items: center;
+  height: 50px;
+  width: 100%;
+}
