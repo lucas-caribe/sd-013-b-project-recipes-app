@@ -4,12 +4,17 @@ import Context from '../context/Context';
 import Button from '../mini-components/Button';
 
 function ExploreFoods() {
-  const { setShowHeader, setTitleName, setShowSearchHeaderIcon } = useContext(Context);
+  const {
+    setShowHeader,
+    setTitleName,
+    setShowSearchHeaderIcon,
+    setShowFooter } = useContext(Context);
 
   useEffect(() => {
     function handleHeader() {
       setShowHeader(true);
       setShowSearchHeaderIcon(false);
+      setShowFooter(true);
       setTitleName('Explorar Comidas');
     }
     handleHeader();

@@ -2,12 +2,17 @@ import React, { useContext, useEffect } from 'react';
 import Context from '../context/Context';
 
 function FavoriteRecipes() {
-  const { setShowHeader, setTitleName, setShowSearchHeaderIcon } = useContext(Context);
+  const {
+    setShowHeader,
+    setTitleName,
+    setShowSearchHeaderIcon,
+    setShowFooter } = useContext(Context);
 
   useEffect(() => {
     function handleHeader() {
       setShowHeader(true);
       setShowSearchHeaderIcon(false);
+      setShowFooter(false);
       setTitleName('Receitas Favoritas');
     }
     handleHeader();

@@ -2,11 +2,12 @@ import React, { useContext, useEffect } from 'react';
 import Context from '../context/Context';
 
 function DrinkDetails() {
-  const { setShowHeader } = useContext(Context);
+  const { setShowHeader, setShowFooter } = useContext(Context);
 
   useEffect(() => {
     function handleHeader() {
       setShowHeader(false);
+      setShowFooter(false);
     }
     handleHeader();
   }, []);

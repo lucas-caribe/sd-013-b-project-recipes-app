@@ -6,11 +6,12 @@ function Login() {
   const [disabled, setDisabled] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { setShowHeader } = useContext(Context);
+  const { setShowHeader, setShowFooter } = useContext(Context);
 
   useEffect(() => {
     function handleHeader() {
       setShowHeader(false);
+      setShowFooter(false);
     }
     handleHeader();
   }, []);
