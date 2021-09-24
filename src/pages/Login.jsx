@@ -27,6 +27,7 @@ export default function Login({ history }) {
   return (
     <div>
       <input
+        className="input-form"
         required
         data-testid="email-input"
         type="text"
@@ -36,6 +37,7 @@ export default function Login({ history }) {
         placeholder="e-mail"
       />
       <input
+        className="input-form"
         required
         data-testid="password-input"
         type="password"
