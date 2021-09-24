@@ -7,7 +7,7 @@ import fetchMeals from '../services/fetchMeals';
 
 function SearchBar({ pageTitle }) {
   const history = useHistory();
-  const { meals, setMeals, drinks, setDrinks } = useContext(RecipesContext);
+  const { setMeals, setDrinks } = useContext(RecipesContext);
   const [inputValue, setInputValue] = useState('');
   const [radioValue, setRadioValue] = useState('');
 
@@ -31,9 +31,6 @@ function SearchBar({ pageTitle }) {
       if (data.length === 1) history.push(`bebidas/${data[0].idDrink}`);
     }
   };
-
-  console.log('comidas', meals);
-  console.log('bebidas', drinks);
 
   return (
     <div>

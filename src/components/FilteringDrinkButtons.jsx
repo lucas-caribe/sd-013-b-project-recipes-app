@@ -17,7 +17,10 @@ function FilteringDrinkButtons() {
 
   return (
     <div>
-      { drinks && filterDrinkButtons ? GenerateButtons(filterDrinkButtons, '') : null }
+      {
+        drinks && filterDrinkButtons
+          ? GenerateButtons(filterDrinkButtons, 'drink') : null
+      }
     </div>
   );
 }

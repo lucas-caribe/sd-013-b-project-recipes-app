@@ -1,4 +1,5 @@
 export default async function fetchDrinks(inputValue, radioValue) {
+  if (!inputValue || !radioValue) return;
   const mealsEndpoints = {
     ingredientSearch: `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${inputValue}`,
     nameSearch: `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${inputValue}`,
@@ -11,9 +12,13 @@ export default async function fetchDrinks(inputValue, radioValue) {
   }
 
   if (inputValue && radioValue) {
-    let response = await fetch(mealsEndpoints[radioValue]);
-    response = await response.json();
-    return response.drinks;
+    try {
+      let response = await fetch(mealsEndpoints[radioValue]);
+      response = await response.json();
+      return response.drinks;
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 
@@ -34,5 +39,3 @@ export async function fetchDrinkByCategory(category) {
   const data = await response.json();
   return data.drinks;
 }
-
-// export default { fetchDrinks, fetchInitialDrinks };
