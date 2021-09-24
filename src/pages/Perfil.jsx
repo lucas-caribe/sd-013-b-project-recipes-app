@@ -7,7 +7,9 @@ export default function Perfil() {
   return (
     <div>
       <Header titlePage="Perfil" />
-      <p data-testid="profile-email">
+      <p
+        data-testid="profile-email"
+      >
         {`Email: ${email}`}
       </p>
       {' '}
