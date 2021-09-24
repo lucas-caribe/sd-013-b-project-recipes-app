@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import copy from 'clipboard-copy';
 import { fetchCocktailDetails, fetchMealDetails } from '../services/fetchDetails';
 import getIngredientsInArray from '../helpers/getIngredientsInArray';
 
 export default function InProgress() {
   const [Recipe, setRecipe] = useState({});
+  const [Copied, setCopied] = useState(false);
   const [Ingredients, setIngredient] = useState([]);
   const [IngredientsCompleted, setIngredientsCompleted] = useState([]);
   const history = useHistory();
@@ -55,6 +57,26 @@ export default function InProgress() {
     </>
   );
 
+  const handleClickShare = async () => {
+    copy(window.location.href);
+    setCopied(true);
+  };
+
+  const renderButtons = () => (
+    <>
+      <button
+        type="button"
+        data-testid="share-btn"
+        onClick={ handleClickShare }
+        id="Compatilhar"
+      >
+        Compartilhar
+      </button>
+      {Copied && <p>Link copiado!</p> }
+      <button type="button" data-testid="favorite-btn">Favoritar</button>
+    </>
+  );
+
   const renderMealsComponents = () => (
     <div>
       <img
@@ -64,8 +86,7 @@ export default function InProgress() {
         data-testid="recipe-photo"
       />
       <h3 data-testid="recipe-title">{Recipe.strMeal}</h3>
-      <button type="button" data-testid="share-btn">Compartilhar</button>
-      <button type="button" data-testid="favorite-btn">Favoritar</button>
+      { renderButtons() }
       <h4 data-testid="recipe-category">{Recipe.strCategory}</h4>
       <ul>
         {renderIngredients()}
@@ -86,8 +107,9 @@ export default function InProgress() {
         data-testid="recipe-photo"
       />
       <h3 data-testid="recipe-title">{Recipe.strDrink}</h3>
-      <button type="button" data-testid="share-btn">Compartilhar</button>
-      <button type="button" data-testid="favorite-btn">Favoritar</button>
+      {
+        renderButtons()
+      }
       <h4 data-testid="recipe-category">{Recipe.strCategory}</h4>
       {
         renderIngredients()
