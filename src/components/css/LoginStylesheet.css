@@ -7,7 +7,7 @@ body {
   height: 400px;
 }
 
-.login {
+/* .login {
   backdrop-filter: blur(10px);
   background: rgba(255, 255, 255, 0.05);
   border-radius: 3px;
@@ -47,7 +47,7 @@ body {
 
 input::placeholder {
   color: white;
-  font-family: Open Sans, sans-serif;
+  font-family: Open Sans , sans-serif;
   text-align: center;
 }
 
@@ -83,7 +83,7 @@ input::placeholder {
   width: 270px;
   text-align: center;
   font-size: 14px;
-  font-family: "Open Sans", sans-serif;
+  font-family: Open Sans , sans-serif;
   font-weight: bold;
   padding: 12px 0;
 
@@ -98,4 +98,4 @@ input::placeholder {
   border: none;
 
   margin-bottom: 20px;
-}
+} */
