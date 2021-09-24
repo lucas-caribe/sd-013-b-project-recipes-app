@@ -1,10 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Context from '../context/Context';
 
 function Login() {
   const [disabled, setDisabled] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { setShowHeader, setShowFooter } = useContext(Context);
+
+  useEffect(() => {
+    function handleHeader() {
+      setShowHeader(false);
+      setShowFooter(false);
+    }
+    handleHeader();
+  }, []);
 
   useEffect(() => {
     function ValidLogin() {
@@ -26,6 +36,9 @@ function Login() {
     localStorage.setItem('user', JSON.stringify({ email }));
   }
 
+  function handleClick() {
+    setToLocalStorage();
+  }
   return (
     <div>
       <h1>Login</h1>
@@ -53,7 +66,7 @@ function Login() {
             type="button"
             data-testid="login-submit-btn"
             disabled={ disabled }
-            onClick={ setToLocalStorage }
+            onClick={ handleClick }
           >
             Entrar
           </button>

@@ -1,8 +1,25 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Context from '../context/Context';
 import Button from '../mini-components/Button';
 
 function ExploreFoods() {
+  const {
+    setShowHeader,
+    setTitleName,
+    setShowSearchHeaderIcon,
+    setShowFooter } = useContext(Context);
+
+  useEffect(() => {
+    function handleHeader() {
+      setShowHeader(true);
+      setShowSearchHeaderIcon(false);
+      setShowFooter(true);
+      setTitleName('Explorar Comidas');
+    }
+    handleHeader();
+  }, []);
+
   return (
     <main data-testid="footer">
       <Link to="/explorar/comidas/ingredientes">
