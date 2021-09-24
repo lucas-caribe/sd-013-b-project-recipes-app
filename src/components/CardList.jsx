@@ -1,21 +1,39 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-
-function CardList({ foods }) {
-  console.log(foods);
+import Card from './Card';
+//
+function CardList({ object: { meals, drinks } }) {
+  const MAX_CARD_LENGTH = 11;
   return (
     <div>
-      {(foods !== undefined) ? foods.map((food, index) => (
-        <li key={ index }>{food.strMeal}</li>
-      )) : null}
+      {(meals) ? meals
+        .filter((_, index) => index <= MAX_CARD_LENGTH)
+        .map((food, index) => (
+          <Card
+            key={ index }
+            id={ index }
+            image={ food.strMealThumb }
+            name={ food.strMeal }
+          />
+        )) : null}
+
+      {(drinks) ? drinks
+        .filter((_, index) => index <= MAX_CARD_LENGTH)
+        .map((drink, index) => (
+          <Card
+            key={ index }
+            id={ index }
+            image={ drink.strDrinkThumb }
+            name={ drink.strDrink }
+          />
+        )) : null}
+
     </div>
   );
 }
 
 CardList.propTypes = {
-  foods: PropTypes.shape({
-    map: PropTypes.func,
-  }).isRequired,
-};
+  object: PropTypes.objectOf(PropTypes.object),
+}.isRequired;
 
 export default CardList;
