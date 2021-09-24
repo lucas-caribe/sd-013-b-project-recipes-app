@@ -3,3 +3,8 @@
   display: flex;
   justify-content: space-around;
 }
+
+button {
+  background: none;
+  border: none;
+}
