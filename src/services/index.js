@@ -33,3 +33,35 @@ export async function fetchDrinksLetter(letter) {
   const data = await response.json();
   return data.drinks;
 }
+
+export async function fetchMealsRecommendation() {
+  const count = 0;
+  const max = 6;
+
+  const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+  const { meals } = await response.json();
+  const data = meals.slice(count, max);
+  return data;
+}
+
+export async function fetchDrinksRecommendation() {
+  const count = 0;
+  const max = 6;
+
+  const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+  const { drinks } = await response.json();
+  const data = drinks.slice(count, max);
+  return data;
+}
+
+export async function fetchDrinkDetails(id) {
+  const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
+  const { drinks } = await response.json();
+  return drinks[0];
+}
+
+export async function fetchMealDetails(id) {
+  const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+  const { meals } = await response.json();
+  return meals[0];
+}
