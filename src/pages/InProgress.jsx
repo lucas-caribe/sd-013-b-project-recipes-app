@@ -58,7 +58,11 @@ export default function InProgress() {
   );
 
   const handleClickShare = async () => {
-    copy(window.location.href);
+    const newPath = pathname.split('/');
+    newPath.splice(3, 1);
+    const path = newPath.join('/');
+    const href = `http://localhost:3000${path}`;
+    copy(href);
     setCopied(true);
   };
 
