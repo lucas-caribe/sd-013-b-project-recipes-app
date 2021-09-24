@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useRecipes } from '../../context';
 import { useDetails } from '../../context/DetailsContext';
 
-function Detalhes({ location: { pathname } }) {
+function Detalhes({ location: { pathname }, history }) {
   const { item,
     ingredients,
     recommendations,
@@ -12,7 +12,6 @@ function Detalhes({ location: { pathname } }) {
 
   const {
     finishedRecipes,
-    setInProgress,
   } = useRecipes();
 
   useEffect(() => {
@@ -60,16 +59,17 @@ function Detalhes({ location: { pathname } }) {
     </div>
   );
 
-  const checkRecipeStatus = (type, id) => {
+  const checkRecipeStatus = (path, id) => {
     const recipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const checkId = finishedRecipes.some((recipe) => recipe.id === id);
     if (!checkId && !recipes) {
+      console.log(`/${path}/${id}`);
       return (
         <button
           style={ { position: 'fixed', bottom: '0px' } }
           data-testid="start-recipe-btn"
           type="button"
-          onClick={ () => setInProgress(type, id) }
+          onClick={ () => history.push(`/${path}/${id}/in-progress`) }
         >
           Iniciar receita
         </button>
@@ -80,14 +80,13 @@ function Detalhes({ location: { pathname } }) {
         style={ { position: 'fixed', bottom: '0px' } }
         data-testid="start-recipe-btn"
         type="button"
-        onClick={ () => setInProgress(type, id) }
       >
         Continuar Receita
       </button>
     );
   };
 
-  const renderDetails = (type, property) => {
+  const renderDetails = (path, type, property) => {
     if (!item[type]) {
       return <span>Carregando...</span>;
     } return (
@@ -118,15 +117,15 @@ function Detalhes({ location: { pathname } }) {
           frameBorder="0"
         />}
         {renderRecommendations()}
-        {checkRecipeStatus(type, item[type][0][`id${property}`])}
+        {checkRecipeStatus(path, item[type][0][`id${property}`])}
       </main>
     );
   };
 
   if (pathname.includes('comidas')) {
-    return renderDetails('meal', 'Meal');
+    return renderDetails('comidas', 'meal', 'Meal');
   }
-  return renderDetails('drink', 'Drink');
+  return renderDetails('bebidas', 'drink', 'Drink');
 }
 
 export default Detalhes;
