@@ -13,10 +13,10 @@ const Main = ({ filterItens }) => {
   const [showSearch, toggleShowSeatch] = useState(false);
   console.log(`type: ${type}\nid: ${id}\nstatus: ${status}`);
   let main;
-  let showHeader = true;
+  let showHeaderAndFooter = true;
   if (type === 'comidas') main = 'Comidas';
   else if (type === 'bebidas') main = 'Bebidas';
-  if (id) showHeader = false;
+  if (id) showHeaderAndFooter = false;
 
   useEffect(() => {
     filterItens(type, 'name', '');
@@ -33,10 +33,11 @@ const Main = ({ filterItens }) => {
 
   return (
     <div>
-      {showHeader ? renderHeader() : null}
+      {showHeaderAndFooter ? renderHeader() : null}
       {showSearch && <SearchBar type={ type } />}
       <FoodCards type={ type } />
-      <LowerMenu />
+      {showHeaderAndFooter ? <LowerMenu /> : null}
+
     </div>
   );
 };

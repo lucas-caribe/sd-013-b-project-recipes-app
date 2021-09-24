@@ -52,7 +52,6 @@ const fetchFilteredItems = (userType, userFilter, userInput) => (dispatch) => {
     fetch(`https://www.${type}.com/api/json/v1/1/${filter}${userInput}`)
       .then((result) => result.json())
       .then((obj) => {
-        console.log('a');
         if (obj[Object.keys(obj)]) {
           dispatch(setFilteredItens(obj));
         } else {
