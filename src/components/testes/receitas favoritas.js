@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../../components/Header';
+import Header from '../Header';
 
 function receitasFavoritas() {
   return <Header title="Receitas Favoritas" displaySearchBtn={ false } />;
