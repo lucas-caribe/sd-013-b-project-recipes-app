@@ -1,5 +1,6 @@
 // Tela de receitas favoritas: requisitos 60 a 66;
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import ButtonFavorite from '../components/ButtonFavorite';
 
 const STATE_FAVORITE = {
@@ -34,65 +35,65 @@ function buttonChangeFilter(setState) {
   );
 }
 
-function itemFavorite(item, index) {
-  const { id, type, area, category, alcoholicOrNot, name, image } = item;
-  if (type === 'comida') {
+function FavoritesRecipes() {
+  const history = useHistory();
+
+  function itemFavorite(item, index) {
+    const { id, type, area, category, alcoholicOrNot, name, image } = item;
+    if (type === 'comida') {
+      return (
+        <div id={ id }>
+          <input
+            type="image"
+            width="150px"
+            data-testid={ `${index}-horizontal-image` }
+            src={ image }
+            alt={ name }
+            onClick={ () => (history.push(`/comidas/${id}`)) }
+          />
+          <br />
+          <button
+            type="button"
+            onClick={ () => (history.push(`/comidas/${id}`)) }
+            data-testid={ `${index}-horizontal-name` }
+          >
+            { name }
+          </button>
+          <p data-testid={ `${index}-horizontal-top-text` }>{`${area} - ${category}`}</p>
+          <ButtonFavorite id={ id } index={ index } />
+        </div>
+      );
+    }
     return (
       <div id={ id }>
-        {/* Quando clicar na imagem, precisa encaminhar para o receita */}
-        <img
+        <input
+          type="image"
+          width="150px"
           data-testid={ `${index}-horizontal-image` }
-          width="100px"
           src={ image }
           alt={ name }
+          onClick={ () => (history.push(`/bebidas/${id}`)) }
         />
-        <p data-testid={ `${index}-horizontal-name` }>{ name }</p>
-        <p data-testid={ `${index}-horizontal-top-text` }>{ category }</p>
-        <p>{ area }</p>
+        <br />
+        <button
+          type="button"
+          onClick={ () => (history.push(`/bebidas/${id}`)) }
+          data-testid={ `${index}-horizontal-name` }
+        >
+          { name }
+        </button>
+        <p>{ category }</p>
+        <p data-testid={ `${index}-horizontal-top-text` }>{ alcoholicOrNot }</p>
         <ButtonFavorite id={ id } index={ index } />
       </div>
     );
   }
-  return (
-    <div id={ id }>
-      <img
-        data-testid={ `${index}-horizontal-image` }
-        width="100px"
-        src={ image }
-        alt={ name }
-      />
-      <p data-testid={ `${index}-horizontal-name` }>{ name }</p>
-      <p data-testid={ `${index}-horizontal-top-text` }>{ category }</p>
-      <p>{ alcoholicOrNot }</p>
-      <ButtonFavorite id={ id } index={ index } />
-    </div>
-  );
-}
 
-function FavoritesRecipes() {
   const [state, setState] = useState(STATE_FAVORITE);
   const { buttonFilter } = state;
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  // const favoriteRecipes = [{
-  //   id: '52771',
-  //   type: 'comida',
-  //   area: 'Italian',
-  //   category: 'Vegetarian',
-  //   alcoholicOrNot: '',
-  //   name: 'Spicy Arrabiata Penne',
-  //   image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-  // },
-  // {
-  //   id: '178319',
-  //   type: 'bebida',
-  //   area: '',
-  //   category: 'Cocktail',
-  //   alcoholicOrNot: 'Alcoholic',
-  //   name: 'Aquamarine',
-  //   image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
-  // }];
 
-  if (!favoriteRecipes) { return (<h1> Não há favoritos</h1>); }
+  if (favoriteRecipes.length === 0) { return (<h1> Não há favoritos</h1>); }
 
   if (buttonFilter === 'comida') {
     return (

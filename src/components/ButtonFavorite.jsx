@@ -7,22 +7,23 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 
+async function buttonCopy(event) {
+  const { id } = event.target.parentNode;
+  const itemFood = await foodRequest(`lookup.php?i=${id}`);
+  if (!itemFood.meals) {
+    copy(`http://localhost:3000/bebidas/${id}`);
+  } else {
+    copy(`http://localhost:3000/comidas/${id}`);
+  }
+  return (alert('Link copiado!'));
+}
+
 function ButtonFavorite(props) {
   const history = useHistory();
-
-  async function buttonCopy(event) {
-    const { id } = event.target.parentNode.parentNode;
-    const itemFood = await foodRequest(`lookup.php?i=${id}`);
-    if (!itemFood.meals) {
-      copy(`http://localhost:3000/bebidas/${id}`);
-    } else {
-      copy(`http://localhost:3000/comidas/${id}`);
-    }
-    return (alert('Link copiado!'));
-  }
+  const attPage = '/receitas-favoritas';
 
   async function addFavorite(event) {
-    const { id } = event.target.parentNode.parentNode;
+    const { id } = event.target.parentNode;
     const itemFood = await foodRequest(`lookup.php?i=${id}`);
     if (!itemFood.meals) {
       const itemDrink = await drinkRequest(`lookup.php?i=${id}`);
@@ -39,7 +40,7 @@ function ButtonFavorite(props) {
         image: strDrinkThumb,
       });
       localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
-      history.push('/receitas-favoritas');
+      history.push(attPage);
     } else {
       const { strCategory, strArea, strMeal, strMealThumb } = itemFood.meals[0];
       const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
@@ -53,15 +54,17 @@ function ButtonFavorite(props) {
         image: strMealThumb,
       });
       localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
-      history.push('/receitas-favoritas');
+      history.push(attPage);
     }
   }
 
   function rmFavorite(event) {
-    const { id } = event.target.parentNode.parentNode;
+    const { id } = event.target.parentNode;
+    console.log(id);
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
+    const recipeRemoved = favoriteRecipes.filter((item) => (item.id !== id));
     localStorage.setItem('favoriteRecipes',
-      JSON.stringify(favoriteRecipes.filter((item) => (item.id !== id))));
+      JSON.stringify(recipeRemoved));
     history.push('/receitas-favoritas');
   }
 
@@ -72,40 +75,40 @@ function ButtonFavorite(props) {
   if (validation) {
     return (
       <>
-        <button
+        <input
           data-testid={ `${index}-horizontal-favorite-btn` }
-          type="button"
+          type="image"
           onClick={ rmFavorite }
-        >
-          <img width="50px" src={ blackHeartIcon } alt="favorite" />
-        </button>
-        <button
+          src={ blackHeartIcon }
+          alt="favorite"
+        />
+        <input
           data-testid={ `${index}-horizontal-share-btn` }
-          type="button"
+          type="image"
           onClick={ buttonCopy }
-        >
-          <img width="50px" src={ shareIcon } alt="shareIcon" />
-        </button>
+          src={ shareIcon }
+          alt="shareIcon"
+        />
       </>
     );
   }
 
   return (
     <>
-      <button
+      <input
         data-testid={ `${index}-horizontal-favorite-btn` }
-        type="button"
+        type="image"
         onClick={ addFavorite }
-      >
-        <img width="50px" src={ whiteHeartIcon } alt="not favorite" />
-      </button>
-      <button
+        src={ whiteHeartIcon }
+        alt="not favorite"
+      />
+      <input
         data-testid={ `${index}-horizontal-share-btn` }
-        type="button"
+        type="image"
         onClick={ buttonCopy }
-      >
-        <img width="50px" src={ shareIcon } alt="shareIcon" />
-      </button>
+        src={ shareIcon }
+        alt="shareIcon"
+      />
     </>
   );
 }
