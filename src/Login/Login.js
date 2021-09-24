@@ -42,16 +42,19 @@ function Login() {
     emailStorage(email);
   };
 
-  const validaLogin = () => {
+  const validaPassword = () => {
     const passwordLength = 7;
-    let loginValidado = true;
-
-    if (email.includes('@' && '.com') && password.length >= passwordLength) {
-      loginValidado = false;
-    } else {
-      loginValidado = true;
+    if (password.length >= passwordLength) {
+      return true;
     }
-    return loginValidado;
+    return false;
+  };
+
+  const validaLogin = () => {
+    if (email.includes('@' && '.com')) {
+      return true;
+    }
+    return false;
   };
 
   return (
@@ -82,7 +85,7 @@ function Login() {
         type="submit"
         data-testid="login-submit-btn"
         onClick={ redirectToTarget }
-        disabled={ validaLogin() }
+        disabled={ !(validaLogin() && validaPassword()) }
       >
         Entrar
       </button>
