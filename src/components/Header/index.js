@@ -57,7 +57,7 @@ function Header(props) {
   }
 
   if (redirect) {
-    return <Redirect to="/profile" />;
+    return <Redirect to="/perfil" />;
   }
   if (searchStatus && displaySearchBtn) {
     return (
