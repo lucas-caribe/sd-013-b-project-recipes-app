@@ -1,12 +1,13 @@
 import React from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useHistory } from 'react-router-dom';
 import searchIcon from '../images/searchIcon.svg'; // import * as icons from '../images';
 import profileIcon from '../images/profileIcon.svg';
 // import { Switch, Route, Link } from 'react-router-dom';
+import SearchBar from './SearchBar';
 
 export default function Header() {
   const { pathname } = useLocation(); // Component em uma Pagina busca histórico
-  console.log(pathname);
+  const history = useHistory();
 
   function renderFilters() {
     return (
@@ -26,6 +27,7 @@ export default function Header() {
         <button type="button" data-testid="search-top-btn" onClick={ renderFilters }>
           <object type="image/svg+xml" data={ searchIcon }>Pesquisa</object>
         </button>
+        <SearchBar history={ history } />
       </div>
     );
   }

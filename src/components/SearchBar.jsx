@@ -1,65 +1,95 @@
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { userLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const URL_FOODS = 'https://www.themealdb.com/api/json/v1/1/';
 const URL_DRINKS = 'https://www.thecocktaildb.com/api/json/v1/1/';
 const ERROR_MESSAGE_CHARACTER = 'Sua busca deve conter somente 1 (um) caracter';
 const ERROR_MESSAGE = 'Sinto muito, não encontramos nenhuma receita para esses filtros.';
 
-export default function SearchBar() {
+export default function SearchBar({ history }) {
   const [searchValue, setSearchText] = useState('');
   const [radioSelect, setRadioSelect] = useState('');
+  const [showResult, setShowResult] = useState({
+    show: {
+      value: false,
+      resultSearch: {},
+    },
+  });
 
-  const { history } = useHistory;
-  const { pathname } = userLocation();
+  const { pathname } = useLocation();
 
   async function checkLength(url) {
-    if (searchValue.length === 0) return global.alert(ERROR_MESSAGE);
     if (searchValue.length === 1) {
       const response = await (await fetch(`${url}${radioSelect}${searchValue}`))
         .json();
       return response;
-    } global.alert(ERROR_MESSAGE_CHARACTER);
+    } return global.alert(ERROR_MESSAGE_CHARACTER);
   }
 
-  function recipeCards(result) {
-    const slicingTwelve = result.slice([0[11]]);
+  function mapFood(slicingTwelve) {
     return slicingTwelve.map((card, index) => (
       <div key={ index }>
-        <p data-testid={ `${index}-recipe-card` }>{card}</p>
-        <p data-testid={ `${index}-card-img` }>{card}</p>
-        <p data-testid={ `${index}-card-name` }>{card}</p>
+        <p data-testid={ `${index}-recipe-card` }>{card.strMeal}</p>
+        <img data-testid={ `${index}-card-img` } src={ card.strMealThumb } alt="" />
+        <p data-testid={ `${index}-card-name` }>{card.strMeal}</p>
+      </div>
+    ));
+  }
+  function mapDrink(slicingTwelve) {
+    return slicingTwelve.map((card, index) => (
+      <div key={ index }>
+        <p data-testid={ `${index}-recipe-card` }>{card.strDrink}</p>
+        <img data-testid={ `${index}-card-img` } src={ card.strDrinkThumb } alt="" />
+        <p data-testid={ `${index}-card-name` }>{card.strDrink}</p>
       </div>
     ));
   }
 
-  function lengthMeals(result) {
+  const numberMax = 12;
+  function recipeCards({ result }) {
+    const slicingTwelve = result.slice(0, numberMax);
+    if (pathname.includes('/bebidas')) return mapDrink(slicingTwelve);
+    return mapFood(slicingTwelve);
+  }
+
+  function lengthMeals(result, typeResult) {
+    if (!result) return global.alert(ERROR_MESSAGE);
     if (result.length === 1) {
-      if (result === 'meals') {
-        return history.push(`${pathname}/${result.idMeal}`);
-      } return history.push(`${pathname}/${result.idDrink}`);
-    } return recipeCards(result);
+      if (typeResult === 'meals') {
+        const idMeal = result[0];
+        return history.push(`${pathname}/${idMeal.idMeal}`);
+      }
+      const [idDrink] = result;
+      return history.push(`${pathname}/${idDrink.idDrink}`);
+    }
+    return setShowResult({
+      show: {
+        value: true,
+        resultSearch: { result },
+      },
+    });
   }
 
   async function handleClick() {
     if (radioSelect === 'search.php?f=') {
-      if (pathname === '/comidas') {
+      if (pathname.includes('/comidas')) {
         return checkLength(URL_FOODS);
       } return checkLength(URL_DRINKS);
-    } if (pathname === '/comidas') {
+    } if (pathname.includes('/comidas')) {
       const { meals } = await (await fetch(`${URL_FOODS}${radioSelect}${searchValue}`))
         .json();
-      return lengthMeals(meals);
+      return lengthMeals(meals, 'meals');
     } const { drinks } = await (await fetch(`${URL_DRINKS}${radioSelect}${searchValue}`))
       .json();
-    return lengthMeals(drinks);
+    return lengthMeals(drinks, 'drinks');
   }
-
   return (
     <div>
       <div>
         <input
           type="text"
+          data-testid="search-input"
           onChange={
             ({ target }) => setSearchText(target.value)
           }
@@ -114,6 +144,13 @@ export default function SearchBar() {
       >
         Buscar
       </button>
+      { showResult.show.value && recipeCards(showResult.show.resultSearch) }
     </div>
   );
 }
+
+SearchBar.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};

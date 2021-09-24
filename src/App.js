@@ -2,14 +2,14 @@ import React from 'react';
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Header from './component/Header';
+import Header from './components/Header';
 import Login from './pages/Login';
 import Details from './pages/Details';
 import Explore from './pages/Explore';
 import Main from './pages/Main';
 import Profile from './pages/Profile';
 import Recipes from './pages/Recipes';
-import Loading from './component/Loading';
+import Loading from './components/Loading';
 
 function App() {
   return (
