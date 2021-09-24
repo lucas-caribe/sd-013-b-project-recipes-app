@@ -8,7 +8,7 @@ import ExploreIcon from '../images/exploreIcon.svg';
 function Footer() {
   return (
     <footer data-testid="footer" style={ { position: 'fixed', bottom: '0px' } }>
-      <Link to='/bebidas'>
+      <Link to="/bebidas">
         <IconButton
           btnImage={ DrinkIcon }
           dataTest="drinks-bottom-btn"
