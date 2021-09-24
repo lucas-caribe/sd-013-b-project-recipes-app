@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import PropTypes from 'prop-types';
-import Video from './Video';
+// import PropTypes from 'prop-types';
+// import Video from './Video';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import { getFoodOrDrinkProperties, getFoodOrDrinkRecipe } from '../helpers/getFoodOrDrinkProperties';
-import { fetchFoodsById, fetchDrinksById } from '../services/api';
+import { getFoodOrDrinkRecipe } from '../helpers/getFoodOrDrinkProperties';
 
 const RecipeDetails = () => {
   const recipeId = useParams();
@@ -34,12 +33,11 @@ const RecipeDetails = () => {
     }
   }, []);
 
-  console.log(object);
   const insertAttributes = (objeto, comidaOuBebida) => {
     const a = getFoodOrDrinkRecipe(objeto, comidaOuBebida);
-    console.log(a);
     return (a);
   };
+
   const insertPageElements = (objeto, comidaOuBebida) => {
     const obj = getFoodOrDrinkRecipe(objeto, comidaOuBebida);
     return (
@@ -49,7 +47,6 @@ const RecipeDetails = () => {
           data-testid="recipe-photo"
           alt="imagem da receita"
           src={ obj[0].image }
-          alt={ obj[0].name }
         />
         <h1
           data-testid="recipe-title"
@@ -134,14 +131,6 @@ const RecipeDetails = () => {
         Object.keys(object).length === 0
           ? <h3>Loading...</h3> : insertPageElements(object, isFoodOrDrink)
       }
-
-      {/* 
-        <button
-          type="button"
-          data-testid="start-recipe-btn"
-        >
-          Iniciar a Receita
-        </button> */}
     </div>
   );
 };
