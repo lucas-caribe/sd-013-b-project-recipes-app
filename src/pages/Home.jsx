@@ -16,13 +16,16 @@ function Home() {
 
   useEffect(() => {
     async function setFetch() {
-      if (pathname === '/comidas') {
-        setFoods(await foodRequest('search.php?s'));
-      }
 
-      if (pathname === '/bebidas') {
-        setDrinks(await drinkRequest('search.php?s'));
-      }
+      const initialRequest = {
+        '/comidas': async () => {
+          setFoods(await foodRequest('search.php?s'));
+        },
+        '/bebidas': async () => {
+          setDrinks(await drinkRequest('search.php?s'));
+        },
+      };
+      initialRequest[pathname]();
     }
     setFetch();
   }, [pathname]);
