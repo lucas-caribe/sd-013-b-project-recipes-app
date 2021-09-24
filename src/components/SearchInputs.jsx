@@ -2,11 +2,10 @@ import React, { useContext } from 'react';
 import Context from '../context/Context';
 import searchBarTextFetch from '../services/searchBarTextFetch';
 
-function SearchInputs(props) {
+function SearchInputs() {
   const {
     inputRadio,
     inputText,
-    apiRadio,
     setInputRadio,
     setInputText,
     setApiRadio,
