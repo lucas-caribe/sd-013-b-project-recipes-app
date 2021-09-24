@@ -83,9 +83,8 @@ const RecipeDetails = () => {
         </h3>
         Ingredients
         <ul>
-          a
-          {/* {
-            ingredients.map((ingredient, index) => (
+          {
+            obj[0].ingredients.map((ingredient, index) => (
               <li
                 key={ index }
                 data-testid={ `${index}-ingredient-name-and-measure` }
@@ -93,8 +92,37 @@ const RecipeDetails = () => {
                 {ingredient}
               </li>
             ))
-          } */}
+          }
         </ul>
+        <p
+          data-testid="instructions"
+        >
+          {obj[0].instructions}
+        </p>
+        {/* { isMeal
+          && <iframe
+            data-testid="video"
+            title={ title }
+            src={ videoUrl }
+          />} */}
+        <ul>
+          {
+            // recomendationCard.map((value, index) => (
+            //   <li
+            //     key={ index }
+            //     data-testid={ `${index}-recomendation-card` }
+            //   >
+            //     { value }
+            //   </li>
+            // ))
+          }
+        </ul>
+        <button
+          type="button"
+          data-testid="start-recipe-btn"
+        >
+          Iniciar a Receita
+        </button>
       </div>
     );
   };
@@ -102,31 +130,12 @@ const RecipeDetails = () => {
 
   return (
     <div className="details-page">
-      {Object.keys(object).length === 0 ? <h3>Loading...</h3> : insertPageElements(object, isFoodOrDrink)}
+      {
+        Object.keys(object).length === 0
+          ? <h3>Loading...</h3> : insertPageElements(object, isFoodOrDrink)
+      }
 
-      {/* <p
-          data-testid="instructions"
-        >
-          {instructions}
-        </p>
-        { isMeal
-          && <iframe
-            data-testid="video"
-            title={ title }
-            src={ videoUrl }
-          />}
-        <ul>
-          {
-            recomendationCard.map((value, index) => (
-              <li
-                key={ index }
-                data-testid={ `${index}-recomendation-card` }
-              >
-                { value }
-              </li>
-            ))
-          }
-        </ul>
+      {/* 
         <button
           type="button"
           data-testid="start-recipe-btn"
