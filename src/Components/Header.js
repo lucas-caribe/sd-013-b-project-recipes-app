@@ -30,7 +30,8 @@ const Header = (props) => {
 
   return (
     <div>
-      <div className="header">
+      {/* testId 'header' criado por Genesis para fazer os tests */}
+      <div className="header" data-testid="header">
 
         {left !== 'none' ? renderIcon(left) : <div />}
 

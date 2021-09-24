@@ -17,7 +17,7 @@ describe('Testando o input de email e senha', () => {
     const inputEmail = screen.getByTestId(EMAIL_TEST_ID);
     expect(inputEmail).toHaveValue('');
     fireEvent.change(inputEmail, { target: { value: TEST_EMAIL } });
-    expect(inputEmail).toHaveValue(TEST_EMAIL);
+    expect(inputEmail).toHaveValue('test.email@test.com');
 
     const inputPassword = screen.getByTestId(PASSWORD_TEST_ID);
     expect(inputPassword).toHaveValue('');

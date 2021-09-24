@@ -5,7 +5,7 @@ import LowerMenu from '../Components/LowerMenu';
 const Perfil = () => (
   <div>
     <Header main="Perfil" left="profile" right="none" />
-    Perfil
+    <h2>Perfil</h2>
     <footer>
       <LowerMenu />
     </footer>
