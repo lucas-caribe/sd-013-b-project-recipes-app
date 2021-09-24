@@ -2,9 +2,14 @@ import React, { useEffect } from 'react';
 import { useDetails } from '../../context/DetailsContext';
 
 function Detalhes({ location: { pathname } }) {
-  const { fetchRecipe, item, ingredients } = useDetails();
+  const { item,
+    ingredients,
+    recommendations,
+    fetchRecipe,
+    fetchRecommendations } = useDetails();
 
   useEffect(() => {
+    fetchRecommendations(pathname);
     fetchRecipe(pathname);
   }, [pathname]);
 
@@ -17,6 +22,17 @@ function Detalhes({ location: { pathname } }) {
         {ingredient}
       </li>
     ));
+
+  const renderRecommendations = () => recommendations.map((rec, index) => {
+    const MAX_REC_CARDS = 12;
+    if (index < MAX_REC_CARDS) {
+      return (
+        <div key={ index } data-testid={ `${index}-recomendation-card` }>
+          {rec.strMeal}
+        </div>
+      );
+    } return null;
+  });
 
   const mealDetails = () => {
     if (!item.meal) {
@@ -46,8 +62,7 @@ function Detalhes({ location: { pathname } }) {
           frameBorder="0"
         /> }
         <div>
-          <div data-testid="0-recomendation-card">Card 1</div>
-          <div data-testid="1-recomendation-card">Card 2</div>
+          {renderRecommendations()}
         </div>
         <button data-testid="start-recipe-btn" type="button">Iniciar receita</button>
       </main>

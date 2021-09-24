@@ -19,6 +19,7 @@ export const DetailsContext = createContext();
 export const DetailsProvider = ({ children }) => {
   const [item, setItem] = useState(itemInitialState);
   const [ingredients, setIngredients] = useState(['xablau']);
+  const [recommendations, setRecommendations] = useState([]);
 
   const ID = 9;
 
@@ -59,10 +60,23 @@ export const DetailsProvider = ({ children }) => {
     }
   }, []);
 
+  const fetchRecommendations = useCallback(async (pathname) => {
+    if (pathname.includes('comidas')) {
+      const result = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+      const { drinks } = await result.json();
+      setRecommendations(drinks);
+    }
+    const result = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    const { meals } = await result.json();
+    setRecommendations(meals);
+  }, []);
+
   const context = {
     item,
     ingredients,
+    recommendations,
     fetchRecipe,
+    fetchRecommendations,
   };
 
   return (
