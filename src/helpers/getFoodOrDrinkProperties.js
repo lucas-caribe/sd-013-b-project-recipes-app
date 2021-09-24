@@ -65,14 +65,10 @@ function getDrinkRecipe(drink) {
 }
 
 export function getFoodOrDrinkProperties(consumable, category) {
-  return (
-    category === 'meals' ? getFoodProperties(consumable) : getDrinkProperties(consumable)
-  );
+  if (category === 'meals') return getFoodProperties(consumable);
+  if (category !== 'meals') return getDrinkProperties(consumable);
 }
 export function getFoodOrDrinkRecipe(consumable, category) {
-  console.log(consumable);
-
-  return (
-    category === 'comida' ? getFoodRecipe(consumable) : getDrinkRecipe(consumable)
-  );
+  if (category === 'meals') return getFoodRecipe(consumable);
+  if (category !== 'meals') return getDrinkRecipe(consumable);
 }

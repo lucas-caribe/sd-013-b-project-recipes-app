@@ -40,7 +40,7 @@ const RecipeDetails = () => {
     }
   }, []);
 
-  if (object) data = { ...getFoodOrDrinkRecipe(object, foodOrDrink) };
+  if (object) data = { ...getFoodOrDrinkRecipe(object, isFoodOrDrink) };
   const { image, name, subCategory, instructions, ingredients, video } = data;
 
   console.log('data', data);
