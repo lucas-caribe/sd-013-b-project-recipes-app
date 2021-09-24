@@ -1,18 +1,43 @@
 import React, { useContext } from 'react';
 import RecipesContext from '../context/RecipesContext';
-import { fetchMealByCategory } from '../services/fetchMeals';
-import { fetchDrinkByCategory } from '../services/fetchDrinks';
+import { fetchMealByCategory, fetchInitialMeals } from '../services/fetchMeals';
+import { fetchDrinkByCategory, fetchInitialDrinks } from '../services/fetchDrinks';
 
 const NUMBER_OF_BUTTONS = 5;
 
 function GenerateButtons(filterButtons, type) {
-  const { setMeals, setDrinks } = useContext(RecipesContext);
+  const {
+    setMeals,
+    setDrinks,
+    currentCategory,
+    setCurrentCategory,
+  } = useContext(RecipesContext);
 
   function handleClick(category, btnType) {
+    if (currentCategory === category && btnType === 'meal') {
+      fetchInitialMeals()
+        .then((data) => {
+          setMeals([...data]);
+          setCurrentCategory('');
+        });
+      return;
+    }
+
+    if (currentCategory === category && btnType === 'drink') {
+      fetchInitialDrinks()
+        .then((data) => {
+          setDrinks([...data]);
+          setCurrentCategory('');
+        });
+      return;
+    }
+
     if (btnType === 'meal') {
       fetchMealByCategory(category).then((data) => setMeals([...data]));
+      setCurrentCategory(category);
     } else {
       fetchDrinkByCategory(category).then((data) => setDrinks([...data]));
+      setCurrentCategory(category);
     }
   }
 
