@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Context from '../context/Context';
 import Button from '../mini-components/Button';
 
 function Profile() {
+  const { setShowHeader, setTitleName, setShowSearchHeaderIcon } = useContext(Context);
+
+  useEffect(() => {
+    function handleHeader() {
+      setShowHeader(true);
+      setShowSearchHeaderIcon(false);
+      setTitleName('Perfil');
+    }
+    handleHeader();
+  }, []);
+
   function getEmail() {
     const localStorageEmail = JSON.parse(localStorage.getItem('user'));
-    return localStorageEmail.email;
+    return localStorageEmail ? localStorageEmail.email : 'Sem email cadastrado';
   }
 
   function getOut() {
