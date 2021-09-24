@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Context from '../context/Context';
 import searchBarTextFetch from '../services/searchBarTextFetch';
 
-function SearchInputs({ history }) {
+function SearchInputs(props) {
   const {
     inputRadio,
     inputText,
@@ -13,14 +13,19 @@ function SearchInputs({ history }) {
   } = useContext(Context);
 
   const handleClickFiltrarReceita = () => {
-    // if (apiRadio.meals.length === 1 || apiRadio.meals !== undefined) {
-    // const id = apiRadio.meals.idMeal;
-    //   // history.push(`${window.location.pathname}/${id}`);
-    // console.log(`REDIRECIONADO P/ ${window.location.pathname}/${id}`);
-    // } else {
     searchBarTextFetch(inputRadio, inputText, setApiRadio);
-    // }
   };
+
+  // const mudaDetails = () => {
+  //   // history.push(`${window.location.pathname}/${id}`);
+  //   // console.log(`REDIRECIONADO P/ ${window.location.pathname}/${id}`);
+  //   const id = apiRadio.meals[0].idMeal;
+
+  //   if (window.location.pathname === '/comidas') {
+  //     return (<Redirect to={ `/comidas/${id}` } />);
+  //   }
+  //   return (<Redirect to={ `/bebidas/${id}` } />);
+  // };
 
   return (
     <div>
@@ -47,6 +52,7 @@ function SearchInputs({ history }) {
         Ingrediente
       </label>
       {/* --------------------------- */}
+
       <br />
       <label htmlFor="name">
         <input

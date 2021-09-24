@@ -12,7 +12,7 @@ function Provider({ children }) {
 
   const [inputText, setInputText] = useState('');
   const [inputRadio, setInputRadio] = useState('');
-  const [apiRadio, setApiRadio] = useState({});
+  const [apiRadio, setApiRadio] = useState();
 
   const contextValue = {
     statusLoginBtn,
