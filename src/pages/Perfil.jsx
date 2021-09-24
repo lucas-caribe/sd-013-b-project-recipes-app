@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Footer from '../components/footer';
 import Header from '../components/header';
 
 export default function Perfil() {
@@ -47,6 +48,7 @@ export default function Perfil() {
           Sair
         </button>
       </Link>
+      <Footer />
     </div>
   );
 }
