@@ -32,8 +32,8 @@ export default function Login({ history }) {
         data-testid="email-input"
         type="text"
         name="email"
-        onChange={handleChange}
-        value={email}
+        onChange={ handleChange }
+        value={ email }
         placeholder="e-mail"
       />
       <input
@@ -42,15 +42,15 @@ export default function Login({ history }) {
         data-testid="password-input"
         type="password"
         name="password"
-        onChange={handleChange}
+        onChange={ handleChange }
         placeholder="senha"
       />
       <button
         data-testid="login-submit-btn"
         type="submit"
-        value={password}
-        disabled={!(emailValidator.test(email) && password.length > minLenghtPassword)}
-        onClick={handleClick}
+        value={ password }
+        disabled={ !(emailValidator.test(email) && password.length > minLenghtPassword) }
+        onClick={ handleClick }
       >
         Entrar
       </button>
