@@ -1,9 +1,11 @@
 import React from 'react';
+import ProgressRecipe from '../components/ProgressRecipe';
 
 export default function ProgressoBebida() {
   return (
-    <div>
+    <main>
       <p>Progresso bebida</p>
-    </div>
+      {/* <ProgressRecipe /> */}
+    </main>
   );
 }
