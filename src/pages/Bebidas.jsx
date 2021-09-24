@@ -23,12 +23,14 @@ function Bebidas() {
   // }, [setDrinks]);
 
   const renderDrinks = () => (
-    drinks.map(({ strDrink, strDrinkThumb }, index) => (
+    drinks.map(({ idDrink, strDrink, strDrinkThumb }, index) => (
       <div key={ strDrink }>
         <RecipeCard
+          id={ idDrink }
           name={ strDrink }
           thumb={ strDrinkThumb }
           index={ index }
+          recipeType="drink"
         />
       </div>
     ))

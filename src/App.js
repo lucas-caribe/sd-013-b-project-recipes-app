@@ -15,6 +15,7 @@ import ComidasArea from './pages/ComidasArea';
 import Perfil from './pages/Perfil';
 import ReceitasFeitas from './pages/ReceitasFeitas';
 import ReceitasFavoritas from './pages/ReceitasFavoritas';
+import RecipeDetail from './pages/RecipeDetail';
 
 function App() {
   return (
@@ -24,9 +25,20 @@ function App() {
         <Route exact path="/perfil" component={ Perfil } />
         <Route exact path="/comidas" component={ Comidas } />
         <Route exact path="/bebidas" component={ Bebidas } />
+        <Route
+          exact
+          path="/comidas/:id"
+          render={ (props) => <RecipeDetail { ...props } type="meals" /> }
+        />
+        <Route
+          exact
+          path="/bebidas/:id"
+          render={ (props) => <RecipeDetail { ...props } type="drinks" /> }
+        />
         <Route exact path="/explorar" component={ Explorar } />
         <Route exact path="/explorar/comidas" component={ ExplorarComidas } />
         <Route exact path="/explorar/bebidas" component={ ExplorarBebidas } />
+        <Route exact path="/explorar/comidas/area" component={ ComidasArea } />
         <Route
           exact
           path="/explorar/comidas/ingredientes"
@@ -37,7 +49,6 @@ function App() {
           path="/explorar/bebidas/ingredientes"
           component={ BebidasIgredientes }
         />
-        <Route exact path="/explorar/comidas/area" component={ ComidasArea } />
         <Route exact path="/receitas-feitas" component={ ReceitasFeitas } />
         <Route exact path="/receitas-favoritas" component={ ReceitasFavoritas } />
       </Switch>
