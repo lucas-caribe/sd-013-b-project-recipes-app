@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import RecipesContext from '../context/RecipesContext';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 
@@ -13,6 +15,9 @@ export default function Comidas() {
   const categoryNumber = 5;
 
   const pageTitle = 'Comidas';
+  const limits = 12;
+  const { recipesDb, redirect } = useContext(RecipesContext);
+  const history = useHistory();
 
   useEffect(() => {
     fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
@@ -45,6 +50,30 @@ export default function Comidas() {
   return (
     <div>
       <Header value={ pageTitle } />
+      { redirect ? history.push(`/comidas/${recipesDb.map((meal) => meal.idMeal)}`) : (
+        <div>
+          {
+            recipesDb.map((meal, index) => (// requisito 17, card com limite de 12
+              (index < limits) && (
+                <div key={ index }>
+                  <div>
+                    <span data-testid={ `${index}-card-name` }>{ meal.strMeal }</span>
+                  </div>
+                  <div data-testid={ `${index}-recipe-card` }>
+                    <img
+                      src={ meal.strMealThumb }
+                      data-testid={ `${index}-card-img` }
+                      alt={ meal.strMeal }
+                      width="150px"
+                    />
+                  </div>
+                </div>
+              )
+            ))
+          }
+        </div>
+      ) }
+
       <div>
         <button type="button" onClick={ () => handleClick(undefined) }>All</button>
 
@@ -60,8 +89,7 @@ export default function Comidas() {
             </button>
           )).slice(0, categoryNumber)}
       </div>
-
-      <div>
+      {/* <div>
         { selectedCategory !== undefined ? (
           filterCategory
             .map((mealFiltered, index) => (
@@ -89,7 +117,7 @@ export default function Comidas() {
                 <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
               </div>
             )).slice(0, recipeNumber)}
-      </div>
+      </div> */}
       <Footer />
     </div>
   );
