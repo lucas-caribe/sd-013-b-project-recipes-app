@@ -4,6 +4,9 @@ import Header from '../components/header';
 
 export default function Perfil() {
   const { email } = JSON.parse(localStorage.getItem('user'));
+  const clearLocalStorage = () => {
+    localStorage.clear();
+  };
 
   return (
     <div>
@@ -35,12 +38,15 @@ export default function Perfil() {
       </Link>
       {' '}
       <br />
-      <button
-        type="button"
-        data-testid="profile-logout-btn"
-      >
-        Sair
-      </button>
+      <Link to="/">
+        <button
+          type="button"
+          data-testid="profile-logout-btn"
+          onClick={ clearLocalStorage }
+        >
+          Sair
+        </button>
+      </Link>
     </div>
   );
 }
