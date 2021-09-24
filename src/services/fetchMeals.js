@@ -11,9 +11,13 @@ async function fetchMeals(inputValue, radioValue) {
   }
 
   if (inputValue && radioValue) {
-    let response = await fetch(mealsEndpoints[radioValue]);
-    response = await response.json();
-    return response.meals;
+    try {
+      let response = await fetch(mealsEndpoints[radioValue]);
+      response = await response.json();
+      return response.meals;
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 

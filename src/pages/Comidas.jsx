@@ -8,12 +8,14 @@ function Comidas() {
   const { meals } = useContext(RecipesContext);
 
   const renderMeals = () => (
-    meals.map(({ strMeal, strMealThumb }, index) => (
+    meals.map(({ idMeal, strMeal, strMealThumb }, index) => (
       <div key={ strMeal }>
         <RecipeCard
+          id={ idMeal }
           name={ strMeal }
           thumb={ strMealThumb }
           index={ index }
+          recipeType="meal"
         />
       </div>
     ))
