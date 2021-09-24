@@ -14,7 +14,7 @@ function DrinkCard() {
 
   return (
     <div>
-      {drinkState.map(({ idDrink, strDrinkThumb, strDrink }, index) => (
+      { drinkState ? drinkState.map(({ idDrink, strDrinkThumb, strDrink }, index) => (
         <div
           data-testid={ `${index}-recipe-card` }
           key={ idDrink }
@@ -26,7 +26,7 @@ function DrinkCard() {
           />
           <h3 data-testid={ `${index}-card-name` }>{strDrink}</h3>
         </div>))
-        .slice(0, MAX_NUMBER)}
+        .slice(0, MAX_NUMBER) : null }
     </div>
   );
 }

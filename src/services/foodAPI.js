@@ -5,9 +5,13 @@ export async function ingredientAPI(ingredient) {
 }
 
 export async function nameAPI(name) {
-  const request = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`);
-  const response = await request.json();
-  return response.meals;
+  try {
+    const request = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`);
+    const response = await request.json();
+    return response.meals;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export async function fistLetterAPI(letter) {
