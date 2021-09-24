@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Footer from '../components/Footer';
+import useCurrentPage from '../context/hooks/useCurrentPage';
 
 function ExplorarComidas() {
+  useCurrentPage('Explorar Comidas');
   return (
     <div>
       <Link to="/explorar/comidas/ingredientes">
@@ -26,6 +29,9 @@ function ExplorarComidas() {
       >
         Me Surpreenda!
       </button>
+      <div className="page">
+        <Footer />
+      </div>
     </div>
   );
 }

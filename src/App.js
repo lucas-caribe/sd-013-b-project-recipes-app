@@ -2,19 +2,23 @@ import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+// import Switch from 'react-bootstrap/esm/Switch';
 import Provider from './context/Provider';
 import {
   Login,
   Comidas,
   Bebidas,
   Explorar,
+  ExplorarComidas,
+  ExplorarComidasIngredientes as ExplComidasIng,
+  ExplorarComidasArea,
+  ExplorarBebidas,
+  ExplorarBebidasIngredientes as ExplBebidasIng,
   Perfil,
   Feitas,
   Favoritas,
-  ExplorarComidas,
-  ExplorarBebidas,
   BebidaAleatoria,
-  ExplorarComidaIngredientes } from './pages/index';
+  NotFound } from './pages/index';
 
 function App() {
   return (
@@ -31,11 +35,26 @@ function App() {
           <Route exact path="/perfil" component={ Perfil } />
           <Route exact path="/receitas-feitas" component={ Feitas } />
           <Route exact path="/receitas-favoritas" component={ Favoritas } />
+          <Route exact path="/comidas/" component={ Comidas } />
+          <Route exact path="/bebidas/" component={ Bebidas } />
+          <Route exact path="/explorar" component={ Explorar } />
+          <Route exact path="/explorar/comidas" component={ ExplorarComidas } />
           <Route
             exact
             path="/explorar/comidas/ingredientes"
-            component={ ExplorarComidaIngredientes }
+            component={ ExplComidasIng }
           />
+          <Route exact path="/explorar/comidas/area" component={ ExplorarComidasArea } />
+          <Route exact path="/explorar/bebidas" component={ ExplorarBebidas } />
+          <Route
+            exact
+            path="/explorar/bebidas/ingredientes"
+            component={ ExplBebidasIng }
+          />
+          <Route exact path="/perfil" component={ Perfil } />
+          <Route exact path="/receitas-feitas" component={ Feitas } />
+          <Route exact path="/receitas-favoritas" component={ Favoritas } />
+          <Route exact path="/explorar/bebidas/area" component={ NotFound } />
         </Switch>
       </BrowserRouter>
     </Provider>

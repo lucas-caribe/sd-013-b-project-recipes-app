@@ -4,21 +4,116 @@
   padding: 0;
 }
 
-/* --------------------------------------/
-/-----------------HEADER-----------------/
-/-------------------------------------- */
+.page {
+  background-color: gainsboro;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 3.5rem 0;
+
+  /* o padding serve para compensar a altura do header e footer que estão fixos */
+}
+
+/* ------------------------------------------------//
+//                     HEADER                      //
+//------------------------------------------------ */
 
 .header {
   align-items: center;
-  background-color: aliceblue;
+  background-color: darkolivegreen;
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
-  padding: 0.5rem 0;
+  padding: 1rem 0;
+  position: fixed;
   text-align: center;
+  top: 0;
+  width: 100%;
 }
 
 .header-title h1 {
-  font-size: 2rem;
+  color: white;
+  font-family: Lobster , sans-serif;
   line-height: 0;
   margin: 0;
+}
+
+.header-icon img {
+  filter: invert(1);
+  height: 1.5rem;
+}
+
+/* ------------------------------------------------//
+//                     FOOTER                      //
+//------------------------------------------------ */
+
+.footer {
+  align-items: center;
+  background-color: darkolivegreen;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 0.5rem 0;
+  position: fixed;
+  text-align: center;
+  width: 100%;
+}
+
+.footer-icon img {
+  filter: invert(1);
+  height: 2rem;
+}
+
+
+/* ------------------------------------------------//
+//                 COMIDAS/BEBIDAS                 //
+//------------------------------------------------ */
+
+/* ------------------------------------------------//
+//                      CARDS                      //
+//------------------------------------------------ */
+
+.home-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.recipe-card {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px rgb(0 0 0 / 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 15rem;
+  margin: 1rem;
+  overflow: hidden;
+  width: 12rem;
+}
+
+.recipe-card-img {
+  display: flex;
+  justify-content: center;
+}
+
+.recipe-card-img img {
+  width: 100%;
+}
+
+.recipe-card-title {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  padding: 0 0.5rem;
+}
+
+.recipe-card-title h4 {
+  margin: 0;
+}
+
+/* ------------------------------------------------//
+//                     PERFIL                      //
+//------------------------------------------------ */
+
+.profile-page {
+  justify-content: center;
 }
