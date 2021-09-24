@@ -7,11 +7,10 @@ import getSixCards from '../services/functionsForDetails';
 import { fetchRecomendationsMeals } from '../services/fetchIdComidas';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import { sendRecipeToGlobalDrinks } from '../redux/actions';
-import CardsRecomendations from '../components/CardsRecomendations';
 
 function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal }) {
   const [objIdReceita, setObjIdReceita] = useState();
-  const [objIdRecomentations, setObjRecomentations] = useState();
+  const [recomendations, setObjRecomentations] = useState();
   const fetchId = async () => {
     setObjIdReceita(await fetchIdBebidas(id));
     setObjRecomentations(await fetchRecomendationsMeals());
@@ -20,7 +19,7 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal }) {
   useEffect(() => {
     fetchId();
   }, []);
-  console.log(objIdRecomentations);
+
   useEffect(() => {
     sendObjToGlobal(objIdReceita);
   }, [objIdReceita]);
@@ -101,19 +100,15 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal }) {
       ))}
       <p data-testid="instructions">{ objIdReceita.strInstructions }</p>
       <p data-testid="video">Video</p>
-      {getSixCards(objIdRecomentations) !== undefined && getSixCards(objIdRecomentations)
-        .map((element, ind) => {
-          const { strMeal, strMealThumb } = element;
-          const obj = {
-            title: strMeal,
-            image: strMealThumb,
-          };
-          return (
-            <div key={ ind } data-testid={ `${ind}-recomendation-card` }>
-              <CardsRecomendations recomendations={ obj } />
+      <div className="teste">
+        {getSixCards(recomendations) !== undefined && getSixCards(recomendations)
+          .map((element, index) => (
+            <div data-testid={ `${index}-recomendation-card` } key={ index }>
+              <img style={ { width: '180px' } } src={ element.strMealThumb } alt="imag" />
+              <p data-testid={ `${index}-recomendation-title` }>{element.strMeal}</p>
             </div>
-          );
-        })}
+          ))}
+      </div>
       <button type="button" data-testid="start-recipe-btn">Start recipe</button>
     </div>
   );

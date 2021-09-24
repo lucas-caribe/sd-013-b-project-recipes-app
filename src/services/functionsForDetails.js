@@ -1,4 +1,4 @@
-const QUANTIDADE_CARDS = 5;
+const QUANTIDADE_CARDS = 6;
 
 const getSixCards = (arr) => {
   if (arr !== undefined) {

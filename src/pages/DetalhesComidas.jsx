@@ -7,7 +7,7 @@ import { fetchRecomendationsDrinks } from '../services/fetchIdBebidas';
 import getSixCards from '../services/functionsForDetails';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import CardsRecomendations from '../components/CardsRecomendations';
+import '../css/CardsRecomendations.css';
 
 function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal }) {
   const [objIdReceita, setObjIdReceita] = useState();
@@ -73,7 +73,6 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal }) {
   }
   return (
     <div>
-      {console.log(getSixCards())}
       <p>Detalhes comidas</p>
       <img
         style={ { width: '180px' } }
@@ -109,20 +108,19 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal }) {
           src={ getEmbedVideo() }
         />
       </div>
-      {getSixCards(objRecomendations) !== undefined && getSixCards(objRecomendations)
-        .map((element, ind) => {
-          const { strDrink, strDrinkThumb, strAlcoholic } = element;
-          const obj = {
-            title: strDrink,
-            image: strDrinkThumb,
-            alcoholic: strAlcoholic,
-          };
-          return (
-            <div key={ ind } data-testid={ `${ind}-recomendation-card` }>
-              <CardsRecomendations recomendations={ obj } />
+      <div className="teste">
+        {getSixCards(objRecomendations) !== undefined && getSixCards(objRecomendations)
+          .map((element, index) => (
+            <div data-testid={ `${index}-recomendation-card` } key={ index }>
+              <img
+                style={ { width: '180px' } }
+                src={ element.strDrinkThumb }
+                alt="imag"
+              />
+              <p data-testid={ `${index}-recomendation-title` }>{element.strDrink}</p>
             </div>
-          );
-        })}
+          ))}
+      </div>
       <button type="button" data-testid="start-recipe-btn">Start recipe</button>
     </div>
   );
