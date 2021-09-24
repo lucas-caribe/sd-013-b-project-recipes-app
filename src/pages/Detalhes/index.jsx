@@ -1,9 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useRecipes } from '../../context';
 import { useDetails } from '../../context/DetailsContext';
 
+const copy = require('clipboard-copy');
+
 function Detalhes({ location: { pathname }, history }) {
+  const [isCopied, setIsCopied] = useState(false);
+
   const { item,
     ingredients,
     recommendations,
@@ -17,6 +21,8 @@ function Detalhes({ location: { pathname }, history }) {
   useEffect(() => {
     fetchRecommendations(pathname);
     fetchRecipe(pathname);
+
+    return setIsCopied(false);
   }, [pathname]);
 
   const renderIngredients = () => ingredients
@@ -63,7 +69,6 @@ function Detalhes({ location: { pathname }, history }) {
     const recipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const checkId = finishedRecipes.some((recipe) => recipe.id === id);
     if (!checkId && !recipes) {
-      console.log(`/${path}/${id}`);
       return (
         <button
           style={ { position: 'fixed', bottom: '0px' } }
@@ -99,7 +104,17 @@ function Detalhes({ location: { pathname }, history }) {
           width="300px"
         />
         <h1 data-testid="recipe-title">{ item[type][0][`str${property}`] }</h1>
-        <button data-testid="share-btn" type="button">Share</button>
+        <button
+          data-testid="share-btn"
+          type="button"
+          onClick={ () => {
+            copy(`http://localhost:3000/${path}/${item[type][0][`id${property}`]}`);
+            setIsCopied(true);
+          } }
+        >
+          Share
+        </button>
+        {isCopied && <span>Link copiado!</span> }
         <button data-testid="favorite-btn" type="button">Favorite</button>
         <h2 data-testid="recipe-category">
           { item[type][0].strAlcoholic
