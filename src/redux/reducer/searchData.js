@@ -1,7 +1,7 @@
 import { SET_COCKTAIL, SET_MEAL } from '../action';
 
 const INITIAL_STATE = {
-  results: [],
+  results: {},
 };
 
 export default function searchReducer(state = INITIAL_STATE, { type, payload }) {

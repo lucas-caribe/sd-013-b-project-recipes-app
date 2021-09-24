@@ -27,3 +27,25 @@
   width: 70vw;
   border-radius: 100%;
 }
+
+.recomendation-carousel {
+  display: flex;
+  overflow-y: auto;
+}
+
+.recomendation-card {
+  display: flex;
+  flex-direction: column;
+  width: 40vw;
+  margin: 10px;
+}
+
+.img-recomendation {
+ width: auto;
+ height: auto;
+}
+
+.start-recipe-btn {
+  position: fixed;
+  bottom: 0px
+}

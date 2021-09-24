@@ -17,6 +17,7 @@ export const SET_MEAL = 'SET_MEAL';
 export const SET_COCKTAIL = 'SET_COCKTAIL';
 export const SET_MEAL_DETAILS = 'SET_MEAL_DETAILS';
 export const SET_COCKTAIL_DETAILS = 'SET_COCKTAIL_DETAILS';
+export const SET_RECOMENDATIONS = 'SET_RECOMENDATIONS';
 
 // //Actions Creator
 
@@ -42,6 +43,11 @@ export const setCocktailDetails = (payload) => ({
   payload,
 });
 
+export const setRecomendations = (payload) => ({
+  type: SET_RECOMENDATIONS,
+  payload,
+});
+
 // // Thunk
 
 export const fetchDetailsThunk = (id, recipe) => async (dispatch) => {
@@ -54,6 +60,24 @@ export const fetchDetailsThunk = (id, recipe) => async (dispatch) => {
   case 'cocktail': {
     const response = await fetchCocktailDetails(id);
     dispatch(setCocktailDetails(response));
+    break;
+  }
+  default:
+    break;
+  }
+};
+
+export const fetchRecomendationThunk = (recomendation) => async (dispatch) => {
+  console.log(recomendation);
+  switch (recomendation) {
+  case 'meal': {
+    const response = await fetchMealByName('fish');
+    dispatch(setRecomendations(response));
+    break;
+  }
+  case 'cocktail': {
+    const response = await fetchCocktailByName('margarita');
+    dispatch(setRecomendations(response));
     break;
   }
   default:

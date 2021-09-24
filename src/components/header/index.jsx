@@ -27,9 +27,13 @@ function Header(props) {
   );
 }
 
+Header.defaultProps = {
+  hasSearchIcon: false,
+};
+
 Header.propTypes = {
   titlePage: PropTypes.string.isRequired,
-  hasSearchIcon: PropTypes.bool.isRequired,
+  hasSearchIcon: PropTypes.bool,
 };
 
 export default Header;

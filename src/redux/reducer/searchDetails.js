@@ -1,7 +1,8 @@
-import { SET_COCKTAIL_DETAILS, SET_MEAL_DETAILS } from '../action';
+import { SET_COCKTAIL_DETAILS, SET_MEAL_DETAILS, SET_RECOMENDATIONS } from '../action';
 
 const INITIAL_STATE = {
-  results: {},
+  results: [],
+  recomendations: {},
 };
 
 export default function detailsReducer(state = INITIAL_STATE, { type, payload }) {
@@ -10,6 +11,8 @@ export default function detailsReducer(state = INITIAL_STATE, { type, payload })
     return ({ ...state, results: payload });
   case SET_COCKTAIL_DETAILS:
     return ({ ...state, results: payload });
+  case SET_RECOMENDATIONS:
+    return ({ ...state, recomendations: payload });
   default:
     return state;
   }
