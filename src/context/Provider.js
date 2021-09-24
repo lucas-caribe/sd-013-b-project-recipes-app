@@ -11,6 +11,10 @@ function Provider({ children }) {
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [allRecipes, setAllRecipes] = useState([]);
 
+  const [inputText, setInputText] = useState('');
+  const [inputRadio, setInputRadio] = useState('');
+  const [apiRadio, setApiRadio] = useState();
+
   const contextValue = {
     statusLoginBtn,
     setStatusLoginBtn,
@@ -18,6 +22,12 @@ function Provider({ children }) {
     setEmailIsValid,
     passwordIsValid,
     setPasswordIsValid,
+    inputText,
+    setInputText,
+    inputRadio,
+    setInputRadio,
+    apiRadio,
+    setApiRadio,
     currentPage,
     setCurrentPage,
     login,
