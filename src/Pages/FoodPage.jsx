@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import FoodMain from '../components/FoodMain';
 import foodContext from '../context/FoodContext';
+import FoodCategory from '../components/FoodCategory';
 
 export default function FoodPage() {
   const { foodState } = useContext(foodContext);
@@ -11,6 +12,7 @@ export default function FoodPage() {
   return (
     <div>
       <Header title="Comidas" />
+      <FoodCategory />
       { foodState
         ? <FoodCard />
         : global
