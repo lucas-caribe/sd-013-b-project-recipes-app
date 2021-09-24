@@ -22,7 +22,7 @@ export default function ExploreMealsPage() {
       <HeaderWithoutSearch />
       <h3 data-testid="page-title">Explorar Ingredientes</h3>
       {drinks.map((drink, index) => (
-        <Link key={ index } to={ `/comidas/${drink.strIngredient1}` }>
+        <Link key={ index } to={ `/bebidas/${drink.strIngredient1}` }>
           <div className="card" data-testid={ `${index}-ingredient-card` }>
             <img
               src={ `${imgURL}${drink.strIngredient1}-Small.png` }
