@@ -104,16 +104,16 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal }) {
           title="dsa"
           frameBorder="0"
           data-testid="video"
-          width="100px"
+          width="200px"
           src={ getEmbedVideo() }
         />
       </div>
-      <div className="teste">
+      <div className="cardsRecomendations">
         {getSixCards(objRecomendations) !== undefined && getSixCards(objRecomendations)
           .map((element, index) => (
             <div data-testid={ `${index}-recomendation-card` } key={ index }>
               <img
-                style={ { width: '180px' } }
+                style={ { width: '300px' } }
                 src={ element.strDrinkThumb }
                 alt="imag"
               />
@@ -121,14 +121,20 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal }) {
             </div>
           ))}
       </div>
-      <button type="button" data-testid="start-recipe-btn">Start recipe</button>
+      <button
+        className="buttonStart"
+        type="button"
+        data-testid="start-recipe-btn"
+      >
+        Start
+      </button>
     </div>
   );
 }
 
 DetalhesComidas.propTypes = {
-  match: PropTypes.shape(PropTypes.shape({})).isRequired,
-  sendObjToGlobal: PropTypes.shape(PropTypes.shape({})).isRequired,
+  match: PropTypes.shape().isRequired,
+  sendObjToGlobal: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

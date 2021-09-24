@@ -7,6 +7,7 @@ import getSixCards from '../services/functionsForDetails';
 import { fetchRecomendationsMeals } from '../services/fetchIdComidas';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import { sendRecipeToGlobalDrinks } from '../redux/actions';
+import '../css/CardsRecomendations.css';
 
 function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal }) {
   const [objIdReceita, setObjIdReceita] = useState();
@@ -100,7 +101,7 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal }) {
       ))}
       <p data-testid="instructions">{ objIdReceita.strInstructions }</p>
       <p data-testid="video">Video</p>
-      <div className="teste">
+      <div className="cardsRecomendations">
         {getSixCards(recomendations) !== undefined && getSixCards(recomendations)
           .map((element, index) => (
             <div data-testid={ `${index}-recomendation-card` } key={ index }>
@@ -109,7 +110,13 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal }) {
             </div>
           ))}
       </div>
-      <button type="button" data-testid="start-recipe-btn">Start recipe</button>
+      <button
+        className="buttonStart"
+        type="button"
+        data-testid="start-recipe-btn"
+      >
+        Start
+      </button>
     </div>
   );
 }
