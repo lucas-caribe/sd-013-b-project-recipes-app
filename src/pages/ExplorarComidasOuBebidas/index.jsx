@@ -27,7 +27,7 @@ function ExplorarComidasOuBebidas() {
   }
 
   return (
-    <main>
+    <>
       <Header
         pageTitle={ `Explorar ${type[0].toUpperCase() + type.slice(1)}` }
         showSearchIcon={ false }
@@ -60,7 +60,7 @@ function ExplorarComidasOuBebidas() {
         }
       </main>
       <Footer />
-    </main>
+    </>
   );
 }
 
