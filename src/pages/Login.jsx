@@ -43,7 +43,7 @@ function Login({ history }) {
     localStorage.setItem('user', loginStorage);
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
-    history.push('/bebidas');
+    history.push('/comidas');
   }
 
   return (
