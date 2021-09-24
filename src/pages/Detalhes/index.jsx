@@ -1,22 +1,27 @@
 import React, { useEffect, useState } from 'react';
+import RecommendationCard from '../../components/RecommendationCard';
+import StartOrContinueButton from '../../components/StartOrContinueButton';
 
 import { useRecipes } from '../../context';
 import { useDetails } from '../../context/DetailsContext';
+
+import blackHeart from '../../images/blackHeartIcon.svg';
+import whiteHeart from '../../images/whiteHeartIcon.svg';
 
 const copy = require('clipboard-copy');
 
 function Detalhes({ location: { pathname }, history }) {
   const [isCopied, setIsCopied] = useState(false);
 
-  const { item,
+  const {
+    item,
     ingredients,
     recommendations,
     fetchRecipe,
-    fetchRecommendations } = useDetails();
+    fetchRecommendations,
+  } = useDetails();
 
-  const {
-    finishedRecipes,
-  } = useRecipes();
+  const { finishedRecipes } = useRecipes();
 
   useEffect(() => {
     fetchRecommendations(pathname);
@@ -25,43 +30,24 @@ function Detalhes({ location: { pathname }, history }) {
     return setIsCopied(false);
   }, [pathname]);
 
-  const renderIngredients = () => ingredients
-    .map((ingredient, index) => (
-      <li
-        key={ index }
-        data-testid={ `${index}-ingredient-name-and-measure` }
-      >
-        {ingredient}
-      </li>
-    ));
+  const renderIngredients = () => ingredients.map((ingredient, index) => (
+    <li
+      key={ index }
+      data-testid={ `${index}-ingredient-name-and-measure` }
+    >
+      {ingredient}
+    </li>
+  ));
 
   // Lógica do CSS do Carrossel feita com ajuda do Lucas Caribé
   const renderRecommendations = () => (
     <div className="recommendations" style={ { display: 'flex', overflow: 'auto' } }>
-      {recommendations
-        .map((rec, index) => {
-          const MAX_REC_CARDS = 6;
-          if (index < MAX_REC_CARDS) {
-            return (
-              <div
-                style={ { overflow: 'scroll', flexShrink: '0' } }
-                key={ index }
-                data-testid={ `${index}-recomendation-card` }
-              >
-                <img
-                  className="recommendation-thumb"
-                  src={ rec.strMealThumb || rec.strDrinkThumb }
-                  alt=""
-                  height="180px"
-                  width="180px"
-                />
-                <p data-testid={ `${index}-recomendation-title` }>
-                  {rec.strMeal || rec.strDrink}
-                </p>
-              </div>
-            );
-          } return null;
-        })}
+      {recommendations.map((recipe, index) => {
+        const MAX_RECOMMENDATIONS_CARDS = 6;
+        if (index < MAX_RECOMMENDATIONS_CARDS) {
+          return <RecommendationCard key={ index } index={ index } recipe={ recipe } />;
+        } return null;
+      })}
     </div>
   );
 
@@ -70,23 +56,29 @@ function Detalhes({ location: { pathname }, history }) {
     const checkId = finishedRecipes.some((recipe) => recipe.id === id);
     if (!checkId && !recipes) {
       return (
-        <button
-          style={ { position: 'fixed', bottom: '0px' } }
-          data-testid="start-recipe-btn"
-          type="button"
+        <StartOrContinueButton
           onClick={ () => history.push(`/${path}/${id}/in-progress`) }
-        >
-          Iniciar receita
+          buttonDescription="Iniciar Receita"
+        />
+      );
+    }
+    return (
+      <StartOrContinueButton buttonDescription="Continuar Receita" />
+    );
+  };
+
+  const checkFavorites = () => {
+    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (favorites) {
+      return (
+        <button type="button">
+          <img data-testid="favorite-btn" src={ blackHeart } alt="" />
         </button>
       );
     }
     return (
-      <button
-        style={ { position: 'fixed', bottom: '0px' } }
-        data-testid="start-recipe-btn"
-        type="button"
-      >
-        Continuar Receita
+      <button type="button">
+        <img data-testid="favorite-btn" src={ whiteHeart } alt="" />
       </button>
     );
   };
@@ -115,7 +107,7 @@ function Detalhes({ location: { pathname }, history }) {
           Share
         </button>
         {isCopied && <span>Link copiado!</span> }
-        <button data-testid="favorite-btn" type="button">Favorite</button>
+        {checkFavorites()}
         <h2 data-testid="recipe-category">
           { item[type][0].strAlcoholic
             ? item[type][0].strAlcoholic : item[type][0].strCategory }
