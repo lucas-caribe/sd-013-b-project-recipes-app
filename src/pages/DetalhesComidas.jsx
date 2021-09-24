@@ -3,13 +3,18 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sendRecipeToGlobalMeal } from '../redux/actions';
 import fetchIdComidas from '../services/fetchIdComidas';
+import { fetchRecomendationsDrinks } from '../services/fetchIdBebidas';
+import getSixCards from '../services/functionsForDetails';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import CardsRecomendations from '../components/CardsRecomendations';
 
 function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal }) {
   const [objIdReceita, setObjIdReceita] = useState();
+  const [objRecomendations, setObjRecomendados] = useState();
   const fetchId = async () => {
     setObjIdReceita(await fetchIdComidas(id));
+    setObjRecomendados(await fetchRecomendationsDrinks());
   };
   useEffect(() => {
     fetchId();
@@ -23,9 +28,9 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal }) {
     if (objIdReceita !== undefined) {
       const entries = Object.entries(objIdReceita);
       const arrayFilteredIngredients = entries
-        .filter((element) => element[0].includes('strIngredient'))
-        .filter((element2) => element2[1] !== '')
-        .map((element) => element[1]);
+        .filter((ingredientes) => ingredientes[0].includes('strIngredient'))
+        .filter((ingredientes2) => ingredientes2[1] !== '')
+        .map((ingredientes3) => ingredientes3[1]);
       return arrayFilteredIngredients;
     }
   };
@@ -33,9 +38,9 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal }) {
   const getMeasure = () => {
     if (objIdReceita !== undefined) {
       const entries = Object.entries(objIdReceita);
-      const measure = entries.filter((element) => element[0].includes('strMeasure'))
-        .filter((element2) => element2[1] !== ' ')
-        .map((element3) => element3[1]);
+      const measure = entries.filter((measures) => measures[0].includes('strMeasure'))
+        .filter((measures2) => measures2[1] !== ' ')
+        .map((measures3) => measures3[1]);
       return measure;
     }
   };
@@ -55,14 +60,23 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal }) {
     }
   };
 
+  const getEmbedVideo = () => {
+    if (objIdReceita !== undefined) {
+      const codigo = objIdReceita.strYoutube.split('v=');
+      const linkYoutube = `http://www.youtube.com/embed/${codigo[1]}`;
+      return linkYoutube;
+    }
+  };
+
   if (objIdReceita === undefined) {
     return <p>Loading...</p>;
   }
   return (
     <div>
-      Detalhes da comida
+      {console.log(getSixCards())}
+      <p>Detalhes comidas</p>
       <img
-        style={ { width: '300px' } }
+        style={ { width: '180px' } }
         src={ objIdReceita.strMealThumb }
         data-testid="recipe-photo"
         alt="recipeFoto"
@@ -78,15 +92,37 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal }) {
         <img src={ whiteHeartIcon } alt="iconHeard" />
       </button>
       <p data-testid="recipe-category">{objIdReceita.strCategory}</p>
-      <p>Ingredientes</p>
+      <p>Ingredientes:</p>
       {getIngredientAndMeasure().map((ingredient, index) => (
         <ul key={ index }>
           <li data-testid={ `${index}-ingredient-name-and-measure` }>{ingredient}</li>
         </ul>
       ))}
-      <p data-testid="instructions">{}</p>
-      <p data-testid="video">Video</p>
-      <p data-testid={ `${0}-recomendation-card` }>Card recomendation</p>
+      <p>Instruções</p>
+      <p data-testid="instructions">{objIdReceita.strInstructions}</p>
+      <div>
+        <iframe
+          title="dsa"
+          frameBorder="0"
+          data-testid="video"
+          width="100px"
+          src={ getEmbedVideo() }
+        />
+      </div>
+      {getSixCards(objRecomendations) !== undefined && getSixCards(objRecomendations)
+        .map((element, ind) => {
+          const { strDrink, strDrinkThumb, strAlcoholic } = element;
+          const obj = {
+            title: strDrink,
+            image: strDrinkThumb,
+            alcoholic: strAlcoholic,
+          };
+          return (
+            <div key={ ind } data-testid={ `${ind}-recomendation-card` }>
+              <CardsRecomendations recomendations={ obj } />
+            </div>
+          );
+        })}
       <button type="button" data-testid="start-recipe-btn">Start recipe</button>
     </div>
   );
