@@ -38,6 +38,9 @@ const fetchFilteredItems = (userType, userFilter, userInput) => (dispatch) => {
   case 'first-letter':
     filter = 'search.php?f=';
     break;
+  case 'filter':
+    filter = 'filter.php?c=';
+    break;
   default:
     filter = 'filter.php?i=';
     break;
