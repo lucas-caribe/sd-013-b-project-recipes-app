@@ -10,6 +10,7 @@ header {
 
 header h1 {
   font-size: 36px;
+  text-align: center;
 }
 
 header section {
@@ -91,3 +92,16 @@ header section button img {
     opacity: 0;
   }
 }
+
+@media ( max-width : 600px ) {
+
+  header h1 {
+    font-size: 22px;
+    line-height: 1.8rem;
+  }
+
+  header section button img {
+    max-width: 2.1rem;
+  }
+}
+
