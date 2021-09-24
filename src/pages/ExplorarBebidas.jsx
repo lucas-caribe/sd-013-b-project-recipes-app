@@ -12,7 +12,7 @@ function ExplorarBebidas() {
           Por Ingredientes
         </button>
       </Link>
-      <Link to="random-drink">
+      <Link to="/explorar/random-drink">
         <button
           type="button"
           data-testid="explore-surprise"
