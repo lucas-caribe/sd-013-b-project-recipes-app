@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useContext, useEffect, useState } from 'react';
-import { Redirect } from 'react-router';
+import React, { useContext, useState } from 'react';
 import { ingredientAPI, nameAPI, fistLetterAPI } from '../services/foodAPI';
 import { ingredientDrinkAPI,
   nameDrinkAPI, fistLetterDrinkAPI } from '../services/drinksAPI';
@@ -11,7 +10,7 @@ export default function SearchBar({ page }) {
   const [ingredient, setIngredient] = useState(false);
   const [name, setName] = useState(false);
   const [letter, setLetter] = useState(false);
-  const { foodState, setFoodState, setDrinkState } = useContext(FoodContext);
+  const { foodState, drinkState, setFoodState, setDrinkState } = useContext(FoodContext);
   // const history = useHistory();
 
   const checkLetter = (input) => {
@@ -74,6 +73,7 @@ export default function SearchBar({ page }) {
     if (ingredient) iAPI(text);
     if (name) nAPI(text);
     if (letter) lAPI(text);
+    return null;
   }
 
   function drinkPageAPI() {
@@ -85,21 +85,19 @@ export default function SearchBar({ page }) {
   function handleClick() {
     if (page === 'Comidas') {
       foodPageAPI();
+      if (foodState === null) {
+        return global
+          .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      }
     }
     if (page === 'Bebidas') {
       drinkPageAPI();
+      if (page === 'Bebidas' && drinkState === null) {
+        return global
+          .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      }
     }
   }
-
-  useEffect(() => {
-    if (Object.keys(foodState).length === 1) {
-      return (<Redirect
-        to={
-          `/comidas/${foodState.meals[0].idMeal}`
-        }
-      />);
-    }
-  }, [foodState]);
 
   return (
     <div>
