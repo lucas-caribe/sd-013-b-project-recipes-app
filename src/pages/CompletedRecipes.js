@@ -9,7 +9,7 @@ export default function CompletedRecipes() {
     setIcon: false,
   };
   const [filter, setFilter] = useState('All');
-  const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+  const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
   // const doneRecipes = [
   //   {
   //     id: '52771',
