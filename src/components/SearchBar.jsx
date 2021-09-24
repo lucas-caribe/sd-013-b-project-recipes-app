@@ -10,7 +10,7 @@ function SearchBar() {
         <input
           type="radio"
           value="ingredient"
-          name="ingredient"
+          name="search-radio"
           id="ingredient"
           data-testid="ingredient-search-radio"
         />
@@ -20,7 +20,7 @@ function SearchBar() {
         <input
           type="radio"
           value="name"
-          name="name"
+          name="search-radio"
           id="name"
           data-testid="name-search-radio"
         />
@@ -30,7 +30,7 @@ function SearchBar() {
         <input
           type="radio"
           value="first-letter"
-          name="first-letter"
+          name="search-radio"
           id="first-letter"
           data-testid="first-letter-search-radio"
         />

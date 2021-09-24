@@ -42,6 +42,8 @@ function Home({ search }) {
           ? <Header setTitle="Comidas" /> : <Header setTitle="Bebidas" />
       }
 
+      {search === true ? <SearchBar /> : null}
+
       {/* {(foods) ? <CardList object={ foods } /> : <CardList object={ drinks } /> } */}
 
       {' '}
@@ -50,7 +52,6 @@ function Home({ search }) {
       {' '}
       <CardList object={ drinks } />
       {/* <Header setTitle="Comidas" /> */}
-      {search === true ? <SearchBar /> : null}
 
       <Footer />
     </div>
