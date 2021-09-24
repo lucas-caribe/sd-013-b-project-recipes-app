@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-// import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player';
 import Header from '../components/detailPageComponents/Header';
 import Recommendations from '../components/detailPageComponents/Recommendations';
 import * as required from '../services/index';
@@ -59,11 +59,11 @@ function MealsDetails() {
         <p data-testid="instructions">{recipe.strInstructions}</p>
       </div>
       <div>
-        {/* <ReactPlayer
+        <ReactPlayer
           url={ recipe.strYoutube }
           controls
           data-testid="video"
-        /> */}
+        />
       </div>
       <div>
         <Recommendations
