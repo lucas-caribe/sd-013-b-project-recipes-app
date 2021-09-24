@@ -17,7 +17,7 @@ function App() {
         <Route exact path="/perfil" component={ Profile } />
         <Route exact path="/comidas" component={ FoodPage } />
         <Route exact path="/comidas/:id" component={ RecipeDetails } />
-        <Route exact patch="/bebidas" component={ DrinkPage } />
+        <Route exact path="/bebidas" component={ DrinkPage } />
         <Route exact path="/bebidas/:id" component={ RecipeDetails } />
       </Switch>
     </Provider>
