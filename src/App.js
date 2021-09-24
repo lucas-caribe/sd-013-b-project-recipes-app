@@ -10,6 +10,8 @@ import ExplorerCountries from './pages/ExplorerCountries';
 import FavoritesRecipes from './pages/FavoritesRecipes';
 import RecipesMade from './pages/RecipesMade';
 import Perfil from './pages/Perfil';
+import RecipesDetails from './pages/RecipesDetails';
+import RecipesInProgress from './pages/RecipesInProgress';
 
 function App() {
   return (
@@ -19,10 +21,10 @@ function App() {
         <Route exact path="/" component={ Login } />
         <Route exact path="/comidas" component={ Home } />
         <Route exact path="/bebidas" component={ Login } />
-        <Route exact path="/comidas/:id" component={ Login } />
-        <Route exact path="/bebidas/:id" component={ Login } />
-        <Route exact path="/comidas/:id/in-progress" component={ Login } />
-        <Route exact path="/bebidas/id/in-progress" component={ Login } />
+        <Route exact path="/comidas/:id" component={ RecipesDetails } />
+        <Route exact path="/bebidas/:id" component={ RecipesDetails } />
+        <Route exact path="/comidas/:id/in-progress" component={ RecipesInProgress } />
+        <Route exact path="/bebidas/id/in-progress" component={ RecipesInProgress } />
         <Route exact path="/explorar" component={ Explorer } />
         <Route exact path="/explorar/comidas" component={ Login } />
         <Route exact path="/explorar/bebidas" component={ Login } />
@@ -33,7 +35,6 @@ function App() {
         <Route exact path="/receitas-feitas" component={ RecipesMade } />
         <Route exact path="/receitas-favoritas" component={ FavoritesRecipes } />
       </Switch>
-
       <Footer />
     </div>
   );
