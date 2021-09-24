@@ -4,7 +4,7 @@ import RecipesProvider from './context/Recipes/RecipesProvider';
 import RecipesList from './components/RecipeList';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import login from './Components/testes/login';
+import Login from './Login/Login';
 import perfil from './Components/testes/perfil';
 import receitas from './Components/testes/receitas';
 import explorar from './Components/testes/explorar';
@@ -45,7 +45,7 @@ function App() {
         <Route exact path="/receitas" component={ receitas } />
         <Route exact path="/receitas-feitas" component={ receitasFeitas } />
         <Route exact path="/receitas-favoritas" component={ receitasFavoritas } />
-        <Route exact path="/" component={ login } />
+        <Route exact path="/" component={ Login } />
       </Switch>
     </RecipesProvider>
   );
