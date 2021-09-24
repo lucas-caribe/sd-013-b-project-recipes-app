@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import PropTypes, { func } from 'prop-types';
-import { result } from 'lodash-es';
+import PropTypes from 'prop-types';
 import Video from './Video';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import { getFoodOrDrinkProperties, getFoodOrDrinkRecipe } from '../helpers/getFoodOrDrinkProperties';
+import { fetchFoodsById, fetchDrinksById } from '../services/api';
 
 const RecipeDetails = () => {
   const recipeId = useParams();
@@ -13,38 +13,43 @@ const RecipeDetails = () => {
     id,
   } = recipeId;
   const typeOffood = window.location.href;
-  const foodOrDrink = typeOffood.includes('comida') ? 'comida' : 'bebida';
-
-  // console.log(foodOrDrink);
-
   const [object, setObject] = useState({});
+  const foodOrDrink = typeOffood.includes('comida') ? 'comida' : 'bebida';
 
   useEffect(() => {
     console.log(foodOrDrink);
     if (foodOrDrink === 'comida') {
-      const getFetchComida = async () => {
-        const results = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
+      const getFetchComida = () => {
+        fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
           .then((resp) => resp.json())
-          .then((resp2) => resp2.meals);
-        setObject(results);
+          .then((resp2) => setObject(resp2.meals[0]));
       };
       getFetchComida();
     } else {
-      const getFetchDrinks = async () => {
-        const results = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
+      const getFetchDrinks = () => {
+        fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
           .then((resp) => resp.json())
-          .then((resp2) => resp2.drinks);
-        setObject(results);
+          .then((resp2) => setObject(resp2.drinks[0]));
       };
       getFetchDrinks();
     }
   }, []);
-  const insertAttributes = (objeto, comidaOuBebida) => (getFoodOrDrinkRecipe(objeto, comidaOuBebida));
-  const x = getFoodOrDrinkProperties(object, foodOrDrink);
-  console.log(x);
+
+  console.log(object);
+  const insertAttributes = (objeto, comidaOuBebida) => {
+    const a = getFoodOrDrinkRecipe(objeto, comidaOuBebida);
+    console.log(a);
+    return ('a');
+  };
+  // const x = getFoodOrDrinkProperties(object, foodOrDrink);
+
   return (
     <div>
-      {console.log(insertAttributes(object[0], foodOrDrink))}
+      a
+      {/* {console.log(object)} */}
+      {Object.keys(object).length === 0 ? console.log('Loading') : <div>{insertAttributes(object, foodOrDrink)}</div>}
+
+      {/* {console.log(insertAttributes(object[0], foodOrDrink))} */}
     </div>
   /* <div className="details-page">
       <h1>Detalhes comidas</h1>

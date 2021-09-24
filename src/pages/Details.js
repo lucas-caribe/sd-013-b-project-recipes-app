@@ -1,5 +1,5 @@
 import React from 'react';
-import RecipeDetails from '../components/RecipeDatails';
+import RecipeDetails from '../components/RecipeDetails';
 
 import '../styles/details.css';
 

@@ -91,3 +91,15 @@ export function fetchDrinksByCategory(filter) {
     .then((res) => res.json())
     .then((data) => data.drinks);
 }
+
+export function fetchFoodsById(id, setObject) {
+  return fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
+    .then((resp) => resp.json())
+    .then((resp2) => setObject(resp2.meals));
+}
+
+export function fetchDrinksById(id, setObject) {
+  return fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
+    .then((resp) => resp.json())
+    .then((data) => setObject(data.drinks));
+}
