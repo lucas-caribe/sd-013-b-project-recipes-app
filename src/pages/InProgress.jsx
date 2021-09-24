@@ -6,8 +6,32 @@ import getIngredientsInArray from '../helpers/getIngredientsInArray';
 export default function InProgress() {
   const [Recipe, setRecipe] = useState({});
   const [Ingredients, setIngredient] = useState([]);
+  const [IngredientsCompleted, setIngredientsCompleted] = useState([]);
   const history = useHistory();
   const { location: { pathname } } = history;
+  const ID = pathname.split('/')[2];
+
+  const saveInLocalStorage = ({ target: { value, checked } }) => {
+    if (!JSON.parse(localStorage.getItem(ID))) {
+      localStorage.setItem(ID, JSON.stringify([]));
+    }
+    const ingredientInLocal = JSON.parse(localStorage.getItem(ID));
+
+    let ingredientCompleted = { [ID]: [value] };
+
+    if (checked) {
+      ingredientCompleted = [...ingredientInLocal, value];
+    }
+
+    if (!checked) {
+      const index = ingredientInLocal.indexOf(value);
+      ingredientInLocal.splice(index, 1);
+      ingredientCompleted = ingredientInLocal;
+    }
+
+    localStorage.setItem(ID, JSON.stringify(ingredientCompleted));
+    setIngredientsCompleted(ingredientCompleted);
+  };
 
   const renderIngredients = () => (
     <>
@@ -22,6 +46,8 @@ export default function InProgress() {
             value={ Ingredient }
             id={ Ingredient }
             name={ Ingredient }
+            onClick={ saveInLocalStorage }
+            checked={ IngredientsCompleted.includes(Ingredient) }
           />
           {Ingredient}
         </label>
@@ -88,8 +114,14 @@ export default function InProgress() {
   );
 
   useEffect(() => {
-    const ID = pathname.split('/')[2];
+    const IngredientsCompletedInLocal = JSON.parse(localStorage.getItem(ID));
+    setIngredientsCompleted(
+      IngredientsCompletedInLocal || [],
+    );
     fetchDetails(ID);
+    return () => {
+      console.log('desmontei');
+    };
   }, [pathname, fetchDetails]);
 
   useEffect(() => {
