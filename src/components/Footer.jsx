@@ -9,7 +9,6 @@ import './css/FooterStyle.css';
 export default function Footer() {
   return (
     <div data-testid="footer" className="footer-test">
-      <h1>Eu sou o Footer</h1>
       <div>
         <Link to="/bebidas">
           <img

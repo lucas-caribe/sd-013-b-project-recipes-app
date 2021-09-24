@@ -5,12 +5,18 @@ import RecipesContext from './RecipesContext';
 export default function Provider({ children }) {
   const [meals, setMeals] = useState([]);
   const [drinks, setDrinks] = useState([]);
+  const [filterMealButtons, setFilterMealButtons] = useState([]);
+  const [filterDrinkButtons, setFilterDrinkButtons] = useState([]);
 
   const contextValue = {
     meals,
     setMeals,
     drinks,
     setDrinks,
+    filterMealButtons,
+    setFilterMealButtons,
+    filterDrinkButtons,
+    setFilterDrinkButtons,
   };
 
   return (
