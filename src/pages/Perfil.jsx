@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/header';
 
 export default function Perfil() {
@@ -14,20 +15,24 @@ export default function Perfil() {
       </p>
       {' '}
       <br />
-      <button
-        type="button"
-        data-testid="profile-done-btn"
-      >
-        Receitas Feitas
-      </button>
+      <Link to="receitas-feitas">
+        <button
+          type="button"
+          data-testid="profile-done-btn"
+        >
+          Receitas Feitas
+        </button>
+      </Link>
       {' '}
       <br />
-      <button
-        type="button"
-        data-testid="profile-favorite-btn"
-      >
-        Receitas Favoritas
-      </button>
+      <Link to="/receitas-favoritas">
+        <button
+          type="button"
+          data-testid="profile-favorite-btn"
+        >
+          Receitas Favoritas
+        </button>
+      </Link>
       {' '}
       <br />
       <button
