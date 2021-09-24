@@ -7,35 +7,34 @@ function Footer() {
   return (
     <footer
       data-testid="footer"
-      className="fixed-bottom"
+      className="footer"
     >
-      <div>
+      <a
+        href="/bebidas"
+        src={ drinkIcon }
+        data-testid="drinks-bottom-btn"
+        className="footer-icon"
+      >
+        <img src={ drinkIcon } alt="Drinks" />
+      </a>
 
-        <a
-          href="/bebidas"
-          src={ drinkIcon }
-          data-testid="drinks-bottom-btn"
-        >
-          <img src={ drinkIcon } alt="Drinks" />
-        </a>
+      <a
+        href="/explorar"
+        src={ exploreIcon }
+        data-testid="explore-bottom-btn"
+        className="footer-icon"
+      >
+        <img src={ exploreIcon } alt="Explore" />
+      </a>
 
-        <a
-          href="/explorar"
-          src={ exploreIcon }
-          data-testid="explore-bottom-btn"
-        >
-          <img src={ exploreIcon } alt="Explore" />
-        </a>
-
-        <a
-          href="/comidas"
-          src={ mealIcon }
-          data-testid="food-bottom-btn"
-        >
-          <img src={ mealIcon } alt="Food" />
-        </a>
-
-      </div>
+      <a
+        href="/comidas"
+        src={ mealIcon }
+        data-testid="food-bottom-btn"
+        className="footer-icon"
+      >
+        <img src={ mealIcon } alt="Food" />
+      </a>
     </footer>
   );
 }

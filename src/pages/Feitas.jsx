@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import useCurrentPage from '../context/hooks/useCurrentPage';
 
 function Feitas() {
-  useCurrentPage('Comidas Favoritas');
+  useCurrentPage('Receitas Feitas');
 
   return (
     <div className="page">
