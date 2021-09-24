@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ProgressRecipe from '../components/ProgressRecipe';
-import {
-  getMealIngredients, getMealMeasure } from '../GlobalFuncs/getIngredientsAndMeasure';
+import { getIngredients, getMeasure } from '../GlobalFuncs/getIngredientsAndMeasure';
 
 function ProgressoComida({ recipeInfo }) {
   function modifyRecipeInfo() {
@@ -13,8 +12,8 @@ function ProgressoComida({ recipeInfo }) {
       title: strMeal,
       category: strCategory,
       strInstructions,
-      ingredients: getMealIngredients(recipeInfo),
-      measure: getMealMeasure(recipeInfo),
+      ingredients: getIngredients(recipeInfo),
+      measure: getMeasure(recipeInfo),
     };
   }
 
@@ -26,7 +25,7 @@ function ProgressoComida({ recipeInfo }) {
 }
 
 const mapStateToProps = (state) => ({
-  recipeInfo: state.reducerRecipe.recipe,
+  recipeInfo: state.reducerRecipe.recipeMeal,
 });
 
 ProgressoComida.propTypes = {
