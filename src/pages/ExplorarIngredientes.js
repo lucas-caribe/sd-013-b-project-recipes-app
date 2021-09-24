@@ -2,9 +2,9 @@ import React from 'react';
 import Footer from '../components/Footer/index';
 import Header from '../components/Header';
 
-const Explorar = () => (
+const ExplorarIngredientes = () => (
   <>
-    <Header title="Explorar" displaySearchBtn={ false } />
+    <Header title="Explorar Ingredientes" displaySearchBtn={ false } />
     <div>
       Sou a página de explorar
     </div>
@@ -12,4 +12,4 @@ const Explorar = () => (
   </>
 );
 
-export default Explorar;
+export default ExplorarIngredientes;
