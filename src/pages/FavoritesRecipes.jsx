@@ -72,25 +72,25 @@ function itemFavorite(item, index) {
 function FavoritesRecipes() {
   const [state, setState] = useState(STATE_FAVORITE);
   const { buttonFilter } = state;
-  // const { favoriteRecipes } = localStorage;
-  const favoriteRecipes = [{
-    id: '52771',
-    type: 'comida',
-    area: 'Italian',
-    category: 'Vegetarian',
-    alcoholicOrNot: '',
-    name: 'Spicy Arrabiata Penne',
-    image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-  },
-  {
-    id: '178319',
-    type: 'bebida',
-    area: '',
-    category: 'Cocktail',
-    alcoholicOrNot: 'Alcoholic',
-    name: 'Aquamarine',
-    image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
-  }];
+  const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  // const favoriteRecipes = [{
+  //   id: '52771',
+  //   type: 'comida',
+  //   area: 'Italian',
+  //   category: 'Vegetarian',
+  //   alcoholicOrNot: '',
+  //   name: 'Spicy Arrabiata Penne',
+  //   image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+  // },
+  // {
+  //   id: '178319',
+  //   type: 'bebida',
+  //   area: '',
+  //   category: 'Cocktail',
+  //   alcoholicOrNot: 'Alcoholic',
+  //   name: 'Aquamarine',
+  //   image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
+  // }];
 
   if (!favoriteRecipes) { return (<h1> Não há favoritos</h1>); }
 
