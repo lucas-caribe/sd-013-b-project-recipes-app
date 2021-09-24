@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
 import DrinksSlider from '../components/DrinksSlider';
 import getIngredients from '../services/getIngredients';
 import shareIcon from '../images/shareIcon.svg';
 import './css/MealDetails.css';
-import whiteHeart from '../images/whiteHeartIcon.svg';
-import blackHeart from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import addFavoriteToStorage from '../services/addFavoriteToStorage';
+import removeFavoritesFromStorage from '../services/removeFavoriteFromStorage';
+import RecipeButton from '../components/RecipeButton';
 
 const copy = require('clipboard-copy');
 
@@ -16,18 +17,14 @@ function RecipeDetail({ match: { params: { id } }, type }) {
   const [suggestedRecipes, setSuggestedRecipes] = useState([]);
   const [modal, setModal] = useState(false);
   const [favorited, setFavorited] = useState(false);
-  const history = useHistory();
-
-  let storageData = localStorage.getItem('inProgressRecipes');
-  storageData = JSON.parse(storageData);
 
   let favoritesFromStorage = localStorage.getItem('favoriteRecipes');
   favoritesFromStorage = JSON.parse(favoritesFromStorage);
 
-  // if (favoritesFromStorage && favoritesFromStorage.find((recipe) => recipe.id === id)) {
-  //   setFavorited(true)
-  // }
-
+  if (favoritesFromStorage && favoritesFromStorage.find((recipe) => recipe.id === id)
+    && !favorited) {
+    setFavorited(true);
+  }
 
   const endPoints = {
     meal: `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`,
@@ -62,17 +59,6 @@ function RecipeDetail({ match: { params: { id } }, type }) {
     getSuggestions();
   }, []);
 
-  const initialButtonText = 'Iniciar Receita';
-
-  const handleRecipeClick = ({ target }) => {
-    if (target.innerText === initialButtonText && type === 'meals') {
-      history.push(`/comidas/${id}/in-progress`);
-    }
-    if (target.innerText === initialButtonText && type === 'drinks') {
-      history.push(`/bebidas/${id}/in-progress`);
-    }
-  };
-
   const handleShareClick = () => {
     setModal('Link copiado!');
     if (type === 'meals') return copy(`http://localhost:3000/comidas/${id}`);
@@ -80,33 +66,15 @@ function RecipeDetail({ match: { params: { id } }, type }) {
   };
 
   const handleFavoriteClick = () => {
-    if (favorited) return;
+    if (favorited) {
+      removeFavoritesFromStorage(id);
+      setFavorited(false);
+      return;
+    }
     addFavoriteToStorage(type, selectedRecipe);
+    setFavorited(true);
   };
 
-  // const removeFavoriteFromStorage = () => {
-
-  // }
-
-  const renderButton = () => {
-    let buttonText = initialButtonText;
-    if (storageData && storageData.meals && Object.keys(storageData[type]).includes(id)) {
-      buttonText = 'Continuar Receita';
-    }
-    if (storageData && storageData.cocktails && Object.keys(storageData.cocktails).includes(id)) {
-      buttonText = 'Continuar Receita';
-    }
-    return (
-      <button
-        onClick={ handleRecipeClick }
-        className="start-recipe-btn"
-        data-testid="start-recipe-btn"
-        type="button"
-      >
-        { buttonText }
-      </button>
-    );
-  };
   return (
     <div>
       { selectedRecipe.map((recipe, i) => (
@@ -127,8 +95,15 @@ function RecipeDetail({ match: { params: { id } }, type }) {
               <img src={ shareIcon } alt="icone de compartilhar" />
             </button>
             { modal }
-            <button data-testid="favorite-btn" type="button" onClick={ handleFavoriteClick }>
-              <img src={ favorited ? blackHeart : whiteHeart } alt="botão de favoritar receita" />
+            <button
+              type="button"
+              onClick={ handleFavoriteClick }
+            >
+              <img
+                data-testid="favorite-btn"
+                src={ favorited ? blackHeartIcon : whiteHeartIcon }
+                alt="botão de favoritar receita"
+              />
             </button>
           </div>
           <h4
@@ -157,7 +132,7 @@ function RecipeDetail({ match: { params: { id } }, type }) {
             allowFullScreen
           /> : null }
           <DrinksSlider type={ type } suggestedRecipes={ suggestedRecipes } />
-          { renderButton() }
+          <RecipeButton type={ type } id={ id } />
         </div>
       ))}
     </div>
