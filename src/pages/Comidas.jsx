@@ -1,11 +1,26 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Header from '../components/Header';
 import RecipesContext from '../context/RecipesContext';
 import RecipeCard from '../components/RecipeCard';
 import Footer from '../components/Footer';
+import { fetchInitialMeals } from '../services/fetchMeals';
+import FilteringMealsButtons from '../components/FilteringMealsButtons';
 
 function Comidas() {
-  const { meals } = useContext(RecipesContext);
+  const { meals, setMeals } = useContext(RecipesContext);
+
+  useEffect(() => {
+    fetchInitialMeals()
+      .then((data) => setMeals([...data]));
+  }, [setMeals]);
+
+  // useEffect(() => {
+  //   const request = async () => {
+  //     const response = await fetchInitialMeals();
+  //     return response;
+  //   };
+  //   request().then((response) => setMeals([...response]));
+  // }, [setMeals]);
 
   const renderMeals = () => (
     meals.map(({ idMeal, strMeal, strMealThumb }, index) => (
@@ -27,6 +42,7 @@ function Comidas() {
       <div>comidas</div>
       { meals && renderMeals() }
       <Footer />
+      <FilteringMealsButtons />
     </div>
   );
 }

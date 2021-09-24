@@ -1,4 +1,4 @@
-async function fetchDrinks(inputValue, radioValue) {
+export default async function fetchDrinks(inputValue, radioValue) {
   if (!inputValue || !radioValue) return;
   const mealsEndpoints = {
     ingredientSearch: `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${inputValue}`,
@@ -22,4 +22,20 @@ async function fetchDrinks(inputValue, radioValue) {
   }
 }
 
-export default fetchDrinks;
+export async function fetchInitialDrinks() {
+  const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+  const data = await response.json();
+  return data.drinks;
+}
+
+export async function fetchDrinksFilters() {
+  const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
+  const data = await response.json();
+  return data;
+}
+
+export async function fetchDrinkByCategory(category) {
+  const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`);
+  const data = await response.json();
+  return data.drinks;
+}
