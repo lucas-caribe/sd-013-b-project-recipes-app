@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+
+import { useRecipes } from '../../context';
 import { useDetails } from '../../context/DetailsContext';
 
 function Detalhes({ location: { pathname } }) {
@@ -7,6 +9,11 @@ function Detalhes({ location: { pathname } }) {
     recommendations,
     fetchRecipe,
     fetchRecommendations } = useDetails();
+
+  const {
+    finishedRecipes,
+    setInProgress,
+  } = useRecipes();
 
   useEffect(() => {
     fetchRecommendations(pathname);
@@ -23,85 +30,103 @@ function Detalhes({ location: { pathname } }) {
       </li>
     ));
 
-  const renderRecommendations = () => recommendations.map((rec, index) => {
-    const MAX_REC_CARDS = 12;
-    if (index < MAX_REC_CARDS) {
-      return (
-        <div key={ index } data-testid={ `${index}-recomendation-card` }>
-          {rec.strMeal}
-        </div>
-      );
-    } return null;
-  });
+  // Lógica do CSS do Carrossel feita com ajuda do Lucas Caribé
+  const renderRecommendations = () => (
+    <div className="recommendations" style={ { display: 'flex', overflow: 'auto' } }>
+      {recommendations
+        .map((rec, index) => {
+          const MAX_REC_CARDS = 6;
+          if (index < MAX_REC_CARDS) {
+            return (
+              <div
+                style={ { overflow: 'scroll', flexShrink: '0' } }
+                key={ index }
+                data-testid={ `${index}-recomendation-card` }
+              >
+                <img
+                  className="recommendation-thumb"
+                  src={ rec.strMealThumb || rec.strDrinkThumb }
+                  alt=""
+                  height="180px"
+                  width="180px"
+                />
+                <p data-testid={ `${index}-recomendation-title` }>
+                  {rec.strMeal || rec.strDrink}
+                </p>
+              </div>
+            );
+          } return null;
+        })}
+    </div>
+  );
 
-  const mealDetails = () => {
-    if (!item.meal) {
-      return <span>Carregando...</span>;
-    } return (
-      <main>
-        <img
-          data-testid="recipe-photo"
-          src={ item.meal[0].strMealThumb }
-          alt={ item.meal[0].strMeal }
-          height="400px"
-          width="400px"
-        />
-        <h1 data-testid="recipe-title">{ item.meal[0].strMeal }</h1>
-        <button data-testid="share-btn" type="button">Share</button>
-        <button data-testid="favorite-btn" type="button">Favorite</button>
-        <h2 data-testid="recipe-category">{ item.meal[0].strCategory }</h2>
-        <ul>
-          {renderIngredients()}
-        </ul>
-        <p data-testid="instructions">{item.meal[0].strInstructions}</p>
-        {item.meal[0].strYoutube
-        && <iframe
-          data-testid="video"
-          src={ item.meal[0].strYoutube }
-          title={ item.meal[0].strMeal }
-          frameBorder="0"
-        /> }
-        <div>
-          {renderRecommendations()}
-        </div>
-        <button data-testid="start-recipe-btn" type="button">Iniciar receita</button>
-      </main>
+  const checkRecipeStatus = (type, id) => {
+    const recipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const checkId = finishedRecipes.some((recipe) => recipe.id === id);
+    if (!checkId && !recipes) {
+      return (
+        <button
+          style={ { position: 'fixed', bottom: '0px' } }
+          data-testid="start-recipe-btn"
+          type="button"
+          onClick={ () => setInProgress(type, id) }
+        >
+          Iniciar receita
+        </button>
+      );
+    }
+    return (
+      <button
+        style={ { position: 'fixed', bottom: '0px' } }
+        data-testid="start-recipe-btn"
+        type="button"
+        onClick={ () => setInProgress(type, id) }
+      >
+        Continuar Receita
+      </button>
     );
   };
 
-  const drinkDetails = () => {
-    if (!item.drink) {
+  const renderDetails = (type, property) => {
+    if (!item[type]) {
       return <span>Carregando...</span>;
     } return (
       <main>
         <img
           data-testid="recipe-photo"
-          src={ item.drink[0].strDrinkThumb }
-          alt={ item.drink[0].strDrink }
-          height="400px"
-          width="400px"
+          src={ item[type][0][`str${property}Thumb`] }
+          alt={ item[type][0][`str${property}`] }
+          height="300px"
+          width="300px"
         />
-        <h1 data-testid="recipe-title">{ item.drink[0].strDrink }</h1>
+        <h1 data-testid="recipe-title">{ item[type][0][`str${property}`] }</h1>
         <button data-testid="share-btn" type="button">Share</button>
         <button data-testid="favorite-btn" type="button">Favorite</button>
-        <h2 data-testid="recipe-category">{ item.drink[0].strAlcoholic }</h2>
+        <h2 data-testid="recipe-category">
+          { item[type][0].strAlcoholic
+            ? item[type][0].strAlcoholic : item[type][0].strCategory }
+        </h2>
         <ul>
           {renderIngredients()}
         </ul>
-        <p data-testid="instructions">{item.drink[0].strInstructions}</p>
-        <div>
-          <div data-testid="0-recomendation-card">Card 1</div>
-          <div data-testid="1-recomendation-card">Card 2</div>
-        </div>
-        <button data-testid="start-recipe-btn" type="button">Iniciar receita</button>
+        <p data-testid="instructions">{item[type][0].strInstructions}</p>
+        {item[type][0].strYoutube
+        && <iframe
+          data-testid="video"
+          src={ item[type][0].strYoutube }
+          title={ item[type][0][`str${property}`] }
+          frameBorder="0"
+        />}
+        {renderRecommendations()}
+        {checkRecipeStatus(type, item[type][0][`id${property}`])}
       </main>
     );
   };
 
   if (pathname.includes('comidas')) {
-    return mealDetails();
+    return renderDetails('meal', 'Meal');
   }
-  return drinkDetails();
+  return renderDetails('drink', 'Drink');
 }
 
 export default Detalhes;

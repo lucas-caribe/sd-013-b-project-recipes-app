@@ -5,16 +5,12 @@ const mealsInitialState = {
   categories: [], // Lista de categorias recuperadas pela API
   list: [], // Lista de comidas recuperadas pela API
   inProgress: {}, // Objeto onde cada chave é o id da receita em andamento e o valor correspondente é o array com os ingredientes já marcados
-  favorites: [], // Lista de receitas favoritas
-  finished: [], // Lista de receitas finalizadas
 };
 
 const cocktailsInitialState = {
   categories: [], // Lista de categorias recuperadas pela API
   list: [], // Lista de comidas recuperadas pela API
   inProgress: {}, // Objeto onde cada chave é o id da receita em andamento e o valor correspondente é o array com os ingredientes já marcados
-  favorites: [], // Lista de receitas favoritas
-  finished: [], // Lista de receitas finalizadas
 };
 
 export const RecipesContext = createContext();
@@ -22,6 +18,7 @@ export const RecipesContext = createContext();
 export const RecipesProvider = ({ children }) => {
   const [meals, setMeals] = useState(mealsInitialState);
   const [cocktails, setCocktails] = useState(cocktailsInitialState);
+  const [finishedRecipes, setFinishedRecipes] = useState([]);
 
   const setMealsList = (mealsList) => {
     setMeals({
@@ -40,6 +37,8 @@ export const RecipesProvider = ({ children }) => {
   const context = {
     setMealsList,
     setCocktailsList,
+    setFinishedRecipes,
+    finishedRecipes,
     meals,
     cocktails,
   };

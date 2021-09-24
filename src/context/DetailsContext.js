@@ -29,8 +29,8 @@ export const DetailsProvider = ({ children }) => {
     const MAX_INGREDIENTS = 21;
     for (let i = 1; i < MAX_INGREDIENTS; i += 1) {
       if (recipeInfo[`strIngredient${i}`] !== null
-      && recipeInfo[`strIngredient${i}`] !== undefined) {
-        console.log(recipeInfo[`strIngredient${i}`]);
+      && recipeInfo[`strIngredient${i}`] !== undefined
+      && recipeInfo[`strIngredient${i}`] !== '') {
         ingredientsAux
           .push(`${recipeInfo[`strIngredient${i}`]} - ${recipeInfo[`strMeasure${i}`]}`);
       }
@@ -65,10 +65,11 @@ export const DetailsProvider = ({ children }) => {
       const result = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
       const { drinks } = await result.json();
       setRecommendations(drinks);
+    } else {
+      const result = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      const { meals } = await result.json();
+      setRecommendations(meals);
     }
-    const result = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-    const { meals } = await result.json();
-    setRecommendations(meals);
   }, []);
 
   const context = {
