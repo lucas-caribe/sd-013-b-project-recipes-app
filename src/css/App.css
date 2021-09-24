@@ -84,3 +84,14 @@
   margin: 3px;
   padding: 2px 5px;
 }
+
+.alert-mensage {
+  background-color: rgba(30, 30, 30, 0.7);
+  bottom: 0;
+  color: rgb(200, 200, 200);
+  font-size: 1rem;
+  padding: 5px;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
