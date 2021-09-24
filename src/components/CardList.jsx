@@ -3,25 +3,30 @@ import React from 'react';
 import Card from './Card';
 //
 function CardList({ object: { meals, drinks } }) {
+  const MAX_CARD_LENGTH = 11;
   return (
     <div>
-      {(meals) ? meals.map((food, index) => (
-        <Card
-          key={ index }
-          id={ index }
-          image={ food.strMealThumb }
-          name={ food.strMeal }
-        />
-      )) : null}
+      {(meals) ? meals
+        .filter((_, index) => index <= MAX_CARD_LENGTH)
+        .map((food, index) => (
+          <Card
+            key={ index }
+            id={ index }
+            image={ food.strMealThumb }
+            name={ food.strMeal }
+          />
+        )) : null}
 
-      {(drinks) ? drinks.map((drink, index) => (
-        <Card
-          key={ index }
-          id={ index }
-          image={ drink.strDrinkThumb }
-          name={ drink.strDrink }
-        />
-      )) : null}
+      {(drinks) ? drinks
+        .filter((_, index) => index <= MAX_CARD_LENGTH)
+        .map((drink, index) => (
+          <Card
+            key={ index }
+            id={ index }
+            image={ drink.strDrinkThumb }
+            name={ drink.strDrink }
+          />
+        )) : null}
 
     </div>
   );
