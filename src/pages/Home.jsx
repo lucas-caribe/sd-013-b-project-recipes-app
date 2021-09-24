@@ -44,24 +44,31 @@ function Home() {
   }
 
   async function handleSubmitButton() {
-    if (pathname === ('/comidas') && radioButton === 'ingredientes') {
-      setFoods(await foodRequest(`filter.php?i=${searchInput}`));
-    }
-    if (pathname === ('/bebidas') && radioButton === 'ingredientes') {
-      setDrinks(await drinkRequest(`filter.php?i=${searchInput}`));
-    }
-    if (pathname === ('/comidas') && radioButton === 'nome') {
-      setFoods(await foodRequest(`search.php?s=${searchInput}`));
-    }
-    if (pathname === ('/bebidas') && radioButton === 'nome') {
-      setDrinks(await drinkRequest(`search.php?s=${searchInput}`));
-    }
-    if (pathname === ('/comidas') && radioButton === 'primeira-letra') {
-      setFoods(await foodRequest(`search.php?f=${searchInput}`));
-    }
-    if (pathname === ('/bebidas') && radioButton === 'primeira-letra') {
-      setDrinks(await drinkRequest(`search.php?f=${searchInput}`));
-    }
+    const requestApi = {
+      '/comidas': async (radio, input) => {
+        if (radio === 'ingredientes') {
+          setFoods(await foodRequest(`filter.php?i=${input}`));
+        }
+        if (radio === 'nome') {
+          setFoods(await foodRequest(`search.php?s=${input}`));
+        }
+        if (radio === 'primeira-letra') {
+          setFoods(await foodRequest(`search.php?f=${input}`));
+        }
+      },
+      '/bebidas': async (radio, input) => {
+        if (radio === 'ingredientes') {
+          setDrinks(await drinkRequest(`filter.php?i=${input}`));
+        }
+        if (radio === 'nome') {
+          setDrinks(await drinkRequest(`search.php?s=${input}`));
+        }
+        if (radio === 'primeira-letra') {
+          setDrinks(await drinkRequest(`search.php?f=${input}`));
+        }
+      },
+    };
+    requestApi[pathname](radioButton, searchInput);
   }
 
   return (
@@ -137,3 +144,10 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(Home);
+
+/*
+Object Literals realizado por sugestão do Gabs para resolver o problema de complexidade do código gerado
+pela dupla verificação de parametros.
+
+https://blog.rocketseat.com.br/substituindo-a-instrucao-switch-por-object-literal/
+*/
