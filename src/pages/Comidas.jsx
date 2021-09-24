@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../components/header';
 import MealsMainList from '../components/mealsMainList';
 import MainCategorys from '../components/mainCategorys';
+import Footer from '../components/footer';
 
 export default function Comidas() {
   return (
@@ -9,7 +10,7 @@ export default function Comidas() {
       <Header titlePage="Comidas" hasSearchIcon />
       <MainCategorys />
       <MealsMainList />
-
+      <Footer />
     </div>
   );
 }

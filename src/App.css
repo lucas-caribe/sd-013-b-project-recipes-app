@@ -1,6 +1,11 @@
 .footer {
+  background-color: white;
   bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 1vw;
   position: fixed;
+  width: 100vw;
 }
 
 .meals {
