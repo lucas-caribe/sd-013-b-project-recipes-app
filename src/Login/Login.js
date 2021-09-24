@@ -44,7 +44,7 @@ function Login() {
     const passwordLength = 6;
     let loginValidado = true;
 
-    if (email.includes('@' && '.com') && password.length >= passwordLength) {
+    if (email.includes('@' && '.com') && password.length > passwordLength) {
       loginValidado = false;
     } else {
       loginValidado = true;
