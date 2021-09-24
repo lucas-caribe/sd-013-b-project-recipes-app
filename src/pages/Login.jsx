@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import Context from '../context/Context';
 
 function Login({ history }) {
@@ -10,7 +11,10 @@ function Login({ history }) {
     setEmailIsValid,
     passwordIsValid,
     setPasswordIsValid,
+    login,
+    setLogin,
   } = useContext(Context);
+  console.log(login);
 
   function disableButton() {
     setStatusLoginBtn(!emailIsValid || !passwordIsValid);
@@ -20,6 +24,7 @@ function Login({ history }) {
     const verifyEmail = emailCheck.test(target.value);
     setEmailIsValid(verifyEmail);
     disableButton();
+    setLogin(target.value);
   }
 
   function VerifyPassword({ target }) {
@@ -32,9 +37,14 @@ function Login({ history }) {
     }
   }
 
-  const handleOnClickLogin = () => {
+  function handleStorage() {
+    const storageObj = { email: login };
+    const loginStorage = JSON.stringify(storageObj);
+    localStorage.setItem('user', loginStorage);
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
     history.push('/comidas');
-  };
+  }
 
   return (
     <div>
@@ -50,10 +60,10 @@ function Login({ history }) {
           onChange={ (event) => VerifyPassword(event) }
         />
         <button
-          type="submit"
+          type="button"
           data-testid="login-submit-btn"
           disabled={ statusLoginBtn }
-          onClick={ handleOnClickLogin }
+          onClick={ handleStorage }
         >
           Login
         </button>
@@ -61,5 +71,11 @@ function Login({ history }) {
     </div>
   );
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
 
 export default Login;

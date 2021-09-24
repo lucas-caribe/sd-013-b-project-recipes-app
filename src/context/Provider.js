@@ -6,6 +6,9 @@ function Provider({ children }) {
   const [statusLoginBtn, setStatusLoginBtn] = useState(true);
   const [emailIsValid, setEmailIsValid] = useState(false);
   const [passwordIsValid, setPasswordIsValid] = useState(false);
+  const [currentPage, setCurrentPage] = useState('');
+  const [login, setLogin] = useState('');
+  const [showSearchBar, setShowSearchBar] = useState(false);
 
   const [inputText, setInputText] = useState('');
   const [inputRadio, setInputRadio] = useState('');
@@ -24,6 +27,12 @@ function Provider({ children }) {
     setInputRadio,
     apiRadio,
     setApiRadio,
+    currentPage,
+    setCurrentPage,
+    login,
+    setLogin,
+    showSearchBar,
+    setShowSearchBar,
   };
 
   return (

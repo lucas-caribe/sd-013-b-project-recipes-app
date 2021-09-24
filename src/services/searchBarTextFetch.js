@@ -1,7 +1,6 @@
-export default function searchBarTextFetch(value, inputText, setApiRadio, setInputRadio) {
-  switch (value) {
+export default function searchBarTextFetch(inputRadio, inputText, setApiRadio) {
+  switch (inputRadio) {
   case 'Ingrediente':
-    setInputRadio(value);
     if (window.location.pathname === '/comidas') {
       const URL = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${inputText}`;
       fetch(URL)
@@ -13,7 +12,6 @@ export default function searchBarTextFetch(value, inputText, setApiRadio, setInp
     }
     break;
   case 'Nome':
-    setInputRadio(value);
     if (window.location.pathname === '/comidas') {
       const URL = `https://www.themealdb.com/api/json/v1/1/search.php?s=${inputText}`;
       fetch(URL)
@@ -25,7 +23,6 @@ export default function searchBarTextFetch(value, inputText, setApiRadio, setInp
     }
     break;
   case 'Primeira letra':
-    setInputRadio(value);
     if (inputText.length === 1) {
       if (window.location.pathname === '/comidas') {
         const URL = `https://www.themealdb.com/api/json/v1/1/search.php?f=${inputText[0].toLowerCase()}`;
@@ -37,7 +34,7 @@ export default function searchBarTextFetch(value, inputText, setApiRadio, setInp
       }
     } else {
       global.alert('Sua busca deve conter somente 1 (um) caracter');
-      window.location.reload();
+      // window.location.reload();
     }
     break;
   default:

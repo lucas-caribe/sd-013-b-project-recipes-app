@@ -13,17 +13,13 @@ function SearchInputs({ history }) {
   } = useContext(Context);
 
   const handleClickFiltrarReceita = () => {
-    // console.log(inputRadio, inputText, apiRadio);
-    console.log(apiRadio.meals);
-    if (apiRadio.meals.length === 1) {
-      const id = apiRadio.meals[0].idMeal;
-      // history.push(`${window.location.pathname}/${id}`);
-      console.log(`${window.location.pathname}/${id}`);
-    }
-  };
-
-  const handleOnChangeRadio = ({ target: { value } }) => {
-    searchBarTextFetch(value, inputText, setApiRadio, setInputRadio);
+    // if (apiRadio.meals.length === 1 || apiRadio.meals !== undefined) {
+    // const id = apiRadio.meals.idMeal;
+    //   // history.push(`${window.location.pathname}/${id}`);
+    // console.log(`REDIRECIONADO P/ ${window.location.pathname}/${id}`);
+    // } else {
+    searchBarTextFetch(inputRadio, inputText, setApiRadio);
+    // }
   };
 
   return (
@@ -46,7 +42,7 @@ function SearchInputs({ history }) {
           name="busca"
           value="Ingrediente"
           data-testid="ingredient-search-radio"
-          onChange={ (e) => handleOnChangeRadio(e) }
+          onChange={ (e) => setInputRadio(e.target.value) }
         />
         Ingrediente
       </label>
@@ -59,7 +55,7 @@ function SearchInputs({ history }) {
           name="busca"
           value="Nome"
           data-testid="name-search-radio"
-          onChange={ (e) => handleOnChangeRadio(e) }
+          onChange={ (e) => setInputRadio(e.target.value) }
         />
         Nome
       </label>
@@ -72,7 +68,7 @@ function SearchInputs({ history }) {
           name="busca"
           value="Primeira letra"
           data-testid="first-letter-search-radio"
-          onChange={ (e) => handleOnChangeRadio(e) }
+          onChange={ (e) => setInputRadio(e.target.value) }
         />
         Primeira Letra
       </label>
