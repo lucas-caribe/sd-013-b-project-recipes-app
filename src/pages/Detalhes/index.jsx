@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import FavoriteButton from '../../components/FavoriteButton';
 import RecommendationCard from '../../components/RecommendationCard';
 import StartOrContinueButton from '../../components/StartOrContinueButton';
 
@@ -71,15 +72,17 @@ function Detalhes({ location: { pathname }, history }) {
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (favorites) {
       return (
-        <button type="button">
-          <img data-testid="favorite-btn" src={ blackHeart } alt="" />
-        </button>
+        <FavoriteButton
+          colorBeforeClick={ blackHeart }
+          colorAfterClick={ whiteHeart }
+        />
       );
     }
     return (
-      <button type="button">
-        <img data-testid="favorite-btn" src={ whiteHeart } alt="" />
-      </button>
+      <FavoriteButton
+        colorBeforeClick={ whiteHeart }
+        colorAfterClick={ blackHeart }
+      />
     );
   };
 
