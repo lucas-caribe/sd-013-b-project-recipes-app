@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { useLocation } from 'react-router-dom';
 import Recomendations from '../components/recipeDetails/Recomendations';
-import Header from '../components/header';
 import { fetchDetailsThunk } from '../redux/action';
 import FavButton from '../components/buttons/FavButton';
 
@@ -17,17 +16,19 @@ export default function Detalhes() {
 
   useEffect(() => {
     if (pathname.includes('bebidas')) {
-      setDetails({ ...details, recipe: 'cocktail' });
+      setDetails((prevState) => ({ ...prevState, recipe: 'cocktail' }));
       dispatch(fetchDetailsThunk(id, 'cocktail'));
     }
     if (pathname.includes('comidas')) {
-      setDetails({ ...details, recipe: 'meal' });
+      setDetails((prevState) => ({ ...prevState, recipe: 'meal' }));
       dispatch(fetchDetailsThunk(id, 'meal'));
     }
   }, []);
 
   useEffect(() => {
-    if (cocktail || meal) setDetails({ ...details, loading: false });
+    if (cocktail || meal) {
+      setDetails((prevState) => ({ ...prevState, loading: false }));
+    }
   }, [cocktail, meal]);
 
   function handleVideo(video) {
@@ -115,7 +116,6 @@ export default function Detalhes() {
 
   return (
     <div>
-      <Header titlePage="Bebidas" />
       { details.loading || handleDetails() }
     </div>
   );

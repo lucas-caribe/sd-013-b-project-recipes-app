@@ -10,16 +10,23 @@ export function fetchMealByName(type) {
     .then((response) => response.json())
     .then((response) => {
       if (!response.meals) {
-        return global.alert(Error);
+        global.alert(Error);
+        return { meals: [] };
       }
       return response;
     });
 }
 export function fetchMealByFirstLetter(type) {
   if (type.length > 1) {
-    return global.alert('Sua busca deve conter somente 1 (um) caracter');
+    global.alert('Sua busca deve conter somente 1 (um) caracter');
+    return { meals: [] };
   }
+
   return fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${type}`)
     .then((response) => response.json())
-    .catch(() => global.alert(Error));
+    .then((response) => response)
+    .catch(() => {
+      global.alert(Error);
+      return [];
+    });
 }

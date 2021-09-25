@@ -18,7 +18,6 @@ export default function FavButton() {
 
   function handleClick() {
     setFav(!fav);
-    console.log();
   }
 
   return (

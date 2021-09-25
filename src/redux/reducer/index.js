@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux';
 import loginData from './loginData';
-import searchReducer from './searchData';
+import itensFilter from './itensFilter';
 import detailsReducer from './searchDetails';
+import categoryFilter from './categoryFilter';
 
 const rootReducer = combineReducers({
   loginData,
-  searchReducer,
+  itensFilter,
   detailsReducer,
+  categoryFilter,
 });
 
 export default rootReducer;
