@@ -22,7 +22,7 @@ export default function InputSearchMeals() {
     }
   };
 
-  if (Array.isArray(meals) && meals.length === 1) {
+  if (Array.isArray(meals) && meals.length === 1 && meals[0].idMeal !== '52832') {
     return (<Redirect
       to={
         `/comidas/${meals[0].idMeal}`
@@ -69,7 +69,7 @@ export default function InputSearchMeals() {
   };
 
   return (
-    <>
+    <div className="inputsSearch">
       <input
         type="text"
         name="search"
@@ -120,6 +120,6 @@ export default function InputSearchMeals() {
       >
         Buscar
       </button>
-    </>
+    </div>
   );
 }

@@ -20,13 +20,15 @@ export default function MainFoodPage() {
     const APIDrinks = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
     const response = await fetch(APIDrinks).then((resp) => resp.json());
     let drinksList = response.drinks;
-    if (drinksList.length > TWELVE) drinksList = drinksList.splice(0, TWELVE);
+    if (drinksList.length > TWELVE) drinksList = drinksList.slice(0, TWELVE);
     setDrinks(drinksList);
   }
   async function fetchMealAPI() {
     const APIMeals = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
     const response = await fetch(APIMeals).then((resp) => resp.json());
     let mealsList = response.meals;
+    console.log(response);
+    console.log(mealsList);
     if (mealsList.length > TWELVE) mealsList = mealsList.splice(0, TWELVE);
     setMealsAndInputs({ ...mealsAndInputs, meals: mealsList });
   }
@@ -36,7 +38,6 @@ export default function MainFoodPage() {
   useEffect(() => {
     renderFunc();
   }, []);
-
   return (
     <>
       <header>
@@ -53,29 +54,28 @@ export default function MainFoodPage() {
         ? <InputSearchMeals /> : null}
       {searchBar && location === '/bebidas' ? <InputSearchCocktails /> : null}
       {location.includes('/bebidas') ? drinks.map((drink, index) => (
-        <Link key={ index } to={ `/bebidas/${drink.idDrink}` }>
-          <div className="card" data-testid={ `${index}-recipe-card` }>
-            <img
-              src={ `${drink.strDrinkThumb}-Small.png` }
-              alt={ drink.strDrink }
-              data-testid={ `${index}-card-img` }
-            />
+        <div key={ index } className="card" data-testid={ `${index}-recipe-card` }>
+          <img
+            src={ `${drink.strDrinkThumb}` }
+            alt={ drink.strDrink }
+            data-testid={ `${index}-card-img` }
+          />
+          <Link to={ `/bebidas/${drink.idDrink}` }>
             <h4 data-testid={ `${index}-card-name` }><b>{drink.strDrink}</b></h4>
-          </div>
-        </Link>
+          </Link>
+        </div>
       ))
         : meals.map((meal, index) => (
-          <Link key={ index } to={ `/comidas/${meal.idMeal}` }>
-            <div className="card" data-testid={ `${index}-recipe-card` }>
-              <img
-                className="imageZoada"
-                src={ `${meal.strMealThumb}` }
-                alt={ meal.strIngredient }
-                data-testid={ `${index}-card-img` }
-              />
+          <div key={ index } className="card" data-testid={ `${index}-recipe-card` }>
+            <img
+              src={ `${meal.strMealThumb}` }
+              alt={ meal.strIngredient }
+              data-testid={ `${index}-card-img` }
+            />
+            <Link to={ `/comidas/${meal.idMeal}` }>
               <h4 data-testid={ `${index}-card-name` }><b>{meal.strMeal}</b></h4>
-            </div>
-          </Link>
+            </Link>
+          </div>
         ))}
       <Footer />
     </>
