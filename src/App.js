@@ -11,6 +11,7 @@ import ExplorarBebidasIngredientes from './pages/ExplorarBebidasIngredientes';
 import ExplorarOrigem from './pages/ExplorarOrigem';
 import Perfil from './pages/Perfil';
 import ReceitasFeitas from './pages/ReceitasFeitas';
+import InProgress from './pages/InProgress';
 import ReceitasFavoritas from './pages/ReceitasFavoritas';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -23,6 +24,16 @@ function App() {
         <Route exact path="/comidas" component={ Comidas } />
         <Route exact path="/bebidas" component={ Bebidas } />
         <Route exact path="/explorar" component={ Explorar } />
+        <Route
+          exact
+          path="/comidas/:id/in-progress"
+          component={ InProgress }
+        />
+        <Route
+          exact
+          path="/bebidas/:id/in-progress"
+          component={ InProgress }
+        />
         <Route exact path="/explorar/comidas" component={ ExplorarComidas } />
         <Route exact path="/explorar/bebidas" component={ ExplorarBebidas } />
         <Route
