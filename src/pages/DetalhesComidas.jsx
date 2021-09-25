@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sendRecipeToGlobalMeal } from '../redux/actions';
@@ -12,13 +12,13 @@ import '../css/CardsRecomendations.css';
 function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal }) {
   const [objIdReceita, setObjIdReceita] = useState();
   const [objRecomendations, setObjRecomendados] = useState();
-  const fetchId = async () => {
+  const fetchId = useCallback(async () => {
     setObjIdReceita(await fetchIdComidas(id));
     setObjRecomendados(await fetchRecomendationsDrinks());
-  };
+  }, [id]);
   useEffect(() => {
     fetchId();
-  }, []);
+  }, [fetchId]);
 
   const objToReducer = {
     id,

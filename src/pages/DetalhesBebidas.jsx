@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import fetchIdBebidas from '../services/fetchIdBebidas';
 import shareIcon from '../images/shareIcon.svg';
@@ -12,14 +12,14 @@ import '../css/CardsRecomendations.css';
 function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal }) {
   const [objIdReceita, setObjIdReceita] = useState();
   const [recomendations, setObjRecomentations] = useState();
-  const fetchId = async () => {
+  const fetchId = useCallback(async () => {
     setObjIdReceita(await fetchIdBebidas(id));
     setObjRecomentations(await fetchRecomendationsMeals());
-  };
+  }, [id]);
 
   useEffect(() => {
     fetchId();
-  }, []);
+  }, [fetchId]);
 
   const objToReducer = {
     id,
