@@ -76,7 +76,7 @@ export default function RecipeDoneCard() {
                 href="''"
                 src={ shareIcon }
                 data-testid={ `${index}-horizontal-share-btn` }
-                onClick={ () => alert('Link copiado!') }
+                onClick={ () => {} }
               >
                 <img src={ shareIcon } alt="share" />
               </a>
