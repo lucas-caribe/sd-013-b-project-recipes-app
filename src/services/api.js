@@ -4,6 +4,9 @@ const drinkListEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.ph
 const MEAL_CATEGORIES_URL = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
 const DRINK_CATEGORIES_URL = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
 
+const MEAL_INGREDIENTS_URL = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
+const DRINK_INGREDIENTS_URL = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list';
+
 const MAX_RECOMMENDATIONS = 6;
 
 export function getMealsEndpoint(type, value) {
