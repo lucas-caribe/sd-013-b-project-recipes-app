@@ -31,44 +31,25 @@ function getFoodRecipe(food) {
     name: food.strMeal,
     id: food.idMeal,
     image: food.strMealThumb,
-    subcategory: food.strCategory,
+    subCategory: food.strCategory,
     ingredients,
     instructions: food.strInstructions,
     video,
   };
 }
 
-function getFoodProperties(food) {
-  return {
-    name: food.strMeal,
-    id: food.idMeal,
-    image: food.strMealThumb,
-  };
-}
-
-function getDrinkProperties(drink) {
-  return {
-    name: drink.strDrink,
-    id: drink.idDrink,
-    image: drink.strDrinkThumb,
-  };
-}
-
-function getDrinkRecipe(drink) {
+export function getDrinkRecipe(drink) {
   return {
     name: drink.strDrink,
     id: drink.idDrink,
     image: drink.strDrinkThumb,
     ingredients: getIngredientsAndMeasures(drink),
     instructions: drink.strInstructions,
+    subCategory: drink.strAlcoholic,
   };
 }
 
-export function getFoodOrDrinkProperties(consumable, category) {
-  if (category === 'meals') return getFoodProperties(consumable);
-  if (category !== 'meals') return getDrinkProperties(consumable);
-}
-export function getFoodOrDrinkRecipe(consumable, category) {
-  if (category === 'meals') return getFoodRecipe(consumable);
-  if (category !== 'meals') return getDrinkRecipe(consumable);
+export function getRecipe(consumable, category) {
+  if (category === 'comida') return getFoodRecipe(consumable);
+  if (category !== 'comida') return getDrinkRecipe(consumable);
 }

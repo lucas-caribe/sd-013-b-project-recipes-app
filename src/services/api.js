@@ -4,6 +4,8 @@ const drinkListEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.ph
 const MEAL_CATEGORIES_URL = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
 const DRINK_CATEGORIES_URL = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
 
+const MAX_RECOMMENDATIONS = 6;
+
 export function getMealsEndpoint(type, value) {
   switch (type) {
   case 'Ingrediente':
@@ -92,14 +94,36 @@ export function fetchDrinksByCategory(filter) {
     .then((data) => data.drinks);
 }
 
-export function fetchFoodsById(id, setObject) {
+export function fetchMealById(id) {
   return fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
-    .then((resp) => resp.json())
-    .then((resp2) => setObject(resp2.meals));
+    .then((res) => res.json())
+    .then((data) => data.meals[0]);
 }
 
-export function fetchDrinksById(id, setObject) {
+export function fetchDrinkById(id) {
   return fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
-    .then((resp) => resp.json())
-    .then((data) => setObject(data.drinks));
+    .then((res) => res.json())
+    .then((data) => data.drinks[0]);
+}
+
+export function fetchRecipeById(type, id) {
+  if (type === 'comida') return fetchMealById(id);
+  if (type === 'bebida') return fetchDrinkById(id);
+}
+
+function fetchDrinksRecommendations() {
+  return fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
+    .then((res) => res.json())
+    .then((data) => (data.drinks.slice(0, MAX_RECOMMENDATIONS)));
+}
+
+function fetchMealsRecommendations() {
+  return fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
+    .then((res) => res.json())
+    .then((data) => (data.meals.slice(0, MAX_RECOMMENDATIONS)));
+}
+
+export function fetchRecommendations(type) {
+  if (type === 'comida') return fetchDrinksRecommendations();
+  if (type === 'bebida') return fetchMealsRecommendations();
 }

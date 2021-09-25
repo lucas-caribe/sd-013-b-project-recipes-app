@@ -12,6 +12,7 @@ import Details from './pages/Details';
 import Explore from './pages/Explore';
 import DrinksExplore from './pages/DrinksExplore';
 import FoodsExplore from './pages/FoodsExplore';
+import InProgress from './pages/InProgress';
 
 function Routes() {
   return (
@@ -23,7 +24,9 @@ function Routes() {
         <Route exact path="/perfil" component={ Profile } />
         <Route exact path="/explorar" component={ Explore } />
         <Route exact path="/comidas/:id" component={ Details } />
+        <Route exact path="/comidas/:id/in-progress" component={ InProgress } />
         <Route exact path="/bebidas/:id" component={ Details } />
+        <Route exact path="/bebidas/:id/in-progress" component={ InProgress } />
         <Route exact path="/explorar/comidas" component={ FoodsExplore } />
         <Route exact path="/explorar/bebidas" component={ DrinksExplore } />
         <Route

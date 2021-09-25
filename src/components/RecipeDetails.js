@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router';
-// import PropTypes from 'prop-types';
+import React, { useState, useEffect, useContext } from 'react';
+import { useParams, useHistory } from 'react-router';
+
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import { getFoodOrDrinkRecipe } from '../helpers/getFoodOrDrinkProperties';
-
+import { getRecipe } from '../helpers/getFoodOrDrinkProperties';
+import Context from '../context/Context';
 import '../styles/details.css';
+import { fetchRecipeById, fetchRecommendations } from '../services/api';
 
-let data = {
+let RECIPE_DATA = {
   image: '',
   name: '',
   subCategory: '',
@@ -16,35 +17,77 @@ let data = {
   video: '',
 };
 
+const bodyWidth = document.body.offsetWidth;
+const LARGE_MOBILE_SCREEN = 425;
+const INIT_WIDTH = bodyWidth <= LARGE_MOBILE_SCREEN ? bodyWidth / 2 : '10rem';
+
+function start(callback, type, id) {
+  callback(`/${type}s/${id}/in-progress`);
+}
+
+function storeRecipe(recipe, context) {
+  const type = window.location.href.includes('comida') ? 'comida' : 'bebida';
+  const { startedRecipes, setStartedRecipes } = context;
+
+  if (type === 'comida') {
+    setStartedRecipes(
+      { ...startedRecipes, meals: [...startedRecipes.meals, recipe] },
+    );
+  }
+
+  if (type === 'bebida') {
+    setStartedRecipes(
+      { ...startedRecipes, cocktails: [...startedRecipes.cocktails, recipe] },
+    );
+  }
+}
+
 const RecipeDetails = () => {
+  const [width, setWidth] = useState(INIT_WIDTH);
   const [object, setObject] = useState();
+  const [featured, setFeatured] = useState();
+  const [copied, setCopied] = useState(false);
+
+  const history = useHistory();
   const { id } = useParams();
-  const typeOffood = window.location.href;
-  const isFoodOrDrink = typeOffood.includes('comida') ? 'comida' : 'bebida';
+
+  const context = useContext(Context);
+
+  const type = window.location.href.includes('comida') ? 'comida' : 'bebida';
+  const featType = type === 'comida' ? 'bebida' : 'comida';
+  const key = type === 'comida' ? 'meals' : 'cocktails';
+
+  const { startedRecipes } = context;
+  const hasStarted = startedRecipes[key].some((x) => x.id === id);
+
+  if (object) RECIPE_DATA = { ...getRecipe(object, type) };
 
   useEffect(() => {
-    if (isFoodOrDrink === 'comida') {
-      const getFetchComida = () => {
-        fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
-          .then((resp) => resp.json())
-          .then((resp2) => setObject(resp2.meals[0]));
-      };
-      getFetchComida();
-    } else {
-      const getFetchDrinks = () => {
-        fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
-          .then((resp) => resp.json())
-          .then((resp2) => setObject(resp2.drinks[0]));
-      };
-      getFetchDrinks();
-    }
-  }, []);
+    fetchRecipeById(type, id).then((recipe) => setObject(recipe));
+    fetchRecommendations(type).then((arr) => setFeatured(arr));
+  }, [type, id]);
 
-  if (object) data = { ...getFoodOrDrinkRecipe(object, isFoodOrDrink) };
-  const { image, name, subCategory, instructions, ingredients, video } = data;
+  window.addEventListener('resize', () => {
+    const { offsetWidth } = document.body;
+    if (offsetWidth <= LARGE_MOBILE_SCREEN) return setWidth(`${offsetWidth / 2}px`);
+    setWidth('10rem');
+  });
 
-  console.log('data', data);
+  function handleShare() {
+    navigator.clipboard.writeText(window.location.href);
+    setCopied(true);
+  }
 
+  function handleStart() {
+    if (hasStarted) start(history.push, type, id);
+
+    const recipe = { id, ...RECIPE_DATA };
+
+    storeRecipe(recipe, context);
+    start(history.push, type, id);
+  }
+
+  const { image, name, subCategory, instructions, ingredients, video } = RECIPE_DATA;
   return (
     <div className="recipe-details">
       {
@@ -52,6 +95,7 @@ const RecipeDetails = () => {
           : (
             <div>
               <div className="details-page">
+                { copied && <h1>Link copiado!</h1> }
                 <img
                   data-testid="recipe-photo"
                   src={ image }
@@ -65,6 +109,7 @@ const RecipeDetails = () => {
                 </h1>
                 <button
                   type="button"
+                  onClick={ handleShare }
                 >
                   <img
                     data-testid="share-btn"
@@ -118,31 +163,48 @@ const RecipeDetails = () => {
 
                 <br />
 
-                { isFoodOrDrink === 'comida'
-                  && <iframe
-                    data-testid="video"
-                    width="420"
-                    height="315"
-                    title={ name }
-                    src={ video }
-                  />}
-                <ul>
-                  {
-                    ['receita'].map((value, index) => (
-                      <li
-                        key={ index }
-                        data-testid={ `${index}-recomendation-card` }
-                      >
-                        { value }
-                      </li>
-                    ))
-                  }
-                </ul>
+                {
+                  type === 'comida' && (
+                    <iframe
+                      data-testid="video"
+                      title={ name }
+                      src={ video }
+                    />
+                  )
+                }
+
+                <div className="scroll-container">
+                  <div className="recommendations">
+                    {
+                      featured && featured.map((value, index) => {
+                        const feat = getRecipe(value, featType);
+
+                        return (
+                          <div
+                            className="card"
+                            key={ index }
+                            style={ { width } }
+                            data-testid={ `${index}-recomendation-card` }
+                          >
+                            <img src={ feat.image } alt="feat.name" />
+                            <b>{ feat.subCategory }</b>
+                            <p data-testid={ `${index}-recomendation-title` }>
+                              { feat.name }
+                            </p>
+                          </div>
+                        );
+                      })
+                    }
+                  </div>
+                </div>
+
                 <button
                   type="button"
                   data-testid="start-recipe-btn"
+                  className="start-btn"
+                  onClick={ handleStart }
                 >
-                  Iniciar a Receita
+                  { hasStarted ? 'Continuar Receita' : 'Iniciar a Receita' }
                 </button>
 
               </div>
@@ -152,20 +214,5 @@ const RecipeDetails = () => {
     </div>
   );
 };
-/* RecipeDetails.propTypes = {
-  id: PropTypes.number.isRequired,
-};
-RecipeDetails.defaultProps = {
-  thumbnail: ‘’,
-  title: ‘’,
-  category: ‘’,
-  isAlcoholic: ‘’,
-  instructions: ‘’,
-  ingredients: [],
-  measures: [],
-  isMeal: false,
-  videoUrl: ‘’,
-  recipe: {},
-};
-*/
+
 export default RecipeDetails;
