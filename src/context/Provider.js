@@ -10,6 +10,28 @@ function Provider({ children }) {
   const [login, setLogin] = useState('');
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [allRecipes, setAllRecipes] = useState([]);
+  // ESSE ESTADO TEM QUE SER SETADO NO BOTÃO 'FINALIZAR RECEITA' DA 'RECEITA EM PROGRESSO'
+  const [allRecipesDone, setAllRecipesDone] = useState([
+    // OBJETOS MOCKADOS PARA FINS DE TESTE
+    {
+      strMealThumb: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+      strCategory: 'Vegetarian',
+      strMeal: 'Spicy Arrabiata Penne',
+      strTags: 'Pasta, Curry, Macarrão',
+      strArea: 'Italian',
+      date: '23/06/2020',
+      type: 'Meal',
+    },
+    {
+      strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
+      strCategory: 'Ordinary Drink',
+      strAlcoholic: 'Alcoholic',
+      strDrink: 'Aquamarine',
+      strTags: null,
+      date: '23/06/2020',
+      type: 'Drink',
+    },
+  ]);
 
   const contextValue = {
     statusLoginBtn,
@@ -26,6 +48,8 @@ function Provider({ children }) {
     setShowSearchBar,
     allRecipes,
     setAllRecipes,
+    allRecipesDone,
+    setAllRecipesDone,
   };
 
   return (
