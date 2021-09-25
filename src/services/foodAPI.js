@@ -19,3 +19,9 @@ export async function fistLetterAPI(letter) {
   const response = await request.json();
   return response.meals;
 }
+
+export async function randomIngredient() {
+  const request = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
+  const response = await request.json();
+  return response.meals;
+}

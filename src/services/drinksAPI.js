@@ -15,3 +15,9 @@ export async function fistLetterDrinkAPI(letter) {
   const response = await request.json();
   return response.drinks;
 }
+
+export async function randomDrinkIngredient() {
+  const request = await fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php');
+  const response = await request.json();
+  return response.drinks;
+}
