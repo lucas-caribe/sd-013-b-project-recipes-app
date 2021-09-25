@@ -3,9 +3,12 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import fetchIdBebidas from '../services/fetchIdBebidas';
 import shareIcon from '../images/shareIcon.svg';
-import getSixCards, { ChoiceButton, clickShare } from '../services/functionsForDetails';
+import getSixCards, { ChoiceButton,
+  clickShare, clickFavoriteDrink,
+  verifyFavorite, getMeasure, getIngredient } from '../services/functionsForDetails';
 import { fetchRecomendationsMeals } from '../services/fetchIdComidas';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import { sendRecipeToGlobalDrinks } from '../redux/actions';
 import '../css/CardsRecomendations.css';
 
@@ -13,9 +16,12 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
   const [objIdReceita, setObjIdReceita] = useState();
   const [recomendations, setObjRecomentations] = useState();
   const [copyOk, setCopyOk] = useState(false);
+  const [favorite, setFavorite] = useState(false);
+
   const fetchId = useCallback(async () => {
     setObjIdReceita(await fetchIdBebidas(id));
     setObjRecomentations(await fetchRecomendationsMeals());
+    verifyFavorite(id, setFavorite);
   }, [id]);
 
   useEffect(() => {
@@ -36,31 +42,12 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
     tipo: 'bebidas',
   };
 
-  const getIngredient = () => {
-    if (objIdReceita !== undefined) {
-      const entries = Object.entries(objIdReceita);
-      const arrayFilteredIngredients = entries
-        .filter((ingredientes) => ingredientes[0].includes('strIngredient'))
-        .filter((ingredientes2) => ingredientes2[1] !== '')
-        .map((ingredientes3) => ingredientes3[1]);
-      return arrayFilteredIngredients;
-    }
-  };
-
-  const getMeasure = () => {
-    if (objIdReceita !== undefined) {
-      const entries = Object.entries(objIdReceita);
-      const measure = entries.filter((measures) => measures[0].includes('strMeasure'))
-        .filter((measures2) => measures2[1] !== ' ')
-        .map((measures3) => measures3[1]);
-      return measure;
-    }
-  };
   const getIngredientAndMeasure = () => {
     const array = [];
-    if (getMeasure() !== undefined && getIngredient() !== undefined) {
-      const measure = getMeasure();
-      const ingredient = getIngredient();
+    if (getMeasure(objIdReceita) !== undefined
+    && getIngredient(objIdReceita) !== undefined) {
+      const measure = getMeasure(objIdReceita);
+      const ingredient = getIngredient(objIdReceita);
       const mix = [{
         ingredient,
         measure,
@@ -101,8 +88,16 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
       >
         <img src={ shareIcon } alt="shareIcon" />
       </button>
-      <button data-testid="favorite-btn" type="button">
-        <img src={ whiteHeartIcon } alt="iconHeard" />
+      <button
+        onClick={ () => clickFavoriteDrink(objIdReceita, setFavorite, id) }
+        data-testid="favorite-btn"
+        type="button"
+        src={ favorite ? blackHeartIcon : whiteHeartIcon }
+      >
+        <img
+          src={ favorite ? blackHeartIcon : whiteHeartIcon }
+          alt="iconHeard"
+        />
       </button>
       <p data-testid="recipe-category">{objIdReceita.strAlcoholic}</p>
       {fixDrinks().map((element, index) => (

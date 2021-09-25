@@ -4,9 +4,14 @@ import { connect } from 'react-redux';
 import { sendRecipeToGlobalMeal } from '../redux/actions';
 import fetchIdComidas from '../services/fetchIdComidas';
 import { fetchRecomendationsDrinks } from '../services/fetchIdBebidas';
-import getSixCards, { ChoiceButton, clickShare } from '../services/functionsForDetails';
+import getSixCards, { ChoiceButton, clickShare,
+  clickFavoriteMeal,
+  getEmbedVideo, getIngredient,
+  getMeasure, formatObjForStorageMeal,
+  verifyFavorite } from '../services/functionsForDetails';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import '../css/CardsRecomendations.css';
 
 function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal,
@@ -14,10 +19,15 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal,
   const [objIdReceita, setObjIdReceita] = useState();
   const [copyOk, setCopyOk] = useState(false);
   const [objRecomendations, setObjRecomendados] = useState();
+  const [favorite, setFavorite] = useState(false);
+
   const fetchId = useCallback(async () => {
     setObjIdReceita(await fetchIdComidas(id));
     setObjRecomendados(await fetchRecomendationsDrinks());
-  }, [id]);
+    verifyFavorite(id, setFavorite);
+    formatObjForStorageMeal(id, objIdReceita);
+  }, [id, objIdReceita]);
+
   useEffect(() => {
     fetchId();
   }, [fetchId]);
@@ -25,17 +35,6 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal,
   const objToReducer = {
     id,
     inProgress: true,
-  };
-
-  const getIngredient = () => {
-    if (objIdReceita !== undefined) {
-      const entries = Object.entries(objIdReceita);
-      const arrayFilteredIngredients = entries
-        .filter((ingredientes) => ingredientes[0].includes('strIngredient'))
-        .filter((ingredientes2) => ingredientes2[1] !== '')
-        .map((ingredientes3) => ingredientes3[1]);
-      return arrayFilteredIngredients;
-    }
   };
 
   const inFButton = {
@@ -47,20 +46,12 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal,
     tipo: 'comidas',
   };
 
-  const getMeasure = () => {
-    if (objIdReceita !== undefined) {
-      const entries = Object.entries(objIdReceita);
-      const measure = entries.filter((measures) => measures[0].includes('strMeasure'))
-        .filter((measures2) => measures2[1] !== ' ')
-        .map((measures3) => measures3[1]);
-      return measure;
-    }
-  };
   const getIngredientAndMeasure = () => {
     const array = [];
-    if (getMeasure() !== undefined && getIngredient() !== undefined) {
-      const measure = getMeasure();
-      const ingredient = getIngredient();
+    if (getMeasure(objIdReceita) !== undefined
+      && getIngredient(objIdReceita) !== undefined) {
+      const measure = getMeasure(objIdReceita);
+      const ingredient = getIngredient(objIdReceita);
       const mix = [{
         ingredient,
         measure,
@@ -72,22 +63,14 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal,
     }
   };
 
-  const getEmbedVideo = () => {
-    if (objIdReceita !== undefined) {
-      const codigo = objIdReceita.strYoutube.split('v=');
-      const linkYoutube = `http://www.youtube.com/embed/${codigo[1]}`;
-      return linkYoutube;
-    }
-  };
-
   if (objIdReceita === undefined) {
     return <p>Loading...</p>;
   }
+
   return (
     <div>
       <p>Detalhes comidas</p>
       <img
-        style={ { width: '180px' } }
         src={ objIdReceita.strMealThumb }
         data-testid="recipe-photo"
         alt="recipeFoto"
@@ -100,8 +83,16 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal,
       >
         <img src={ shareIcon } alt="shareIcon" />
       </button>
-      <button data-testid="favorite-btn" type="button">
-        <img src={ whiteHeartIcon } alt="iconHeard" />
+      <button
+        data-testid="favorite-btn"
+        type="button"
+        onClick={ () => clickFavoriteMeal(objIdReceita, setFavorite, id) }
+        src={ favorite ? blackHeartIcon : whiteHeartIcon }
+      >
+        <img
+          alt="iconHeard"
+          src={ favorite ? blackHeartIcon : whiteHeartIcon }
+        />
       </button>
       <p data-testid="recipe-category">{objIdReceita.strCategory}</p>
       <p>Ingredientes:</p>
@@ -118,7 +109,7 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal,
           frameBorder="0"
           data-testid="video"
           width="200px"
-          src={ getEmbedVideo() }
+          src={ getEmbedVideo(objIdReceita) }
         />
       </div>
       <div className="cardsRecomendations">
