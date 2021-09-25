@@ -26,7 +26,7 @@ export default function HomeRecipeCard(meal) {
 
             <div className="recipe-card-title">
               <h4
-                data-testid={ `${index}-recipe-name` }
+                data-testid={ `${index}-card-name` }
               >
                 { recipe[`str${recipeType}`] }
               </h4>

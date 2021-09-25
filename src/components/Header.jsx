@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Context from '../context/Context';
 import profile from '../images/profileIcon.svg';
 import search from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 export default function Header({ showSearch }) {
   const {
@@ -41,7 +42,7 @@ export default function Header({ showSearch }) {
           <img src={ search } alt="search" />
         </div>
       ) }
-
+      { showSearchBar === true ? <SearchBar /> : '' }
     </header>
   );
 }
