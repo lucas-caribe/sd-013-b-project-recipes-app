@@ -1,6 +1,5 @@
 // Tela principal de receitas: requisitos 25 a 32;
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -15,19 +14,15 @@ function Home() {
   const { location: { pathname } } = useHistory();
 
   useEffect(() => {
-    async function setFetch() {
-
-      const initialRequest = {
-        '/comidas': async () => {
-          setFoods(await foodRequest('search.php?s'));
-        },
-        '/bebidas': async () => {
-          setDrinks(await drinkRequest('search.php?s'));
-        },
-      };
-      initialRequest[pathname]();
-    }
-    setFetch();
+    const initialRequest = {
+      '/comidas': async () => {
+        setFoods(await foodRequest('search.php?s'));
+      },
+      '/bebidas': async () => {
+        setDrinks(await drinkRequest('search.php?s'));
+      },
+    };
+    initialRequest[pathname]();
   }, [pathname]);
 
   if (foods === [] || drinks === []) {
@@ -48,30 +43,38 @@ function Home() {
 
   async function handleSubmitButton() {
     const requestApi = {
-      '/comidas': async (radio, input) => {
-        if (radio === 'ingredientes') {
+      '/comidas': {
+        ingredientes: async (input) => {
           setFoods(await foodRequest(`filter.php?i=${input}`));
-        }
-        if (radio === 'nome') {
+        },
+        nome: async (input) => {
           setFoods(await foodRequest(`search.php?s=${input}`));
-        }
-        if (radio === 'primeira-letra') {
-          setFoods(await foodRequest(`search.php?f=${input}`));
-        }
+        },
+        'primeira-letra': async (input) => {
+          if (input.length === 1) {
+            setFoods(await foodRequest(`search.php?f=${input}`));
+          } else {
+            global.alert('Sua busca deve conter somente 1 (um) caracter');
+          }
+        },
       },
-      '/bebidas': async (radio, input) => {
-        if (radio === 'ingredientes') {
+      '/bebidas': {
+        ingredientes: async (input) => {
           setDrinks(await drinkRequest(`filter.php?i=${input}`));
-        }
-        if (radio === 'nome') {
+        },
+        nome: async (input) => {
           setDrinks(await drinkRequest(`search.php?s=${input}`));
-        }
-        if (radio === 'primeira-letra') {
-          setDrinks(await drinkRequest(`search.php?f=${input}`));
-        }
+        },
+        'primeira-letra': async (input) => {
+          if (input.length === 1) {
+            setDrinks(await drinkRequest(`search.php?f=${input}`));
+          } else {
+            global.alert('Sua busca deve conter somente 1 (um) caracter');
+          }
+        },
       },
     };
-    requestApi[pathname](radioButton, searchInput);
+    requestApi[pathname][radioButton](searchInput);
   }
 
   return (
@@ -81,7 +84,6 @@ function Home() {
           ? <Header setTitle="Comidas" />
           : <Header setTitle="Bebidas" />
       }
-
       <div>
         <label htmlFor="search">
           <input
@@ -142,11 +144,7 @@ function Home() {
   );
 }
 
-const mapStateToProps = (state) => ({
-  search: state.search,
-});
-
-export default connect(mapStateToProps)(Home);
+export default Home;
 
 /*
 Object Literals realizado por sugestão do Gabs para resolver o problema de complexidade do código gerado
