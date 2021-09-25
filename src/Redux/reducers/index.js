@@ -3,14 +3,16 @@ import search from './search';
 import user from './user';
 import mealsToken from './mealsToken';
 import cocktailsToken from './cocktailsToken';
-import radioFilters from './radioFilters';
+import radioButton from './radioFilters';
+import searchInput from './serchText';
 
 const rootReducer = combineReducers({
   search,
   user,
   mealsToken,
   cocktailsToken,
-  radioFilters,
+  radioButton,
+  searchInput,
 });
 
 export default rootReducer;

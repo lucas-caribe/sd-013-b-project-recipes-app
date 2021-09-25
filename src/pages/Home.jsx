@@ -9,30 +9,65 @@ import SearchBar from '../components/SearchBar';
 import { foodRequest, drinkRequest } from '../services/data';
 import CardList from '../components/CardList';
 
-function Home({ search }) {
-  const [foods, setFoods] = useState([]);
-  const [drinks, setDrinks] = useState([]);
+function Home({ search, radioButton, searchInput }) {
+  const [foods, setFoods] = useState('');
+  const [drinks, setDrinks] = useState('');
   const { location: { pathname } } = useHistory();
 
   useEffect(() => {
-    async function setFetch() {
-      if (pathname === '/comidas') {
+    const initialRequest = {
+      '/comidas': async () => {
         setFoods(await foodRequest('search.php?s'));
-      }
-
-      if (pathname === '/bebidas') {
+      },
+      '/bebidas': async () => {
         setDrinks(await drinkRequest('search.php?s'));
-      }
-    }
-    setFetch();
+      },
+    };
+    initialRequest[pathname]();
   }, [pathname]);
 
-  if (foods === [] || drinks === []) {
-    return (
-      <div>
-        <p> Loading </p>
-      </div>
-    );
+  // if (foods === [] || drinks === []) {
+  //   return (
+  //     <div>
+  //       <p> Loading </p>
+  //     </div>
+  //   );
+  // }
+
+  function handleSubmitButton() {
+    const requestApi = {
+      '/comidas': {
+        ingredient: async (input) => {
+          setFoods(await foodRequest(`filter.php?i=${input}`));
+        },
+        name: async (input) => {
+          setFoods(await foodRequest(`search.php?s=${input}`));
+        },
+        'first-letter': async (input) => {
+          if (input.length === 1) {
+            setFoods(await foodRequest(`search.php?f=${input}`));
+          } else {
+            global.alert('Sua busca deve conter somente 1 (um) caracter');
+          }
+        },
+      },
+      '/bebidas': {
+        ingredient: async (input) => {
+          setDrinks(await drinkRequest(`filter.php?i=${input}`));
+        },
+        name: async (input) => {
+          setDrinks(await drinkRequest(`search.php?s=${input}`));
+        },
+        'first-letter': async (input) => {
+          if (input.length === 1) {
+            setDrinks(await drinkRequest(`search.php?f=${input}`));
+          } else {
+            global.alert('Sua busca deve conter somente 1 (um) caracter');
+          }
+        },
+      },
+    };
+    requestApi[pathname][radioButton](searchInput);
   }
 
   return (
@@ -42,16 +77,16 @@ function Home({ search }) {
           ? <Header setTitle="Comidas" /> : <Header setTitle="Bebidas" />
       }
 
-      {search === true ? <SearchBar /> : null}
+      {search === true && pathname === '/comidas'
+        ? <SearchBar object={ foods } handleSubmitButton={ handleSubmitButton } />
+        : null}
 
-      {/* {(foods) ? <CardList object={ foods } /> : <CardList object={ drinks } /> } */}
+      {search === true && pathname === '/bebidas'
+        ? <SearchBar object={ drinks } handleSubmitButton={ handleSubmitButton } />
+        : null}
 
-      {' '}
-      <CardList object={ foods } />
-
-      {' '}
-      <CardList object={ drinks } />
-      {/* <Header setTitle="Comidas" /> */}
+      {pathname === '/comidas' && pathname !== '/bebidas'
+        ? <CardList object={ foods } /> : <CardList object={ drinks } />}
 
       <Footer />
     </div>
@@ -60,10 +95,14 @@ function Home({ search }) {
 
 Home.propTypes = {
   search: PropTypes.bool.isRequired,
+  radioButton: PropTypes.string.isRequired,
+  searchInput: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   search: state.search,
+  radioButton: state.radioButton,
+  searchInput: state.searchInput,
 });
 
 export default connect(mapStateToProps)(Home);
