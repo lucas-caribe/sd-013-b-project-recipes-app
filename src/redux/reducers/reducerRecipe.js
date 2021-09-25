@@ -3,7 +3,7 @@ const INITIAL_STATE = {
   recipeDrink: {},
   recipeMealProgress: [],
   recipeDrinkProgress: [],
-
+  inProgressMeal: false,
 };
 
 const reducerRecipe = (state = INITIAL_STATE, action) => {
@@ -13,12 +13,14 @@ const reducerRecipe = (state = INITIAL_STATE, action) => {
       ...state,
       recipeMeal: action.payload.meals,
       recipeMealProgress: [...state.recipeMealProgress, action.payload.status],
+      inProgressMeal: true,
     };
   case 'BTN_START_RECIPE_DRINKS':
     return {
       ...state,
       recipeDrink: action.payload.drinks,
       recipeDrinkProgress: [...state.recipeDrinkProgress, action.payload.status],
+      inProgressMeal: true,
     };
   default:
     return state;

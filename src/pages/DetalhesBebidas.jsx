@@ -3,13 +3,13 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import fetchIdBebidas from '../services/fetchIdBebidas';
 import shareIcon from '../images/shareIcon.svg';
-import getSixCards from '../services/functionsForDetails';
+import getSixCards, { ChoiceButton } from '../services/functionsForDetails';
 import { fetchRecomendationsMeals } from '../services/fetchIdComidas';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import { sendRecipeToGlobalDrinks } from '../redux/actions';
 import '../css/CardsRecomendations.css';
 
-function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal }) {
+function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgressMeal }) {
   const [objIdReceita, setObjIdReceita] = useState();
   const [recomendations, setObjRecomentations] = useState();
   const fetchId = useCallback(async () => {
@@ -24,6 +24,15 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal }) {
   const objToReducer = {
     id,
     inProgress: true,
+  };
+
+  const inFButton = {
+    inProgressMeal,
+    sendObjToGlobal,
+    objIdReceita,
+    objToReducer,
+    id,
+    tipo: 'bebidas',
   };
 
   const getIngredient = () => {
@@ -76,7 +85,6 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal }) {
 
   return (
     <div>
-      {console.log(objIdReceita)}
       Detalhes das bebidas
       <img
         width="180px"
@@ -111,14 +119,7 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal }) {
             </div>
           ))}
       </div>
-      <button
-        className="buttonStart"
-        type="button"
-        data-testid="start-recipe-btn"
-        onClick={ () => sendObjToGlobal(objIdReceita, objToReducer) }
-      >
-        Start
-      </button>
+      {ChoiceButton(inFButton)}
     </div>
   );
 }
@@ -126,10 +127,16 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal }) {
 DetalhesBebidas.propTypes = {
   match: PropTypes.shape(PropTypes.shape({})).isRequired,
   sendObjToGlobal: PropTypes.shape(PropTypes.shape({})).isRequired,
+  inProgressMeal: PropTypes.shape().isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   sendObjToGlobal: (drinks, status) => dispatch(sendRecipeToGlobalDrinks(drinks, status)),
 });
 
-export default connect(null, mapDispatchToProps)(DetalhesBebidas);
+const mapStateToProps = (state) => ({
+  inProgress: state.reducerRecipe.recipeMealProgress,
+  inProgressMeal: state.reducerRecipe.inProgressMeal,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DetalhesBebidas);

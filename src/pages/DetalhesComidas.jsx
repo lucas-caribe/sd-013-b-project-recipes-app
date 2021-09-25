@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import { sendRecipeToGlobalMeal } from '../redux/actions';
 import fetchIdComidas from '../services/fetchIdComidas';
 import { fetchRecomendationsDrinks } from '../services/fetchIdBebidas';
-import getSixCards from '../services/functionsForDetails';
+import getSixCards, { ChoiceButton } from '../services/functionsForDetails';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import '../css/CardsRecomendations.css';
 
-function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal }) {
+function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal,
+  inprogressMeal }) {
   const [objIdReceita, setObjIdReceita] = useState();
   const [objRecomendations, setObjRecomendados] = useState();
   const fetchId = useCallback(async () => {
@@ -34,6 +35,15 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal }) {
         .map((ingredientes3) => ingredientes3[1]);
       return arrayFilteredIngredients;
     }
+  };
+
+  const inFButton = {
+    inprogressMeal,
+    sendObjToGlobal,
+    objIdReceita,
+    objToReducer,
+    id,
+    tipo: 'comidas',
   };
 
   const getMeasure = () => {
@@ -122,19 +132,13 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal }) {
             </div>
           ))}
       </div>
-      <button
-        className="buttonStart"
-        type="button"
-        data-testid="start-recipe-btn"
-        onClick={ () => sendObjToGlobal(objIdReceita, objToReducer) }
-      >
-        Start
-      </button>
+      {ChoiceButton(inFButton)}
     </div>
   );
 }
 
 DetalhesComidas.propTypes = {
+  inprogressMeal: PropTypes.shape().isRequired,
   match: PropTypes.shape().isRequired,
   sendObjToGlobal: PropTypes.func.isRequired,
 };
@@ -143,4 +147,9 @@ const mapDispatchToProps = (dispatch) => ({
   sendObjToGlobal: (obj, obj2) => dispatch(sendRecipeToGlobalMeal(obj, obj2)),
 });
 
-export default connect(null, mapDispatchToProps)(DetalhesComidas);
+const mapStateToProps = (state) => ({
+  inProgress: state.reducerRecipe.recipeMealProgress,
+  inprogressMeal: state.reducerRecipe.inProgressMeal,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DetalhesComidas);
