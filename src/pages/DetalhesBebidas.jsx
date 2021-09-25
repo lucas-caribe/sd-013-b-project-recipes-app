@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import fetchIdBebidas from '../services/fetchIdBebidas';
 import shareIcon from '../images/shareIcon.svg';
-import getSixCards, { ChoiceButton } from '../services/functionsForDetails';
+import getSixCards, { ChoiceButton, clickShare } from '../services/functionsForDetails';
 import { fetchRecomendationsMeals } from '../services/fetchIdComidas';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import { sendRecipeToGlobalDrinks } from '../redux/actions';
@@ -12,6 +12,7 @@ import '../css/CardsRecomendations.css';
 function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgressMeal }) {
   const [objIdReceita, setObjIdReceita] = useState();
   const [recomendations, setObjRecomentations] = useState();
+  const [copyOk, setCopyOk] = useState(false);
   const fetchId = useCallback(async () => {
     setObjIdReceita(await fetchIdBebidas(id));
     setObjRecomentations(await fetchRecomendationsMeals());
@@ -96,6 +97,7 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
       <button
         type="button"
         data-testid="share-btn"
+        onClick={ () => clickShare(setCopyOk) }
       >
         <img src={ shareIcon } alt="shareIcon" />
       </button>
@@ -119,6 +121,7 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
             </div>
           ))}
       </div>
+      {copyOk ? <p>Link copiado!</p> : null}
       {ChoiceButton(inFButton)}
     </div>
   );

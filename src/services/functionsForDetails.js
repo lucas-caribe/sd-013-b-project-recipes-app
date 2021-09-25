@@ -48,4 +48,10 @@ export const ChoiceButton = (inFButton) => {
   );
 };
 
+export const clickShare = (setCopyOk) => {
+  // source link : https://stackoverflow.com/questions/66338574/button-copy-to-clipboard-window-location-href
+  navigator.clipboard.writeText(window.location.href);
+  setCopyOk(true);
+};
+
 export default getSixCards;

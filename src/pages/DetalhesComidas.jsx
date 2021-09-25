@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { sendRecipeToGlobalMeal } from '../redux/actions';
 import fetchIdComidas from '../services/fetchIdComidas';
 import { fetchRecomendationsDrinks } from '../services/fetchIdBebidas';
-import getSixCards, { ChoiceButton } from '../services/functionsForDetails';
+import getSixCards, { ChoiceButton, clickShare } from '../services/functionsForDetails';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import '../css/CardsRecomendations.css';
@@ -12,6 +12,7 @@ import '../css/CardsRecomendations.css';
 function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal,
   inprogressMeal }) {
   const [objIdReceita, setObjIdReceita] = useState();
+  const [copyOk, setCopyOk] = useState(false);
   const [objRecomendations, setObjRecomendados] = useState();
   const fetchId = useCallback(async () => {
     setObjIdReceita(await fetchIdComidas(id));
@@ -95,6 +96,7 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal,
       <button
         type="button"
         data-testid="share-btn"
+        onClick={ () => clickShare(setCopyOk) }
       >
         <img src={ shareIcon } alt="shareIcon" />
       </button>
@@ -132,6 +134,7 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal,
             </div>
           ))}
       </div>
+      {copyOk ? <p>Link copiado!</p> : null}
       {ChoiceButton(inFButton)}
     </div>
   );
