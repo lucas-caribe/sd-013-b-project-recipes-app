@@ -73,7 +73,7 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
 
   return (
     <div>
-      Detalhes das bebidas
+      Detalhes das bebidass
       <img
         width="180px"
         data-testid="recipe-photo"
