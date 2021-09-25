@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { fetchCocktailDetails, fetchMealDetails } from '../services/fetchDetails';
 import getIngredientsInArray from '../helpers/getIngredientsInArray';
 import MealsInProgress from '../components/mealsInProgress';
@@ -12,15 +12,15 @@ export default function InProgress() {
   const [ButtonDislabedFinalizRecipe, setButtonDislabedFinalizRecipe] = useState(true);
   const history = useHistory();
   const { location: { pathname } } = history;
-  const ID = pathname.split('/')[2]; // pegar o ID no path da URL
+  const { id } = useParams();
 
   const saveInLocalStorage = ({ target: { value, checked } }) => {
-    if (!JSON.parse(localStorage.getItem(ID))) {
-      localStorage.setItem(ID, JSON.stringify([]));
+    if (!JSON.parse(localStorage.getItem(id))) {
+      localStorage.setItem(id, JSON.stringify([]));
     }
-    const ingredientInLocal = JSON.parse(localStorage.getItem(ID));
+    const ingredientInLocal = JSON.parse(localStorage.getItem(id));
 
-    let ingredientCompleted = { [ID]: [value] };
+    let ingredientCompleted = { [id]: [value] };
 
     if (checked) {
       ingredientCompleted = [...ingredientInLocal, value];
@@ -32,7 +32,7 @@ export default function InProgress() {
       ingredientCompleted = ingredientInLocal;
     }
 
-    localStorage.setItem(ID, JSON.stringify(ingredientCompleted));
+    localStorage.setItem(id, JSON.stringify(ingredientCompleted));
     setIngredientsCompleted(ingredientCompleted);
   };
 
@@ -63,13 +63,13 @@ export default function InProgress() {
   };
 
   const fetchDetails = useCallback(
-    async (id) => {
+    async (idFetch) => {
       if (pathname.includes('/comidas')) {
-        const { meals } = await fetchMealDetails(id);
+        const { meals } = await fetchMealDetails(idFetch);
         setRecipe({ ...meals[0] });
       }
       if (pathname.includes('/bebidas')) {
-        const { drinks } = await fetchCocktailDetails(id);
+        const { drinks } = await fetchCocktailDetails(idFetch);
         setRecipe({ ...drinks[0] });
       }
     },
@@ -77,12 +77,12 @@ export default function InProgress() {
   );
 
   useEffect(() => {
-    const IngredientsCompletedInLocal = JSON.parse(localStorage.getItem(ID));
+    const IngredientsCompletedInLocal = JSON.parse(localStorage.getItem(id));
     setIngredientsCompleted(
       IngredientsCompletedInLocal || [],
     );
-    fetchDetails(ID);
-  }, [pathname, fetchDetails, ID]);
+    fetchDetails(id);
+  }, [pathname, fetchDetails, id]);
 
   useEffect(() => {
     const IngredientArray = getIngredientsInArray(Recipe);

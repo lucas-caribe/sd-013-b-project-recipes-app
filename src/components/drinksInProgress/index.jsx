@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ButtonsFavoriteAndShare from '../buttonsFavoriteAndShare/index';
 
 export default function DrinksInProgress(
