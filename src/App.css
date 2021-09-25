@@ -81,3 +81,19 @@
 .recipe-card-title h4 {
   margin: 0;
 }
+
+/* ------------------------------------------------//
+//                      CARDS                      //
+//                 RECEITAS FEITAS                 //
+//------------------------------------------------ */
+.recipe-done-card {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px rgb(0 0 0 / 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 1rem;
+  overflow: hidden;
+  width: 12rem;
+}
