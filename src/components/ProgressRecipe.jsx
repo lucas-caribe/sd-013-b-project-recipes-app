@@ -1,42 +1,55 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
-import shareIcon from '../images/shareIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 function ProgressRecipe({
-  recipe: { image, title, category, ingredients, strInstructions, measure } }) {
+  recipe: { ingredients, strInstructions, measure, id, type } }) {
   const history = useHistory();
+  const [storageRecipe, setStorageRecipe] = useState({});
+
+  useEffect(() => {
+    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    localStorage.setItem('inProgressRecipes', JSON.stringify({
+      meals: {},
+      cocktails: {},
+      ...inProgressRecipes,
+    }));
+    if (JSON.parse(localStorage.getItem('inProgressRecipes'))[type][id]) {
+      setStorageRecipe(JSON.parse(localStorage.getItem('inProgressRecipes'))[type][id]);
+    }
+  }, [id, type]);
+
+  useEffect(() => {
+    const currentStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    localStorage.setItem('inProgressRecipes', JSON.stringify({
+      ...currentStorage,
+      [type]: {
+        ...currentStorage[type],
+        [id]: { ...storageRecipe },
+      },
+    }));
+  }, [storageRecipe, id, type]);
 
   function handleFinishClick() {
     history.push('/receitas-feitas');
   }
 
+  const handleCheckBox = ({ target: { id: elementID } }) => {
+    if (storageRecipe[elementID]) {
+      setStorageRecipe({
+        ...storageRecipe,
+        [elementID]: false,
+      });
+    } else {
+      setStorageRecipe({
+        ...storageRecipe,
+        [elementID]: 'checked',
+      });
+    }
+  };
+
   return (
     <>
-      <header>
-        <img data-testid="recipe-photo" src={ image } alt="Recipe Imagem" />
-      </header>
-
-      <section>
-        <h2 data-testid="recipe-title">{ title }</h2>
-        <button
-          type="button"
-          src={ shareIcon }
-          data-testid="share-btn"
-        >
-          <img src={ shareIcon } alt="Share Icon" />
-        </button>
-        <button
-          type="button"
-          src={ whiteHeartIcon }
-          data-testid="favorite-btn"
-        >
-          <img src={ whiteHeartIcon } alt="Favorite icon" />
-        </button>
-        <h5 data-testid="recipe-category">{ category }</h5>
-      </section>
-
       <section>
         <h3>Ingredients</h3>
         <ul>
@@ -46,7 +59,12 @@ function ProgressRecipe({
               htmlFor={ `${index}-ingredient-step` }
               data-testid={ `${index}-ingredient-step` }
             >
-              <input id={ `${index}-ingredient-step` } type="checkbox" />
+              <input
+                id={ `${index}-ingredient-step` }
+                type="checkbox"
+                onChange={ handleCheckBox }
+                defaultChecked={ storageRecipe[`${index}-ingredient-step`] }
+              />
               { `${ingrdient} - ${measure[index]}` }
             </label>
           ))}
@@ -73,12 +91,11 @@ function ProgressRecipe({
 
 ProgressRecipe.propTypes = {
   recipe: PropTypes.shape({
-    image: PropTypes.string,
-    title: PropTypes.string,
-    category: PropTypes.string,
     strInstructions: PropTypes.string,
     ingredients: PropTypes.arrayOf(PropTypes.string),
     measure: PropTypes.arrayOf(PropTypes.string),
+    id: PropTypes.string,
+    type: PropTypes.string,
   }).isRequired,
 };
 

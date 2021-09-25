@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router';
 import { sendRecipeToGlobal } from '../redux/actions';
 import fetchIdComidas from '../services/fetchIdComidas';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal }) {
+  const history = useHistory();
   const [objIdReceita, setObjIdReceita] = useState();
   const fetchId = async () => {
     setObjIdReceita(await fetchIdComidas(id));
   };
+
   useEffect(() => {
     fetchId();
   }, []);
@@ -41,7 +44,7 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal }) {
       <p data-testid="instructions">Instruções</p>
       <p data-testid="video">Video</p>
       <p data-testid={ `${0}-recomendation-card` }>Card recomendation</p>
-      <button type="button" data-testid="start-recipe-btn">Start recipe</button>
+      <button type="button" data-testid="start-recipe-btn" onClick={ () => history.push(`/comidas/${id}/in-progress`) }>Start recipe</button>
     </div>
   );
 }

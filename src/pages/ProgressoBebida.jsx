@@ -6,7 +6,7 @@ import { getIngredients, getMeasure } from '../GlobalFuncs/getIngredientsAndMeas
 
 function ProgressoBebida({ recipeInfo }) {
   function modifyRecipeInfo() {
-    const { strDrinkThumb, strDrink, strCategory, strInstructions } = recipeInfo;
+    const { strDrinkThumb, strDrink, strCategory, strInstructions, idDrink } = recipeInfo;
     return {
       image: strDrinkThumb,
       title: strDrink,
@@ -14,6 +14,8 @@ function ProgressoBebida({ recipeInfo }) {
       strInstructions,
       ingredients: getIngredients(recipeInfo),
       measure: getMeasure(recipeInfo),
+      id: idDrink,
+      type: 'cocktails',
     };
   }
 
@@ -34,6 +36,7 @@ ProgressoBebida.propTypes = {
     strDrink: PropTypes.string,
     strCategory: PropTypes.string,
     strInstructions: PropTypes.string,
+    idDrink: PropTypes.string,
   }).isRequired,
 };
 
