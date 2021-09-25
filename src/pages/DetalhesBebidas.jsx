@@ -106,7 +106,7 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
         </div>
       ))}
       <p data-testid="instructions">{ objIdReceita.strInstructions }</p>
-      <p data-testid="video">Video</p>
+      <p data-testid="video">Videoo</p>
       <div className="cardsRecomendations">
         {getSixCards(recomendations) !== undefined && getSixCards(recomendations)
           .map((element, index) => (
