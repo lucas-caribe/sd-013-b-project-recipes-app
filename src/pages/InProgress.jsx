@@ -1,17 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import copy from 'clipboard-copy';
 import { fetchCocktailDetails, fetchMealDetails } from '../services/fetchDetails';
 import getIngredientsInArray from '../helpers/getIngredientsInArray';
+import MealsInProgress from '../components/mealsInProgress';
+import DrinksInProgress from '../components/drinksInProgress';
 
 export default function InProgress() {
   const [Recipe, setRecipe] = useState({});
-  const [Copied, setCopied] = useState(false);
   const [Ingredients, setIngredient] = useState([]);
   const [IngredientsCompleted, setIngredientsCompleted] = useState([]);
+  const [ButtonDislabedFinalizRecipe, setButtonDislabedFinalizRecipe] = useState(true);
   const history = useHistory();
   const { location: { pathname } } = history;
-  const ID = pathname.split('/')[2];
+  const ID = pathname.split('/')[2]; // pegar o ID no path da URL
 
   const saveInLocalStorage = ({ target: { value, checked } }) => {
     if (!JSON.parse(localStorage.getItem(ID))) {
@@ -57,73 +58,9 @@ export default function InProgress() {
     </>
   );
 
-  const handleClickShare = async () => {
-    const newPath = pathname.split('/');
-    newPath.splice(3, 1);
-    const path = newPath.join('/');
-    const href = `http://localhost:3000${path}`;
-    copy(href);
-    setCopied(true);
+  const handleClickFinaliz = () => {
+    history.push('/receitas-feitas');
   };
-
-  const renderButtons = () => (
-    <>
-      <button
-        type="button"
-        data-testid="share-btn"
-        onClick={ handleClickShare }
-        id="Compatilhar"
-      >
-        Compartilhar
-      </button>
-      {Copied && <p>Link copiado!</p> }
-      <button type="button" data-testid="favorite-btn">Favoritar</button>
-    </>
-  );
-
-  const renderMealsComponents = () => (
-    <div>
-      <img
-        src={ Recipe.strMealThumb }
-        alt={ Recipe.strMeal }
-        style={ { width: '250px' } }
-        data-testid="recipe-photo"
-      />
-      <h3 data-testid="recipe-title">{Recipe.strMeal}</h3>
-      { renderButtons() }
-      <h4 data-testid="recipe-category">{Recipe.strCategory}</h4>
-      <ul>
-        {renderIngredients()}
-      </ul>
-      <p data-testid="instructions">
-        {Recipe.strInstructions}
-      </p>
-      <button type="button" data-testid="finish-recipe-btn">Finalizar</button>
-    </div>
-  );
-
-  const renderDrinksComponents = () => (
-    <div>
-      <img
-        src={ Recipe.strDrinkThumb }
-        alt={ Recipe.strDrink }
-        style={ { width: '250px' } }
-        data-testid="recipe-photo"
-      />
-      <h3 data-testid="recipe-title">{Recipe.strDrink}</h3>
-      {
-        renderButtons()
-      }
-      <h4 data-testid="recipe-category">{Recipe.strCategory}</h4>
-      {
-        renderIngredients()
-      }
-      <p data-testid="instructions">
-        {Recipe.strInstructions}
-      </p>
-      <button type="button" data-testid="finish-recipe-btn">Finalizar</button>
-    </div>
-  );
 
   const fetchDetails = useCallback(
     async (id) => {
@@ -145,23 +82,42 @@ export default function InProgress() {
       IngredientsCompletedInLocal || [],
     );
     fetchDetails(ID);
-    return () => {
-      console.log('desmontei');
-    };
-  }, [pathname, fetchDetails]);
+  }, [pathname, fetchDetails, ID]);
 
   useEffect(() => {
     const IngredientArray = getIngredientsInArray(Recipe);
     setIngredient(IngredientArray);
   }, [Recipe]);
 
+  useEffect(() => {
+    if (IngredientsCompleted.length === Ingredients.length) {
+      setButtonDislabedFinalizRecipe(false);
+    } else {
+      setButtonDislabedFinalizRecipe(true);
+    }
+  }, [IngredientsCompleted, Ingredients]);
+
   return (
     <div>
       <h1>Em Progresso</h1>
       {
         pathname.includes('/comidas')
-          ? renderMealsComponents()
-          : renderDrinksComponents()
+          ? (
+            <MealsInProgress
+              Recipe={ Recipe }
+              ButtonDislabedFinalizRecipe={ ButtonDislabedFinalizRecipe }
+              handleClickFinaliz={ handleClickFinaliz }
+              renderIngredients={ renderIngredients }
+            />
+          )
+          : (
+            <DrinksInProgress
+              Recipe={ Recipe }
+              ButtonDislabedFinalizRecipe={ ButtonDislabedFinalizRecipe }
+              handleClickFinaliz={ handleClickFinaliz }
+              renderIngredients={ renderIngredients }
+            />
+          )
       }
     </div>
   );
