@@ -61,25 +61,42 @@ export function fetchFullDrinksList() {
 }
 
 export function fetchResults(type, value, page) {
-  if (page.includes('Comidas')) return fetchMeals(type, value);
-  if (page.includes('Bebidas')) return fetchDrinks(type, value);
+  if (page.includes('comidas')) return fetchMeals(type, value);
+  if (page.includes('bebidas')) return fetchDrinks(type, value);
 }
 
-export function fetchMealCategories() {
+export function fetchMealsCategories() {
   return fetch(MEAL_CATEGORIES_URL)
     .then((res) => res.json())
     .then((data) => data.meals);
 }
 
-export function fetchDrinkCategories() {
+export function fetchDrinksCategories() {
   return fetch(DRINK_CATEGORIES_URL)
     .then((res) => res.json())
     .then((data) => data.drinks);
 }
 
 export function fetchCategories(category) {
-  if (category === 'meals') return fetchMealCategories();
-  if (category === 'drinks') return fetchDrinkCategories();
+  if (category === 'meals') return fetchMealsCategories();
+  if (category === 'drinks') return fetchDrinksCategories();
+}
+
+export function fetchMealsIngredients() {
+  return fetch(MEAL_INGREDIENTS_URL)
+    .then((res) => res.json())
+    .then((data) => data.meals);
+}
+
+export function fetchDrinksIngredients() {
+  return fetch(DRINK_INGREDIENTS_URL)
+    .then((res) => res.json())
+    .then((data) => data.drinks);
+}
+
+export function fetchIngredients(isMeal) {
+  if (isMeal) return fetchMealsIngredients();
+  if (!isMeal) return fetchDrinksIngredients();
 }
 
 export function fetchMealsByCategory(filter) {
