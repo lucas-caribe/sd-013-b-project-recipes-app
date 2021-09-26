@@ -47,10 +47,10 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal,
 
   const getIngredientAndMeasure = () => {
     const array = [];
-    if (getMeasure(objIdReceita) !== undefined
-      && getIngredient(objIdReceita) !== undefined) {
-      const measure = getMeasure(objIdReceita);
-      const ingredient = getIngredient(objIdReceita);
+    if (getMeasure(objIdReceita, 'comida') !== undefined
+      && getIngredient(objIdReceita, 'comidas') !== undefined) {
+      const measure = getMeasure(objIdReceita, 'comida');
+      const ingredient = getIngredient(objIdReceita, 'comidas');
       const mix = [{
         ingredient,
         measure,

@@ -44,10 +44,10 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
 
   const getIngredientAndMeasure = () => {
     const array = [];
-    if (getMeasure(objIdReceita) !== undefined
-    && getIngredient(objIdReceita) !== undefined) {
-      const measure = getMeasure(objIdReceita);
-      const ingredient = getIngredient(objIdReceita);
+    if (getMeasure(objIdReceita, 'bebida') !== undefined
+    && getIngredient(objIdReceita, 'bebidas') !== undefined) {
+      const measure = getMeasure(objIdReceita, 'bebida');
+      const ingredient = getIngredient(objIdReceita, 'bebidas');
       const mix = [{
         ingredient,
         measure,
@@ -55,15 +55,14 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
       for (let i = 0; i < mix[0].ingredient.length; i += 1) {
         array.push(`${mix[0].ingredient[i]} - ${mix[0].measure[i]}`);
       }
+      if (array.some((element) => element.includes('undefined'))) {
+        const withOutUndefined = array.map((element) => {
+          const beatifulDrinks = element.replace(' - undefined', '');
+          return beatifulDrinks;
+        });
+        return withOutUndefined;
+      }
       return array;
-    }
-  };
-
-  const fixDrinks = () => {
-    if (getIngredientAndMeasure() !== undefined) {
-      const drinks = getIngredientAndMeasure();
-      const drinksFilterNull = drinks.filter((drink) => drink !== 'null-null');
-      return drinksFilterNull;
     }
   };
 
@@ -73,9 +72,9 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
 
   return (
     <div>
-      Detalhes das bebidass
+      <p>Detalhes</p>
       <img
-        width="180px"
+        width="300px"
         data-testid="recipe-photo"
         src={ objIdReceita.strDrinkThumb }
         alt="recipeFoto"
@@ -100,13 +99,13 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
         />
       </button>
       <p data-testid="recipe-category">{objIdReceita.strAlcoholic}</p>
-      {fixDrinks().map((element, index) => (
+      {getIngredientAndMeasure().map((element, index) => (
         <div key={ index }>
           <p data-testid={ `${index}-ingredient-name-and-measure` }>{element}</p>
         </div>
       ))}
       <p data-testid="instructions">{ objIdReceita.strInstructions }</p>
-      <p data-testid="video">Videoo</p>
+      <p data-testid="video" />
       <div className="cardsRecomendations">
         {getSixCards(recomendations) !== undefined && getSixCards(recomendations)
           .map((element, index) => (

@@ -62,8 +62,16 @@ export const getEmbedVideo = (objIdReceita) => {
   }
 };
 
-export const getIngredient = (objIdReceita) => {
-  if (objIdReceita !== undefined) {
+export const getIngredient = (objIdReceita, type) => {
+  if (objIdReceita !== undefined && type === 'bebidas') {
+    const entries = Object.entries(objIdReceita);
+    const arrayFilteredIngredients = entries
+      .filter((ingredientes) => ingredientes[0].includes('strIngredient'))
+      .filter((ingredientes2) => ingredientes2[1] !== null)
+      .map((ingredientes3) => ingredientes3[1]);
+    return arrayFilteredIngredients;
+  }
+  if (objIdReceita !== undefined && type === 'comidas') {
     const entries = Object.entries(objIdReceita);
     const arrayFilteredIngredients = entries
       .filter((ingredientes) => ingredientes[0].includes('strIngredient'))
@@ -73,8 +81,17 @@ export const getIngredient = (objIdReceita) => {
   }
 };
 
-export const getMeasure = (objIdReceita) => {
-  if (objIdReceita !== undefined) {
+export const getMeasure = (objIdReceita, type) => {
+  const filtros = [null, undefined];
+  if (objIdReceita !== undefined && type === 'bebida') {
+    const entries = Object.entries(objIdReceita);
+    const measure = entries.filter((measures) => measures[0].includes('strMeasure'))
+      .filter((measures2) => measures2[1] !== ' ')
+      .filter((measures3) => !filtros.includes(measures3[1]))
+      .map((measures3) => measures3[1]);
+    return measure;
+  }
+  if (objIdReceita !== undefined && type === 'comida') {
     const entries = Object.entries(objIdReceita);
     const measure = entries.filter((measures) => measures[0].includes('strMeasure'))
       .filter((measures2) => measures2[1] !== ' ')
