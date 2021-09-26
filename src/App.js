@@ -17,7 +17,10 @@ import {
   Perfil,
   Feitas,
   Favoritas,
-  NotFound } from './pages/index';
+  NotFound,
+  DetalheBebida,
+  DetalheComida,
+} from './pages/index';
 
 function App() {
   return (
@@ -26,7 +29,9 @@ function App() {
         <Switch>
           <Route exact path="/" component={ Login } />
           <Route exact path="/comidas/" component={ Comidas } />
+          <Route exact path="/comidas/:idRecipe" component={ DetalheComida } />
           <Route exact path="/bebidas/" component={ Bebidas } />
+          <Route exact path="/bebidas/:idRecipe" component={ DetalheBebida } />
           <Route exact path="/explorar" component={ Explorar } />
           <Route exact path="/explorar/comidas" component={ ExplorarComidas } />
           <Route
