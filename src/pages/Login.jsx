@@ -20,20 +20,10 @@ function Login({ actLogin }) {
     } return true;
   };
 
-  const recipeInProgressToStorage = () => {
-    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    localStorage.setItem('inProgressRecipes', JSON.stringify({
-      meals: {},
-      cocktails: {},
-      ...inProgressRecipes,
-    }));
-  };
-
   const handleClick = () => {
     localStorage.setItem('mealsToken', JSON.stringify(1));
     localStorage.setItem('cocktailsToken', JSON.stringify(1));
     localStorage.setItem('user', JSON.stringify({ email }));
-    recipeInProgressToStorage();
     actLogin(email);
     setIsLogged(true);
   };

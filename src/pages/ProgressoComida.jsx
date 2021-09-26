@@ -6,12 +6,14 @@ import { getIngredients, getMeasure } from '../GlobalFuncs/getIngredientsAndMeas
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
-import shareButtonFunc from '../GlobalFuncs/shareAndFavButtonFuncs';
+import { shareButtonFunc,
+  setFavorites, checkFavorite } from '../GlobalFuncs/shareAndFavButtonFuncs';
 
 function ProgressoComida({ recipeInfo:
-  { strMeal, strMealThumb, strCategory, strInstructions, idMeal }, recipeInfo }) {
+  { strMeal, strMealThumb, strCategory, strInstructions, idMeal, strArea },
+recipeInfo }) {
   const [copiedText, setCopyText] = useState('');
-  const [favorite, setFavorite] = useState(false);
+  const [favorite, setFavorite] = useState(checkFavorite(idMeal));
 
   function modifyRecipeInfo() {
     return {
@@ -37,7 +39,17 @@ function ProgressoComida({ recipeInfo:
   };
 
   const handleFavorite = () => {
+    const modifiedRecipe = {
+      id: idMeal,
+      type: 'comida',
+      area: strArea,
+      category: strCategory,
+      alcoholicOrNot: '',
+      name: strMeal,
+      image: strMealThumb,
+    };
     setFavorite(!favorite);
+    setFavorites(modifiedRecipe);
   };
 
   return (
@@ -87,6 +99,7 @@ ProgressoComida.propTypes = {
     strCategory: PropTypes.string,
     strInstructions: PropTypes.string,
     idMeal: PropTypes.string,
+    strArea: PropTypes.string,
   }).isRequired,
 };
 

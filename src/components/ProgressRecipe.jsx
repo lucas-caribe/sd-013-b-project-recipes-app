@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
+import checkFinishCondition from '../GlobalFuncs/finishButtonFuncs';
 
 function ProgressRecipe({
   recipe: { ingredients, strInstructions, measure, id, type } }) {
   const history = useHistory();
-  const [storageRecipe, setStorageRecipe] = useState({});
+  const [ingredientsStatus, setingredientsStatus] = useState({});
+  const [finishButtonCondition, setFinishButtonCondition] = useState(true);
 
   useEffect(() => {
-    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    localStorage.setItem('inProgressRecipes', JSON.stringify({
-      meals: {},
-      cocktails: {},
-      ...inProgressRecipes,
-    }));
     if (JSON.parse(localStorage.getItem('inProgressRecipes'))[type][id]) {
-      setStorageRecipe(JSON.parse(localStorage.getItem('inProgressRecipes'))[type][id]);
+      setingredientsStatus(JSON
+        .parse(localStorage.getItem('inProgressRecipes'))[type][id]);
     }
   }, [id, type]);
 
@@ -25,25 +22,26 @@ function ProgressRecipe({
       ...currentStorage,
       [type]: {
         ...currentStorage[type],
-        [id]: { ...storageRecipe },
+        [id]: { ...ingredientsStatus },
       },
     }));
-  }, [storageRecipe, id, type]);
+    setFinishButtonCondition(checkFinishCondition(ingredientsStatus, ingredients));
+  }, [ingredientsStatus, id, type, ingredients]);
 
   function handleFinishClick() {
     history.push('/receitas-feitas');
   }
 
   const handleCheckBox = ({ target: { id: elementID } }) => {
-    if (storageRecipe[elementID]) {
-      setStorageRecipe({
-        ...storageRecipe,
+    if (ingredientsStatus[elementID]) {
+      setingredientsStatus({
+        ...ingredientsStatus,
         [elementID]: false,
       });
     } else {
-      setStorageRecipe({
-        ...storageRecipe,
-        [elementID]: 'checked',
+      setingredientsStatus({
+        ...ingredientsStatus,
+        [elementID]: true,
       });
     }
   };
@@ -62,8 +60,8 @@ function ProgressRecipe({
               <input
                 id={ `${index}-ingredient-step` }
                 type="checkbox"
-                onChange={ handleCheckBox }
-                defaultChecked={ storageRecipe[`${index}-ingredient-step`] }
+                onClick={ handleCheckBox }
+                defaultChecked={ ingredientsStatus[`${index}-ingredient-step`] }
               />
               { `${ingrdient} - ${measure[index]}` }
             </label>
@@ -80,7 +78,7 @@ function ProgressRecipe({
       <button
         data-testid="finish-recipe-btn"
         type="button"
-        disabled
+        disabled={ finishButtonCondition }
         onClick={ handleFinishClick }
       >
         Finish Recipe
