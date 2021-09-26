@@ -14,6 +14,7 @@ function Provider({ children }) {
   const [allRecipesDone, setAllRecipesDone] = useState([
     // OBJETOS MOCKADOS PARA FINS DE TESTE
     {
+      idMeal: 52977,
       strMealThumb: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
       strCategory: 'Vegetarian',
       strMeal: 'Spicy Arrabiata Penne',
@@ -23,6 +24,7 @@ function Provider({ children }) {
       type: 'Meal',
     },
     {
+      idDrink: 15997,
       strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
       strCategory: 'Ordinary Drink',
       strAlcoholic: 'Alcoholic',

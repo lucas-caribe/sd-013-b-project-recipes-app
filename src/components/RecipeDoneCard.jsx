@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import Context from '../context/Context';
 import shareIcon from '../images/shareIcon.svg';
 
@@ -24,12 +25,19 @@ export default function RecipeDoneCard() {
             className="recipe-done-card"
           >
             <div className="recipe-card-img">
-              <img
-                data-testid={ `${index}-horizontal-image` }
-                // src={ recipe[`str${recipeType}Thumb`] }
-                src={ recipe[`str${recipe.type}Thumb`] }
-                alt="thumbnail"
-              />
+              <Link
+                to={
+                  recipe.type === 'Meal'
+                    ? `/comidas/${recipe.idMeal}`
+                    : `/bebidas/${recipe.idDrink}`
+                }
+              >
+                <img
+                  data-testid={ `${index}-horizontal-image` }
+                  src={ recipe[`str${recipe.type}Thumb`] }
+                  alt="thumbnail"
+                />
+              </Link>
             </div>
 
             <div className="recipe-card-category">
@@ -45,11 +53,17 @@ export default function RecipeDoneCard() {
             </div>
 
             <div className="recipe-card-title">
-              <h4
-                data-testid={ `${index}-horizontal-name` }
+              <Link
+                to={
+                  recipe.type === 'Meal'
+                    ? `/comidas/${recipe.idMeal}`
+                    : `/bebidas/${recipe.idDrink}`
+                }
               >
-                { recipe[`str${recipe.type}`] }
-              </h4>
+                <h4 data-testid={ `${index}-horizontal-name` }>
+                  { recipe[`str${recipe.type}`] }
+                </h4>
+              </Link>
             </div>
 
             <div className="recipe-card-date">
