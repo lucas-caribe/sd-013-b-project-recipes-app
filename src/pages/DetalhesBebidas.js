@@ -87,7 +87,7 @@ class DetalhesBebidas extends React.Component {
 
   drinkDetails() {
     const { drinks, loadingRecomended } = this.state;
-    const drink = drinks.drinks[0];
+    const drink = drinks.drinks ? drinks.drinks[0] : {};
 
     const ingredientArray = [];
     const ingredientsWithMeasures = [];

@@ -85,6 +85,7 @@ export default function Bebidas() {
             </button>
           )).slice(0, categoryNumber)}
       </div>
+
       <div>
         { selectedCategory !== undefined ? (
           filterCategory
@@ -106,11 +107,11 @@ export default function Bebidas() {
           : drinks
             .map((drink, index) => (
               <Link key={ index } to={ `/bebidas/${drink.idDrink}` }>
-                <div key={ index } data-testid={ `${index}-recipe-card` }>
+                <div data-testid={ `${index}-recipe-card` }>
                   <img
                     src={ drink.strDrinkThumb }
                     alt="meal"
-                    width="100px"
+                    width="150px"
                     data-testid={ `${index}-card-img` }
                   />
                   <p data-testid={ `${index}-card-name` }>{drink.strDrink}</p>
