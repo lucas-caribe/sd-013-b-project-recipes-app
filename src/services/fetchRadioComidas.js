@@ -29,3 +29,9 @@ export const getMealCategoryFilter = async (category) => {
   const data = await response.json();
   return data.meals;
 };
+
+export const getMealSurprise = async () => {
+  const response = await fetch(`${URL_BASE_API}/random.php`);
+  const data = await response.json();
+  return data.meals;
+};

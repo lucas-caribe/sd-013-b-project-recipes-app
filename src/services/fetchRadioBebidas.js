@@ -29,3 +29,9 @@ export const getDrinksCategoryFilter = async (drink) => {
   const data = await response.json();
   return data.drinks;
 };
+
+export const getDrinkSurprise = async () => {
+  const response = await fetch(`${URL_BASE_API}/random.php`);
+  const data = await response.json();
+  return data.drinks;
+};
