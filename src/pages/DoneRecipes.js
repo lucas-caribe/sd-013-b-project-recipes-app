@@ -17,6 +17,7 @@ function DoneRecipes() {
       setShowSearchHeaderIcon(false);
       setShowFooter(false);
       setTitleName('Receitas Feitas');
+      setFilteredRecipes('');
     }
     handleHeader();
   }, []);
@@ -52,4 +53,5 @@ function DoneRecipes() {
     </div>
   );
 }
+
 export default DoneRecipes;

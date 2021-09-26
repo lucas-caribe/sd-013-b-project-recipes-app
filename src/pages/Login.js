@@ -10,7 +10,7 @@ function Login() {
 
   const doneRecipesInitialStorage = [
     {
-      id: 0,
+      id: '',
       type: '',
       area: '',
       category: '',
@@ -19,6 +19,18 @@ function Login() {
       image: '',
       doneDate: '',
       tags: [],
+    },
+  ];
+
+  const favoriteRecipesInitialStorage = [
+    {
+      id: '',
+      type: '',
+      area: '',
+      category: '',
+      alcoholicOrNot: '',
+      name: '',
+      image: '',
     },
   ];
 
@@ -49,6 +61,8 @@ function Login() {
     localStorage.setItem('cocktailsToken', '1');
     localStorage.setItem('user', JSON.stringify({ email }));
     localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesInitialStorage));
+    localStorage
+      .setItem('favoriteRecipes', JSON.stringify(favoriteRecipesInitialStorage));
   }
 
   function handleClick() {
