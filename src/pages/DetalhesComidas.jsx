@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router';
 import { sendRecipeToGlobalMeal } from '../redux/actions';
 import fetchIdComidas from '../services/fetchIdComidas';
 import { fetchRecomendationsDrinks } from '../services/fetchIdBebidas';
@@ -20,6 +21,7 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal,
   const [copyOk, setCopyOk] = useState(false);
   const [objRecomendations, setObjRecomendados] = useState();
   const [favorite, setFavorite] = useState(false);
+  const { push } = useHistory();
 
   const fetchId = useCallback(async () => {
     setObjIdReceita(await fetchIdComidas(id));
@@ -125,13 +127,13 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal,
           ))}
       </div>
       {copyOk ? <p>Link copiado!</p> : null}
-      {ChoiceButton(inFButton)}
+      {ChoiceButton(inFButton, push)}
     </div>
   );
 }
 
 DetalhesComidas.propTypes = {
-  inprogressMeal: PropTypes.shape().isRequired,
+  inprogressMeal: PropTypes.bool.isRequired,
   match: PropTypes.shape().isRequired,
   sendObjToGlobal: PropTypes.func.isRequired,
 };

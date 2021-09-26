@@ -1,5 +1,4 @@
 import React from 'react';
-import { useHistory } from 'react-router';
 
 const QUANTIDADE_CARDS = 6;
 
@@ -9,9 +8,7 @@ const getSixCards = (arr) => {
     return sixCards;
   }
 };
-
-export const ChoiceButton = (inFButton) => {
-  const { push } = useHistory();
+export const ChoiceButton = (inFButton, push) => {
   const { inprogressMeal, sendObjToGlobal, objIdReceita, objToReducer,
     id, tipo } = inFButton;
 
@@ -47,7 +44,6 @@ export const ChoiceButton = (inFButton) => {
     </button>
   );
 };
-
 export const clickShare = (setCopyOk) => {
   // source link : https://stackoverflow.com/questions/66338574/button-copy-to-clipboard-window-location-href
   navigator.clipboard.writeText(window.location.href);

@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router';
 import fetchIdBebidas from '../services/fetchIdBebidas';
 import shareIcon from '../images/shareIcon.svg';
 import getSixCards, { ChoiceButton,
@@ -17,7 +18,7 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
   const [recomendations, setObjRecomentations] = useState();
   const [copyOk, setCopyOk] = useState(false);
   const [favorite, setFavorite] = useState(false);
-
+  const { push } = useHistory();
   const fetchId = useCallback(async () => {
     setObjIdReceita(await fetchIdBebidas(id));
     setObjRecomentations(await fetchRecomendationsMeals());
@@ -67,7 +68,11 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
   };
 
   if (objIdReceita === undefined) {
-    return <p>Loading...</p>;
+    return (
+      <div>
+        <p>Loading...</p>
+      </div>
+    );
   }
 
   return (
@@ -116,15 +121,15 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
           ))}
       </div>
       {copyOk ? <p>Link copiado!</p> : null}
-      {ChoiceButton(inFButton)}
+      {ChoiceButton(inFButton, push)}
     </div>
   );
 }
 
 DetalhesBebidas.propTypes = {
-  match: PropTypes.shape(PropTypes.shape({})).isRequired,
-  sendObjToGlobal: PropTypes.shape(PropTypes.shape({})).isRequired,
-  inProgressMeal: PropTypes.shape().isRequired,
+  match: PropTypes.shape().isRequired,
+  sendObjToGlobal: PropTypes.func.isRequired,
+  inProgressMeal: PropTypes.bool.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
