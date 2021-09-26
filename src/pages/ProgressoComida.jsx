@@ -5,7 +5,7 @@ import ProgressRecipe from '../components/ProgressRecipe';
 import { getIngredients, getMeasure } from '../GlobalFuncs/getIngredientsAndMeasure';
 
 function ProgressoComida({ recipeInfo:
-  { strMeal, strMealThumb, strCategory, strInstructions, idMeal, strArea },
+  { strMeal, strMealThumb, strCategory, strInstructions, idMeal, strArea, strTags },
 recipeInfo }) {
   function modifyRecipeInfo() {
     return {
@@ -20,6 +20,7 @@ recipeInfo }) {
       id: idMeal,
       type: 'meals',
       tipo: 'comida',
+      tags: strTags,
     };
   }
 
@@ -42,6 +43,7 @@ ProgressoComida.propTypes = {
     strInstructions: PropTypes.string,
     idMeal: PropTypes.string,
     strArea: PropTypes.string,
+    strTags: PropTypes.string,
   }).isRequired,
 };
 

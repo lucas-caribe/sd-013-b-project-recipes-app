@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import HandleIngredients from './HandleIngredients';
 import ShareAndFavButton from './ShareAndFavButton';
+import { getDate, finishRecipe } from '../GlobalFuncs/finishButtonFuncs';
 
 function ProgressRecipe({ recipe:
   {
@@ -17,6 +18,7 @@ function ProgressRecipe({ recipe:
     area,
     alcoholic,
     tipo,
+    tags,
   } }) {
   const history = useHistory();
   const [finishButtonCondition, setFinishButtonCondition] = useState(true);
@@ -32,18 +34,19 @@ function ProgressRecipe({ recipe:
   }
 
   function handleFinishClick() {
+    const doneRecipe = {
+      id,
+      type: tipo,
+      area,
+      category,
+      alcoholicOrNot: alcoholic,
+      name: title,
+      image,
+      doneDate: getDate(),
+      tags: (!tags ? [] : tags.split(',')),
+    };
+    finishRecipe(doneRecipe, type);
     history.push('/receitas-feitas');
-    // const doneRecipe = {
-    //   id,
-    //   type: '',
-    //   area: '',
-    //   category: '',
-    //   alcoholicOrNot: '',
-    //   name: '',
-    //   image: '',
-    //   doneDate: '',
-    //   tags: [],
-    // };
   }
 
   return (
@@ -96,6 +99,7 @@ ProgressRecipe.propTypes = {
     alcoholic: PropTypes.string,
     title: PropTypes.string,
     image: PropTypes.string,
+    tags: PropTypes.string,
   }).isRequired,
 };
 

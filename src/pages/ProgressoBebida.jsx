@@ -5,8 +5,8 @@ import ProgressRecipe from '../components/ProgressRecipe';
 import { getIngredients, getMeasure } from '../GlobalFuncs/getIngredientsAndMeasure';
 
 function ProgressoBebida({ recipeInfo:
-  { strDrinkThumb, strDrink, strCategory, strInstructions, idDrink, strAlcoholic },
-recipeInfo }) {
+  { strDrinkThumb, strDrink, strCategory, strInstructions, idDrink, strAlcoholic,
+    strTags }, recipeInfo }) {
   function modifyRecipeInfo() {
     return {
       image: strDrinkThumb,
@@ -20,6 +20,7 @@ recipeInfo }) {
       id: idDrink,
       type: 'cocktails',
       tipo: 'bebida',
+      tags: strTags,
     };
   }
 
@@ -42,6 +43,7 @@ ProgressoBebida.propTypes = {
     strInstructions: PropTypes.string,
     idDrink: PropTypes.string,
     strAlcoholic: PropTypes.string,
+    strTags: PropTypes.string,
   }).isRequired,
 };
 
