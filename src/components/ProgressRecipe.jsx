@@ -1,77 +1,73 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
-import checkFinishCondition from '../GlobalFuncs/finishButtonFuncs';
+import HandleIngredients from './HandleIngredients';
+import ShareAndFavButton from './ShareAndFavButton';
 
-function ProgressRecipe({
-  recipe: { ingredients, strInstructions, measure, id, type } }) {
+function ProgressRecipe({ recipe:
+  {
+    ingredients,
+    instructions,
+    measure,
+    id,
+    type,
+    image,
+    title,
+    category,
+    area,
+    alcoholic,
+    tipo,
+  } }) {
   const history = useHistory();
-  const [ingredientsStatus, setingredientsStatus] = useState({});
   const [finishButtonCondition, setFinishButtonCondition] = useState(true);
 
-  useEffect(() => {
-    if (JSON.parse(localStorage.getItem('inProgressRecipes'))[type][id]) {
-      setingredientsStatus(JSON
-        .parse(localStorage.getItem('inProgressRecipes'))[type][id]);
+  function checkFinishCondition(ingredientsStatus) {
+    const ingredientsCondition = Object.values(ingredientsStatus);
+    if (ingredientsCondition
+      .filter((item) => item === true).length === ingredients.length) {
+      setFinishButtonCondition(false);
+    } else {
+      setFinishButtonCondition(true);
     }
-  }, [id, type]);
-
-  useEffect(() => {
-    const currentStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    localStorage.setItem('inProgressRecipes', JSON.stringify({
-      ...currentStorage,
-      [type]: {
-        ...currentStorage[type],
-        [id]: { ...ingredientsStatus },
-      },
-    }));
-    setFinishButtonCondition(checkFinishCondition(ingredientsStatus, ingredients));
-  }, [ingredientsStatus, id, type, ingredients]);
+  }
 
   function handleFinishClick() {
     history.push('/receitas-feitas');
+    // const doneRecipe = {
+    //   id,
+    //   type: '',
+    //   area: '',
+    //   category: '',
+    //   alcoholicOrNot: '',
+    //   name: '',
+    //   image: '',
+    //   doneDate: '',
+    //   tags: [],
+    // };
   }
-
-  const handleCheckBox = ({ target: { id: elementID } }) => {
-    if (ingredientsStatus[elementID]) {
-      setingredientsStatus({
-        ...ingredientsStatus,
-        [elementID]: false,
-      });
-    } else {
-      setingredientsStatus({
-        ...ingredientsStatus,
-        [elementID]: true,
-      });
-    }
-  };
 
   return (
     <>
-      <section>
-        <h3>Ingredients</h3>
-        <ul>
-          {ingredients.map((ingrdient, index) => (
-            <label
-              key={ index }
-              htmlFor={ `${index}-ingredient-step` }
-              data-testid={ `${index}-ingredient-step` }
-            >
-              <input
-                id={ `${index}-ingredient-step` }
-                type="checkbox"
-                onClick={ handleCheckBox }
-                defaultChecked={ ingredientsStatus[`${index}-ingredient-step`] }
-              />
-              { `${ingrdient} - ${measure[index]}` }
-            </label>
-          ))}
-        </ul>
-      </section>
+      <header>
+        <img data-testid="recipe-photo" src={ image } alt="Recipe Imagem" />
+      </header>
 
       <section>
+        <h2 data-testid="recipe-title">{ title }</h2>
+        <h5 data-testid="recipe-category">{ category }</h5>
+      </section>
+
+      <ShareAndFavButton
+        recipeInfos={ { id, tipo, area, category, alcoholic, title, image } }
+      />
+
+      <HandleIngredients
+        recipeInfos={ { ingredients, measure, type, id } }
+        checkFinishCondition={ checkFinishCondition }
+      />
+      <section>
         <p data-testid="instructions">
-          { strInstructions }
+          { instructions }
         </p>
       </section>
 
@@ -89,11 +85,17 @@ function ProgressRecipe({
 
 ProgressRecipe.propTypes = {
   recipe: PropTypes.shape({
-    strInstructions: PropTypes.string,
+    instructions: PropTypes.string,
     ingredients: PropTypes.arrayOf(PropTypes.string),
     measure: PropTypes.arrayOf(PropTypes.string),
     id: PropTypes.string,
     type: PropTypes.string,
+    tipo: PropTypes.string,
+    area: PropTypes.string,
+    category: PropTypes.string,
+    alcoholic: PropTypes.string,
+    title: PropTypes.string,
+    image: PropTypes.string,
   }).isRequired,
 };
 

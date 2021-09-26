@@ -4,18 +4,22 @@ import { connect } from 'react-redux';
 import ProgressRecipe from '../components/ProgressRecipe';
 import { getIngredients, getMeasure } from '../GlobalFuncs/getIngredientsAndMeasure';
 
-function ProgressoBebida({ recipeInfo }) {
+function ProgressoBebida({ recipeInfo:
+  { strDrinkThumb, strDrink, strCategory, strInstructions, idDrink, strAlcoholic },
+recipeInfo }) {
   function modifyRecipeInfo() {
-    const { strDrinkThumb, strDrink, strCategory, strInstructions, idDrink } = recipeInfo;
     return {
       image: strDrinkThumb,
       title: strDrink,
       category: strCategory,
-      strInstructions,
+      area: '',
+      alcoholic: strAlcoholic,
+      instructions: strInstructions,
       ingredients: getIngredients(recipeInfo),
       measure: getMeasure(recipeInfo),
       id: idDrink,
       type: 'cocktails',
+      tipo: 'bebida',
     };
   }
 
@@ -37,6 +41,7 @@ ProgressoBebida.propTypes = {
     strCategory: PropTypes.string,
     strInstructions: PropTypes.string,
     idDrink: PropTypes.string,
+    strAlcoholic: PropTypes.string,
   }).isRequired,
 };
 
