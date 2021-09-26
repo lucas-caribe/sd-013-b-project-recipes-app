@@ -87,7 +87,11 @@ export default function RecipeDoneCard() {
 
             <div className="recipe-card-share-btn">
               <a
-                href="''"
+                href={
+                  recipe.type === 'Meal'
+                    ? `/comidas/${recipe.idMeal}`
+                    : `/bebidas/${recipe.idDrink}`
+                }
                 src={ shareIcon }
                 data-testid={ `${index}-horizontal-share-btn` }
                 onClick={ () => {} }
