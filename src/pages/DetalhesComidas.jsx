@@ -7,7 +7,7 @@ import { fetchRecomendationsDrinks } from '../services/fetchIdBebidas';
 import getSixCards, { ChoiceButton, clickShare,
   clickFavoriteMeal,
   getEmbedVideo, getIngredient,
-  getMeasure, formatObjForStorageMeal,
+  getMeasure,
   verifyFavorite } from '../services/functionsForDetails';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -25,8 +25,7 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal,
     setObjIdReceita(await fetchIdComidas(id));
     setObjRecomendados(await fetchRecomendationsDrinks());
     verifyFavorite(id, setFavorite);
-    formatObjForStorageMeal(id, objIdReceita);
-  }, [id, objIdReceita]);
+  }, [id]);
 
   useEffect(() => {
     fetchId();

@@ -84,6 +84,9 @@ export const getMeasure = (objIdReceita) => {
 };
 
 export const formatObjForStorageMeal = (id, objIdReceita) => {
+  if (localStorage.getItem('favoriteRecipes') === null) {
+    localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+  }
   if (objIdReceita) {
     const obj = [{
       id,
@@ -94,13 +97,18 @@ export const formatObjForStorageMeal = (id, objIdReceita) => {
       name: objIdReceita.strMeal,
       image: objIdReceita.strMealThumb,
     }];
+    const recipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    recipes.push(obj);
     localStorage.setItem('favoriteRecipes', JSON.stringify(obj));
   }
 };
 
 export const formatObjForStorageDrink = (id, objIdReceita) => {
+  if (localStorage.getItem('favoriteRecipes') === null) {
+    localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+  }
   if (objIdReceita) {
-    const obj = [{
+    const obj = {
       id,
       type: 'bebida',
       area: '',
@@ -108,8 +116,10 @@ export const formatObjForStorageDrink = (id, objIdReceita) => {
       alcoholicOrNot: objIdReceita.strAlcoholic,
       name: objIdReceita.strDrink,
       image: objIdReceita.strDrinkThumb,
-    }];
-    localStorage.setItem('favoriteRecipes', JSON.stringify(obj));
+    };
+    const recipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    recipes.push(obj);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(recipes));
   }
 };
 
