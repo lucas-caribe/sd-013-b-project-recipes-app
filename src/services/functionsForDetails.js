@@ -1,0 +1,138 @@
+import React from 'react';
+import { useHistory } from 'react-router';
+
+const QUANTIDADE_CARDS = 6;
+
+const getSixCards = (arr) => {
+  if (arr !== undefined) {
+    const sixCards = arr.slice(0, QUANTIDADE_CARDS);
+    return sixCards;
+  }
+};
+
+export const ChoiceButton = (inFButton) => {
+  const { push } = useHistory();
+  const { inprogressMeal, sendObjToGlobal, objIdReceita, objToReducer,
+    id, tipo } = inFButton;
+
+  const onClick = () => {
+    sendObjToGlobal(objIdReceita, objToReducer);
+    if (tipo === 'bebidas') {
+      push(`/bebidas/${id}/in-progress`);
+    }
+    if (tipo === 'comidas') {
+      push(`/comidas/${id}/in-progress`);
+    }
+  };
+  if (!inprogressMeal) {
+    return (
+      <button
+        type="button"
+        data-testid="start-recipe-btn"
+        onClick={ () => onClick() }
+        className="buttonStart"
+      >
+        Continuar Receita
+      </button>
+    );
+  }
+  return (
+    <button
+      type="button"
+      data-testid="start-recipe-btn"
+      onClick={ () => onClick() }
+      className="buttonStart"
+    >
+      Start
+    </button>
+  );
+};
+
+export const clickShare = (setCopyOk) => {
+  // source link : https://stackoverflow.com/questions/66338574/button-copy-to-clipboard-window-location-href
+  navigator.clipboard.writeText(window.location.href);
+  setCopyOk(true);
+};
+
+export const getEmbedVideo = (objIdReceita) => {
+  if (objIdReceita !== undefined) {
+    const codigo = objIdReceita.strYoutube.split('v=');
+    const linkYoutube = `http://www.youtube.com/embed/${codigo[1]}`;
+    return linkYoutube;
+  }
+};
+
+export const getIngredient = (objIdReceita) => {
+  if (objIdReceita !== undefined) {
+    const entries = Object.entries(objIdReceita);
+    const arrayFilteredIngredients = entries
+      .filter((ingredientes) => ingredientes[0].includes('strIngredient'))
+      .filter((ingredientes2) => ingredientes2[1] !== '')
+      .map((ingredientes3) => ingredientes3[1]);
+    return arrayFilteredIngredients;
+  }
+};
+
+export const getMeasure = (objIdReceita) => {
+  if (objIdReceita !== undefined) {
+    const entries = Object.entries(objIdReceita);
+    const measure = entries.filter((measures) => measures[0].includes('strMeasure'))
+      .filter((measures2) => measures2[1] !== ' ')
+      .map((measures3) => measures3[1]);
+    return measure;
+  }
+};
+
+export const formatObjForStorageMeal = (id, objIdReceita) => {
+  if (objIdReceita) {
+    const obj = [{
+      id,
+      type: 'comida',
+      area: objIdReceita.strArea,
+      category: objIdReceita.strCategory,
+      alcoholicOrNot: '',
+      name: objIdReceita.strMeal,
+      image: objIdReceita.strMealThumb,
+    }];
+    localStorage.setItem('favoriteRecipes', JSON.stringify(obj));
+  }
+};
+
+export const formatObjForStorageDrink = (id, objIdReceita) => {
+  if (objIdReceita) {
+    const obj = [{
+      id,
+      type: 'bebida',
+      area: '',
+      category: objIdReceita.strCategory,
+      alcoholicOrNot: objIdReceita.strAlcoholic,
+      name: objIdReceita.strDrink,
+      image: objIdReceita.strDrinkThumb,
+    }];
+    localStorage.setItem('favoriteRecipes', JSON.stringify(obj));
+  }
+};
+
+export const clickFavoriteMeal = (obj, setFavorite, id) => {
+  setFavorite((prevState) => !prevState);
+  formatObjForStorageMeal(id, obj);
+};
+
+export const clickFavoriteDrink = (obj, setFavorite, id) => {
+  setFavorite((prevState) => !prevState);
+  formatObjForStorageDrink(id, obj);
+};
+
+export const verifyFavorite = (foodId, setFavorite) => {
+  const objFromStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  if (objFromStorage) {
+    const recipeFavorite = objFromStorage.some((algum) => algum.id === foodId);
+    if (recipeFavorite) {
+      setFavorite(true);
+    } else {
+      setFavorite(false);
+    }
+  }
+};
+
+export default getSixCards;

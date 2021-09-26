@@ -1,0 +1,11 @@
+.cardsRecomendations {
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  overflow-y: hidden;
+}
+
+.buttonStart {
+  bottom: 0;
+  position: fixed;
+}
