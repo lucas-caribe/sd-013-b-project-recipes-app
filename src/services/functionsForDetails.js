@@ -46,18 +46,13 @@ export const ChoiceButton = (inFButton, push) => {
 };
 export const clickShare = (setCopyOk, type, id) => {
   if (type === 'bebida') {
-    console.log(type);
     navigator.clipboard.writeText(`http://localhost:3000/bebidas/${id}`);
     setCopyOk(true);
   }
   if (type === 'comida') {
-    console.log('comida');
     navigator.clipboard.writeText(`http://localhost:3000/comidas/${id}`);
     setCopyOk(true);
   }
-  // source link : https://stackoverflow.com/questions/66338574/button-copy-to-clipboard-window-location-href
-  // navigator.clipboard.writeText(window.location.href);
-  // setCopyOk(true);
 };
 
 export const getEmbedVideo = (objIdReceita) => {
