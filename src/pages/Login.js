@@ -23,8 +23,8 @@ function Login() {
   const loginCock = (token) => {
     localStorage.setItem('cocktailsToken', JSON.stringify(token));
   };
-  const emailStorage = (usemail) => {
-    localStorage.setItem('user', JSON.stringify({ email: usemail }));
+  const emailStorage = (userEmail) => {
+    localStorage.setItem('user', JSON.stringify({ email: userEmail }));
   };
   // caso precisem remover do storage
   // const logout = () => {

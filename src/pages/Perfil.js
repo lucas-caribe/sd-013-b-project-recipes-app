@@ -1,13 +1,13 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import getEmailFromLocalStorage from '../services/getLocalStorage';
 
 const Perfil = () => {
   const history = useHistory();
   // substito para mapStateToProps
-  const email = useSelector(({ user }) => user.email);
+  const email = getEmailFromLocalStorage();
   return (
     <>
       <Header title="Perfil" displaySearchBtn={ false } />
@@ -30,7 +30,10 @@ const Perfil = () => {
         <button
           type="button"
           data-testid="profile-logout-btn"
-          onClick={ () => history.push('/') }
+          onClick={ () => {
+            localStorage.clear();
+            history.push('/');
+          } }
         >
           Sair
         </button>
