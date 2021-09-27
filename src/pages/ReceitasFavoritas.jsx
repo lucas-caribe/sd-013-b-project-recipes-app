@@ -1,13 +1,67 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import { clickShare } from '../services/functionsForDetails';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 export default function ReceitasFavoritas() {
   const [copyOk, setCopyOk] = useState(false);
   const [favoritesFromStorage, setFavoritesFromStorage] = useState([]);
+  const { push } = useHistory();
+
+  const sendToDetails = (type, id) => {
+    if (type === 'bebida') {
+      push(`/bebidas/${id}`);
+    }
+    if (type === 'comida') {
+      push(`/comidas/${id}`);
+    }
+  };
+
+  const onClickFilter = (type) => {
+    switch (type) {
+    case 'All':
+      setFavoritesFromStorage(JSON.parse(localStorage.getItem('favoriteRecipes')));
+      break;
+    case 'Food':
+      setFavoritesFromStorage(favoritesFromStorage
+        .filter((element) => element.type === 'comida'));
+      break;
+    case 'Drinks':
+      setFavoritesFromStorage(favoritesFromStorage
+        .filter((element) => element.type === 'bebida'));
+      break;
+    default:
+      setFavoritesFromStorage(favoritesFromStorage);
+    }
+  };
+
+  const buttonsFilters = () => (
+    <div>
+      <button
+        type="button"
+        data-testid="filter-by-all-btn"
+        onClick={ () => onClickFilter('All') }
+      >
+        All
+      </button>
+      <button
+        type="button"
+        data-testid="filter-by-food-btn"
+        onClick={ () => onClickFilter('Food') }
+      >
+        Food
+      </button>
+      <button
+        type="button"
+        data-testid="filter-by-drink-btn"
+        onClick={ () => onClickFilter('Drinks') }
+      >
+        Drinks
+      </button>
+    </div>
+  );
 
   useEffect(() => {
     setFavoritesFromStorage(JSON.parse(localStorage.getItem('favoriteRecipes')));
@@ -23,24 +77,36 @@ export default function ReceitasFavoritas() {
     <main className="main-content">
       <Header pageTitle="Receitas Favoritas" searchButton={ false } />
       <h1>Receitas favoritas</h1>
+      {buttonsFilters()}
       <div>
         {favoritesFromStorage.map((recipes, index) => (
           <div key={ index }>
-            <button type="button" data-testid="filter-by-all-btn">All</button>
-            <button type="button" data-testid="filter-by-food-btn">Food</button>
-            <button type="button" data-testid="filter-by-drink-btn">Drinks</button>
-            <img
-              src={ recipes.image }
+            <button
               alt="imageRecipe"
+              type="button"
               data-testid={ `${index}-horizontal-image` }
-            />
+              onClick={ () => sendToDetails(recipes.type, recipes.id) }
+              src={ recipes.image }
+            >
+              <img
+                src={ recipes.image }
+                alt="imagemComida"
+                style={ { width: '200px' } }
+              />
+            </button>
             <p
               data-testid={ `${index}-horizontal-top-text` }
             >
               {recipes.type === 'bebida' ? recipes.alcoholicOrNot
                 : `${recipes.area} - ${recipes.category}`}
             </p>
-            <p data-testid={ `${index}-horizontal-name` }>{recipes.name}</p>
+            <button
+              type="button"
+              data-testid={ `${index}-horizontal-name` }
+              onClick={ () => sendToDetails(recipes.type, recipes.id) }
+            >
+              {recipes.name}
+            </button>
             <button
               type="button"
               onClick={ () => clickShare(setCopyOk, recipes.type, recipes.id) }
@@ -53,7 +119,7 @@ export default function ReceitasFavoritas() {
               type="button"
               data-testid={ `${index}-horizontal-favorite-btn` }
               onClick={ () => clickFavoriteButton(recipes.id) }
-              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+              src={ blackHeartIcon }
             >
               <img src={ blackHeartIcon } alt="blackHeart" />
             </button>
