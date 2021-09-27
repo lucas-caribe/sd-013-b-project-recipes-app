@@ -50,7 +50,11 @@ export default function ReceitasFeitas() {
           ))
         }
       </ul>
-      <ButtonShare datatestid={ `${index}-horizontal-share-btn` } />
+
+      <ButtonShare
+        datatestid={ `${index}-horizontal-share-btn` }
+        url={ `http://localhost:3000/${recipe.type}s/${recipe.id}` }
+      />
     </li>
   );
 
@@ -70,7 +74,10 @@ export default function ReceitasFeitas() {
         <p>{recipe.alcoholicOrNot}</p>
       </p>
       <p data-testid={ `${index}-horizontal-done-date` }>{recipe.doneDate}</p>
-      <ButtonShare datatestid={ `${index}-horizontal-share-btn` } />
+      <ButtonShare
+        datatestid={ `${index}-horizontal-share-btn` }
+        url={ `http://localhost:3000/${recipe.type}s/${recipe.id}` }
+      />
     </li>
   );
 
