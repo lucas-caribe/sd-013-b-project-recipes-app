@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Search from '../Search/Search';
+import Search from '../SearchBar';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
 import './index.css';
@@ -57,7 +57,7 @@ function Header(props) {
   }
 
   if (redirect) {
-    return <Redirect to="/profile" />;
+    return <Redirect to="/perfil" />;
   }
   if (searchStatus && displaySearchBtn) {
     return (
@@ -96,6 +96,10 @@ function Header(props) {
       </div>
     );
   }
+
+  return (
+    <div />
+  );
 }
 
 Header.propTypes = {
