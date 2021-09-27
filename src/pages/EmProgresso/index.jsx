@@ -31,14 +31,22 @@ function EmProgresso() {
     setIsCopied(bool);
   };
 
-  const renderIngredients = () => ingredients.map((ingredient, index) => (
-    <li
-      key={ index }
-      data-testid={ `${index}-ingredient-step` }
-    >
-      {ingredient}
-    </li>
-  ));
+  const renderIngredients = () => (
+    <form>
+      { ingredients.map((ingredient, index) => (
+        <div key={ index } data-testid={ `${index}-ingredient-step` }>
+          <label htmlFor={ `${index}-ingredient-step` }>
+            <input
+              id={ `${index}-ingredient-step` }
+              type="checkbox"
+              name="ingredients"
+            />
+            {ingredient}
+          </label>
+        </div>
+      ))}
+    </form>
+  );
 
   const checkFavorites = (recipe, type) => {
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
@@ -87,9 +95,7 @@ function EmProgresso() {
           { item[type][0].strAlcoholic
             ? item[type][0].strAlcoholic : item[type][0].strCategory }
         </h2>
-        <ul>
-          {renderIngredients()}
-        </ul>
+        {renderIngredients()}
         <p data-testid="instructions">{item[type][0].strInstructions}</p>
         {item[type][0].strYoutube
         && <iframe
