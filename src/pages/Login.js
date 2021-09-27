@@ -8,6 +8,32 @@ function Login() {
   const [password, setPassword] = useState('');
   const { setShowHeader, setShowFooter } = useContext(Context);
 
+  const doneRecipesInitialStorage = [
+    {
+      id: '',
+      type: '',
+      area: '',
+      category: '',
+      alcoholicOrNot: '',
+      name: '',
+      image: '',
+      doneDate: '',
+      tags: [],
+    },
+  ];
+
+  const favoriteRecipesInitialStorage = [
+    {
+      id: '',
+      type: '',
+      area: '',
+      category: '',
+      alcoholicOrNot: '',
+      name: '',
+      image: '',
+    },
+  ];
+
   useEffect(() => {
     function handleHeader() {
       setShowHeader(false);
@@ -34,6 +60,9 @@ function Login() {
     localStorage.setItem('mealsToken', '1');
     localStorage.setItem('cocktailsToken', '1');
     localStorage.setItem('user', JSON.stringify({ email }));
+    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesInitialStorage));
+    localStorage
+      .setItem('favoriteRecipes', JSON.stringify(favoriteRecipesInitialStorage));
   }
 
   function handleClick() {
