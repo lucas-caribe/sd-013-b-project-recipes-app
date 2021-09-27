@@ -9,7 +9,7 @@ function Explorer() {
           type="button"
           data-testid="explore-food"
         >
-          Explorar comidas
+          Explorar Comidas
         </button>
       </Link>
       <Link to="/explorar/bebidas">
@@ -17,7 +17,7 @@ function Explorer() {
           type="button"
           data-testid="explore-drinks"
         >
-          Explorar bebidas
+          Explorar Bebidas
         </button>
       </Link>
     </div>
