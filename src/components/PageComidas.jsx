@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import myContext from '../context/mycontext';
 import fetchFoods from '../Services/fetchApiFoodsandDrinks';
 import Filter from './Filter';
@@ -32,14 +33,23 @@ export default function PageComidas() {
       <br />
       { data.map((comida, index) => {
         if (index < NUMBER) {
-          return (<ReceitaCard
-            key={ comida.idMeal }
-            thumb={ comida.strMealThumb }
-            index={ index }
-            name={ comida.strMeal }
-            page={ PAGE }
-            id={ comida.idMeal }
-          />);
+          return (
+            <Link
+              to={ {
+                pathname: `/comidas/${comida.idMeal}`,
+                state: { name: comida.strMeal },
+              } }
+            >
+              <ReceitaCard
+                key={ comida.idMeal }
+                thumb={ comida.strMealThumb }
+                index={ index }
+                name={ comida.strMeal }
+                page={ PAGE }
+                id={ comida.idMeal }
+              />
+            </Link>
+          );
         }
         return false;
       }) }
