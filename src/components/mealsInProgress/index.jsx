@@ -55,7 +55,7 @@ export default function MealsInProgress(
         data-testid="recipe-photo"
       />
       <h3 data-testid="recipe-title">{Recipe.strMeal}</h3>
-      <ButtonsFavoriteAndShare />
+      <ButtonsFavoriteAndShare testIdShare="share-btn" testIdFavorite="favorite-btn" />
       <h4 data-testid="recipe-category">{Recipe.strCategory}</h4>
       <ul>
         {renderIngredients()}

@@ -51,7 +51,7 @@ export default function DrinksInProgress(
         data-testid="recipe-photo"
       />
       <h3 data-testid="recipe-title">{Recipe.strDrink}</h3>
-      <ButtonsFavoriteAndShare />
+      <ButtonsFavoriteAndShare testIdShare="share-btn" testIdFavorite="favorite-btn" />
       <h4 data-testid="recipe-category">{Recipe.strCategory}</h4>
       {
         renderIngredients()

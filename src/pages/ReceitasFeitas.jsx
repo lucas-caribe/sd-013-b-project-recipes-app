@@ -1,9 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 import Header from '../components/header';
-import ButtonShare from '../components/buttonsFavoriteAndShare/buttonShare';
+import MealsRecipesCompleted from '../components/mealsRecipesComnpleted';
+import DrinkRecipesCompleted from '../components/drinksRecipesCompleted';
 
 export default function ReceitasFeitas() {
   const [RecipesCompleted, setRecipesCompleted] = useState([]);
+  const history = useHistory();
 
   const getItensInLocal = useCallback(
     () => {
@@ -19,82 +22,79 @@ export default function ReceitasFeitas() {
     [],
   );
 
+  const handlerClickFilter = ({ target: { innerHTML } }) => {
+    const recipesCompletedInLocal = (
+      JSON.parse(localStorage.getItem('doneRecipes'))
+    );
+    if (innerHTML === 'All') {
+      setRecipesCompleted(recipesCompletedInLocal);
+    } else {
+      const objectLiteral = {
+        Food() {
+          return RecipesCompleted.filter(({ type }) => type === 'comida');
+        },
+        Drinks() {
+          return RecipesCompleted.filter(({ type }) => type === 'bebida');
+        },
+      };
+      setRecipesCompleted(objectLiteral[innerHTML]());
+    }
+  };
+
+  const handlerClickRedirect = (id, type) => {
+    const href = `/${type}s/${id}`;
+    history.push(href);
+  };
+
   useEffect(() => {
     getItensInLocal();
   }, [getItensInLocal]);
 
-  const renderCardMeal = (recipe, index) => (
-    <li key={ recipe.id }>
-      <img
-        src={ recipe.image }
-        alt={ recipe.name }
-        style={ { width: '150px' } }
-        data-testid={ `${index}-horizontal-image` }
-      />
-      <p data-testid={ `${index}-horizontal-name` }>
-        { recipe.name}
-      </p>
-      <p data-testid={ `${index}-horizontal-top-text` }>
-        { `${recipe.area} - ${recipe.category}` }
-      </p>
-      <p data-testid={ `${index}-horizontal-done-date` }>{recipe.doneDate}</p>
-      <ul>
-        {
-          recipe.tags.map((tag) => (
-            <li
-              key={ index }
-              data-testid={ `${index}-${tag}-horizontal-tag` }
-            >
-              {tag}
-            </li>
-          ))
-        }
-      </ul>
-
-      <ButtonShare
-        datatestid={ `${index}-horizontal-share-btn` }
-        url={ `http://localhost:3000/${recipe.type}s/${recipe.id}` }
-      />
-    </li>
-  );
-
-  const renderCardDrink = (recipe, index) => (
-    <li key={ recipe.id }>
-      <img
-        src={ recipe.image }
-        alt={ recipe.name }
-        style={ { width: '150px' } }
-        data-testid={ `${index}-horizontal-image` }
-      />
-      <p data-testid={ `${index}-horizontal-name` }>
-        { recipe.name}
-      </p>
-      <p data-testid={ `${index}-horizontal-top-text` }>
-        { recipe.category }
-        <p>{recipe.alcoholicOrNot}</p>
-      </p>
-      <p data-testid={ `${index}-horizontal-done-date` }>{recipe.doneDate}</p>
-      <ButtonShare
-        datatestid={ `${index}-horizontal-share-btn` }
-        url={ `http://localhost:3000/${recipe.type}s/${recipe.id}` }
-      />
-    </li>
-  );
-
   return (
     <div>
       <Header titlePage="Receitas Feitas" />
-      <button type="button" data-testid="filter-by-all-btn">All</button>
-      <button type="button" data-testid="filter-by-food-btn">Food</button>
-      <button type="button" data-testid="filter-by-drink-btn">Drinks</button>
-
+      <button
+        onClick={ handlerClickFilter }
+        type="button"
+        data-testid="filter-by-all-btn"
+      >
+        All
+      </button>
+      <button
+        onClick={ handlerClickFilter }
+        type="button"
+        data-testid="filter-by-food-btn"
+      >
+        Food
+      </button>
+      <button
+        onClick={ handlerClickFilter }
+        type="button"
+        data-testid="filter-by-drink-btn"
+      >
+        Drinks
+      </button>
       <section>
         <ul>
           {
             RecipesCompleted.map((recipe, index) => (
               recipe.type === 'comida'
-                ? renderCardMeal(recipe, index)
-                : renderCardDrink(recipe, index)
+                ? (
+                  <MealsRecipesCompleted
+                    key={ recipe.id }
+                    recipe={ recipe }
+                    index={ index }
+                    handlerClickRedirect={ handlerClickRedirect }
+                  />
+                )
+                : (
+                  <DrinkRecipesCompleted
+                    recipe={ recipe }
+                    index={ index }
+                    key={ recipe.id }
+                    handlerClickRedirect={ handlerClickRedirect }
+                  />
+                )
             ))
           }
         </ul>
