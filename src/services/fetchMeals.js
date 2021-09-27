@@ -6,7 +6,7 @@ export default async function fetchMeals(inputValue, radioValue) {
   };
 
   if (inputValue.length > 1 && radioValue === 'firstLetterSearch') {
-    alert('Sua busca deve conter somente 1 (um) caracter');
+    global.alert('Sua busca deve conter somente 1 (um) caracter');
     return;
   }
 
