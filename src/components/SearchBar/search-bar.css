@@ -1,0 +1,20 @@
+.main-container {
+  display: flex;
+  padding: 0.2em;
+  margin: 0.3em 0;
+  flex-flow: column;
+}
+
+#searchBar {
+  width: 98vw;
+}
+
+.radios {
+  display: flex;
+  margin-right: 5px;
+  justify-content: space-around;
+}
+
+.search-btn {
+  align-self: flex-start;
+}
