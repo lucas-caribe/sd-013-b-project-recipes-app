@@ -39,6 +39,10 @@ function Routes() {
           path="/explorar/comidas/area"
           component={ ExploreArea }
         />
+        <Route
+          path="/explorar/bebidas/area"
+          render={ () => <h1>Not Found</h1> }
+        />
       </Switch>
     </Router>
   );
