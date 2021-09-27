@@ -7,4 +7,11 @@ export async function fetchAllRecipes(type) {
     .then((response) => response);
 }
 
-export function exemple() {}
+export async function fetchCategories(type) {
+  const mealsCategoryURL = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
+  const drinksCategoryURL = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+
+  return fetch(type === 'meals' ? mealsCategoryURL : drinksCategoryURL)
+    .then((response) => response.json())
+    .then((response) => response);
+}

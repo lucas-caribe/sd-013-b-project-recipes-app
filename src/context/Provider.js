@@ -10,6 +10,7 @@ function Provider({ children }) {
   const [login, setLogin] = useState('');
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [allRecipes, setAllRecipes] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const contextValue = {
     statusLoginBtn,
@@ -26,6 +27,8 @@ function Provider({ children }) {
     setShowSearchBar,
     allRecipes,
     setAllRecipes,
+    categories,
+    setCategories,
   };
 
   return (

@@ -69,6 +69,25 @@
 //------------------------------------------------ */
 
 /* ------------------------------------------------//
+//                   CATEGORIAS                    //
+//------------------------------------------------ */
+
+.categories-filter {
+  align-items: center;
+  background-color: whitesmoke;
+  display: flex;
+  justify-content: space-around;
+  margin: 1rem 0;
+}
+
+.category-button button {
+  background-color: whitesmoke;
+  border: none;
+  color: darkolivegreen;
+  padding: 0.5rem 1rem;
+}
+
+/* ------------------------------------------------//
 //                      CARDS                      //
 //------------------------------------------------ */
 
