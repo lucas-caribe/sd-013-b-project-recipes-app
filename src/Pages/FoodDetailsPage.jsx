@@ -94,3 +94,4 @@ export default function FoodDetailsPage() {
   }
   return <span>Loading!!!</span>;
 }
+console.log('change');
