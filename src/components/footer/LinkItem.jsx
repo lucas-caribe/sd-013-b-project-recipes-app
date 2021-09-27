@@ -1,17 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 function LinkItem({ objProps }) {
   const { testid, rota, sourceImg, singular } = objProps;
 
   return (
-    <Link
-      to={ rota }
+    <a
       data-testid={ testid }
+      href={ rota }
+      src={ sourceImg }
     >
       <img src={ sourceImg } alt={ singular } />
-    </Link>
+    </a>
   );
 }
 

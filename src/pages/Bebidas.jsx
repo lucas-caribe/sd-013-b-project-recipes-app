@@ -1,14 +1,16 @@
 import React from 'react';
 import Header from '../components/header';
-import SearchBar from '../components/searchBar';
-import CocktailList from '../components/cocktails/CocktailList';
+import CocktailsMainList from '../components/cocktailsMainList';
+import MainCategorys from '../components/mainCategorys';
+import Footer from '../components/footer';
 
 export default function Bebidas() {
   return (
     <div>
       <Header titlePage="Bebidas" hasSearchIcon />
-      <SearchBar recipe="cocktail" />
-      <CocktailList />
+      <MainCategorys />
+      <CocktailsMainList />
+      <Footer />
     </div>
   );
 }

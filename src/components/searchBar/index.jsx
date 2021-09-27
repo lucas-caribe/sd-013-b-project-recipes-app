@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchSearchThunk } from '../../redux/action';
+import { fetchSearchThunk, SetFilterByCategory } from '../../redux/action';
 
 export default function SearchBar({ recipe }) {
   const dispatch = useDispatch();
@@ -27,6 +27,7 @@ export default function SearchBar({ recipe }) {
 
   function handleClick() {
     dispatch(fetchSearchThunk(state));
+    dispatch(SetFilterByCategory(true));
   }
 
   return (

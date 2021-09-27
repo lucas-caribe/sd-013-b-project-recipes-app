@@ -1,6 +1,11 @@
 .footer {
+  background-color: white;
   bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 1vw;
   position: fixed;
+  width: 100vw;
 }
 
 .meals {
@@ -21,4 +26,50 @@
 
 .card-img {
   width: 100%;
+}
+
+
+.main-conteiner-list {
+  align-items: center;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.main-card {
+  align-items: center;
+  border-radius: 20px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-flow: column wrap;
+  height: 150px;
+  justify-content: space-around;
+  margin: 2rem 0;
+  text-align: center;
+  transition: 0.5s;
+  width: 150px;
+
+}
+
+.main-card:hover {
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  transform: scale(1.2);
+}
+
+.main-card-image {
+  border-radius: 20px;
+  width: 70%;
+}
+
+.spinner-main {
+  animation: myRotartion 1s linear infinite;
+  font-size: 100px;
+  margin: 2rem;
+}
+
+@keyframes myRotartion {
+
+  to {
+    transform: rotate(360deg);
+  }
 }
