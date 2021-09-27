@@ -5,7 +5,7 @@ import RecipesList from './components/RecipeList';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './Login/Login';
-import perfil from './Components/testes/perfil';
+import Perfil from './Perfil/Perfil';
 import receitas from './Components/testes/receitas';
 import explorar from './Components/testes/explorar';
 import explorarComidas from './Components/testes/explorar comidas';
@@ -26,8 +26,7 @@ function App() {
         <Route exact path="/bebidas/:id" component={ RecipesList } />
         <Route exact path="/comidas" component={ RecipesList } />
         <Route exact path="/bebidas" component={ RecipesList } />
-        <Route exact path="/perfil" component={ perfil } />
-        <Route exact path="/profile" component={ perfil } />
+        <Route exact path="/perfil" component={ Perfil } />
         <Route exact path="/explorar" component={ explorar } />
         <Route exact path="/explorar/comidas" component={ explorarComidas } />
         <Route exact path="/explorar/bebidas" component={ explorarBebidas } />

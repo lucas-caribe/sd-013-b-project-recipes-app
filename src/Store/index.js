@@ -1,11 +1,10 @@
 import { createStore } from 'redux';
-// import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from '../Reducers';
 
 const store = createStore(
   rootReducer,
-  // composeWithDevTools(
-  // applyMiddleware(thunk),
+  composeWithDevTools(),
 );
 
 export default store;

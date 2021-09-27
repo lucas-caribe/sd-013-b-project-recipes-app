@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { saveEmail } from '../Actions';
 // import PropTypes from 'prop-types';
 
 function Login() {
   const history = useHistory();
   const [email, setUserEmail] = useState('');
   const [password, setPassword] = useState('');
+  // equivalente ao mapdispatchTo Props
+  const dispatch = useDispatch();
 
   // caso precisem pegar algo no local storage;
   // const mealisAuthenticated = () => localStorage.getItem(mealsToken) !== null;
@@ -36,10 +40,11 @@ function Login() {
   };
 
   const redirectToTarget = () => {
-    history.push('/comidas');
     loginmeals(1);
     loginCock(1);
     emailStorage(email);
+    dispatch(saveEmail(email));
+    history.push('/comidas');
   };
 
   const validaPassword = () => {
