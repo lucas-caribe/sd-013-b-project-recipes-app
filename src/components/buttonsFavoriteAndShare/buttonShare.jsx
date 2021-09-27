@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import copy from 'clipboard-copy';
+import shareIcon from '../../images/shareIcon.svg';
 
 export default function ButtonShare({ datatestid }) {
   const [Copied, setCopied] = useState(false);
@@ -20,14 +21,15 @@ export default function ButtonShare({ datatestid }) {
 
   return (
     <>
-      <button
+      <img
         type="button"
         data-testid={ datatestid }
         onClick={ handleClickShare }
         id="Compatilhar"
-      >
-        Compartilhar
-      </button>
+        src={ shareIcon }
+        alt="share button"
+        role="presentation"
+      />
       {Copied && <p>Link copiado!</p>}
     </>
   );
