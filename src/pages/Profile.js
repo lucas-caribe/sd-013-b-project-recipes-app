@@ -21,11 +21,6 @@ function Profile() {
     handleHeader();
   }, []);
 
- /* function getEmail() {
-    const localStorageEmail = JSON.parse(localStorage.getItem('user'));
-    return localStorageEmail ? localStorageEmail.email : 'Sem email cadastrado';
-  }*/
-
   function getOut() {
     localStorage.clear();
   }
