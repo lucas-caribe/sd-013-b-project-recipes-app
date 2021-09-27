@@ -36,12 +36,12 @@ export default function FoodDetailsPage() {
 
     const ingredients = [];
     Object.keys(mealDetails.meals[0]).forEach((key) => {
-      if (key.includes('strIngredient')) ingredients.push(drinkDetails.drinks[0][key]);
+      if (key.includes('strIngredient')) ingredients.push(mealDetails.meals[0][key]);
     });
 
     const measures = [];
-    Object.keys(drinkDetails.drinks[0]).forEach((key) => {
-      if (key.includes('strMeasure')) measures.push(drinkDetails.drinks[0][key]);
+    Object.keys(mealDetails.meals[0]).forEach((key) => {
+      if (key.includes('strMeasure')) measures.push(mealDetails.meals[0][key]);
     });
 
     return (
