@@ -24,8 +24,8 @@ function App() {
         <Route path="/bebidas" component={ MainPage } />
         <Route path="/comidas/:recipeId" component={ FoodRecipe } />
         <Route path="/bebidas/:id-da-receita" component={ FoodRecipe } />
-        {/* <Route path="/comidas/:id-da-receita/in-progress" component={ FoodInProgress } /> */}
-        {/* <Route path="/bebidas/:id-da-receita/in-progress" component={ DrinkInProgress } /> */}
+        {/* <Route path="/comidas/:id-da-receita/in-progress" component={ FoodInProgress } />
+        <Route path="/bebidas/:id-da-receita/in-progress" component={ DrinkInProgress } /> */}
         <Route exact path="/explorar" component={ Explorer } />
         <Route exact path="/explorar/comidas" component={ FoodExplorer } />
         <Route exact path="/explorar/bebidas" component={ DrinkExplorer } />
