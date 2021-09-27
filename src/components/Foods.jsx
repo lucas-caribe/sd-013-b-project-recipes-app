@@ -17,6 +17,7 @@ const inProgressRecipesObeject = {
 function Foods({ id }) {
   const history = useHistory();
   const [localStorageMeals, setlocalStorageMeals] = useState(false);
+  const [visibleMessage, setVisibleMessage] = useState(true);
   const [drinks, setDrinks] = useState([]);
   const [food, setFood] = useState({});
   const {
@@ -82,10 +83,17 @@ function Foods({ id }) {
     );
   }
 
-  console.log(history);
-
   function StartRecipeClick() {
     history.push(`/comidas/${id}/in-progress`);
+  }
+
+  function shareClick() {
+    const visibleTime = 1000;
+
+    setVisibleMessage(false);
+
+    navigator.clipboard.writeText(`http://localhost:3000${history.location.pathname}`);
+    setTimeout(() => setVisibleMessage(true), visibleTime);
   }
 
   return (
@@ -93,7 +101,14 @@ function Foods({ id }) {
       <img data-testid="recipe-photo" width="120px" src={ strMealThumb } alt="foto" />
       <h4 data-testid="recipe-title">{ strMeal }</h4>
       <p data-testid="recipe-category">{ strCategory }</p>
-      <img src={ shareIcon } alt="share" data-testid="share-btn" />
+      <p hidden={ visibleMessage }>Link copiado!</p>
+      <input
+        type="image"
+        onClick={ shareClick }
+        src={ shareIcon }
+        alt="share"
+        data-testid="share-btn"
+      />
       <img src={ favorite } alt="favorite" data-testid="favorite-btn" />
       <ul>
         { renderIngredients(ingredientsArray) }
