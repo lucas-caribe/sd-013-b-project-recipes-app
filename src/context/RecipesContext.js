@@ -19,6 +19,7 @@ export const RecipesProvider = ({ children }) => {
   const [meals, setMeals] = useState(mealsInitialState);
   const [cocktails, setCocktails] = useState(cocktailsInitialState);
   const [finishedRecipes, setFinishedRecipes] = useState([]);
+  // const [favoriteRecipes, setFavoriteRecipes] = useState([]);
 
   const setMealsList = (mealsList) => {
     setMeals({
