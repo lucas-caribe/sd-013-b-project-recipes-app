@@ -1,34 +1,22 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Redirect } from 'react-router';
 import RecipesContext from '../../Context/RecipesContext';
 
 export default function InputSearchMeals() {
-  const { mealsAndInputs:
-    { meals, search, mealInput }, setMealsAndInputs,
-  mealsAndInputs } = useContext(RecipesContext);
+  const [search, setSearch] = useState('');
+  const [mealInput, setMealInput] = useState('');
   const PRIMEIRA_LETRA = 'Primeira letra';
   const apiIngredienteUrl = 'https://www.themealdb.com/api/json/v1/1/filter.php?';
   const apiMealsUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?';
-
+  const { api, setApi } = useContext(RecipesContext);
+  const TWELVE = 12;
+  let mealsList = api.meals;
   const NOTFOUND = 'Sinto muito, não encontramos nenhuma receita para esses filtros.';
-  const alert = (response) => {
-    if (response.meals) {
-      setMealsAndInputs(
-        { search: '', mealInput: '', meals: response.meals },
-      );
-    }
-    if (!response.meals) {
-      global.alert(NOTFOUND);
-    }
-  };
 
-  if (Array.isArray(meals) && meals.length === 1) {
-    return (<Redirect
-      to={
-        `/comidas/${meals[0].idMeal}`
-      }
-    />);
-  }
+  const alert = (response) => {
+    if (response.meals) setApi(response);
+    if (!response.meals) global.alert(NOTFOUND);
+  };
 
   const handleClick = () => {
     const apiIngredienteRequest = async () => {
@@ -68,16 +56,20 @@ export default function InputSearchMeals() {
     }
   };
 
+  if (mealsList.length === 1) {
+    return <Redirect to={ `/comidas/${mealsList[0].idMeal}` } />;
+  }
+
+  if (mealsList.length > TWELVE) mealsList = mealsList.splice(0, TWELVE);
+
   return (
-    <div className="inputsSearch">
+    <>
       <input
         type="text"
         name="search"
         id="search"
         data-testid="search-input"
-        onChange={ (ev) => setMealsAndInputs(
-          { ...mealsAndInputs, mealInput: ev.target.value },
-        ) }
+        onChange={ (ev) => setMealInput(ev.target.value) }
       />
       <label htmlFor="Ingrediente">
         <input
@@ -85,9 +77,7 @@ export default function InputSearchMeals() {
           data-testid="ingredient-search-radio"
           id="Ingrediente"
           name="search"
-          onClick={ () => setMealsAndInputs(
-            { ...mealsAndInputs, search: 'Ingrediente' },
-          ) }
+          onClick={ () => setSearch('Ingrediente') }
         />
         Ingrediente
       </label>
@@ -97,7 +87,7 @@ export default function InputSearchMeals() {
           data-testid="name-search-radio"
           id="Nome"
           name="search"
-          onClick={ () => setMealsAndInputs({ ...mealsAndInputs, search: 'Nome' }) }
+          onClick={ () => setSearch('Nome') }
         />
         Nome
       </label>
@@ -107,9 +97,7 @@ export default function InputSearchMeals() {
           data-testid="first-letter-search-radio"
           id="Primeira letra"
           name="search"
-          onClick={ () => setMealsAndInputs(
-            { ...mealsAndInputs, search: PRIMEIRA_LETRA },
-          ) }
+          onClick={ () => setSearch(PRIMEIRA_LETRA) }
         />
         Primeira letra
       </label>
@@ -120,6 +108,15 @@ export default function InputSearchMeals() {
       >
         Buscar
       </button>
-    </div>
+      { api.meals.map((meal, index) => (
+        <div data-testid={ `${index}-recipe-card` } key={ index }>
+          <img
+            data-testid={ `${index}-card-img` }
+            src={ meal.strMealThumb }
+            alt="Meal card"
+          />
+          <p data-testid={ `${index}-card-name` }>{ meal.strMeal }</p>
+        </div>))}
+    </>
   );
 }
