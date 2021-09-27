@@ -7,7 +7,7 @@ export default async function fetchDrinks(inputValue, radioValue) {
   };
 
   if (inputValue.length > 1 && radioValue === 'firstLetterSearch') {
-    alert('Sua busca deve conter somente 1 (um) caracter');
+    global.alert('Sua busca deve conter somente 1 (um) caracter');
     return;
   }
 
@@ -23,19 +23,37 @@ export default async function fetchDrinks(inputValue, radioValue) {
 }
 
 export async function fetchInitialDrinks() {
-  const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-  const data = await response.json();
-  return data.drinks;
+  try {
+    const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    const data = await response.json();
+    return data.drinks;
+  } catch (err) {
+    console.log(err, 'FETCH ERROU');
+  }
 }
 
 export async function fetchDrinksFilters() {
-  const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
-  const data = await response.json();
-  return data;
+  try {
+    const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.log(err, 'erro no fetch');
+  }
 }
 
 export async function fetchDrinkByCategory(category) {
-  const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`);
+  try {
+    const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`);
+    const data = await response.json();
+    return data.drinks;
+  } catch (err) {
+    console.log(err, 'deu ruim no fech, pare para tomar uma bavaria');
+  }
+}
+
+export async function fetchDrinksById(id) {
+  const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
   const data = await response.json();
   return data.drinks;
 }

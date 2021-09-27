@@ -17,7 +17,8 @@ function SearchBar({ pageTitle }) {
       const data = await fetchMeals(inputValue, radioValue);
       setMeals(data);
       if (!data) {
-        return alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+        return global.alert('Sinto muito, não encontramos nenhuma '
+        + 'receita para esses filtros.');
       }
       if (data.length === 1) history.push(`comidas/${data[0].idMeal}`);
       return;
@@ -26,7 +27,8 @@ function SearchBar({ pageTitle }) {
       const data = await fetchDrinks(inputValue, radioValue);
       setDrinks(data);
       if (!data) {
-        return alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+        return global.alert('Sinto muito, não encontramos nenhuma '
+        + 'receita para esses filtros.');
       }
       if (data.length === 1) history.push(`bebidas/${data[0].idDrink}`);
     }
