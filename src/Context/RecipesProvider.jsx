@@ -28,14 +28,6 @@ function RecipesProvider({ children }) {
     mealsAndInputs,
     setMealsAndInputs };
 
-  //   useEffect(() => {
-  //     async function fetchData() {
-  //       const mealsApiRequest = await fetch().then()
-
-  //     }
-
-  //   }, [input])
-
   return (
     <RecipesContext.Provider value={ contextValue }>
       {children}

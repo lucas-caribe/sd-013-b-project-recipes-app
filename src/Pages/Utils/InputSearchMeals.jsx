@@ -22,7 +22,7 @@ export default function InputSearchMeals() {
     }
   };
 
-  if (Array.isArray(meals) && meals.length === 1 && meals[0].idMeal !== '52832') {
+  if (Array.isArray(meals) && meals.length === 1) {
     return (<Redirect
       to={
         `/comidas/${meals[0].idMeal}`
