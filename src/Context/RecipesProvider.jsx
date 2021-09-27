@@ -9,6 +9,7 @@ function RecipesProvider({ children }) {
   const [api, setApi] = useState({ meals: [], drinks: [] });
   const [randomMeal, setRandomMeal] = useState({});
   const [meals, setMeals] = useState([]);
+  const [drinks, setDrinks] = useState([]);
   const [mealsAndInputs, setMealsAndInputs] = useState(
     { meals: [], search: '', mealInput: '' },
   );
@@ -26,7 +27,10 @@ function RecipesProvider({ children }) {
     meals,
     setMeals,
     mealsAndInputs,
-    setMealsAndInputs };
+    setMealsAndInputs,
+    drinks,
+    setDrinks,
+  };
 
   return (
     <RecipesContext.Provider value={ contextValue }>

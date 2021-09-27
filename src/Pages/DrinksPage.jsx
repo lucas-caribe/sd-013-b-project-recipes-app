@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import Footer from '../Components/Footer';
+import RecipesContext from '../Context/RecipesContext';
 import MainFoodPage from './HeaderWithSearch';
 
 export default function DrinksPage() {
-  const [drinks, setDrinks] = useState([]);
+  const { drinks, setDrinks } = useContext(RecipesContext);
   const [drinkCategories, setDrinkCategories] = useState([]);
   const [categoryToogle, setCategoryToogle] = useState({ category: '', toogle: false });
   const TWELVE = 12;
@@ -85,6 +87,7 @@ export default function DrinksPage() {
           </div>
         ))
       }
+      <Footer />
     </>
   );
 }

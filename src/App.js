@@ -6,7 +6,6 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 // Início
 import RecipesProvider from './Context/RecipesProvider';
 import DrinksPage from './Pages/DrinksPage';
-import MainFoodPage from './Pages/HeaderWithSearch';
 import ProfilePage from './Pages/ProfilePage';
 import Login from './Pages/Login';
 import ExplorePage from './Pages/ExplorePage';
@@ -19,6 +18,9 @@ import DoneRecipes from './Pages/DoneRecipes';
 import FavoriteRecipes from './Pages/FavoriteRecipes';
 import DrinkDetails from './Pages/DrinkDetails';
 import MealDetails from './Pages/MealDetails';
+import MealsPage from './Pages/MealsPage';
+import ExploreRecipesByIngredient from './Pages/ExploreMealsRecipesByIngredient';
+import ExploreDrinksRecipesByIngredient from './Pages/ExploreDrinksRecipesByIngredient';
 // import RecipesContext from './Context/RecipesContext';
 
 function App() {
@@ -29,9 +31,25 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={ Login } />
-          <Route exact path="/comidas" component={ MainFoodPage } />
+          <Route exact path="/comidas" component={ MealsPage } />
+          <Route exact path="/comidas/nome/:nome" component={ MealsPage } />
+          <Route
+            exact
+            path="/comidas/ingrediente/:ingrediente"
+            component={ ExploreRecipesByIngredient }
+          />
+          <Route
+            exact
+            path="/comidas/primeira-letra/:letra"
+            component={ MealsPage }
+          />
           <Route exact path="/perfil" component={ ProfilePage } />
           <Route exact path="/bebidas" component={ DrinksPage } />
+          <Route
+            exact
+            path="/bebidas/ingrediente/:ingrediente"
+            component={ ExploreDrinksRecipesByIngredient }
+          />
           <Route exact path="/explorar" component={ ExplorePage } />
           <Route exact path="/explorar/comidas" component={ ExploreMealsPage } />
           <Route exact path="/comidas/:idMeal" component={ MealDetails } />
