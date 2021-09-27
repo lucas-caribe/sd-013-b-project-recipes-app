@@ -3,6 +3,7 @@ import { useParams, useHistory } from 'react-router';
 
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import { getRecipe } from '../helpers/getFoodOrDrinkProperties';
 import Context from '../context/Context';
 import '../styles/details.css';
@@ -47,6 +48,7 @@ const RecipeDetails = () => {
   const [object, setObject] = useState();
   const [featured, setFeatured] = useState();
   const [copied, setCopied] = useState(false);
+  const [favorite, setFavorite] = useState(whiteHeartIcon);
 
   const history = useHistory();
   const { id } = useParams();
@@ -76,6 +78,35 @@ const RecipeDetails = () => {
   function handleShare() {
     navigator.clipboard.writeText(window.location.href);
     setCopied(true);
+  }
+
+  function handleFavorite() {
+    const recipe = { id, ...RECIPE_DATA };
+    const localFavorites = localStorage.getItem('favoriteRecipes');
+    if (localFavorites) {
+      const localArray = JSON.parse(localFavorites);
+      const isFavorite = localArray.some((el) => (el.id === id));
+      if (isFavorite) {
+        const filteredArray = localArray.filter((el) => (el.id !== id));
+        localStorage.setItem('favoriteRecipes', JSON.stringify(filteredArray));
+        return;
+      }
+      const newFavorites = JSON.stringify([...localArray, recipe]);
+      localStorage.setItem('favoriteRecipes', newFavorites);
+    } else {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([recipe]));
+    }
+  }
+
+  let icon = whiteHeartIcon;
+
+  const localFavorites = localStorage.getItem('favoriteRecipes');
+
+  if (localFavorites) {
+    const localArray = JSON.parse(localFavorites);
+    const isFavorite = localArray.some((el) => (el.id === id));
+
+    if (isFavorite) icon = blackHeartIcon;
   }
 
   function handleStart() {
@@ -119,10 +150,11 @@ const RecipeDetails = () => {
                 </button>
                 <button
                   type="button"
+                  onClick={ handleFavorite }
                 >
                   <img
                     data-testid="favorite-btn"
-                    src={ whiteHeartIcon }
+                    src={ icon }
                     alt="whiteHeart icon"
                     id={ id }
                   />
