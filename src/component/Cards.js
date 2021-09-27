@@ -7,7 +7,6 @@ export default function Cards() {
   const history = useHistory();
   const ForD = history.location.pathname;
   const DOZE = 12;
-  console.log(filteredItem);
 
   return (
     <div>
