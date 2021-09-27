@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import myContext from '../context/mycontext';
 import Header from './Header';
 import ReceitaCard from './ReceitaCard';
@@ -12,12 +13,21 @@ export default function PageBebidas() {
       <br />
       { data.map((bebida, index) => {
         if (index < NUMBER) {
-          return (<ReceitaCard
-            key={ bebida.idDrink }
-            thumb={ bebida.strDrinkThumb }
-            index={ index }
-            name={ bebida.strDrink }
-          />);
+          return (
+            <Link
+              to={ {
+                pathname: `/bebidas/${bebida.idDrink}`,
+                state: { name: bebida.strDrink },
+              } }
+            >
+              <ReceitaCard
+                key={ bebida.idDrink }
+                thumb={ bebida.strDrinkThumb }
+                index={ index }
+                name={ bebida.strDrink }
+              />
+            </Link>
+          );
         }
         return false;
       }) }
