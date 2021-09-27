@@ -25,7 +25,7 @@ const SearchBar = () => {
     if (pathname === '/bebidas') {
       setDomain('thecocktaildb');
     }
-  }, [pathname]);
+  }, []);
 
   const validateSearchWord = async () => {
     if (searchWord.length > 1) {
