@@ -21,7 +21,6 @@ import ExploreDrinks from './Pages/ExploreDrinks';
 import ExploreFoodIngredient from './Pages/ExploreFoodIngredient';
 import ExploreFoodArea from './Pages/ExploreFoodArea';
 
-
 function App() {
   return (
     <Provider>
