@@ -18,10 +18,6 @@ body {
   width: 100%;
 }
 
-.categoryButtons {
-  margin-top: 50px;
-}
-
 .rocksGlass {
   animation: shake 1s infinite ease;
   max-height: 80vh;
@@ -85,11 +81,6 @@ header {
   display: flex;
   height: 39px;
   justify-content: space-between;
-  max-width: 100;
-  overflow: hidden;
-  position: fixed;
-  top: 0;
-  width: 100%;
 }
 
 footer {
@@ -149,20 +140,6 @@ footer {
   transform: rotate(-180deg) translate(150px, 0);
 }
 
-.cardImages {
-  border: solid black 1px;
-  height: 10%;
-  width: 10%;
-}
-
-.inputsSearch {
-  margin-top: 50px;
-}
-
-.card img {
-  margin: 15px auto;
-  max-width: 100%;
-}
 
 .animate span:nth-of-type( 2 ) {
   animation-delay: 500ms;

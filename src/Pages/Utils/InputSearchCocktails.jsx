@@ -63,7 +63,7 @@ export default function InputSearchCocktails() {
   if (drinksList.length > TWELVE) drinksList = drinksList.splice(0, TWELVE);
 
   return (
-    <div className="inputsSearch">
+    <>
       <input
         type="text"
         name="search"
@@ -109,7 +109,7 @@ export default function InputSearchCocktails() {
         Buscar
       </button>
       { drinksList.map((drink, index) => (
-        <div className="card" data-testid={ `${index}-recipe-card` } key={ index }>
+        <div data-testid={ `${index}-recipe-card` } key={ index }>
           <img
             data-testid={ `${index}-card-img` }
             src={ drink.strDrinkThumb }
@@ -117,6 +117,6 @@ export default function InputSearchCocktails() {
           />
           <p data-testid={ `${index}-card-name` }>{ drink.strDrink }</p>
         </div>))}
-    </div>
+    </>
   );
 }

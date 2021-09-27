@@ -8,10 +8,6 @@ function RecipesProvider({ children }) {
   const [searchBar, setsearchBar] = useState(false);
   const [api, setApi] = useState({ meals: [], drinks: [] });
   const [randomMeal, setRandomMeal] = useState({});
-  const [meals, setMeals] = useState([]);
-  const [mealsAndInputs, setMealsAndInputs] = useState(
-    { meals: [], search: '', mealInput: '' },
-  );
 
   const contextValue = { email,
     setEmail,
@@ -22,11 +18,15 @@ function RecipesProvider({ children }) {
     api,
     setApi,
     randomMeal,
-    setRandomMeal,
-    meals,
-    setMeals,
-    mealsAndInputs,
-    setMealsAndInputs };
+    setRandomMeal };
+
+  //   useEffect(() => {
+  //     async function fetchData() {
+  //       const mealsApiRequest = await fetch().then()
+
+  //     }
+
+  //   }, [input])
 
   return (
     <RecipesContext.Provider value={ contextValue }>
