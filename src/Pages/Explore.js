@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import ExplorerBy from '../Components/ExplorerBy';
+import Explorer from '../Components/Explorer';
 import Header from '../Components/Header';
 import LowerMenu from '../Components/LowerMenu';
 
@@ -23,7 +23,7 @@ const Explore = () => {
         right={ filter === 'area' ? 'search' : 'none' }
       />
       {main}
-      <ExplorerBy />
+      <Explorer />
       <LowerMenu />
     </div>
   );
