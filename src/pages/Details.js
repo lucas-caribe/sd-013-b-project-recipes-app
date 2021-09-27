@@ -5,9 +5,7 @@ import '../styles/details.css';
 
 function Details() {
   return (
-    <div>
-      <RecipeDetails />
-    </div>
+    <RecipeDetails />
   );
 }
 
