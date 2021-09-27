@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory, useLocation, useParams } from 'react-router';
 
 import FavoriteButton from '../../components/FavoriteButton';
 import RecommendationCard from '../../components/RecommendationCard';
@@ -12,7 +13,11 @@ import whiteHeart from '../../images/whiteHeartIcon.svg';
 import shareIcon from '../../images/shareIcon.svg';
 import ShareButton from '../../components/ShareButton';
 
-function Detalhes({ location: { pathname }, history }) {
+function Detalhes() {
+  const history = useHistory();
+  const { pathname } = useLocation();
+  const { id } = useParams();
+
   const [isCopied, setIsCopied] = useState(false);
 
   const {
@@ -27,7 +32,7 @@ function Detalhes({ location: { pathname }, history }) {
 
   useEffect(() => {
     fetchRecommendations(pathname);
-    fetchRecipe(pathname);
+    fetchRecipe(pathname, id);
 
     return setIsCopied(false);
   }, [pathname]);
@@ -57,7 +62,7 @@ function Detalhes({ location: { pathname }, history }) {
     </div>
   );
 
-  const checkRecipeStatus = (path, id) => {
+  const checkRecipeStatus = (path) => {
     const recipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const checkId = finishedRecipes.some((recipe) => recipe.id === id);
     if (!checkId && !recipes) {
@@ -132,7 +137,7 @@ function Detalhes({ location: { pathname }, history }) {
           frameBorder="0"
         />}
         {renderRecommendations()}
-        {checkRecipeStatus(path, item[type][0][`id${property}`])}
+        {checkRecipeStatus(path)}
       </main>
     );
   };

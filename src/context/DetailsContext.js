@@ -18,10 +18,8 @@ export const DetailsContext = createContext();
 
 export const DetailsProvider = ({ children }) => {
   const [item, setItem] = useState(itemInitialState);
-  const [ingredients, setIngredients] = useState(['xablau']);
+  const [ingredients, setIngredients] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
-
-  const ID = 9;
 
   const organizeIngredients = (recipe) => {
     const recipeInfo = recipe[0];
@@ -40,9 +38,9 @@ export const DetailsProvider = ({ children }) => {
     setIngredients(finalIngredients);
   };
 
-  const fetchRecipe = useCallback(async (pathname) => {
+  const fetchRecipe = useCallback(async (pathname, id) => {
     if (pathname.includes('comidas')) {
-      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${pathname.slice(ID)}`);
+      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
       const { meals: meal } = await response.json();
       organizeIngredients(meal);
       setItem({
@@ -50,7 +48,7 @@ export const DetailsProvider = ({ children }) => {
         meal,
       });
     } else {
-      const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${pathname.slice(ID)}`);
+      const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
       const { drinks: drink } = await response.json();
       organizeIngredients(drink);
       setItem({
