@@ -7,7 +7,9 @@ import Profile from './Pages/Profile';
 import FoodPage from './Pages/FoodPage';
 import DrinkPage from './Pages/DrinkPage';
 import Provider from './context/Provider';
-import RecipeDetails from './components/RecipeDetails';
+// import RecipeDetails from './components/RecipeDetails';
+import FoodDetailsPage from './Pages/FoodDetailsPage';
+import DrinkDetailsPage from './Pages/DrinkDetailsPage';
 
 function App() {
   return (
@@ -16,12 +18,14 @@ function App() {
         <Route exact path="/" component={ Login } />
         <Route exact path="/perfil" component={ Profile } />
         <Route exact path="/comidas" component={ FoodPage } />
-        <Route exact path="/comidas/:id" component={ RecipeDetails } />
+        <Route exact path="/comidas/:id" component={ FoodDetailsPage } />
         <Route exact path="/bebidas" component={ DrinkPage } />
-        <Route exact path="/bebidas/:id" component={ RecipeDetails } />
+        <Route exact path="/bebidas/:id" component={ DrinkDetailsPage } />
       </Switch>
     </Provider>
   );
 }
 
 export default App;
+
+//  178319
