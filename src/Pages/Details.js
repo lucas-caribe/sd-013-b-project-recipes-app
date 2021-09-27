@@ -88,7 +88,15 @@ const Details = (props) => {
         subTitle={ subTitle }
         type={ type }
       />
+      <button
+        type="button"
+        onClick={ () => {
+          finishRecipe(itemToRedux);
+        } }
+      >
+        Finalizar
 
+      </button>
       <DetailsIngredients
         ingredients={ ingredients }
         measures={ measures }
