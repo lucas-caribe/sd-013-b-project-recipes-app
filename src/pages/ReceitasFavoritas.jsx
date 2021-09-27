@@ -1,19 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import { clickShare } from '../services/functionsForDetails';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 export default function ReceitasFavoritas() {
   const [copyOk, setCopyOk] = useState(false);
-  const favoriteRecipesFromStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  console.log(favoriteRecipesFromStorage);
+  const [favoritesFromStorage, setFavoritesFromStorage] = useState([]);
+
+  useEffect(() => {
+    setFavoritesFromStorage(JSON.parse(localStorage.getItem('favoriteRecipes')));
+  }, []);
+  const clickFavoriteButton = (Id) => {
+    const favoriteStorage = localStorage.getItem('favoriteRecipes');
+    const favoritesObj = JSON.parse(favoriteStorage);
+    const newFavorite = favoritesObj.filter((element) => element.id !== Id);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorite));
+    setFavoritesFromStorage(newFavorite);
+  };
   return (
     <main className="main-content">
       <Header pageTitle="Receitas Favoritas" searchButton={ false } />
       <h1>Receitas favoritas</h1>
       <div>
-        {favoriteRecipesFromStorage.map((recipes, index) => (
+        {favoritesFromStorage.map((recipes, index) => (
           <div key={ index }>
             <button type="button" data-testid="filter-by-all-btn">All</button>
             <button type="button" data-testid="filter-by-food-btn">Food</button>
@@ -41,7 +52,8 @@ export default function ReceitasFavoritas() {
             <button
               type="button"
               data-testid={ `${index}-horizontal-favorite-btn` }
-              src={ blackHeartIcon }
+              onClick={ () => clickFavoriteButton(recipes.id) }
+              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
             >
               <img src={ blackHeartIcon } alt="blackHeart" />
             </button>
