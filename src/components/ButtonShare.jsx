@@ -12,7 +12,7 @@ async function buttonCopy(event) {
   } else {
     copy(`http://localhost:3000/comidas/${id}`);
   }
-  // return (window.alert('Link copiado!'));
+  global.alert('Link copiado!');
 }
 
 function ButtonShare(props) {
