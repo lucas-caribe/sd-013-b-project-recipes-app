@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 import { sendRecipeToGlobalMeal } from '../redux/actions';
 import fetchIdComidas from '../services/fetchIdComidas';
 import { fetchRecomendationsDrinks } from '../services/fetchIdBebidas';
-import getSixCards, { ChoiceButton, clickShare,
+import getSixCards, { ChoiceButton,
   clickFavoriteMeal,
   getEmbedVideo, getIngredient,
   getMeasure,
@@ -47,6 +47,11 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal,
     tipo: 'comidas',
   };
 
+  const clickShareComidas = () => {
+    navigator.clipboard.writeText(window.location.href);
+    setCopyOk(true);
+  };
+
   const getIngredientAndMeasure = () => {
     const array = [];
     if (getMeasure(objIdReceita, 'comida') !== undefined
@@ -80,7 +85,7 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal,
       <button
         type="button"
         data-testid="share-btn"
-        onClick={ () => clickShare(setCopyOk) }
+        onClick={ () => clickShareComidas() }
       >
         <img src={ shareIcon } alt="shareIcon" />
       </button>

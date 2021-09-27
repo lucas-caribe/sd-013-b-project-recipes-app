@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 import fetchIdBebidas from '../services/fetchIdBebidas';
 import shareIcon from '../images/shareIcon.svg';
 import getSixCards, { ChoiceButton,
-  clickShare, clickFavoriteDrink,
+  clickFavoriteDrink,
   verifyFavorite, getMeasure, getIngredient } from '../services/functionsForDetails';
 import { fetchRecomendationsMeals } from '../services/fetchIdComidas';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -41,6 +41,11 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
     objToReducer,
     id,
     tipo: 'bebidas',
+  };
+
+  const clickShareBebidas = () => {
+    navigator.clipboard.writeText(window.location.href);
+    setCopyOk(true);
   };
 
   const getIngredientAndMeasure = () => {
@@ -88,7 +93,7 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
       <button
         type="button"
         data-testid="share-btn"
-        onClick={ () => clickShare(setCopyOk) }
+        onClick={ () => clickShareBebidas() }
       >
         <img src={ shareIcon } alt="shareIcon" />
       </button>
