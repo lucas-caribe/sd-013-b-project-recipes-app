@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ButtonShare from './buttonShare';
 
 export default function ButtonsFavoriteAndShare({ testIdShare, testIdFavorite }) {
@@ -9,3 +10,8 @@ export default function ButtonsFavoriteAndShare({ testIdShare, testIdFavorite })
     </>
   );
 }
+
+ButtonsFavoriteAndShare.propTypes = {
+  testIdFavorite: PropTypes.string.isRequired,
+  testIdShare: PropTypes.string.isRequired,
+};
