@@ -51,10 +51,13 @@ const renderWithRouterAndContext = (
     searchProps = INITIAL_SEARCH,
     recipesProps = INITIAL_RECIPES,
     detailsProps = INITIAL_DETAILS,
+    initialEntries = ['/'],
     ...renderOptions
   } = {},
 ) => {
-  const history = createMemoryHistory();
+  const history = createMemoryHistory({
+    initialEntries,
+  });
 
   return {
     ...render(
