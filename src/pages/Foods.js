@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import Context from '../context/Context';
+import Cards from '../component/Cards';
 
 function Foods() {
   const {
@@ -20,7 +21,7 @@ function Foods() {
 
   return (
     <div>
-      <h1>COMIDAS</h1>
+      <Cards />
     </div>
   );
 }
