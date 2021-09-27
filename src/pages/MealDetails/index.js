@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './style.css';
 import { useHistory } from 'react-router-dom';
+import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../../images/blackHeartIcon.svg';
 
 const MAX_RECOMENDATIONS = 6;
 const MAX_NUMBER = 20;
@@ -15,6 +17,7 @@ const MealDetails = (props) => {
   const [meal, setMeal] = useState({});
   const [drinks, setDrinks] = useState([]);
   const history = useHistory();
+  const [favorite, setFavorite] = useState(false);
 
   useEffect(() => {
     async function getMeal() {
@@ -67,8 +70,28 @@ const MealDetails = (props) => {
       <button type="button" data-testid="share-btn">
         Compartilhar
       </button>
-      <button type="button" data-testid="favorite-btn">
-        Favoritar
+      <button
+        onClick={ () => setFavorite(!favorite) }
+        type="button"
+        data-testid="favorite-btn"
+      >
+        {
+          favorite ?
+            <button
+              aria-label="favorite button"
+              onClick={ () => setFavorite(!favorite) }
+              type="button"
+              data-testid="favorite-btn"
+              src={ blackHeartIcon }
+            />
+            : <button
+              aria-label="favorite button"
+              onClick={ () => setFavorite(!favorite) }
+              type="button"
+              data-testid="favorite-btn"
+              src={ whiteHeartIcon }
+            />
+        }
       </button>
       <p data-testid="recipe-category">{meal.strCategory}</p>
       {ingredients.map((ingredient, index) => (
