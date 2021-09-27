@@ -14,14 +14,6 @@ function Bebidas() {
       .then((data) => setDrinks([...data]));
   }, [setDrinks]);
 
-  // useEffect(() => {
-  //   const request = async () => {
-  //     const response = await fetchInitialDrinks();
-  //     return response;
-  //   };
-  //   request().then((response) => setDrinks([...response]));
-  // }, [setDrinks]);
-
   const renderDrinks = () => (
     drinks.map(({ idDrink, strDrink, strDrinkThumb }, index) => (
       <div key={ strDrink }>
@@ -40,7 +32,9 @@ function Bebidas() {
     <div>
       <Header pageTitle="Bebidas" haveHeader="active" />
       <div>Bebidas</div>
+
       { drinks && renderDrinks() }
+
       <Footer />
       <FilteringDrinkButtons />
     </div>

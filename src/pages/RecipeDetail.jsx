@@ -56,7 +56,8 @@ function RecipeDetail({ match: { params: { id } }, type }) {
     };
     getDetails();
     getSuggestions();
-  }, []);
+  }, [endPoints.drink, endPoints.meal,
+    endPoints.suggestedDrinks, endPoints.suggestedMeals, type]);
 
   const handleShareClick = () => {
     setModal('Link copiado!');

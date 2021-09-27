@@ -1,19 +1,22 @@
 import React from 'react';
-import DoneRecipesFilter from '../components/DoneRecipesFilters';
-import Header from '../components/Header';
-import DoneCard from '../components/DoneCard';
 
-function ReceitasFeitas() {
+function DoneCard() {
+  let doneRecipesStorage = localStorage.getItem('doneRecipes');
+  doneRecipesStorage = JSON.parse(doneRecipesStorage);
+  console.log(doneRecipesStorage);
+
+  if (!doneRecipesStorage) {
+    console.log('ok');
+  }
+
   return (
     <div>
-      <Header pageTitle="Receitas Feitas" haveHeader={ false } />
-      <DoneRecipesFilter />
-      <DoneCard />
+      cards
     </div>
   );
 }
 
-export default ReceitasFeitas;
+export default DoneCard;
 
 /*
 [{
