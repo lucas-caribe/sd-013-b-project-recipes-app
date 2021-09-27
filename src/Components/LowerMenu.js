@@ -17,7 +17,7 @@ class LowerMenu extends Component {
             bebidas
           </button>
         </Link>
-        <Link to="/comidas">
+        <Link to="/explorar">
           <button
             type="button"
             data-testid="explore-bottom-btn"
@@ -26,7 +26,7 @@ class LowerMenu extends Component {
             explorar
           </button>
         </Link>
-        <Link to="/explorar">
+        <Link to="/comidas">
           <button
             type="button"
             data-testid="food-bottom-btn"

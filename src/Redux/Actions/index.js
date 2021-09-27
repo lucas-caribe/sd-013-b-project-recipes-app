@@ -1,6 +1,8 @@
 const STORE_USER_INFO = 'STORE_USER_INFO';
 const FILTER_ITEMS = 'FILTER_ITENS';
 const CLEAN_ITENS = 'CLEAN_ITENS';
+const RANDOM_FOOD = 'https://www.themealdb.com/api/json/v1/1/random.php';
+const RANDOM_DRINKS = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
 
 const storeUser = (email, password) => {
   localStorage.setItem('mealsToken', 1);
@@ -62,3 +64,23 @@ const fetchFilteredItems = (userType, userFilter, userInput) => (dispatch) => {
 export {
   STORE_USER_INFO,
   FILTER_ITEMS, CLEAN_ITENS, storeUser, fetchFilteredItems, cleanFilter };
+
+export const fetchRandomMeal = async () => {
+  try {
+    const response = await fetch(RANDOM_FOOD);
+    const { meals } = await response.json();
+    return meals;
+  } catch (error) {
+    throw new Error('Não foi possível realizar pesquisa');
+  }
+};
+
+export const fetchRandomDrink = async () => {
+  try {
+    const response = await fetch(RANDOM_DRINKS);
+    const { drinks } = await response.json();
+    return drinks;
+  } catch (error) {
+    throw new Error('Não foi possível realizar pesquisa');
+  }
+};

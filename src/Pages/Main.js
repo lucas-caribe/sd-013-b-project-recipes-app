@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Header from '../Components/Header';
 import SearchBar from '../Components/SearchBar';
 import FoodCards from '../Components/FoodCards';
+import Explorer from '../Components/Explorer';
 
 const Main = () => {
   const { id, type, status } = useParams();
@@ -28,6 +29,7 @@ const Main = () => {
       {showHeader ? renderHeader() : null}
       {showSearch && <SearchBar type={ type } />}
       <FoodCards type={ type } />
+      <Explorer />
     </div>
   );
 };
