@@ -1,40 +1,41 @@
 import React, { useContext, useEffect } from 'react';
-import { useLocation } from 'react-router';
+import { useHistory } from 'react-router';
 
 import RecipesContext from '../../context/Recipes/RecipesContext';
+
+import {
+  renderIngredients,
+  renderRecomendationList,
+  handleStartRecipe,
+  handleShareBtn,
+} from '../helper';
 
 import './style.css';
 import share from '../../images/shareIcon.svg';
 import favoriteWhite from '../../images/whiteHeartIcon.svg';
 
 function DrinkDetails() {
-  const { fetchRecipeById, recipeDetails } = useContext(RecipesContext);
-  const location = useLocation();
+  const {
+    fetchRecipeById,
+    recipeDetails,
+    recipesRecommendedList,
+    fetchRecipesRecommendedList,
+  } = useContext(RecipesContext);
+  const history = useHistory();
 
   useEffect(() => {
-    const [type, id] = location.pathname.split('/').splice(1);
+    const [type, id] = history.location.pathname.split('/').splice(1);
     const recipeType = type === 'comidas' ? 'meals' : 'drinks';
     fetchRecipeById(recipeType, id);
-  }, [location, fetchRecipeById]);
+    fetchRecipesRecommendedList('meals');
+  }, [history, fetchRecipeById, fetchRecipesRecommendedList]);
 
   const handleFavotiteBtn = ({ target }) => {
     const { src } = target || target.firstElementChild;
     console.log(src);
   };
 
-  const renderIngredients = () => {
-    const ingredientsList = Object.entries(recipeDetails)
-      .filter((e) => (e[0].includes('Ingredient') && e[1]));
-    const measuresList = Object.entries(recipeDetails)
-      .filter((e) => (e[0].includes('Measure') && e[1]));
-    return ingredientsList.map((ingredient, i) => (
-      <li
-        key={ ingredient[0] }
-        data-testid={ `${i}-ingredient-name-and-measure` }
-      >
-        {`${ingredient[1]} - ${measuresList[i][1]}`}
-      </li>));
-  };
+  if (!Object.keys(recipeDetails).length) return <div />;
 
   const {
     strDrink,
@@ -43,8 +44,6 @@ function DrinkDetails() {
     strInstructions,
   } = recipeDetails;
 
-  if (!Object.keys(recipeDetails).length) return <div />;
-  console.log(recipeDetails);
   return (
     <div>
       <img
@@ -54,19 +53,38 @@ function DrinkDetails() {
         alt={ strDrink }
       />
       <h2 data-testid="recipe-title">{strDrink}</h2>
-      <button type="button" data-testid="share-btn">
-        <img src={ share } alt="share" />
-      </button>
-      <button type="button" data-testid="favorite-btn" onClick={ handleFavotiteBtn }>
-        <img src={ favoriteWhite } alt="favorite" />
-      </button>
+      <div>
+        <button
+          type="button"
+          data-testid="share-btn"
+          onClick={ () => handleShareBtn(window.location.href) }
+        >
+          <img src={ share } alt="share" />
+        </button>
+        <button type="button" data-testid="favorite-btn" onClick={ handleFavotiteBtn }>
+          <img src={ favoriteWhite } alt="favorite" />
+        </button>
+        <div className="share-text">Link copiado!</div>
+      </div>
       <p data-testid="recipe-category">{strAlcoholic}</p>
       <ul>
-        { renderIngredients() }
+        { renderIngredients(recipeDetails) }
       </ul>
       <p data-testid="instructions">{strInstructions}</p>
-      <p data-testid="0-recomendation-card">card de receitas recomendadas</p>
-      <button type="button" data-testid="start-recipe-btn">Iniciar receita</button>
+      <div className="recomendation-list">
+        {
+          recipesRecommendedList
+            .map((card, index) => renderRecomendationList(card, index, 'Meal'))
+        }
+      </div>
+      <button
+        type="button"
+        data-testid="start-recipe-btn"
+        className="start-recipe-btn"
+        onClick={ () => handleStartRecipe(history) }
+      >
+        Iniciar receita
+      </button>
     </div>
   );
 }

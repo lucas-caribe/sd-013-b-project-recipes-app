@@ -20,9 +20,11 @@ const URL = {
 };
 const CATEGORIES_TO_SHOW = 5;
 const RECIPES_TO_SHOW = 12;
+const RECOMMENDEDS_TO_SHOW = 6;
 
 function RecipesProvider({ children }) {
   const [recipes, setRecipes] = useState([]);
+  const [recipesRecommendedList, setRecipesRecommendedList] = useState([]);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState('');
   const [type, setType] = useState('');
@@ -35,6 +37,13 @@ function RecipesProvider({ children }) {
       .map(({ strCategory }) => strCategory);
     setCategories(categoriesList);
     setType(recipeType);
+  }, []);
+
+  const fetchRecipesRecommendedList = useCallback(async (recipeType) => {
+    const data = await fetchApi(URL[recipeType].list);
+    const recipesList = data[recipeType]
+      .filter((recipe) => data[recipeType].indexOf(recipe) < RECOMMENDEDS_TO_SHOW);
+    setRecipesRecommendedList(recipesList);
   }, []);
 
   const fetchRecipesList = useCallback(async (recipeType) => {
@@ -68,9 +77,11 @@ function RecipesProvider({ children }) {
     handleClickCategory,
     fetchRecipesList,
     fetchRecipeById,
+    fetchRecipesRecommendedList,
     categories,
     recipes,
     recipeDetails,
+    recipesRecommendedList,
   };
 
   return (
