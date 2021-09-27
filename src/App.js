@@ -7,6 +7,11 @@ import Profile from './Pages/Profile';
 import FoodPage from './Pages/FoodPage';
 import DrinkPage from './Pages/DrinkPage';
 import Provider from './context/Provider';
+
+// import RecipeDetails from './components/RecipeDetails';
+import FoodDetailsPage from './Pages/FoodDetailsPage';
+import DrinkDetailsPage from './Pages/DrinkDetailsPage';
+
 import RecipeDetails from './components/RecipeDetails';
 import CompletedRecipes from './Pages/CompletedRecipes';
 import FavoriteRecipes from './Pages/FavoriteRecipes';
@@ -23,8 +28,11 @@ function App() {
         <Route exact path="/" component={ Login } />
         <Route exact path="/perfil" component={ Profile } />
         <Route exact path="/comidas" component={ FoodPage } />
-        <Route exact path="/comidas/:id" component={ RecipeDetails } />
+        <Route exact path="/comidas/:id" component={ FoodDetailsPage } />
         <Route exact path="/bebidas" component={ DrinkPage } />
+
+        <Route exact path="/bebidas/:id" component={ DrinkDetailsPage } />
+
         <Route exact path="/bebidas/:id" component={ RecipeDetails } />
         <Route exact path="/receitas-feitas" component={ CompletedRecipes } />
         <Route exact path="/receitas-favoritas" component={ FavoriteRecipes } />
@@ -37,9 +45,12 @@ function App() {
           component={ ExploreFoodIngredient }
         />
         <Route exact path="/explorar/comidas/area" component={ ExploreFoodArea } />
+
       </Switch>
     </Provider>
   );
 }
 
 export default App;
+
+//  178319
