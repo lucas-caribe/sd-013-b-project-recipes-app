@@ -51,3 +51,9 @@ export async function fetchDrinkByCategory(category) {
     console.log(err, 'deu ruim no fech, pare para tomar uma bavaria');
   }
 }
+
+export async function fetchDrinksById(id) {
+  const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
+  const data = await response.json();
+  return data.drinks;
+}

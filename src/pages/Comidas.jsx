@@ -14,14 +14,6 @@ function Comidas() {
       .then((data) => setMeals([...data]));
   }, [setMeals]);
 
-  // useEffect(() => {
-  //   const request = async () => {
-  //     const response = await fetchInitialMeals();
-  //     return response;
-  //   };
-  //   request().then((response) => setMeals([...response]));
-  // }, [setMeals]);
-
   const renderMeals = () => (
     meals.map(({ idMeal, strMeal, strMealThumb }, index) => (
       <div key={ strMeal }>
