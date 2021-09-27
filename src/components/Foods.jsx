@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
-import favorite from '../images/blackHeartIcon.svg';
+import blackHeart from '../images/blackHeartIcon.svg';
+import whiteHeart from '../images/whiteHeartIcon.svg';
 import './Cards.css';
 
 const inProgressRecipesObeject = {
@@ -14,8 +15,29 @@ const inProgressRecipesObeject = {
   },
 };
 
+function localStorageChecker(setlocalStorageMeals, setlocalStorageFavorite, id) {
+  if (!localStorage.inProgressRecipes) {
+    localStorage.inProgressRecipes = JSON.stringify(inProgressRecipesObeject);
+  }
+  if (!localStorage.favoriteRecipes) {
+    localStorage.favoriteRecipes = JSON.stringify([]);
+  }
+
+  const inProgressRecipes = JSON.parse(localStorage.inProgressRecipes);
+  const findFavoriteRecipe = JSON.parse(localStorage.favoriteRecipes)
+    .find(({ id: idRecipe }) => Number(idRecipe) === Number(id));
+
+  if (inProgressRecipes.meals[id]) {
+    setlocalStorageMeals(true);
+  }
+  if (findFavoriteRecipe) {
+    setlocalStorageFavorite(blackHeart);
+  }
+}
+
 function Foods({ id }) {
   const history = useHistory();
+  const [localStorageFavorite, setlocalStorageFavorite] = useState(whiteHeart);
   const [localStorageMeals, setlocalStorageMeals] = useState(false);
   const [visibleMessage, setVisibleMessage] = useState(true);
   const [drinks, setDrinks] = useState([]);
@@ -26,19 +48,10 @@ function Foods({ id }) {
     strCategory,
     strInstructions,
     strYoutube,
+    strArea,
   } = food;
 
   useEffect(() => {
-    function localStorageChecker() {
-      if (!localStorage.inProgressRecipes) {
-        localStorage.inProgressRecipes = JSON.stringify(inProgressRecipesObeject);
-      }
-      const inProgressRecipes = JSON.parse(localStorage.inProgressRecipes);
-      if (inProgressRecipes.meals[id]) {
-        setlocalStorageMeals(true);
-      }
-    }
-
     async function foodsRequest() {
       const drinksResponse = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
       const drinksData = await drinksResponse.json();
@@ -53,7 +66,7 @@ function Foods({ id }) {
       setDrinks(drinksData.drinks);
     }
 
-    localStorageChecker();
+    localStorageChecker(setlocalStorageMeals, setlocalStorageFavorite, id);
     foodsRequest();
   }, [id]);
 
@@ -96,6 +109,42 @@ function Foods({ id }) {
     setTimeout(() => setVisibleMessage(true), visibleTime);
   }
 
+  function favoriteFood({ target }) {
+    const src = target.src.replace('http://localhost:3000', '');
+    const favoriteRecipes = JSON.parse(localStorage.favoriteRecipes);
+    const validatorObejct = {
+      '/static/media/whiteHeartIcon.ea3b6ba8.svg': () => {
+        localStorage.favoriteRecipes = JSON.stringify([
+          ...favoriteRecipes,
+          {
+            id,
+            type: 'comida',
+            area: strArea,
+            category: strCategory,
+            alcoholicOrNot: '',
+            name: strMeal,
+            image: strMealThumb,
+          },
+        ]);
+        setlocalStorageFavorite(blackHeart);
+      },
+      '/static/media/blackHeartIcon.b8913346.svg': () => {
+        let newFavoriteRecipes = [];
+
+        favoriteRecipes.forEach((recipe) => {
+          if (id === recipe.id) return;
+          newFavoriteRecipes = [...newFavoriteRecipes, recipe];
+        });
+
+        localStorage.favoriteRecipes = JSON.stringify([...newFavoriteRecipes]);
+
+        setlocalStorageFavorite(whiteHeart);
+      },
+    };
+
+    validatorObejct[src]();
+  }
+
   return (
     <div>
       <img data-testid="recipe-photo" width="120px" src={ strMealThumb } alt="foto" />
@@ -104,12 +153,20 @@ function Foods({ id }) {
       <p hidden={ visibleMessage }>Link copiado!</p>
       <input
         type="image"
+        style={ { margin: '4px' } }
         onClick={ shareClick }
         src={ shareIcon }
         alt="share"
         data-testid="share-btn"
       />
-      <img src={ favorite } alt="favorite" data-testid="favorite-btn" />
+      <input
+        type="image"
+        style={ { margin: '4px' } }
+        onClick={ favoriteFood }
+        src={ localStorageFavorite }
+        alt="favorite"
+        data-testid="favorite-btn"
+      />
       <ul>
         { renderIngredients(ingredientsArray) }
       </ul>
