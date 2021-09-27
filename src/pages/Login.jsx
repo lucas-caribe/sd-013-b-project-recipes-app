@@ -50,6 +50,7 @@ function Login(props) {
         value={ email }
         onChange={ handleChange }
         type="email"
+        placeholder="seuemail@gmail.com"
         data-testid="email-input"
       />
       <input
@@ -57,6 +58,7 @@ function Login(props) {
         value={ password }
         onChange={ handleChange }
         type="password"
+        placeholder="senha"
         data-testid="password-input"
       />
       <button
