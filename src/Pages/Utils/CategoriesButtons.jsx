@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// Comment
+
 export default function CategoriesButtons({ props: { mealsCategories, categoryToogle,
   fetchMealAPI, setCategoryToogle, mealsAndInputs, setMealsAndInputs } }) {
   const TWELVE = 12;
