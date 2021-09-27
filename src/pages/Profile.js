@@ -4,6 +4,7 @@ import Context from '../context/Context';
 import Button from '../mini-components/Button';
 
 function Profile() {
+  const { profile } = useContext(context);
   const {
     setShowHeader,
     setTitleName,
@@ -20,10 +21,10 @@ function Profile() {
     handleHeader();
   }, []);
 
-  function getEmail() {
+ /* function getEmail() {
     const localStorageEmail = JSON.parse(localStorage.getItem('user'));
     return localStorageEmail ? localStorageEmail.email : 'Sem email cadastrado';
-  }
+  }*/
 
   function getOut() {
     localStorage.clear();
@@ -31,7 +32,7 @@ function Profile() {
 
   return (
     <main>
-      <h1 data-testid="profile-email">{ getEmail() }</h1>
+      <h1 data-testid="profile-email">{ profile.user.email }</h1>
       <Link to="/receitas-feitas">
         <Button
           btnText="Receitas Feitas"

@@ -6,7 +6,7 @@ function Login() {
   const [disabled, setDisabled] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { setShowHeader, setShowFooter } = useContext(Context);
+  const { setShowHeader, setShowFooter, handleSetProfile } = useContext(Context);
 
   const doneRecipesInitialStorage = [
     {
@@ -57,9 +57,10 @@ function Login() {
 
   // verificar A FUNCAO LOCALSTORAGE
   function setToLocalStorage() {
+    handleSetProfile(user);
     localStorage.setItem('mealsToken', '1');
     localStorage.setItem('cocktailsToken', '1');
-    localStorage.setItem('user', JSON.stringify({ email }));
+    localStorage.setItem(user, JSON.stringify({ email }));
     localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesInitialStorage));
     localStorage
       .setItem('favoriteRecipes', JSON.stringify(favoriteRecipesInitialStorage));

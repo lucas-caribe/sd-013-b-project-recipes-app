@@ -10,13 +10,25 @@ function Provider({ children }) {
   const [showSearchHeaderIcon, setShowSearchHeaderIcon] = useState(true);
   const [filteredRecipes, setFilteredRecipes] = useState('');
 
+  const [profile, setProfile] = useState({
+    user: {
+      email: '',
+    },
+  });
+
+  const handleSetProfile = (user) => {
+    setProfile((prevState) => ({ ...prevState, user }));
+  };
+
   const contextDefault = {
     showHeader,
     showSearchBar,
     showFooter,
+    profile,
     showSearchHeaderIcon,
     titleName,
     filteredRecipes,
+    handleSetProfile,
     setShowHeader,
     setShowSearchBar,
     setShowFooter,
