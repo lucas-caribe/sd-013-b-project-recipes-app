@@ -14,8 +14,7 @@ import { fetchCocktailDetails, fetchMealDetails } from '../../services/fetchDeta
 // Type
 
 export const SET_USER = 'SET_USER';
-export const SET_MEAL_DETAILS = 'SET_MEAL_DETAILS';
-export const SET_COCKTAIL_DETAILS = 'SET_COCKTAIL_DETAILS';
+export const SET_DETAILS = 'SET_DETAILS';
 export const SET_RECOMENDATIONS = 'SET_RECOMENDATIONS';
 export const SET_ITENS_OF_FETCH = 'SET_ITENS_OF_FETCH';
 export const SET_NEW_FITLER_BY_CATEGORY = 'SET_NEW_FITLER_BY_CATEGORY';
@@ -38,13 +37,8 @@ export const SetFilterByCategory = (payload) => (
   { type: SET_MAIN_LIST_FILTER_CATEGORY, payload }
 );
 
-export const setMealDetails = (payload) => ({
-  type: SET_MEAL_DETAILS,
-  payload,
-});
-
-export const setCocktailDetails = (payload) => ({
-  type: SET_COCKTAIL_DETAILS,
+export const setDetails = (payload) => ({
+  type: SET_DETAILS,
   payload,
 });
 
@@ -58,13 +52,13 @@ export const setRecomendations = (payload) => ({
 export const fetchDetailsThunk = (id, recipe) => async (dispatch) => {
   switch (recipe) {
   case 'meal': {
-    const response = await fetchMealDetails(id);
-    dispatch(setMealDetails(response));
+    const { meals } = await fetchMealDetails(id);
+    dispatch(setDetails(meals));
     break;
   }
   case 'cocktail': {
-    const response = await fetchCocktailDetails(id);
-    dispatch(setCocktailDetails(response));
+    const { drinks } = await fetchCocktailDetails(id);
+    dispatch(setDetails(drinks));
     break;
   }
   default:

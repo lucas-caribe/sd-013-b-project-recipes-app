@@ -10,8 +10,7 @@ export default function Detalhes() {
   const { id } = useParams();
   const { pathname } = useLocation();
   const [details, setDetails] = useState({ loading: true, Top6: [], fav: false });
-  const cocktail = useSelector((state) => state.detailsReducer.results.drinks);
-  const meal = useSelector((state) => state.detailsReducer.results.meals);
+  const detailsResult = useSelector((state) => state.detailsReducer.results[0]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -26,10 +25,10 @@ export default function Detalhes() {
   }, []);
 
   useEffect(() => {
-    if (cocktail || meal) {
+    if (detailsResult) {
       setDetails((prevState) => ({ ...prevState, loading: false }));
     }
-  }, [cocktail, meal]);
+  }, [detailsResult]);
 
   function handleVideo(video) {
     return (
@@ -52,7 +51,7 @@ export default function Detalhes() {
   function handleDetails() {
     if (details.recipe === 'meal') {
       const { strMealThumb, strCategory,
-        strMeal, strInstructions, strYoutube } = meal[0];
+        strMeal, strInstructions, strYoutube } = detailsResult;
       return (
         <div>
           <img
@@ -83,7 +82,7 @@ export default function Detalhes() {
     }
     if (details.recipe === 'cocktail') {
       const { strDrinkThumb, strCategory,
-        strDrink, strInstructions, strAlcoholic } = cocktail[0];
+        strDrink, strInstructions, strAlcoholic } = detailsResult;
       return (
         <div>
           <img
