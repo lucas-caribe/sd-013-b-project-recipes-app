@@ -60,7 +60,7 @@ export default function InputSearchCocktails() {
     return <Redirect to={ `/bebidas/${drinksList[0].idDrink}` } />;
   }
 
-  if (drinksList.length > TWELVE) drinksList = drinksList.splice(0, TWELVE);
+  if (drinksList.length > TWELVE) drinksList = drinksList.slice(0, TWELVE);
 
   return (
     <div className="inputsSearch">

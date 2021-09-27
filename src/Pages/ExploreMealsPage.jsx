@@ -28,12 +28,16 @@ export default function ExploreMealsPage() {
         </div>
       </header>
       <Link to="/explorar/comidas/ingredientes">
-        <button data-testid="explore-by-ingredient" type="button">
+        <button
+          className="categoryButtons"
+          data-testid="explore-by-ingredient"
+          type="button"
+        >
           Por Ingredientes
         </button>
       </Link>
       <Link to="/explorar/comidas/area">
-        <button data-testid="explore-by-area" type="button">
+        <button className="categoryButtons" data-testid="explore-by-area" type="button">
           Por Local de Origem
         </button>
       </Link>

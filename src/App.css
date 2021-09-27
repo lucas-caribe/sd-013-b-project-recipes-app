@@ -87,8 +87,9 @@ header {
   justify-content: space-between;
   max-width: 100;
   overflow: hidden;
-  position: fixed;
-  top: 0;
+
+  /* position: fixed;
+  top: 0; */
   width: 100%;
 }
 
