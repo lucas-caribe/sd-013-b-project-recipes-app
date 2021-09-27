@@ -9,11 +9,13 @@ const URL = {
     list: 'https://www.themealdb.com/api/json/v1/1/search.php?s=',
     categories: 'https://www.themealdb.com/api/json/v1/1/list.php?c=list',
     byCategory: 'https://www.themealdb.com/api/json/v1/1/filter.php?c=',
+    id: 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=',
   },
   drinks: {
     list: 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=',
     categories: 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list',
     byCategory: 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=',
+    id: 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=',
   },
 };
 const CATEGORIES_TO_SHOW = 5;
@@ -24,6 +26,7 @@ function RecipesProvider({ children }) {
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState('');
   const [type, setType] = useState('');
+  const [recipeDetails, setRecipeDetails] = useState({});
 
   const fetchRecipesCategory = useCallback(async (recipeType) => {
     const data = await fetchApi(URL[recipeType].categories);
@@ -55,12 +58,19 @@ function RecipesProvider({ children }) {
     setCategory(target.innerText);
   };
 
+  const fetchRecipeById = useCallback(async (recipeType, id) => {
+    const data = await fetchApi(`${URL[recipeType].id}${id}`);
+    setRecipeDetails(data[recipeType][0]);
+  }, []);
+
   const context = {
     fetchRecipesCategory,
     handleClickCategory,
     fetchRecipesList,
+    fetchRecipeById,
     categories,
     recipes,
+    recipeDetails,
   };
 
   return (

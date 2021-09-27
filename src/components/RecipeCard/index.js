@@ -14,7 +14,12 @@ function RecipeCard({ recipe, index, type }) {
       to={ `${pathname}/${recipe[id]}` }
       data-testid={ `${index}-recipe-card` }
     >
-      <img data-testid={ `${index}-card-img` } src={ recipe[src] } alt={ recipe[name] } />
+      <img
+        className="card"
+        data-testid={ `${index}-card-img` }
+        src={ recipe[src] }
+        alt={ recipe[name] }
+      />
       <p data-testid={ `${index}-card-name` }>{recipe[name]}</p>
     </Link>
   );
