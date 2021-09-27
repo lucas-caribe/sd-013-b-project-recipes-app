@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import DetailsHeader from '../Components/DetailsHeader';
 import DetailsIngredients from '../Components/DetailsIngredients';
 import DetailsInstructions from '../Components/DetailsInstructions';
 import DetailsVideo from '../Components/DetailsVideo';
 import DetailsRecommended from '../Components/DetailsRecommended';
 import StartRecipeButton from '../Components/StartRecipeButton';
+import { finishRecipe as finishRecipeAction } from '../Redux/Actions';
 
 const Details = (props) => {
-  const { type, id, status } = props;
+  const { type, id, status, finishRecipe } = props;
   const [item, setItem] = useState({});
   const [recommended, setRecommended] = useState([]);
 
@@ -32,6 +34,20 @@ const Details = (props) => {
   }
   const url = `${baseUrl}${id}`;
 
+  let itemToRedux = {};
+  if (item) {
+    itemToRedux = {
+      id: type === 'comidas' ? item.idMeal : item.idDrink,
+      type: type === 'comidas' ? 'meals' : 'cocktails',
+      area: item.strArea,
+      category: item.strCategory,
+      alcoholicOrNot: type === 'comidas' ? '' : item.strAlcoholic,
+      name: type === 'comidas' ? item.strMeal : item.strDrink,
+      doneDate: '',
+      tags: item.strTags ? item.strTags.split(',') : [],
+    };
+  }
+
   useEffect(() => {
     fetch(url)
       .then((res) => res.json())
@@ -45,7 +61,7 @@ const Details = (props) => {
       const sixFirst = rec.splice(0, spliceNumber);
       setRecommended(sixFirst);
     });
-  }, [id]);
+  }, [id, db, recommendationUrl, recommendedDb, url]);
 
   const ingredients = [];
   const measures = [];
@@ -62,10 +78,17 @@ const Details = (props) => {
   const subTitle = type === 'comidas' ? item.strCategory : item.strAlcoholic;
   const instructions = item.strInstructions;
   const videoUrl = item.strYoutube;
-  console.log(item);
+  // console.log(item);
   return (
     <div>
-      <DetailsHeader imgSrc={ imgSrc } title={ title } subTitle={ subTitle } />
+      <DetailsHeader
+        item={ item }
+        imgSrc={ imgSrc }
+        title={ title }
+        subTitle={ subTitle }
+        type={ type }
+      />
+
       <DetailsIngredients
         ingredients={ ingredients }
         measures={ measures }
@@ -75,6 +98,7 @@ const Details = (props) => {
       {type === 'comidas' && <DetailsVideo videoUrl={ videoUrl } />}
       <DetailsRecommended recommended={ recommended } recommendedDb={ recommendedDb } />
       <StartRecipeButton type={ type } id={ id } />
+
     </div>
   );
 };
@@ -83,6 +107,11 @@ Details.propTypes = {
   type: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
+  finishRecipe: PropTypes.func.isRequired,
 };
 
-export default Details;
+const mapDispatchToProps = (dispatch) => ({
+  finishRecipe: (items) => dispatch(finishRecipeAction(items)),
+});
+
+export default connect(null, mapDispatchToProps)(Details);
