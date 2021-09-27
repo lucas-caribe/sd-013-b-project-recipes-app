@@ -35,13 +35,21 @@ export const RecipesProvider = ({ children }) => {
     });
   };
 
+  const addTypeWhenFinishRecipe = (type, recipe) => {
+    setFinishedRecipes([...finishedRecipes, { type, ...recipe }]);
+  };
+
   const getRandomRecipe = useCallback(async (page) => {
     if (page === 'comidas') {
-      const { meals: mealsApi } = await fetch('https://www.themealdb.com/api/json/v1/1/random.php').then((response) => response.json());
+      const { meals: mealsApi } = await fetch(
+        'https://www.themealdb.com/api/json/v1/1/random.php',
+      ).then((response) => response.json());
       return mealsApi[0].idMeal;
     }
     if (page === 'bebidas') {
-      const { drinks } = await fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php').then((response) => response.json());
+      const { drinks } = await fetch(
+        'https://www.thecocktaildb.com/api/json/v1/1/random.php',
+      ).then((response) => response.json());
       return drinks[0].idDrink;
     }
   }, []);
@@ -54,13 +62,10 @@ export const RecipesProvider = ({ children }) => {
     finishedRecipes,
     meals,
     cocktails,
+    addTypeWhenFinishRecipe,
   };
 
-  return (
-    <RecipesContext.Provider value={ context }>
-      { children }
-    </RecipesContext.Provider>
-  );
+  return <RecipesContext.Provider value={ context }>{children}</RecipesContext.Provider>;
 };
 
 RecipesProvider.propTypes = {

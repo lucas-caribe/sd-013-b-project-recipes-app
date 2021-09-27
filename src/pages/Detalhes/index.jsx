@@ -10,7 +10,6 @@ import { useDetails } from '../../context/DetailsContext';
 
 import blackHeart from '../../images/blackHeartIcon.svg';
 import whiteHeart from '../../images/whiteHeartIcon.svg';
-import shareIcon from '../../images/shareIcon.svg';
 import ShareButton from '../../components/ShareButton';
 
 function Detalhes() {
@@ -116,7 +115,6 @@ function Detalhes() {
         <ShareButton
           path={ path }
           id={ item[type][0][`id${property}`] }
-          icon={ shareIcon }
           handleCopy={ handleCopy }
         />
         {checkFavorites(item[type][0], type)}

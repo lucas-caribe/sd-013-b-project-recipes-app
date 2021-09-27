@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import shareIcon from '../../images/shareIcon.svg';
 
 const copy = require('clipboard-copy');
 
-function ShareButton({ path, id, icon, handleCopy }) {
+function ShareButton({ path, id, handleCopy }) {
   return (
     <button
       data-testid="share-btn"
@@ -13,7 +14,7 @@ function ShareButton({ path, id, icon, handleCopy }) {
         handleCopy(true);
       } }
     >
-      <img src={ icon } alt="share-button" />
+      <img src={ shareIcon } alt="share-button" />
     </button>
   );
 }
@@ -21,7 +22,6 @@ function ShareButton({ path, id, icon, handleCopy }) {
 ShareButton.propTypes = {
   path: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  icon: PropTypes.string.isRequired,
   handleCopy: PropTypes.func.isRequired,
 };
 
