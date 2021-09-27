@@ -12,18 +12,4 @@ export const actionInputHeader = (inpHeader) => ({
   },
 });
 
-export const sendRecipeToGlobal = (recipe) => ({
-  type: 'SEND_RECIPE_TO_GLOBAL',
-  payload: {
-    recipe,
-  },
-});
-
-export const sendRecipeToGlobalDrinks = (drinks) => ({
-  type: 'SEND_RECIPE_TO_GLOBAL_DRINKS',
-  payload: {
-    drinks,
-  },
-});
-
 export default actionLogin;

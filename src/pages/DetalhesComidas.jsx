@@ -1,60 +1,103 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
-import { sendRecipeToGlobal } from '../redux/actions';
 import fetchIdComidas from '../services/fetchIdComidas';
-import shareIcon from '../images/shareIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import { fetchRecomendationsDrinks } from '../services/fetchIdBebidas';
+import getSixCards, { ChoiceButton,
+  getEmbedVideo, getIngredient,
+  getMeasure } from '../services/functionsForDetails';
+import '../css/CardsRecomendations.css';
+import ShareAndFavButton from '../components/ShareAndFavButton';
+import { modifyMealRecipeInfo } from '../GlobalFuncs/modifyRecipeInfo';
 
-function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal }) {
-  const history = useHistory();
+function DetalhesComidas({ match: { params: { id } } }) {
   const [objIdReceita, setObjIdReceita] = useState();
-  const fetchId = async () => {
+  const [objRecomendations, setObjRecomendados] = useState();
+  const { push } = useHistory();
+
+  const fetchId = useCallback(async () => {
     setObjIdReceita(await fetchIdComidas(id));
-  };
+    setObjRecomendados(await fetchRecomendationsDrinks());
+  }, [id]);
 
   useEffect(() => {
     fetchId();
-  }, []);
+  }, [fetchId]);
 
-  useEffect(() => {
-    sendObjToGlobal(objIdReceita);
-  }, [objIdReceita]);
+  const inFButton = {
+    id,
+    tipo: 'comidas',
+  };
+
+  const getIngredientAndMeasure = () => {
+    const array = [];
+    if (getMeasure(objIdReceita, 'comida') !== undefined
+      && getIngredient(objIdReceita, 'comidas') !== undefined) {
+      const measure = getMeasure(objIdReceita, 'comida');
+      const ingredient = getIngredient(objIdReceita, 'comidas');
+      const mix = [{
+        ingredient,
+        measure,
+      }];
+      for (let i = 0; i < mix[0].ingredient.length; i += 1) {
+        array.push(`${mix[0].ingredient[i]}-${mix[0].measure[i]}`);
+      }
+      return array;
+    }
+  };
 
   if (objIdReceita === undefined) {
     return <p>Loading...</p>;
   }
+
   return (
     <div>
-      Detalhes da comida
-      <img src={ objIdReceita.strMealThumb } data-testid="recipe-photo" alt="recipeFo" />
-      <h3 data-testid="recipe-title">{}</h3>
-      <button
-        type="button"
-        data-testid="share-btn"
-      >
-        <img src={ shareIcon } alt="shareIcon" />
-      </button>
-      <button data-testid="favorite-btn" type="button">
-        <img src={ whiteHeartIcon } alt="iconHeard" />
-      </button>
-      <p data-testid="recipe-category">Categoria</p>
-      <p data-testid={ `${0}-ingredient-name-and-measure` }>Ingredientes</p>
-      <p data-testid="instructions">Instruções</p>
-      <p data-testid="video">Video</p>
-      <p data-testid={ `${0}-recomendation-card` }>Card recomendation</p>
-      <button type="button" data-testid="start-recipe-btn" onClick={ () => history.push(`/comidas/${id}/in-progress`) }>Start recipe</button>
+      <p>Detalhes comidas</p>
+      <img
+        src={ objIdReceita.strMealThumb }
+        data-testid="recipe-photo"
+        alt="recipeFoto"
+      />
+      <h3 data-testid="recipe-title">{objIdReceita.strMeal}</h3>
+      <ShareAndFavButton recipeInfos={ modifyMealRecipeInfo(objIdReceita) } />
+      <p data-testid="recipe-category">{objIdReceita.strCategory}</p>
+      <p>Ingredientes:</p>
+      {getIngredientAndMeasure().map((ingredient, index) => (
+        <ul key={ index }>
+          <li data-testid={ `${index}-ingredient-name-and-measure` }>{ingredient}</li>
+        </ul>
+      ))}
+      <p>Instruções</p>
+      <p data-testid="instructions">{objIdReceita.strInstructions}</p>
+      <div>
+        <iframe
+          title="dsa"
+          frameBorder="0"
+          data-testid="video"
+          width="200px"
+          src={ getEmbedVideo(objIdReceita) }
+        />
+      </div>
+      <div className="cardsRecomendations">
+        {getSixCards(objRecomendations) !== undefined && getSixCards(objRecomendations)
+          .map((element, index) => (
+            <div data-testid={ `${index}-recomendation-card` } key={ index }>
+              <img
+                style={ { width: '300px' } }
+                src={ element.strDrinkThumb }
+                alt="imag"
+              />
+              <p data-testid={ `${index}-recomendation-title` }>{element.strDrink}</p>
+            </div>
+          ))}
+      </div>
+      {ChoiceButton(inFButton, push)}
     </div>
   );
 }
 
 DetalhesComidas.propTypes = {
-  match: PropTypes.shape(PropTypes.shape({})).isRequired,
+  match: PropTypes.shape().isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  sendObjToGlobal: (obj) => dispatch(sendRecipeToGlobal(obj)),
-});
-
-export default connect(null, mapDispatchToProps)(DetalhesComidas);
+export default DetalhesComidas;

@@ -1,50 +1,37 @@
-import React from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import ProgressRecipe from '../components/ProgressRecipe';
-import { getIngredients, getMeasure } from '../GlobalFuncs/getIngredientsAndMeasure';
+import fetchIdBebidas from '../services/fetchIdBebidas';
+import { modifyDrinkRecipeInfo } from '../GlobalFuncs/modifyRecipeInfo';
 
-function ProgressoBebida({ recipeInfo:
-  { strDrinkThumb, strDrink, strCategory, strInstructions, idDrink, strAlcoholic,
-    strTags }, recipeInfo }) {
-  function modifyRecipeInfo() {
-    return {
-      image: strDrinkThumb,
-      title: strDrink,
-      category: strCategory,
-      area: '',
-      alcoholic: strAlcoholic,
-      instructions: strInstructions,
-      ingredients: getIngredients(recipeInfo),
-      measure: getMeasure(recipeInfo),
-      id: idDrink,
-      type: 'cocktails',
-      tipo: 'bebida',
-      tags: strTags,
-    };
+function ProgressoBebida({ match: { params: { id } } }) {
+  const [recipeInfo, setRecipeInfo] = useState(undefined);
+
+  const fetchId = useCallback(async () => {
+    setRecipeInfo(await fetchIdBebidas(id));
+  }, [id]);
+
+  useEffect(() => {
+    fetchId();
+  }, [fetchId]);
+
+  if (recipeInfo === undefined) {
+    return (
+      <div>
+        <p>Loading...</p>
+      </div>
+    );
   }
 
   return (
     <main>
-      <ProgressRecipe recipe={ modifyRecipeInfo() } />
+      <ProgressRecipe recipe={ modifyDrinkRecipeInfo(recipeInfo) } />
     </main>
   );
 }
 
-const mapStateToProps = (state) => ({
-  recipeInfo: state.reducerRecipe.recipeDrink,
-});
-
 ProgressoBebida.propTypes = {
-  recipeInfo: PropTypes.shape({
-    strDrinkThumb: PropTypes.string,
-    strDrink: PropTypes.string,
-    strCategory: PropTypes.string,
-    strInstructions: PropTypes.string,
-    idDrink: PropTypes.string,
-    strAlcoholic: PropTypes.string,
-    strTags: PropTypes.string,
-  }).isRequired,
+  match: PropTypes.shape().isRequired,
 };
 
-export default connect(mapStateToProps)(ProgressoBebida);
+export default ProgressoBebida;
