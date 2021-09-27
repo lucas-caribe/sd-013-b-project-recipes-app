@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router';
 import fetchIdBebidas from '../services/fetchIdBebidas';
 import shareIcon from '../images/shareIcon.svg';
 import getSixCards, { ChoiceButton,
-  clickShare, clickFavoriteDrink,
+  clickFavoriteDrink,
   verifyFavorite, getMeasure, getIngredient } from '../services/functionsForDetails';
 import { fetchRecomendationsMeals } from '../services/fetchIdComidas';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -17,7 +18,7 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
   const [recomendations, setObjRecomentations] = useState();
   const [copyOk, setCopyOk] = useState(false);
   const [favorite, setFavorite] = useState(false);
-
+  const { push } = useHistory();
   const fetchId = useCallback(async () => {
     setObjIdReceita(await fetchIdBebidas(id));
     setObjRecomentations(await fetchRecomendationsMeals());
@@ -42,12 +43,17 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
     tipo: 'bebidas',
   };
 
+  const clickShareBebidas = () => {
+    navigator.clipboard.writeText(window.location.href);
+    setCopyOk(true);
+  };
+
   const getIngredientAndMeasure = () => {
     const array = [];
-    if (getMeasure(objIdReceita) !== undefined
-    && getIngredient(objIdReceita) !== undefined) {
-      const measure = getMeasure(objIdReceita);
-      const ingredient = getIngredient(objIdReceita);
+    if (getMeasure(objIdReceita, 'bebida') !== undefined
+    && getIngredient(objIdReceita, 'bebidas') !== undefined) {
+      const measure = getMeasure(objIdReceita, 'bebida');
+      const ingredient = getIngredient(objIdReceita, 'bebidas');
       const mix = [{
         ingredient,
         measure,
@@ -55,27 +61,30 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
       for (let i = 0; i < mix[0].ingredient.length; i += 1) {
         array.push(`${mix[0].ingredient[i]} - ${mix[0].measure[i]}`);
       }
+      if (array.some((element) => element.includes('undefined'))) {
+        const withOutUndefined = array.map((element) => {
+          const beatifulDrinks = element.replace(' - undefined', '');
+          return beatifulDrinks;
+        });
+        return withOutUndefined;
+      }
       return array;
     }
   };
 
-  const fixDrinks = () => {
-    if (getIngredientAndMeasure() !== undefined) {
-      const drinks = getIngredientAndMeasure();
-      const drinksFilterNull = drinks.filter((drink) => drink !== 'null-null');
-      return drinksFilterNull;
-    }
-  };
-
   if (objIdReceita === undefined) {
-    return <p>Loading...</p>;
+    return (
+      <div>
+        <p>Loading...</p>
+      </div>
+    );
   }
 
   return (
     <div>
-      Detalhes das bebidass
+      <p>Detalhes</p>
       <img
-        width="180px"
+        width="300px"
         data-testid="recipe-photo"
         src={ objIdReceita.strDrinkThumb }
         alt="recipeFoto"
@@ -84,7 +93,7 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
       <button
         type="button"
         data-testid="share-btn"
-        onClick={ () => clickShare(setCopyOk) }
+        onClick={ () => clickShareBebidas() }
       >
         <img src={ shareIcon } alt="shareIcon" />
       </button>
@@ -100,13 +109,13 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
         />
       </button>
       <p data-testid="recipe-category">{objIdReceita.strAlcoholic}</p>
-      {fixDrinks().map((element, index) => (
+      {getIngredientAndMeasure().map((element, index) => (
         <div key={ index }>
           <p data-testid={ `${index}-ingredient-name-and-measure` }>{element}</p>
         </div>
       ))}
       <p data-testid="instructions">{ objIdReceita.strInstructions }</p>
-      <p data-testid="video">Videoo</p>
+      <p data-testid="video" />
       <div className="cardsRecomendations">
         {getSixCards(recomendations) !== undefined && getSixCards(recomendations)
           .map((element, index) => (
@@ -117,15 +126,15 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
           ))}
       </div>
       {copyOk ? <p>Link copiado!</p> : null}
-      {ChoiceButton(inFButton)}
+      {ChoiceButton(inFButton, push)}
     </div>
   );
 }
 
 DetalhesBebidas.propTypes = {
-  match: PropTypes.shape(PropTypes.shape({})).isRequired,
-  sendObjToGlobal: PropTypes.shape(PropTypes.shape({})).isRequired,
-  inProgressMeal: PropTypes.shape().isRequired,
+  match: PropTypes.shape().isRequired,
+  sendObjToGlobal: PropTypes.func.isRequired,
+  inProgressMeal: PropTypes.bool.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

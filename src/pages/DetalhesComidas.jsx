@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router';
 import { sendRecipeToGlobalMeal } from '../redux/actions';
 import fetchIdComidas from '../services/fetchIdComidas';
 import { fetchRecomendationsDrinks } from '../services/fetchIdBebidas';
-import getSixCards, { ChoiceButton, clickShare,
+import getSixCards, { ChoiceButton,
   clickFavoriteMeal,
   getEmbedVideo, getIngredient,
-  getMeasure, formatObjForStorageMeal,
+  getMeasure,
   verifyFavorite } from '../services/functionsForDetails';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -20,13 +21,13 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal,
   const [copyOk, setCopyOk] = useState(false);
   const [objRecomendations, setObjRecomendados] = useState();
   const [favorite, setFavorite] = useState(false);
+  const { push } = useHistory();
 
   const fetchId = useCallback(async () => {
     setObjIdReceita(await fetchIdComidas(id));
     setObjRecomendados(await fetchRecomendationsDrinks());
     verifyFavorite(id, setFavorite);
-    formatObjForStorageMeal(id, objIdReceita);
-  }, [id, objIdReceita]);
+  }, [id]);
 
   useEffect(() => {
     fetchId();
@@ -46,12 +47,17 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal,
     tipo: 'comidas',
   };
 
+  const clickShareComidas = () => {
+    navigator.clipboard.writeText(window.location.href);
+    setCopyOk(true);
+  };
+
   const getIngredientAndMeasure = () => {
     const array = [];
-    if (getMeasure(objIdReceita) !== undefined
-      && getIngredient(objIdReceita) !== undefined) {
-      const measure = getMeasure(objIdReceita);
-      const ingredient = getIngredient(objIdReceita);
+    if (getMeasure(objIdReceita, 'comida') !== undefined
+      && getIngredient(objIdReceita, 'comidas') !== undefined) {
+      const measure = getMeasure(objIdReceita, 'comida');
+      const ingredient = getIngredient(objIdReceita, 'comidas');
       const mix = [{
         ingredient,
         measure,
@@ -79,7 +85,7 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal,
       <button
         type="button"
         data-testid="share-btn"
-        onClick={ () => clickShare(setCopyOk) }
+        onClick={ () => clickShareComidas() }
       >
         <img src={ shareIcon } alt="shareIcon" />
       </button>
@@ -126,13 +132,13 @@ function DetalhesComidas({ match: { params: { id } }, sendObjToGlobal,
           ))}
       </div>
       {copyOk ? <p>Link copiado!</p> : null}
-      {ChoiceButton(inFButton)}
+      {ChoiceButton(inFButton, push)}
     </div>
   );
 }
 
 DetalhesComidas.propTypes = {
-  inprogressMeal: PropTypes.shape().isRequired,
+  inprogressMeal: PropTypes.bool.isRequired,
   match: PropTypes.shape().isRequired,
   sendObjToGlobal: PropTypes.func.isRequired,
 };

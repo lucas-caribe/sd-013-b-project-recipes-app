@@ -1,5 +1,4 @@
 import React from 'react';
-import { useHistory } from 'react-router';
 
 const QUANTIDADE_CARDS = 6;
 
@@ -9,9 +8,7 @@ const getSixCards = (arr) => {
     return sixCards;
   }
 };
-
-export const ChoiceButton = (inFButton) => {
-  const { push } = useHistory();
+export const ChoiceButton = (inFButton, push) => {
   const { inprogressMeal, sendObjToGlobal, objIdReceita, objToReducer,
     id, tipo } = inFButton;
 
@@ -47,11 +44,20 @@ export const ChoiceButton = (inFButton) => {
     </button>
   );
 };
-
-export const clickShare = (setCopyOk) => {
+export const clickShare = (setCopyOk, type, id) => {
+  if (type === 'bebida') {
+    console.log(type);
+    navigator.clipboard.writeText(`http://localhost:3000/bebidas/${id}`);
+    setCopyOk(true);
+  }
+  if (type === 'comida') {
+    console.log('comida');
+    navigator.clipboard.writeText(`http://localhost:3000/comidas/${id}`);
+    setCopyOk(true);
+  }
   // source link : https://stackoverflow.com/questions/66338574/button-copy-to-clipboard-window-location-href
-  navigator.clipboard.writeText(window.location.href);
-  setCopyOk(true);
+  // navigator.clipboard.writeText(window.location.href);
+  // setCopyOk(true);
 };
 
 export const getEmbedVideo = (objIdReceita) => {
@@ -62,8 +68,16 @@ export const getEmbedVideo = (objIdReceita) => {
   }
 };
 
-export const getIngredient = (objIdReceita) => {
-  if (objIdReceita !== undefined) {
+export const getIngredient = (objIdReceita, type) => {
+  if (objIdReceita !== undefined && type === 'bebidas') {
+    const entries = Object.entries(objIdReceita);
+    const arrayFilteredIngredients = entries
+      .filter((ingredientes) => ingredientes[0].includes('strIngredient'))
+      .filter((ingredientes2) => ingredientes2[1] !== null)
+      .map((ingredientes3) => ingredientes3[1]);
+    return arrayFilteredIngredients;
+  }
+  if (objIdReceita !== undefined && type === 'comidas') {
     const entries = Object.entries(objIdReceita);
     const arrayFilteredIngredients = entries
       .filter((ingredientes) => ingredientes[0].includes('strIngredient'))
@@ -73,8 +87,17 @@ export const getIngredient = (objIdReceita) => {
   }
 };
 
-export const getMeasure = (objIdReceita) => {
-  if (objIdReceita !== undefined) {
+export const getMeasure = (objIdReceita, type) => {
+  const filtros = [null, undefined];
+  if (objIdReceita !== undefined && type === 'bebida') {
+    const entries = Object.entries(objIdReceita);
+    const measure = entries.filter((measures) => measures[0].includes('strMeasure'))
+      .filter((measures2) => measures2[1] !== ' ')
+      .filter((measures3) => !filtros.includes(measures3[1]))
+      .map((measures3) => measures3[1]);
+    return measure;
+  }
+  if (objIdReceita !== undefined && type === 'comida') {
     const entries = Object.entries(objIdReceita);
     const measure = entries.filter((measures) => measures[0].includes('strMeasure'))
       .filter((measures2) => measures2[1] !== ' ')
@@ -84,6 +107,9 @@ export const getMeasure = (objIdReceita) => {
 };
 
 export const formatObjForStorageMeal = (id, objIdReceita) => {
+  if (localStorage.getItem('favoriteRecipes') === null) {
+    localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+  }
   if (objIdReceita) {
     const obj = [{
       id,
@@ -94,13 +120,18 @@ export const formatObjForStorageMeal = (id, objIdReceita) => {
       name: objIdReceita.strMeal,
       image: objIdReceita.strMealThumb,
     }];
+    const recipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    recipes.push(obj);
     localStorage.setItem('favoriteRecipes', JSON.stringify(obj));
   }
 };
 
 export const formatObjForStorageDrink = (id, objIdReceita) => {
+  if (localStorage.getItem('favoriteRecipes') === null) {
+    localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+  }
   if (objIdReceita) {
-    const obj = [{
+    const obj = {
       id,
       type: 'bebida',
       area: '',
@@ -108,8 +139,10 @@ export const formatObjForStorageDrink = (id, objIdReceita) => {
       alcoholicOrNot: objIdReceita.strAlcoholic,
       name: objIdReceita.strDrink,
       image: objIdReceita.strDrinkThumb,
-    }];
-    localStorage.setItem('favoriteRecipes', JSON.stringify(obj));
+    };
+    const recipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    recipes.push(obj);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(recipes));
   }
 };
 
