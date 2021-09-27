@@ -9,11 +9,9 @@ const getSixCards = (arr) => {
   }
 };
 export const ChoiceButton = (inFButton, push) => {
-  const { inprogressMeal, sendObjToGlobal, objIdReceita, objToReducer,
-    id, tipo } = inFButton;
+  const { inprogressMeal, id, tipo } = inFButton;
 
   const onClick = () => {
-    sendObjToGlobal(objIdReceita, objToReducer);
     if (tipo === 'bebidas') {
       push(`/bebidas/${id}/in-progress`);
     }

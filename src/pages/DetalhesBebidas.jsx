@@ -1,51 +1,30 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect, useCallback } from 'react';
-import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 import fetchIdBebidas from '../services/fetchIdBebidas';
-import shareIcon from '../images/shareIcon.svg';
 import getSixCards, { ChoiceButton,
-  clickFavoriteDrink,
-  verifyFavorite, getMeasure, getIngredient } from '../services/functionsForDetails';
+  getMeasure, getIngredient } from '../services/functionsForDetails';
 import { fetchRecomendationsMeals } from '../services/fetchIdComidas';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
-import { sendRecipeToGlobalDrinks } from '../redux/actions';
 import '../css/CardsRecomendations.css';
+import ShareAndFavButton from '../components/ShareAndFavButton';
+import { modifyDrinkRecipeInfo } from '../GlobalFuncs/modifyRecipeInfo';
 
-function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgressMeal }) {
+function DetalhesBebidas({ match: { params: { id } } }) {
   const [objIdReceita, setObjIdReceita] = useState();
   const [recomendations, setObjRecomentations] = useState();
-  const [copyOk, setCopyOk] = useState(false);
-  const [favorite, setFavorite] = useState(false);
   const { push } = useHistory();
   const fetchId = useCallback(async () => {
     setObjIdReceita(await fetchIdBebidas(id));
     setObjRecomentations(await fetchRecomendationsMeals());
-    verifyFavorite(id, setFavorite);
   }, [id]);
 
   useEffect(() => {
     fetchId();
   }, [fetchId]);
 
-  const objToReducer = {
-    id,
-    inProgress: true,
-  };
-
   const inFButton = {
-    inProgressMeal,
-    sendObjToGlobal,
-    objIdReceita,
-    objToReducer,
     id,
     tipo: 'bebidas',
-  };
-
-  const clickShareBebidas = () => {
-    navigator.clipboard.writeText(window.location.href);
-    setCopyOk(true);
   };
 
   const getIngredientAndMeasure = () => {
@@ -90,24 +69,7 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
         alt="recipeFoto"
       />
       <h3 data-testid="recipe-title">{ objIdReceita.strDrink }</h3>
-      <button
-        type="button"
-        data-testid="share-btn"
-        onClick={ () => clickShareBebidas() }
-      >
-        <img src={ shareIcon } alt="shareIcon" />
-      </button>
-      <button
-        onClick={ () => clickFavoriteDrink(objIdReceita, setFavorite, id) }
-        data-testid="favorite-btn"
-        type="button"
-        src={ favorite ? blackHeartIcon : whiteHeartIcon }
-      >
-        <img
-          src={ favorite ? blackHeartIcon : whiteHeartIcon }
-          alt="iconHeard"
-        />
-      </button>
+      <ShareAndFavButton recipeInfos={ modifyDrinkRecipeInfo(objIdReceita) } />
       <p data-testid="recipe-category">{objIdReceita.strAlcoholic}</p>
       {getIngredientAndMeasure().map((element, index) => (
         <div key={ index }>
@@ -125,7 +87,6 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
             </div>
           ))}
       </div>
-      {copyOk ? <p>Link copiado!</p> : null}
       {ChoiceButton(inFButton, push)}
     </div>
   );
@@ -133,17 +94,6 @@ function DetalhesBebidas({ match: { params: { id } }, sendObjToGlobal, inProgres
 
 DetalhesBebidas.propTypes = {
   match: PropTypes.shape().isRequired,
-  sendObjToGlobal: PropTypes.func.isRequired,
-  inProgressMeal: PropTypes.bool.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  sendObjToGlobal: (drinks, status) => dispatch(sendRecipeToGlobalDrinks(drinks, status)),
-});
-
-const mapStateToProps = (state) => ({
-  inProgress: state.reducerRecipe.recipeMealProgress,
-  inProgressMeal: state.reducerRecipe.inProgressMeal,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(DetalhesBebidas);
+export default DetalhesBebidas;
