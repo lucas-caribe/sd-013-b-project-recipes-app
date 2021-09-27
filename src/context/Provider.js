@@ -34,7 +34,6 @@ function Provider({ children }) {
       type: 'Drink',
     },
   ]);
-
   const [filterRecipeDone, setFilterRecipeDone] = useState([]);
   const [inputText, setInputText] = useState('');
   const [inputRadio, setInputRadio] = useState('');
