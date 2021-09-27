@@ -13,14 +13,17 @@ export default function ButtonShare({ datatestid, url }) {
 
   return (
     <>
-      <img
+      <button
         type="button"
         data-testid={ datatestid }
         onClick={ handleClickShare }
-        id="Compatilhar"
         src={ shareIcon }
-        alt="share button"
-      />
+      >
+        <img
+          src={ shareIcon }
+          alt="share button"
+        />
+      </button>
       {Copied && <p>Link copiado!</p>}
     </>
   );
