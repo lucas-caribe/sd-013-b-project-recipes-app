@@ -3,7 +3,8 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch } from 'react-router';
 import Login from './pages/Login';
-import Home from './pages/Home';
+import Comidas from './pages/Comidas';
+import Bebidas from './pages/Bebidas';
 import Footer from './components/Footer';
 import Explorer from './pages/Explorer';
 import ExplorerCountries from './pages/ExplorerCountries';
@@ -19,8 +20,8 @@ function App() {
     <div className="wrapper">
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route exact path="/comidas" component={ Home } />
-        <Route exact path="/bebidas" component={ Login } />
+        <Route exact path="/comidas" component={ Comidas } />
+        <Route exact path="/bebidas" component={ Bebidas } />
         <Route exact path="/comidas/:id" component={ RecipesDetails } />
         <Route exact path="/bebidas/:id" component={ RecipesDetails } />
         <Route exact path="/comidas/:id/in-progress" component={ RecipesInProgress } />

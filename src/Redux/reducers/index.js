@@ -5,6 +5,8 @@ import mealsToken from './mealsToken';
 import cocktailsToken from './cocktailsToken';
 import radioButton from './radioFilters';
 import searchInput from './serchText';
+import loadFoods from './loadFoods';
+import loadDrinks from './loadDrinks';
 
 const rootReducer = combineReducers({
   search,
@@ -13,6 +15,8 @@ const rootReducer = combineReducers({
   cocktailsToken,
   radioButton,
   searchInput,
+  loadDrinks,
+  loadFoods,
 });
 
 export default rootReducer;
