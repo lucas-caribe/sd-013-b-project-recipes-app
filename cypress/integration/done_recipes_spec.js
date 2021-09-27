@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe('Done recipes screen', () => {
+describe.only('Done recipes screen', () => {
   const doneRecipes = [
     {
       id: '52771',
