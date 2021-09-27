@@ -1,7 +1,8 @@
-/* eslint-disable */
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function CategoriesButtons({ props: { mealsCategories, categoryToogle, fetchMealAPI, setCategoryToogle, mealsAndInputs, setMealsAndInputs } }) {
+export default function CategoriesButtons({ props: { mealsCategories, categoryToogle,
+  fetchMealAPI, setCategoryToogle, mealsAndInputs, setMealsAndInputs } }) {
   const TWELVE = 12;
   const handleMealCatecory = async (category) => {
     const buttonCategory = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
@@ -22,14 +23,14 @@ export default function CategoriesButtons({ props: { mealsCategories, categoryTo
               onClick={ () => {
                 console.log(category, categoryToogle);
                 if (categoryToogle.toogle) {
-                  if(category === categoryToogle.category) {
+                  if (category === categoryToogle.category) {
                     fetchMealAPI();
-                    setCategoryToogle({ category, toogle: !categoryToogle.toogle })
-                  };
-                  if(category !== categoryToogle.category) {
-                    handleMealCatecory(category)
-                    setCategoryToogle({ category, toogle: categoryToogle.toogle })
-                  };
+                    setCategoryToogle({ category, toogle: !categoryToogle.toogle });
+                  }
+                  if (category !== categoryToogle.category) {
+                    handleMealCatecory(category);
+                    setCategoryToogle({ category, toogle: categoryToogle.toogle });
+                  }
                 }
                 if (!categoryToogle.toogle) {
                   handleMealCatecory(category);
@@ -45,3 +46,14 @@ export default function CategoriesButtons({ props: { mealsCategories, categoryTo
     </>
   );
 }
+
+CategoriesButtons.propTypes = {
+  props: {
+    mealsCategories: PropTypes.string,
+    categoryToogle: PropTypes.string,
+    fetchMealAPI: PropTypes.string,
+    setCategoryToogle: PropTypes.string,
+    mealsAndInputs: PropTypes.string,
+    setMealsAndInputs: PropTypes.string,
+  }.isRequired,
+};
