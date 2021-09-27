@@ -51,7 +51,9 @@ function Login() {
   };
 
   const validaLogin = () => {
-    if (email.includes('@' && '.com')) {
+    const emailIsValid = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/i;
+    const enable = emailIsValid.test(email);
+    if (enable) {
       return true;
     }
     return false;
