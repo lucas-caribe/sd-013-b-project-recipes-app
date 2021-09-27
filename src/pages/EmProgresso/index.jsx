@@ -31,15 +31,27 @@ function EmProgresso() {
     setIsCopied(bool);
   };
 
+  const checkIngredient = (target) => {
+    if (target.parentElement.style.textDecoration === 'line-through') {
+      target.parentElement.style.textDecoration = 'none';
+    } else {
+      target.parentElement.style.textDecoration = 'line-through';
+    }
+  };
+
   const renderIngredients = () => (
     <form>
       { ingredients.map((ingredient, index) => (
         <div key={ index } data-testid={ `${index}-ingredient-step` }>
-          <label htmlFor={ `${index}-ingredient-step` }>
+          <label
+            htmlFor={ `${index}-ingredient-step` }
+            className={ `${index}-ingredient-label` }
+          >
             <input
               id={ `${index}-ingredient-step` }
               type="checkbox"
               name="ingredients"
+              onClick={ (e) => checkIngredient(e.target) }
             />
             {ingredient}
           </label>
