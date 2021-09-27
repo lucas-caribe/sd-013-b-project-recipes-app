@@ -15,3 +15,13 @@ export async function fetchCategories(type) {
     .then((response) => response.json())
     .then((response) => response);
 }
+
+export async function fetchByCategory(type, category) {
+  const mealsCategoryURL = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=';
+  const drinksCategoryURL = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=';
+
+  return fetch(type === 'meals'
+    ? `${mealsCategoryURL}${category}` : `${drinksCategoryURL}${category}`)
+    .then((response) => response.json())
+    .then((response) => response);
+}
