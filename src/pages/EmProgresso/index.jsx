@@ -70,7 +70,8 @@ function EmProgresso() {
               id={ `${index}-ingredient-step` }
               type="checkbox"
               name="ingredients"
-              checked={ ingredientsChecked ? (/true/i).test(ingredientsChecked[`${index}-ingredient-step`]) : false }
+              checked={ ingredientsChecked
+                ? (/true/i).test(ingredientsChecked[`${index}-ingredient-step`]) : false }
               onChange={ (e) => checkIngredient(e.target) }
             />
             {ingredient}
