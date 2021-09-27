@@ -4,10 +4,13 @@ import SearchHeader from '../components/Header/SearchHeader';
 import Footer from '../components/Footer/Footer';
 
 export default function Perfil({ history }) {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState();
+  const pageTitle = 'Perfil';
 
   useEffect(() => {
-    setEmail(JSON.parse(localStorage.getItem('user')).email);
+    if (localStorage.getItem('user')) {
+      setEmail(JSON.parse(localStorage.getItem('user')).email);
+    }
   }, []);
 
   function handleClick() {
@@ -15,7 +18,6 @@ export default function Perfil({ history }) {
     history.push('/');
   }
 
-  const pageTitle = 'Perfil';
   return (
     <div>
       <SearchHeader value={ pageTitle } />
@@ -55,6 +57,6 @@ export default function Perfil({ history }) {
 
 Perfil.propTypes = {
   history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
+    push: PropTypes.func,
   }).isRequired,
 };
