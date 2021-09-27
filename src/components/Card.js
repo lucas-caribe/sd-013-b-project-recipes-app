@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
 import '../styles/card.css';
@@ -24,17 +23,6 @@ function Card(name, image, id, { i, category }) {
       </h4>
     </div>
   );
-};
-Card.propTypes = {
-  type: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
-  thumb: PropTypes.string,
-  name: PropTypes.string,
-};
-
-Card.defaultProps = {
-  thumb: undefined,
-  name: undefined,
-};
+}
 
 export default Card;
