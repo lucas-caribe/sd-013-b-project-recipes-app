@@ -6,6 +6,7 @@ import useCurrentPage from '../context/hooks/useCurrentPage';
 
 const DRINK = 'Drink';
 const MEAL = 'Meal';
+
 export default function Feitas() {
   useCurrentPage('Receitas Feitas');
   const { allRecipesDone, setFilterRecipeDone } = useContext(Context);

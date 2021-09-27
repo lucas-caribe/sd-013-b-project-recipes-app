@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Context from '../context/Context';
 import shareIcon from '../images/shareIcon.svg';
 
-// CÓDIGO QUE MOSTRA TODAS AS RECEITAS FEITAS
+// RENDERIZA TODAS AS RECEITAS FEITAS
 
 export default function RecipeDoneCard() {
   const { allRecipesDone } = useContext(Context);
