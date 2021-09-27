@@ -9,7 +9,7 @@ function Provider({ children }) {
     </context.Provider>
   );
 }
-// teste
+
 Provider.propTypes = {
   children: node,
 }.isRequired;
