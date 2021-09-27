@@ -41,6 +41,7 @@ function Provider({ children }) {
       global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     }
   }
+  const [filteredRecipes, setFilteredRecipes] = useState('');
 
   const contextDefault = {
     showHeader,
@@ -51,6 +52,7 @@ function Provider({ children }) {
     filteredItem,
     filterRadio,
     filterText,
+    filteredRecipes,
     setShowHeader,
     setShowSearchBar,
     setShowFooter,
@@ -61,6 +63,7 @@ function Provider({ children }) {
     setFilterText,
     fetchFood,
     fetchDrink,
+    setFilteredRecipes,
   };
 
   return (
