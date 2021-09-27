@@ -35,6 +35,7 @@ function Provider({ children }) {
     },
   ]);
 
+  const [filterRecipeDone, setFilterRecipeDone] = useState([]);
   const [inputText, setInputText] = useState('');
   const [inputRadio, setInputRadio] = useState('');
   const [apiRadio, setApiRadio] = useState();
@@ -62,6 +63,8 @@ function Provider({ children }) {
     setAllRecipes,
     allRecipesDone,
     setAllRecipesDone,
+    filterRecipeDone,
+    setFilterRecipeDone,
   };
 
   return (
