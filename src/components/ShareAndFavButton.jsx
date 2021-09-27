@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
 import { shareButtonFunc,
   setFavorites, checkFavorite } from '../GlobalFuncs/shareAndFavButtonFuncs';
 import shareIcon from '../images/shareIcon.svg';
@@ -8,19 +9,21 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function ShareAndFavButton({ recipeInfos:
   { id, tipo, area, category, alcoholic, title, image } }) {
-  const [copiedText, setCopyText] = useState('');
+  const history = useHistory();
+  const [copiedText, setCopyText] = useState(false);
   const [favorite, setFavorite] = useState(checkFavorite(id));
 
   const removeCopiedText = () => {
     const TIMER_LIMIT = 2000;
     setTimeout(() => {
-      setCopyText('');
+      setCopyText(false);
     }, TIMER_LIMIT);
   };
 
   const handleShare = () => {
-    shareButtonFunc(window.location.href.replace('/in-progress', ''));
-    setCopyText('Link copiado!');
+    const itemDetailUrl = history.location.pathname.replace('/in-progress', '');
+    shareButtonFunc(`http://localhost:3000${itemDetailUrl}`);
+    setCopyText(true);
     removeCopiedText();
   };
 
@@ -58,7 +61,7 @@ function ShareAndFavButton({ recipeInfos:
         <img src={ favorite ? blackHeartIcon : whiteHeartIcon } alt="Favorite icon" />
       </button>
 
-      <span>{ copiedText }</span>
+      {copiedText && <span>Link copiado!</span>}
     </div>
   );
 }

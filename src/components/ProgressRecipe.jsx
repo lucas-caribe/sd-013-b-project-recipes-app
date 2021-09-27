@@ -69,6 +69,7 @@ function ProgressRecipe({ recipe:
         checkFinishCondition={ checkFinishCondition }
       />
       <section>
+        <h3>Instructions</h3>
         <p data-testid="instructions">
           { instructions }
         </p>

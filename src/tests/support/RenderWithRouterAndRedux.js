@@ -14,7 +14,7 @@ const renderWithRouterAndRedux = (
     initialState = {},
   } = {},
 ) => {
-  const history = createMemoryHistory(initialEntries);
+  const history = createMemoryHistory({ initialEntries });
   const store = createStore(rootReducer, initialState, applyMiddleware(thunk));
   return ({
     ...render(
