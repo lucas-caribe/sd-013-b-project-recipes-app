@@ -9,6 +9,7 @@ function Provider({ children }) {
   const [showFooter, setShowFooter] = useState(false);
   const [showSearchHeaderIcon, setShowSearchHeaderIcon] = useState(true);
   const [filteredItem, setFilteredItem] = useState([]);
+  const [filteredRecipes, setFilteredRecipes] = useState('');
 
   const contextDefault = {
     showHeader,
@@ -17,12 +18,14 @@ function Provider({ children }) {
     showSearchHeaderIcon,
     titleName,
     filteredItem,
+    filteredRecipes,
     setShowHeader,
     setShowSearchBar,
     setShowFooter,
     setShowSearchHeaderIcon,
     setTitleName,
     setFilteredItem,
+    setFilteredRecipes,
   };
 
   return (
