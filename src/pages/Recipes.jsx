@@ -1,7 +1,10 @@
 import React from 'react';
 
-export default function Recipes() {
+export default function Recipes(props) {
+  console.log(props);
   return (
-    <h2>Receitas</h2>
+    <div>
+      <h2>Receitas</h2>
+    </div>
   );
 }

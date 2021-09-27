@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import './SearchBar.css';
 
 const URL_FOODS = 'https://www.themealdb.com/api/json/v1/1/';
 const URL_DRINKS = 'https://www.thecocktaildb.com/api/json/v1/1/';
@@ -29,18 +30,28 @@ export default function SearchBar({ history }) {
 
   function mapFood(slicingTwelve) {
     return slicingTwelve.map((card, index) => (
-      <div key={ index }>
+      <div className="card" key={ index }>
         <p data-testid={ `${index}-recipe-card` }>{card.strMeal}</p>
-        <img data-testid={ `${index}-card-img` } src={ card.strMealThumb } alt="" />
+        <img
+          className="card-img"
+          data-testid={ `${index}-card-img` }
+          src={ card.strMealThumb }
+          alt=""
+        />
         <p data-testid={ `${index}-card-name` }>{card.strMeal}</p>
       </div>
     ));
   }
   function mapDrink(slicingTwelve) {
     return slicingTwelve.map((card, index) => (
-      <div key={ index }>
+      <div className="card" key={ index }>
         <p data-testid={ `${index}-recipe-card` }>{card.strDrink}</p>
-        <img data-testid={ `${index}-card-img` } src={ card.strDrinkThumb } alt="" />
+        <img
+          className="card-img"
+          data-testid={ `${index}-card-img` }
+          src={ card.strDrinkThumb }
+          alt=""
+        />
         <p data-testid={ `${index}-card-name` }>{card.strDrink}</p>
       </div>
     ));
@@ -84,6 +95,7 @@ export default function SearchBar({ history }) {
       .json();
     return lengthMeals(drinks, 'drinks');
   }
+
   return (
     <div>
       <div>
@@ -144,7 +156,9 @@ export default function SearchBar({ history }) {
       >
         Buscar
       </button>
-      { showResult.show.value && recipeCards(showResult.show.resultSearch) }
+      <div className="cardDisplay">
+        { showResult.show.value && recipeCards(showResult.show.resultSearch) }
+      </div>
     </div>
   );
 }
