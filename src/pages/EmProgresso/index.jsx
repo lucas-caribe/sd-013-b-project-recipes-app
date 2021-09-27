@@ -14,6 +14,7 @@ function EmProgresso() {
   const [isCopied, setIsCopied] = useState(false);
   const { pathname } = useLocation();
   const { id } = useParams();
+  const [ingredientsChecked, setIngredientsChecked] = useState({});
 
   const {
     item,
@@ -27,16 +28,35 @@ function EmProgresso() {
     return setIsCopied(false);
   }, [pathname]);
 
-  const handleCopy = (bool) => {
-    setIsCopied(bool);
-  };
+  useEffect(() => {
+    console.log(ingredientsChecked);
+    const handleCheck = () => setIngredientsChecked(JSON
+      .parse(localStorage.getItem('checkedIngredients')));
+    handleCheck();
+  }, []);
 
   const checkIngredient = (target) => {
-    if (target.parentElement.style.textDecoration === 'line-through') {
+    if (!target.checked) {
+      setIngredientsChecked({
+        ...ingredientsChecked,
+        [target.id]: false,
+      });
       target.parentElement.style.textDecoration = 'none';
     } else {
+      setIngredientsChecked({
+        ...ingredientsChecked,
+        [target.id]: true,
+      });
       target.parentElement.style.textDecoration = 'line-through';
     }
+  };
+
+  useEffect(() => {
+    localStorage.setItem('checkedIngredients', JSON.stringify({ ...ingredientsChecked }));
+  }, [ingredientsChecked]);
+
+  const handleCopy = (bool) => {
+    setIsCopied(bool);
   };
 
   const renderIngredients = () => (
@@ -45,13 +65,13 @@ function EmProgresso() {
         <div key={ index } data-testid={ `${index}-ingredient-step` }>
           <label
             htmlFor={ `${index}-ingredient-step` }
-            className={ `${index}-ingredient-label` }
           >
             <input
               id={ `${index}-ingredient-step` }
               type="checkbox"
               name="ingredients"
-              onClick={ (e) => checkIngredient(e.target) }
+              checked={ ingredientsChecked ? (/true/i).test(ingredientsChecked[`${index}-ingredient-step`]) : false }
+              onChange={ (e) => checkIngredient(e.target) }
             />
             {ingredient}
           </label>
