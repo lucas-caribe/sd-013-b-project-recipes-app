@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import SearchBar from '../components/SearchBar';
-import searchIcon from '../images/searchIcon.svg';
+import Header from '../components/Header';
 
 const URL_FOODS = 'https://www.themealdb.com/api/json/v1/1/';
 const URL_DRINKS = 'https://www.thecocktaildb.com/api/json/v1/1/';
@@ -10,12 +10,11 @@ export default function Main() {
   const history = useHistory();
   const [drinkList, setDrink] = useState();
   const [mealsList, setMeals] = useState();
-  const [loading, setLoading] = useState(true);
+  const [loadingItems, setLoadingItems] = useState(true);
+  const [loadingButtons, setLoadingButtons] = useState(true);
   const [buttons, setButtons] = useState({
-    buttonFilter: {
-      meals,
-      drinks,
-    },
+    meals: '',
+    drinks: '',
   });
 
   const { pathname } = useLocation();
@@ -24,10 +23,12 @@ export default function Main() {
     async function fetchItems() {
       const { meals } = await (await fetch(`${URL_FOODS}search.php?s=`))
         .json();
+      setMeals(meals);
+
       const { drinks } = await (await fetch(`${URL_DRINKS}search.php?s=`))
         .json();
       setDrink(drinks);
-      setMeals(meals);
+      setLoadingItems(false);
     }
 
     async function fetchButtons() {
@@ -36,15 +37,13 @@ export default function Main() {
       const { drinks } = await (await fetch(`${URL_DRINKS}list.php?c=list`))
         .json();
       setButtons({
-        buttonFilter: {
-          meals,
-          drinks,
-        },
+        meals,
+        drinks,
       });
-      setLoading(false);
+      setLoadingButtons(false);
     }
-    fetchButtons();
     fetchItems();
+    fetchButtons();
   }, []);
 
   // useEffect(() => {
@@ -53,7 +52,13 @@ export default function Main() {
   //       .json();
   //     const { drinks } = await (await fetch(`${URL_DRINKS}list.php?c=list`))
   //       .json();
+  //     setButtons({
+  //       meals,
+  //       drinks,
+  //     });
+  //     setLoadingButtons(false);
   //   }
+  //   fetchButtons();
   // }, []);
 
   function mapFood(slicingTwelve) {
@@ -86,31 +91,57 @@ export default function Main() {
     ));
   }
 
-  const numberMax = 12;
+  const maxTwelve = 12;
+  const maxFive = 5;
   function recipeCards(result, typeResult) {
-    const slicingTwelve = result.slice(0, numberMax);
-    if (typeResult === 'drinks') return mapDrink(slicingTwelve);
+    const slicingTwelve = result.slice(0, maxTwelve);
+    if (typeResult.includes('drinks')) return mapDrink(slicingTwelve);
     return mapFood(slicingTwelve);
   }
 
-  function pathChange() {
-    if (pathname === '/comidas') return recipeCards(mealsList);
-    return recipeCards(drinkList, 'drinks');
+  function recipeButtons(result) {
+    console.log(result);
+    const slicingFiveCategory = result.slice(0, maxFive);
+    return slicingFiveCategory.map(({ strCategory }, index) => (
+      <div key={ index }>
+        <button
+          type="button"
+          data-testid={ `${strCategory}-category-filter` }
+        >
+          {strCategory}
+        </button>
+      </div>
+    ));
   }
+
+  function pathChangeButton() {
+    const { meals, drinks } = buttons;
+    if (pathname.includes('comidas')) return recipeButtons(meals);
+    return recipeButtons(drinks);
+  }
+
+  function pathChange(typeOfPath) {
+    if (typeOfPath === 'category') {
+      if (pathname === '/comidas') return recipeCards(mealsList, 'comidas');
+      return recipeCards(drinkList, 'drinks');
+    }
+    // const { meals, drinks } = buttons;
+    // if (pathname.includes('comidas')) return recipeButtons(meals);
+    // return recipeButtons(drinks);
+  }
+  console.log('Items', loadingItems);
+  console.log('button', loadingButtons);
 
   return (
     <div>
       <h2>Main</h2>
-      {/* { TEMP REMOVER} */}
-      <button type="button" data-testid="search-top-btn">
-        <object type="image/svg+xml" data={ searchIcon }>Pesquisa</object>
-      </button>
-      {/* { TEMP REMOVER} */}
+      <Header />
       <SearchBar history={ history } />
-      { loading ? 'Loading...'
+      { (loadingItems || loadingButtons) ? 'Loading...'
         : (
           <div className="cardDisplay">
-            {pathChange()}
+            {pathChangeButton()}
+            {pathChange('category')}
           </div>)}
     </div>
   );
