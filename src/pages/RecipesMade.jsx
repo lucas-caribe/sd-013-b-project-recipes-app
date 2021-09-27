@@ -1,7 +1,6 @@
 // Tela de receitas feitas: requisitos 54 a 59;
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import ButtonFavorite from '../components/ButtonFavorite';
 import ButtonShare from '../components/ButtonShare';
 
 const STATE_DONE = {
@@ -64,14 +63,14 @@ function RecipesMade() {
           <p data-testid={ `${index}-horizontal-top-text` }>{`${area} - ${category}`}</p>
           { tags.map((tag, i) => (
             <p
-              data-testid={ `${i}-${tag}horizontal-tag` }
+              data-testid={ `0-${tag}-horizontal-tag` }
               key={ i }
             >
               {tag}
             </p>
           ))}
           <p data-testid={ `${index}-horizontal-done-date` }>{ doneDate }</p>
-          <ButtonFavorite id={ id } index={ index } />
+          {/* <ButtonFavorite id={ id } index={ index } /> */}
           <ButtonShare index={ index } />
         </div>
       );
@@ -97,7 +96,6 @@ function RecipesMade() {
         <p>{ category }</p>
         <p data-testid={ `${index}-horizontal-top-text` }>{ alcoholicOrNot }</p>
         <p data-testid={ `${index}-horizontal-done-date` }>{ doneDate }</p>
-        <ButtonFavorite id={ id } index={ index } />
         <ButtonShare index={ index } />
       </div>
     );
@@ -123,7 +121,7 @@ function RecipesMade() {
       type: 'bebida',
       area: '',
       category: 'Cocktail',
-      alcoholicOrNot:  'Alcoholic',
+      alcoholicOrNot: 'Alcoholic',
       name: 'Aquamarine',
       image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
       doneDate: '23/06/2020',
