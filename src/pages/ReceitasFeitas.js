@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import BarraDeBusca from '../components/Header/BarraDeBusca';
+import SearchHeader from '../components/Header/SearchHeader';
 import CardReceitasFeitas from '../components/Card/CardReceitasFeitas';
 
 function ReceitasFeitas() {
@@ -28,7 +28,7 @@ function ReceitasFeitas() {
 
   return (
     <div>
-      <BarraDeBusca value={ pageTitle } />
+      <SearchHeader value={ pageTitle } />
       <button
         type="button"
         data-testid="filter-by-all-btn"
