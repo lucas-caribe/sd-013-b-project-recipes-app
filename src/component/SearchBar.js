@@ -1,8 +1,32 @@
-import React from 'react';
-import RadialInput from '../mini-components/RadialInput';
-import Button from '../mini-components/Button';
+import React, { useEffect, useContext } from 'react';
+import { useHistory } from 'react-router';
+import Context from '../context/Context';
 
-function SearchBar() {
+export default function SearchBar() {
+  const history = useHistory();
+  const { filterRadio,
+    setFilterRadio,
+    filterText,
+    setFilterText,
+    fetchFood,
+    fetchDrink,
+    filteredItem,
+  } = useContext(Context);
+
+  useEffect(() => {
+    if (filterRadio === 'f' && filterText.length > 1) {
+      global.alert('Sua busca deve conter somente 1 (um) caracter');
+    }
+  }, [filterText]);
+
+  useEffect(() => {
+    if (filteredItem.length === 1 && history.location.pathname === '/comidas') {
+      history.push(`/comidas/${filteredItem[0].idMeal}`);
+    } if (filteredItem.length === 1 && history.location.pathname === '/bebidas') {
+      history.push(`/bebidas/${filteredItem[0].idDrink}`);
+    }
+  }, [filteredItem]);
+
   return (
     <div>
       <input data-testid="search-input" type="text" placeholder="DIGITE SUA COMIDA" />
@@ -28,5 +52,3 @@ function SearchBar() {
     </div>
   );
 }
-
-export default SearchBar;
