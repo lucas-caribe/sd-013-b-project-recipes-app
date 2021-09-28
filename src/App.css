@@ -89,7 +89,7 @@
 }
 
 .category-button input {
-  display: none;
+  appearance: none;
 }
 
 .category-button label {
