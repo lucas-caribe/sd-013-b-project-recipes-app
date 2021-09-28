@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
+import removeFavoriteFromStorage from '../services/removeFavoriteFromStorage';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 const copy = require('clipboard-copy');
 
 function DoneCard({ filteredRecipes }) {
+  const { push, location: { pathname } } = useHistory();
+
+  const favoriteRecipesLink = '/receitas-favoritas';
+
   const [modal, setModal] = useState(false);
 
   const handleShareButton = ({ id, type }) => {
@@ -20,6 +26,11 @@ function DoneCard({ filteredRecipes }) {
     if (recipe.type === 'bebida') return recipe.alcoholicOrNot;
     return `${recipe.area} - ${recipe.category}`;
   };
+
+  function handleClick(id) {
+    removeFavoriteFromStorage(id);
+    push(favoriteRecipesLink);
+  }
 
   return (
     <div>
@@ -52,7 +63,7 @@ function DoneCard({ filteredRecipes }) {
             />
           </button>
           <div>
-            {recipe.tags.map((tag) => (
+            {pathname !== favoriteRecipesLink && recipe.tags.map((tag) => (
               <span
                 data-testid={ `${index}-${tag}-horizontal-tag` }
                 key={ tag }
@@ -61,6 +72,20 @@ function DoneCard({ filteredRecipes }) {
               </span>
             ))}
           </div>
+          {
+            pathname === favoriteRecipesLink && (
+              <button
+                type="button"
+                onClick={ () => handleClick(recipe.id) }
+              >
+                <img
+                  src={ blackHeartIcon }
+                  alt="remove favorite"
+                  data-testid={ `${index}-horizontal-favorite-btn` }
+                />
+              </button>
+            )
+          }
         </div>
       ))}
     </div>
