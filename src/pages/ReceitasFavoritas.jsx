@@ -20,17 +20,17 @@ export default function ReceitasFavoritas() {
   };
 
   const onClickFilter = (type) => {
+    const arrayFromStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
     switch (type) {
     case 'All':
       setFavoritesFromStorage(JSON.parse(localStorage.getItem('favoriteRecipes')));
       break;
     case 'Food':
-      setFavoritesFromStorage(favoritesFromStorage
-        .filter((element) => element.type === 'comida'));
+      setFavoritesFromStorage(arrayFromStorage.filter((food) => food.type === 'comida'));
       break;
     case 'Drinks':
-      setFavoritesFromStorage(favoritesFromStorage
-        .filter((element) => element.type === 'bebida'));
+      setFavoritesFromStorage(arrayFromStorage
+        .filter((drink) => drink.type === 'bebida'));
       break;
     default:
       setFavoritesFromStorage(favoritesFromStorage);
