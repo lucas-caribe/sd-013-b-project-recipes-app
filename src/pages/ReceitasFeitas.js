@@ -6,7 +6,7 @@ import DoneRecipeCard from '../components/DoneRecipeCard/index';
 import { getLocalStorage } from '../components/helper';
 
 const ReceitasFeitas = () => {
-  const doneRecipes = getLocalStorage();
+  const doneRecipes = getLocalStorage() || [];
 
   const [filter, setFilter] = useState('');
 
