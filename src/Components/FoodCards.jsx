@@ -12,6 +12,8 @@ function FoodCards({ itens, type }) {
 
   let newList = [];
 
+  console.log(itens);
+
   if (result) {
     const maxCardsNumber = 12;
     newList = result.reduce((acc, act, index) => {

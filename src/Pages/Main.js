@@ -17,11 +17,12 @@ const Main = ({ filterItens }) => {
   let showDetails = false;
   if (type === 'comidas') main = 'Comidas';
   else if (type === 'bebidas') main = 'Bebidas';
+  let showHeaderAndFooter = true;
+
   if (id) {
-    showHeader = false;
+    showHeaderAndFooter = false;
     showDetails = true;
   }
-  let showHeaderAndFooter = true;
   if (type === 'comidas') main = 'Comidas';
   else if (type === 'bebidas') main = 'Bebidas';
   if (id) showHeaderAndFooter = false;
