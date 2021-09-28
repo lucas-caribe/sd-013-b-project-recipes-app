@@ -182,6 +182,7 @@ describe.only('Testes no componentest Header', () => {
     const { history } = renderWithRouterAndRedux(<App />);
     history.push('/comidas');
 
-    expect(screen.getByRole('link')).toHaveAttribute('href', '/perfil'); // estrutura da linha foi pego no stackoverflow
+    expect(screen.getByRole('link')).toHaveAttribute('href', '/perfil');
+    // estrutura da linha foi pego no stackoverflow
   });
 });
