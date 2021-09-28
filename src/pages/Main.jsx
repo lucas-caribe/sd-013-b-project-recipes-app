@@ -1,21 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
+import contextCreat from '../context/contextCreate';
 import SearchBar from '../components/SearchBar';
 import Header from '../components/Header';
+import ButtonComponent from '../components/ButtonComponent';
 
 const URL_FOODS = 'https://www.themealdb.com/api/json/v1/1/';
 const URL_DRINKS = 'https://www.thecocktaildb.com/api/json/v1/1/';
 
+const maxTwelve = 12;
+
 export default function Main() {
   const history = useHistory();
+  const { mapDrink, mapFood } = useContext(contextCreat);
+  const [noFilterDrinkList, setNoFilterDrinkList] = useState();
+  const [noFilterMealsList, setNoFilterMealsList] = useState();
+  const [categoryFilter, setCategoryFilter] = useState('');
   const [drinkList, setDrink] = useState();
   const [mealsList, setMeals] = useState();
   const [loadingItems, setLoadingItems] = useState(true);
-  const [loadingButtons, setLoadingButtons] = useState(true);
-  const [buttons, setButtons] = useState({
-    meals: '',
-    drinks: '',
-  });
 
   const { pathname } = useLocation();
 
@@ -24,124 +27,74 @@ export default function Main() {
       const { meals } = await (await fetch(`${URL_FOODS}search.php?s=`))
         .json();
       setMeals(meals);
+      setNoFilterMealsList(meals);
 
       const { drinks } = await (await fetch(`${URL_DRINKS}search.php?s=`))
         .json();
       setDrink(drinks);
+      setNoFilterDrinkList(drinks);
       setLoadingItems(false);
     }
-
-    async function fetchButtons() {
-      const { meals } = await (await fetch(`${URL_FOODS}list.php?c=list`))
-        .json();
-      const { drinks } = await (await fetch(`${URL_DRINKS}list.php?c=list`))
-        .json();
-      setButtons({
-        meals,
-        drinks,
-      });
-      setLoadingButtons(false);
-    }
     fetchItems();
-    fetchButtons();
   }, []);
 
-  // useEffect(() => {
-  //   async function fetchButtons() {
-  //     const { meals } = await (await fetch(`${URL_FOODS}list.php?c=list`))
-  //       .json();
-  //     const { drinks } = await (await fetch(`${URL_DRINKS}list.php?c=list`))
-  //       .json();
-  //     setButtons({
-  //       meals,
-  //       drinks,
-  //     });
-  //     setLoadingButtons(false);
-  //   }
-  //   fetchButtons();
-  // }, []);
-
-  function mapFood(slicingTwelve) {
-    return slicingTwelve.map((card, index) => (
-      <div className="card" key={ index }>
-        <p data-testid={ `${index}-recipe-card` }>{card.strMeal}</p>
-        <img
-          className="card-img"
-          data-testid={ `${index}-card-img` }
-          src={ card.strMealThumb }
-          alt=""
-        />
-        <p data-testid={ `${index}-card-name` }>{card.strMeal}</p>
-      </div>
-    ));
+  async function handleClick(category, typeOfFilter) {
+    setCategoryFilter(category);
+    if (typeOfFilter === 'drinks') {
+      const { drinks } = await (
+        await fetch(`${URL_DRINKS}filter.php?c=${category}`)).json();
+      const slicedDrinks = drinks.slice(0, maxTwelve);
+      const categoryDink = category === categoryFilter ? (
+        noFilterDrinkList
+      ) : (
+        slicedDrinks
+      );
+      return setDrink(categoryDink);
+    } const { meals } = await (
+      await fetch(`${URL_FOODS}filter.php?c=${category}`)).json();
+    const slicedMeals = meals.slice(0, maxTwelve);
+    const categoryMeal = category === categoryFilter ? (
+      noFilterMealsList
+    ) : (
+      slicedMeals
+    );
+    return setMeals(categoryMeal);
   }
 
-  function mapDrink(slicingTwelve) {
-    return slicingTwelve.map((card, index) => (
-      <div className="card" key={ index }>
-        <p data-testid={ `${index}-recipe-card` }>{card.strDrink}</p>
-        <img
-          className="card-img"
-          data-testid={ `${index}-card-img` }
-          src={ card.strDrinkThumb }
-          alt=""
-        />
-        <p data-testid={ `${index}-card-name` }>{card.strDrink}</p>
-      </div>
-    ));
-  }
-
-  const maxTwelve = 12;
-  const maxFive = 5;
   function recipeCards(result, typeResult) {
     const slicingTwelve = result.slice(0, maxTwelve);
     if (typeResult.includes('drinks')) return mapDrink(slicingTwelve);
     return mapFood(slicingTwelve);
   }
 
-  function recipeButtons(result) {
-    console.log(result);
-    const slicingFiveCategory = result.slice(0, maxFive);
-    return slicingFiveCategory.map(({ strCategory }, index) => (
-      <div key={ index }>
-        <button
-          type="button"
-          data-testid={ `${strCategory}-category-filter` }
-        >
-          {strCategory}
-        </button>
-      </div>
-    ));
-  }
-
-  function pathChangeButton() {
-    const { meals, drinks } = buttons;
-    if (pathname.includes('comidas')) return recipeButtons(meals);
-    return recipeButtons(drinks);
-  }
-
-  function pathChange(typeOfPath) {
-    if (typeOfPath === 'category') {
-      if (pathname === '/comidas') return recipeCards(mealsList, 'comidas');
-      return recipeCards(drinkList, 'drinks');
+  function pathChange() {
+    if (pathname === '/comidas') {
+      return recipeCards(
+        mealsList, 'comidas',
+      );
     }
-    // const { meals, drinks } = buttons;
-    // if (pathname.includes('comidas')) return recipeButtons(meals);
-    // return recipeButtons(drinks);
+    return recipeCards(drinkList, 'drinks');
   }
-  console.log('Items', loadingItems);
-  console.log('button', loadingButtons);
+
+  function resetAll() {
+    setDrink(noFilterDrinkList);
+    setMeals(noFilterMealsList);
+    setCategoryFilter('');
+  }
 
   return (
     <div>
       <h2>Main</h2>
       <Header />
       <SearchBar history={ history } />
-      { (loadingItems || loadingButtons) ? 'Loading...'
+      { loadingItems ? 'Loading...'
         : (
           <div className="cardDisplay">
-            {pathChangeButton()}
-            {pathChange('category')}
+            <ButtonComponent
+              handleClick={ handleClick }
+              resetAll={ resetAll }
+            />
+            {pathChange()}
           </div>)}
     </div>
   );
