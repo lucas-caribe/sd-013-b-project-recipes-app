@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouterAndRedux from './support/RenderWithRouterAndRedux';
 import App from '../App';
@@ -13,12 +13,18 @@ const FAV_BTN = 'favorite-btn';
 const URL = '/comidas/52771/in-progress';
 
 describe('Favorite and share button tests', () => {
-  beforeEach(() => (
-    renderWithRouterAndRedux(<App />, {
-      initialState: { reducerRecipe: { recipeMeal } },
-      initialEntries: [URL],
-    })
-  ));
+  beforeEach(async () => {
+    global.fetch = jest.fn(async () => ({
+      json: async () => ({ meals: [recipeMeal] }),
+    }));
+
+    await act(async () => {
+      renderWithRouterAndRedux(<App />, {
+        initialEntries: [URL],
+      });
+    });
+  });
+
   afterEach(() => jest.clearAllMocks());
 
   test('Se os botão de compartilhar está funcionnado corretamente', () => {
@@ -40,7 +46,7 @@ describe('Favorite and share button tests', () => {
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith('http://localhost:3000/comidas/52771');
   });
 
-  test('Se o botão de favoritar está funcionnado corretamente ', () => {
+  test('Se o botão de favoritar está funcionnado corretamente ', async () => {
     const favBtn = screen.getByTestId(FAV_BTN);
 
     expect(favBtn.firstChild.src).toBe(`http://localhost/${whiteHeartIcon}`);
@@ -55,18 +61,16 @@ describe('Favorite and share button tests', () => {
 
     userEvent.click(favBtn);
 
-    renderWithRouterAndRedux(<App />, {
-      initialState: { reducerRecipe: { recipeMeal } },
-      initialEntries: [URL],
+    await act(async () => {
+      renderWithRouterAndRedux(<App />, { initialEntries: [URL] });
     });
 
     expect(favBtn.firstChild.src).toBe(`http://localhost/${blackHeartIcon}`);
     userEvent.click(favBtn);
     expect(favBtn.firstChild.src).toBe(`http://localhost/${whiteHeartIcon}`);
 
-    renderWithRouterAndRedux(<App />, {
-      initialState: { reducerRecipe: { recipeMeal } },
-      initialEntries: [URL],
+    await act(async () => {
+      renderWithRouterAndRedux(<App />, { initialEntries: [URL] });
     });
 
     expect(favBtn.firstChild.src).toBe(`http://localhost/${whiteHeartIcon}`);
