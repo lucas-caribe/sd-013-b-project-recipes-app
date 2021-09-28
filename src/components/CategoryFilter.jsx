@@ -16,7 +16,7 @@ export default function CategoryFilter() {
   function handleCheck({ target }) {
     onlyOne(target);
 
-    const category = target.value.split(' ').join('_');
+    const category = target.value;
 
     if (target.checked) {
       setSelectedCategory(category);
