@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import contextCreat from '../context/contextCreate';
 import SearchBar from '../components/SearchBar';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 import ButtonComponent from '../components/ButtonComponent';
 
@@ -95,7 +96,9 @@ export default function Main() {
               resetAll={ resetAll }
             />
             {pathChange()}
+            <Footer />
           </div>)}
+      
     </div>
   );
 }
