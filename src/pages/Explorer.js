@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
-
 import Footer from '../components/Footer';
+import '../css/Explorer.css';
 
 export default function Explorer({ history }) {
   const pageTitle = {
@@ -10,24 +10,25 @@ export default function Explorer({ history }) {
     setIcon: false,
   };
   return (
-    <div>
+    <div className="explorer-page">
       <Header value={ pageTitle } />
-      Explorar
-      <button
-        type="button"
-        data-testid="explore-food"
-        onClick={ () => history.push('/explorar/comidas') }
-      >
-        Explorar Comidas
-      </button>
+      <div className="explorer-button">
+        <button
+          type="button"
+          data-testid="explore-food"
+          onClick={ () => history.push('/explorar/comidas') }
+        >
+          Explorar Comidas
+        </button>
 
-      <button
-        type="button"
-        data-testid="explore-drinks"
-        onClick={ () => history.push('/explorar/bebidas') }
-      >
-        Explorar Bebidas
-      </button>
+        <button
+          type="button"
+          data-testid="explore-drinks"
+          onClick={ () => history.push('/explorar/bebidas') }
+        >
+          Explorar Bebidas
+        </button>
+      </div>
       <Footer />
     </div>
   );

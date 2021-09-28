@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import '../css/Profile.css';
 
 export default function Profile({ history }) {
   const pageTitle = {
@@ -23,14 +24,14 @@ export default function Profile({ history }) {
   };
 
   return (
-    <div>
+    <div className="profile-page">
       <Header value={ pageTitle } />
-      <div>
+      <div className="email">
         { test() }
       </div>
-      Perfil
       <div>
         <button
+          className="profile-button"
           type="button"
           data-testid="profile-done-btn"
           onClick={ () => history.push('/receitas-feitas') }
@@ -40,6 +41,7 @@ export default function Profile({ history }) {
       </div>
       <div>
         <button
+          className="profile-button"
           type="button"
           data-testid="profile-favorite-btn"
           onClick={ () => history.push('/receitas-favoritas') }
@@ -50,6 +52,7 @@ export default function Profile({ history }) {
 
       <div>
         <button
+          className="profile-button"
           type="button"
           data-testid="profile-logout-btn"
           onClick={ () => outPage() }
