@@ -19,6 +19,10 @@ function Bebidas() {
       setCategories(drinks.slice(0, quantidade));
     }
 
+    getCategories();
+  }, [setCategories]);
+
+  useEffect(() => {
     async function getAllRecipes() {
       const quantidade = 12;
       const { drinks } = await fetchAllRecipes('drinks');
@@ -31,14 +35,12 @@ function Bebidas() {
       setAllRecipes(drinks.slice(0, quantidade));
     }
 
-    getCategories();
-
     if (selectedCategory === 'All') {
       getAllRecipes();
     } else {
       getByCategory();
     }
-  }, [selectedCategory, setAllRecipes, setCategories]);
+  }, [selectedCategory, setAllRecipes]);
 
   return (
     <div className="page">
