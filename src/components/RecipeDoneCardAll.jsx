@@ -32,6 +32,7 @@ export default function RecipeDoneCard() {
             className="recipe-done-card"
           >
             <div className="recipe-card-img">
+              {/** direciona para a página da receita */}
               <Link
                 to={
                   recipe.type === 'Meal'
@@ -60,6 +61,7 @@ export default function RecipeDoneCard() {
             </div>
 
             <div className="recipe-card-title">
+              {/** direciona para a página da receita */}
               <Link
                 to={
                   recipe.type === 'Meal'
@@ -80,15 +82,17 @@ export default function RecipeDoneCard() {
             </div>
 
             <div className="recipe-card-tags">
+              {/** renderiza as duas primeiras tags: índice 0 e 1 do array de tags
+               * usadas tanto no datateste-id, quanto para aparecer no card */}
               <div
                 data-testid={ `${index}-${renderTags(recipe.strTags)[0]}-horizontal-tag` }
               >
-                {renderTags(recipe.strTags)[0]}
+                { renderTags(recipe.strTags)[0] }
               </div>
               <div
                 data-testid={ `${index}-${renderTags(recipe.strTags)[1]}-horizontal-tag` }
               >
-                {renderTags(recipe.strTags)[1]}
+                { renderTags(recipe.strTags)[1] }
               </div>
             </div>
 
@@ -110,7 +114,8 @@ export default function RecipeDoneCard() {
                 </button>
               </CopyToClipboard>
             </div>
-            <div className="link-copied">
+
+            <div className="recipe-card-link-copied">
               { copied ? <span> Link copiado!</span> : null }
             </div>
           </div> // end <div> principal

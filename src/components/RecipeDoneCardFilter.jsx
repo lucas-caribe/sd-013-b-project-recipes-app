@@ -1,12 +1,18 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+
 import Context from '../context/Context';
 import shareIcon from '../images/shareIcon.svg';
 
 // RENDERIZA AS RECEITAS FILTRADAS
 
 export default function RecipeDoneCardFilter() {
-  const { filterRecipeDone } = useContext(Context);
+  const {
+    filterRecipeDone,
+    copied,
+    setCopied,
+  } = useContext(Context);
 
   function renderTags(stringTags) {
     if (stringTags) {
@@ -88,18 +94,26 @@ export default function RecipeDoneCardFilter() {
             </div>
 
             <div className="recipe-card-share-btn">
-              <a
-                href={
+              <CopyToClipboard
+                text={
                   recipe.type === 'Meal'
-                    ? `/comidas/${recipe.idMeal}`
-                    : `/bebidas/${recipe.idDrink}`
+                    ? `http://localhost:3000/comidas/${recipe.idMeal}`
+                    : `http://localhost:3000/bebidas/${recipe.idDrink}`
                 }
-                src={ shareIcon }
-                data-testid={ `${index}-horizontal-share-btn` }
-                onClick={ () => {} }
               >
-                <img src={ shareIcon } alt="share" />
-              </a>
+                <button
+                  data-testid={ `${index}-horizontal-share-btn` }
+                  type="button"
+                  src={ shareIcon }
+                  onClick={ () => setCopied(true) }
+                >
+                  <img src={ shareIcon } alt="share" />
+                </button>
+              </CopyToClipboard>
+            </div>
+
+            <div className="recipe-card-link-copied">
+              { copied ? <span> Link copiado!</span> : null }
             </div>
 
           </div>
