@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import DrinkCardSpace from '../component/DrinkCardSpace';
 import Context from '../context/Context';
 
 function Drinks() {
@@ -20,7 +21,7 @@ function Drinks() {
 
   return (
     <div>
-      <h1>Drinks</h1>
+      <DrinkCardSpace />
     </div>
   );
 }

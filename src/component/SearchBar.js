@@ -24,7 +24,7 @@ function SearchBar() {
         radialName="search-checkbox"
         radialText="Primeira Letra"
       />
-      <Button btnText="Buscar" data-testid="exec-search-btn" />
+      <Button btnText="Buscar" dataTest="exec-search-btn" />
     </div>
   );
 }
