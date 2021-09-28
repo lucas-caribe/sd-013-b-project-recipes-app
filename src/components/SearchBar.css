@@ -5,10 +5,10 @@
 }
 
 .card {
-  border: 1px solid black;
   align-items: center;
-  margin: 5px;
+  border: 1px solid black;
   height: 170px;
+  margin: 5px;
   width: 180px;
 }
 
