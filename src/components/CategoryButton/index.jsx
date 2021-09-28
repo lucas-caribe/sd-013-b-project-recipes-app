@@ -4,9 +4,12 @@ import AppContext from '../../context/AppContext';
 
 export default function CategoryButton({ category }) {
   const { currentFoodFilter, setCurrentFoodFilter,
-    currentDrinkFilter, setCurrentDrinkFilter, page } = useContext(AppContext);
+    currentDrinkFilter, setCurrentDrinkFilter, page,
+    setFoodIngredientSituation, setDrinkIngredientSituation } = useContext(AppContext);
+
   function handleClick(categoryName) {
     if (page === 'Comidas') {
+      setFoodIngredientSituation(false);
       if (currentFoodFilter === categoryName) {
         setCurrentFoodFilter('');
       } if (currentFoodFilter !== categoryName) {
@@ -14,6 +17,7 @@ export default function CategoryButton({ category }) {
       }
     }
     if (page === 'Bebidas') {
+      setDrinkIngredientSituation(false);
       if (currentDrinkFilter === categoryName) {
         setCurrentDrinkFilter('');
       } if (currentDrinkFilter !== categoryName) {

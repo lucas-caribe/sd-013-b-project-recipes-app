@@ -10,7 +10,8 @@ const SearchBar = ({ option }) => {
   const SEARCH_TERM = 'searchTerm';
   const [inputSearch, setInputSearch] = useState('');
   const [inputRadio, setInputRadio] = useState('');
-  const { setMeals, setDrinks } = useContext(AppContext);
+  const { setMeals, setDrinks,
+    setDrinkIngredientSituation, setFoodIngredientSituation } = useContext(AppContext);
   const history = useHistory();
 
   const handleChange = ({ target }) => (target.name === 'searchBar'
@@ -53,10 +54,12 @@ const SearchBar = ({ option }) => {
     };
 
     if (type === 'Comidas') {
+      setFoodIngredientSituation(false);
       const { meals } = await fetchAPI(radioCriteria[radio]);
       checkResult(type, meals);
     }
     if (type === 'Bebidas') {
+      setDrinkIngredientSituation(false);
       const { drinks } = await fetchAPI(radioCriteria[radio]);
       checkResult(type, drinks);
     }
