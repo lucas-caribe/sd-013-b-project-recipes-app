@@ -52,7 +52,8 @@ export default function Details() {
   }
 
   function handleButton() {
-    if (localStorage.getItem(id)) {
+    if (localStorage.getItem('inProgressRecipes')
+    && localStorage.getItem('inProgressRecipes').includes(id)) {
       return 'Continuar Receita';
     }
     return 'Iniciar Receita';

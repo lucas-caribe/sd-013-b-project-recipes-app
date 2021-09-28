@@ -73,12 +73,6 @@ export default function InProgress() {
   );
 
   useEffect(() => {
-    if (!JSON.parse(localStorage.getItem(id))) {
-      localStorage.setItem(id, JSON.stringify([]));
-    }
-  }, [id]);
-
-  useEffect(() => {
     const IngredientsCompletedInLocal = JSON.parse(localStorage.getItem(id));
     setIngredientsCompleted(
       IngredientsCompletedInLocal || [],
