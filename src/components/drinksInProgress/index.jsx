@@ -1,11 +1,47 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
 import ButtonsFavoriteAndShare from '../buttonsFavoriteAndShare/index';
 
 export default function DrinksInProgress(
-  { Recipe, ButtonDislabedFinalizRecipe, handleClickFinaliz, renderIngredients },
+  { Recipe, ButtonDislabedFinalizRecipe, renderIngredients },
 ) {
-  console.log(ButtonDislabedFinalizRecipe);
+  const history = useHistory();
+
+  const handleClickFinaliz = () => {
+    const d = new Date();
+    const data = `${d.getDate()}/${d.getMonth()}/${d.getFullYear()}`;
+    const nameChaveInLocal = 'doneRecipes';
+
+    const doneRecipe = {
+      id: Recipe.idDrink,
+      type: 'bebida',
+      area: '',
+      category: Recipe.strCategory,
+      alcoholicOrNot: Recipe.strAlcoholic,
+      name: Recipe.strDrink,
+      image: Recipe.strDrinkThumb,
+      doneDate: data,
+      tags: Recipe.strTags || [],
+    };
+
+    if (!JSON.parse(localStorage.getItem(nameChaveInLocal))) {
+      localStorage.setItem(nameChaveInLocal, JSON.stringify([doneRecipe]));
+    } else {
+      const arrayRecipesCompleted = JSON.parse(localStorage.getItem(nameChaveInLocal));
+
+      const verification = arrayRecipesCompleted.some((recipe) => (
+        recipe.idDrink === Recipe.idDrink
+      ));
+
+      if (!verification) {
+        localStorage.setItem(nameChaveInLocal, JSON.stringify(
+          [...arrayRecipesCompleted, doneRecipe],
+        ));
+      }
+    }
+    history.push('/receitas-feitas');
+  };
   return (
     <div>
       <img
@@ -15,7 +51,7 @@ export default function DrinksInProgress(
         data-testid="recipe-photo"
       />
       <h3 data-testid="recipe-title">{Recipe.strDrink}</h3>
-      <ButtonsFavoriteAndShare />
+      <ButtonsFavoriteAndShare testIdShare="share-btn" />
       <h4 data-testid="recipe-category">{Recipe.strCategory}</h4>
       {
         renderIngredients()
@@ -38,12 +74,14 @@ export default function DrinksInProgress(
 
 DrinksInProgress.propTypes = {
   Recipe: PropTypes.shape({
+    idDrink: PropTypes.string.isRequired,
     strDrinkThumb: PropTypes.string,
     strDrink: PropTypes.string,
     strCategory: PropTypes.string,
     strInstructions: PropTypes.string,
+    strAlcoholic: PropTypes.string,
+    strTags: PropTypes.string,
   }).isRequired,
   ButtonDislabedFinalizRecipe: PropTypes.bool.isRequired,
-  handleClickFinaliz: PropTypes.func.isRequired,
   renderIngredients: PropTypes.func.isRequired,
 };

@@ -61,7 +61,7 @@ export default function Details() {
   function handleDetails() {
     if (details.recipe === 'cocktail') {
       const { strDrinkThumb, strCategory,
-        strDrink, strInstructions, strAlcoholic } = detailsResult;
+        strDrink, strInstructions, strAlcoholic, idDrink } = detailsResult;
       return (
         <div>
           <img
@@ -72,7 +72,7 @@ export default function Details() {
           />
           <p data-testid="recipe-title">{ strDrink }</p>
           <p data-testid="recipe-category">{strAlcoholic}</p>
-          <ButtonsFavoriteAndShare />
+          <ButtonsFavoriteAndShare testIdShare="share-btn" url={ `http://localhost:3000/bebidas/${idDrink}` } />
           <p data-testid="recipe-category">{`Category: ${strCategory}`}</p>
           { handleIngredients() }
           <p data-testid="instructions">{`Instructions: ${strInstructions}`}</p>
@@ -90,7 +90,7 @@ export default function Details() {
     }
     if (pathname.includes('comidas')) {
       const { strMealThumb, strCategory,
-        strMeal, strInstructions, strYoutube } = detailsResult;
+        strMeal, strInstructions, strYoutube, idMeal } = detailsResult;
       const youtubeId = strYoutube.split('=');
       const embed = `https://www.youtube.com/embed/${youtubeId[1]}`;
       return (
@@ -102,7 +102,7 @@ export default function Details() {
             src={ `${strMealThumb}` }
           />
           <p data-testid="recipe-title">{ strMeal }</p>
-          <ButtonsFavoriteAndShare />
+          <ButtonsFavoriteAndShare testIdShare="share-btn" url={ `http://localhost:3000/comidas/${idMeal}` } />
           <p data-testid="recipe-category">{`Category: ${strCategory}`}</p>
           { handleIngredients() }
           <p data-testid="instructions">{`Instructions: ${strInstructions}`}</p>

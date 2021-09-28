@@ -58,4 +58,8 @@ Header.propTypes = {
   hasSearchIcon: PropTypes.bool,
 };
 
+Header.defaultProps = {
+  hasSearchIcon: false,
+};
+
 export default Header;

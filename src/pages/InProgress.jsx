@@ -58,10 +58,6 @@ export default function InProgress() {
     </>
   );
 
-  const handleClickFinaliz = () => {
-    history.push('/receitas-feitas');
-  };
-
   const fetchDetails = useCallback(
     async (idFetch) => {
       if (pathname.includes('/comidas')) {
@@ -75,6 +71,12 @@ export default function InProgress() {
     },
     [setRecipe, pathname],
   );
+
+  useEffect(() => {
+    if (!JSON.parse(localStorage.getItem(id))) {
+      localStorage.setItem(id, JSON.stringify([]));
+    }
+  }, [id]);
 
   useEffect(() => {
     const IngredientsCompletedInLocal = JSON.parse(localStorage.getItem(id));
@@ -106,7 +108,6 @@ export default function InProgress() {
             <MealsInProgress
               Recipe={ Recipe }
               ButtonDislabedFinalizRecipe={ ButtonDislabedFinalizRecipe }
-              handleClickFinaliz={ handleClickFinaliz }
               renderIngredients={ renderIngredients }
             />
           )
@@ -114,7 +115,6 @@ export default function InProgress() {
             <DrinksInProgress
               Recipe={ Recipe }
               ButtonDislabedFinalizRecipe={ ButtonDislabedFinalizRecipe }
-              handleClickFinaliz={ handleClickFinaliz }
               renderIngredients={ renderIngredients }
             />
           )
