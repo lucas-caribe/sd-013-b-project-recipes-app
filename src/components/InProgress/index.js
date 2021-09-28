@@ -15,7 +15,7 @@ function ReceitasEmProcesso() {
   useEffect(() => {
     const recipeType = type === 'comidas' ? 'meals' : 'drinks';
     fetchRecipeById(recipeType, id);
-  }, [history, fetchRecipeById]);
+  }, [history, fetchRecipeById, id, type]);
 
   if (type === 'comidas') {
     return (

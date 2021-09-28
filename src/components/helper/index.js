@@ -66,6 +66,8 @@ export const handleStartRecipe = (history, url, recipe, dispatch) => {
   history.push(`${pathname}/in-progress`);
 };
 
+export const getLocalStorage = () => JSON.parse(localStorage.getItem('doneRecipes'));
+
 export const handleDoneRecipes = (recipeDetails, type) => {
   const newDate = new Date();
   const date = newDate.getDate();
