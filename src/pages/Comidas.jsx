@@ -21,8 +21,8 @@ function Comidas({ inputTextInitialValue }) {
 
   const componentLoad = useCallback(async () => {
     setCategoryList(await getMealCategoriesList());
-    setResultFetch(await fetchName(inputTextInitialValue));
-  }, [inputTextInitialValue]);
+    setResultFetch(await fetchName(''));
+  }, []);
 
   const getByIngredient = useCallback(async () => {
     setResultFetch(await fetchIngrediente(inputTextInitialValue));

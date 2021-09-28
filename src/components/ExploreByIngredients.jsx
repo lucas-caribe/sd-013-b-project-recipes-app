@@ -24,7 +24,6 @@ function ExploreByIngredients({ ingredients, type, SetFilterByIngrdients }) {
     const path = { meal: '/comidas', drink: '/bebidas' };
     SetFilterByIngrdients({
       text,
-      type: 'ingrediente',
     });
     history.push(path[type]);
   };
