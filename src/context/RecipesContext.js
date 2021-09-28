@@ -13,6 +13,8 @@ const mealsInitialState = {
   inProgress: {}, // Objeto onde cada chave é o id da receita em andamento e o valor correspondente é o array com os ingredientes já marcados
 };
 
+// Comentário da sorte
+
 const cocktailsInitialState = {
   categories: [], // Lista de categorias recuperadas pela API
   list: [], // Lista de comidas recuperadas pela API
