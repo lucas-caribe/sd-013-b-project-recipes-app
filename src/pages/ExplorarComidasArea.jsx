@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { getMealAreas, getMealByArea } from '../services/fetchRadioComidas';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import CardsComida from '../components/CardsComida';
 
 export default function ExplorarComidasArea() {
   const QUANTIDADE_RECEITAS = 12;
@@ -48,7 +47,7 @@ export default function ExplorarComidasArea() {
           </select>
         </label>
         {mealAllByArea
-        && pegarDozeElementos().map(({ strMeal }) => <p>{ strMeal }</p>)}
+        && pegarDozeElementos().map(({ strMeal }, key) => <p key={ key }>{ strMeal }</p>)}
       </div>
       <Footer />
     </main>
