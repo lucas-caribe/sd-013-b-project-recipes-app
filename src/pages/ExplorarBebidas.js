@@ -1,13 +1,12 @@
 import React from 'react';
 import Footer from '../components/Footer/index';
 import Header from '../components/Header';
+import ButtonExplore from '../components/ButtonExplore';
 
 const ExplorarBebidas = () => (
   <>
     <Header title="Explorar Bebidas" displaySearchBtn={ false } />
-    <div>
-      Sou a página de explorar
-    </div>
+    <ButtonExplore type="bebidas" />
     <Footer />
   </>
 );

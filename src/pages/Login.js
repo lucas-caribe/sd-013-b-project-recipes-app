@@ -80,7 +80,7 @@ function Login() {
       <label htmlFor="password">
         <input
           className="em-input"
-          type="text"
+          type="password"
           data-testid="password-input"
           name="password"
           onChange={ handlePassword }

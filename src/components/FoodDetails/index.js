@@ -3,6 +3,9 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import RecipesContext from '../../context/Recipes/RecipesContext';
+import {
+  getFavoriteRecipesFromLocalStorage as getFavoriteRecipes,
+} from '../../services/getLocalStorage';
 
 import {
   renderIngredients,
@@ -10,11 +13,10 @@ import {
   handleStartRecipe,
   handleShareBtn,
 } from '../helper';
+import FavoriteBtn from '../FavoriteBtn';
 
 import './style.css';
 import share from '../../images/shareIcon.svg';
-import favoriteWhite from '../../images/whiteHeartIcon.svg';
-// import favoriteBlack from '../../images/blackHeartIcon.svg';
 
 function FoodDetails() {
   const {
@@ -24,17 +26,23 @@ function FoodDetails() {
     fetchRecipesRecommendedList,
   } = useContext(RecipesContext);
 
+  const [pageId, setPageId] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const [isFavorited, setIsFavorited] = useState(false);
 
   const startedRecipes = useSelector(({ foods }) => foods.startedRecipes);
   const dispatch = useDispatch();
 
   const history = useHistory();
 
+  const { href } = window.location;
+
   useEffect(() => {
     const [type, id] = history.location.pathname.split('/').splice(1);
     const recipeType = type === 'comidas' ? 'meals' : 'drinks';
     const recommendedType = type === 'comidas' ? 'drinks' : 'meals';
+    setPageId(id);
     fetchRecipeById(recipeType, id);
     fetchRecipesRecommendedList(recommendedType);
   }, [history, fetchRecipeById, fetchRecipesRecommendedList]);
@@ -42,22 +50,30 @@ function FoodDetails() {
   useEffect(() => {
     const [id] = history.location.pathname.split('/').splice(2);
     if (startedRecipes.length) {
-      startedRecipes
+      const started = startedRecipes
         .find((recipe) => recipe.id === id && recipe.startedRecipe);
-      setIsStarted(true);
+      setIsStarted(!!started);
+      const completed = startedRecipes
+        .find((recipe) => recipe.id === id && !recipe.startedRecipe);
+      setIsCompleted(!!completed);
     }
   }, [history, startedRecipes]);
 
-  const handleFavotiteBtn = ({ target }) => {
-    const { src } = target || target.firstElementChild;
-    console.log(src);
-  };
+  useEffect(() => {
+    if (getFavoriteRecipes()) {
+      const favorited = getFavoriteRecipes()
+        .find((recipe) => recipe.id === pageId);
+      setIsFavorited(!!favorited);
+    }
+  }, [pageId]);
 
   if (!Object.keys(recipeDetails).length) return <div />;
 
   const {
+    idMeal,
     strMeal,
     strMealThumb,
+    strArea,
     strCategory,
     strInstructions,
     strYoutube,
@@ -73,16 +89,26 @@ function FoodDetails() {
       />
       <h2 data-testid="recipe-title">{strMeal}</h2>
       <div>
-        <button
-          type="button"
+        <input
+          type="image"
           data-testid="share-btn"
-          onClick={ () => handleShareBtn(window.location.href) }
-        >
-          <img src={ share } alt="share" />
-        </button>
-        <button type="button" data-testid="favorite-btn" onClick={ handleFavotiteBtn }>
-          <img src={ favoriteWhite } alt="favorite" />
-        </button>
+          onClick={ () => handleShareBtn(href) }
+          src={ share }
+          alt="share"
+        />
+
+        { FavoriteBtn(
+          isFavorited,
+          setIsFavorited,
+          { id: idMeal,
+            type: 'comida',
+            area: strArea,
+            category: strCategory,
+            alcoholicOrNot: '',
+            name: strMeal,
+            image: strMealThumb },
+        ) }
+
         <div className="share-text">Link copiado!</div>
       </div>
       <p data-testid="recipe-category">{strCategory}</p>
@@ -107,16 +133,20 @@ function FoodDetails() {
             .map((card, index) => renderRecomendationList(card, index, 'Drink'))
         }
       </div>
-      <button
-        type="button"
-        data-testid="start-recipe-btn"
-        className="start-recipe-btn"
-        onClick={
-          () => handleStartRecipe(history, window.location.href, recipeDetails, dispatch)
-        }
-      >
-        { isStarted ? 'Iniciar receita' : 'Continuar Receita'}
-      </button>
+      {
+        !isCompleted && (
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+            className="start-recipe-btn"
+            onClick={
+              () => handleStartRecipe(history, href, recipeDetails, dispatch)
+            }
+          >
+            { isStarted ? 'Iniciar receita' : 'Continuar Receita'}
+          </button>
+        )
+      }
     </div>
   );
 }
