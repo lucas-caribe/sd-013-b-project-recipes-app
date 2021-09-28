@@ -4,13 +4,12 @@ import { Link } from 'react-router-dom';
 import contextCreat from './contextCreate';
 
 export default function ContextProvider({ children }) {
-  const [searchText, setSearchText] = useState('');
+  const [toggleSearch, setToggleSearch] = useState(true);
 
   function mapFood(slicingTwelve) {
     return slicingTwelve.map((card, index) => (
       <div className="card" key={ index }>
         <Link to={ `/comidas/${card.idMeal}` }>
-
           <p data-testid={ `${index}-recipe-card` }>{card.strMeal}</p>
           <img
             className="card-img"
@@ -44,10 +43,10 @@ export default function ContextProvider({ children }) {
   return (
     <contextCreat.Provider
       value={ {
-        setSearchText,
-        searchText,
         mapDrink,
         mapFood,
+        setToggleSearch,
+        toggleSearch,
       } }
     >
       {children}
