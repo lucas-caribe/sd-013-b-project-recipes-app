@@ -10,11 +10,11 @@ import Login from './pages/Login';
 import Perfil from './pages/Perfil';
 import Explorar from './pages/Explorar';
 import ExplorarComidas from './pages/ExplorarComidas';
-import receitasFeitas from './components/testes/receitas feitas';
 import receitasFavoritas from './components/testes/receitas favoritas';
 import ExplorarIngredientes from './pages/ExplorarIngredientes';
 import ExplorarOrigem from './pages/ExplorarOrigem';
 import ExplorarBebidas from './pages/ExplorarBebidas';
+import ReceitasFeitas from './pages/ReceitasFeitas';
 
 function App() {
   return (
@@ -39,7 +39,7 @@ function App() {
           path="/explorar/bebidas/ingredientes"
           component={ ExplorarIngredientes }
         />
-        <Route exact path="/receitas-feitas" component={ receitasFeitas } />
+        <Route exact path="/receitas-feitas" component={ ReceitasFeitas } />
         <Route exact path="/receitas-favoritas" component={ receitasFavoritas } />
         <Route exact path="/" component={ Login } />
       </Switch>
