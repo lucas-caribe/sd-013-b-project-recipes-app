@@ -5,7 +5,7 @@ import './index.css';
 
 function IngredientsLibrary({ ingredients }) {
   return (
-    <div id="ingredients-lib">
+    <div className="ingredients-lib">
       {ingredients.map((ingredient, index) => (
         <IngredientCard
           key={ index }

@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import AppContext from '../../context/AppContext';
+import './index.css';
 
 export default function IngredientCard({ details, index }) {
   const { setFilteredByIngredient, page,
@@ -22,19 +23,19 @@ export default function IngredientCard({ details, index }) {
 
   if (page === 'Comidas') {
     return (
-      <Link
-        onClick={ handleClick }
-        to="/comidas"
-      >
-        <div data-testid={ `${index}-ingredient-card` }>
+      <div className="ingredient-card" data-testid={ `${index}-ingredient-card` }>
+        <Link
+          onClick={ handleClick }
+          to="/comidas"
+        >
           <img
             data-testid={ `${index}-card-img` }
             src={ `https://www.themealdb.com/images/ingredients/${details.strIngredient}-Small.png` }
             alt={ details.strIngredient }
           />
           <h3 data-testid={ `${index}-card-name` }>{details.strIngredient}</h3>
-        </div>
-      </Link>
+        </Link>
+      </div>
     );
   }
   if (page === 'Bebidas') {
@@ -43,7 +44,7 @@ export default function IngredientCard({ details, index }) {
         onClick={ handleClick }
         to="/bebidas"
       >
-        <div data-testid={ `${index}-ingredient-card` }>
+        <div className="ingredient-card" data-testid={ `${index}-ingredient-card` }>
           <img
             data-testid={ `${index}-card-img` }
             src={ `https://www.thecocktaildb.com/images/ingredients/${details.strIngredient1}-Small.png` }
