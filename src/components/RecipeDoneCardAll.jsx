@@ -8,7 +8,9 @@ import shareIcon from '../images/shareIcon.svg';
 
 export default function RecipeDoneCard() {
   const {
-    allRecipesDone, copied, setCopied,
+    allRecipesDone,
+    copied,
+    setCopied,
   } = useContext(Context);
 
   function renderTags(stringTags) {
@@ -19,15 +21,6 @@ export default function RecipeDoneCard() {
     }
     return '';
   }
-
-  // function getLink(recipe) {
-  //   const linkToCopy = recipe.type === 'Meal'
-  //     ? `http://localhost:3000/comidas/${recipe.idMeal}`
-  //     : `http://localhost:3000/bebidas/${recipe.idDrink}`;
-
-  //   setCopied(true);
-  //   setLinkCopied(linkToCopy);
-  // }
 
   if (allRecipesDone.length !== 0) {
     return (
@@ -99,20 +92,6 @@ export default function RecipeDoneCard() {
               </div>
             </div>
 
-            {/* <div className="recipe-card-share-btn">
-                <a
-                  href={
-                    recipe.type === 'Meal'
-                      ? `/comidas/${recipe.idMeal}`
-                      : `/bebidas/${recipe.idDrink}`
-                  }
-                  src={ shareIcon }
-                  data-testid={ `${index}-horizontal-share-btn` }
-                  onClick={ () => {} }
-                >
-                  <img src={ shareIcon } alt="share" />
-                </a>
-              </div> */}
             <div className="recipe-card-share-btn">
               <CopyToClipboard
                 text={
@@ -128,11 +107,12 @@ export default function RecipeDoneCard() {
                   onClick={ () => setCopied(true) }
                 >
                   <img src={ shareIcon } alt="share" />
-                  { copied ? <span> Link copiado!</span> : null }
                 </button>
               </CopyToClipboard>
             </div>
-
+            <div className="link-copied">
+              { copied ? <span> Link copiado!</span> : null }
+            </div>
           </div> // end <div> principal
         )) // end map()
     ); // end return() do if
