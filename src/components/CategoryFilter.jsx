@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
 import Context from '../context/Context';
-import { fetchAllRecipes, fetchByCategory } from '../services';
 
 export default function CategoryFilter() {
-  const { categories, setAllRecipes, currentPage } = useContext(Context);
+  const { categories, setSelectedCategory } = useContext(Context);
 
   // NÃO USEI RADIO POIS É PRECISO SER POSSÍVEL DESMARCAR A OPÇÃO
   // ideia pra função que seleciona apenas um checkbox encontrada em https://abre.ai/dk5x
@@ -14,29 +13,16 @@ export default function CategoryFilter() {
     });
   }
 
-  async function getByCategory(category) {
-    const type = (currentPage === 'Comidas') ? 'meals' : 'drinks';
-    const quantidade = 12;
-    const recipes = await fetchByCategory(type, category);
-    setAllRecipes(recipes[`${type}`].slice(0, quantidade));
-  }
-
-  async function getAllRecipes() {
-    const type = (currentPage === 'Comidas') ? 'meals' : 'drinks';
-    const quantidade = 12;
-    const recipes = await fetchAllRecipes(type);
-    setAllRecipes(recipes[`${type}`].slice(0, quantidade));
-  }
-
   function handleCheck({ target }) {
     onlyOne(target);
 
-    // SE FOR NÃO FOR O BOTÃO 'ALL' E ESTIVER SELECIONADO, BUSCA POR CATEGORIA
-    // CASO ESTEJA DESMARCADO FAZ A BUSCA DE TODAS AS RECEITAS
-    if (target.value !== 'all') {
-      const category = target.value.split(' ').join('_');
-      if (target.checked) { getByCategory(category); } else { getAllRecipes(); }
-    } else { getAllRecipes(); }
+    const category = target.value.split(' ').join('_');
+
+    if (target.checked) {
+      setSelectedCategory(category);
+    } else {
+      setSelectedCategory('All');
+    }
   }
 
   return (
@@ -52,7 +38,7 @@ export default function CategoryFilter() {
             type="checkbox"
             name="category"
             id="all"
-            value="all"
+            value="All"
             onClick={ handleCheck }
             hidden
           />

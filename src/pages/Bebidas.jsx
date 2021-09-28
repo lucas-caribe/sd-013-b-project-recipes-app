@@ -5,29 +5,40 @@ import Header from '../components/Header';
 import HomeRecipeCard from '../components/HomeRecipeCard';
 import Context from '../context/Context';
 import useCurrentPage from '../context/hooks/useCurrentPage';
-import { fetchAllRecipes, fetchCategories } from '../services';
+import { fetchAllRecipes, fetchByCategory, fetchCategories } from '../services';
 
 function Bebidas() {
   useCurrentPage('Bebidas');
 
-  const { setAllRecipes, setCategories } = useContext(Context);
+  const { setAllRecipes, setCategories, selectedCategory } = useContext(Context);
 
   useEffect(() => {
-    async function getRecipes() {
-      const quantidade = 12;
-      const { drinks } = await fetchAllRecipes('drinks');
-      setAllRecipes(drinks.slice(0, quantidade));
-    }
-
     async function getCategories() {
       const quantidade = 5;
       const { drinks } = await fetchCategories('drinks');
       setCategories(drinks.slice(0, quantidade));
     }
 
-    getRecipes();
+    async function getAllRecipes() {
+      const quantidade = 12;
+      const { drinks } = await fetchAllRecipes('drinks');
+      setAllRecipes(drinks.slice(0, quantidade));
+    }
+
+    async function getByCategory() {
+      const quantidade = 12;
+      const { drinks } = await fetchByCategory('drinks', selectedCategory);
+      setAllRecipes(drinks.slice(0, quantidade));
+    }
+
     getCategories();
-  }, []);
+
+    if (selectedCategory === 'All') {
+      getAllRecipes();
+    } else {
+      getByCategory();
+    }
+  }, [selectedCategory, setAllRecipes, setCategories]);
 
   return (
     <div className="page">
