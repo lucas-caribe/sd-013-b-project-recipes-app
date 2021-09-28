@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import HomeRecipeCard from '../components/HomeRecipeCard';
 import Context from '../context/Context';
 import useCurrentPage from '../context/hooks/useCurrentPage';
-import { fetchAllRecipes, fetchByCategory, fetchCategories } from '../services';
+import { fetchAllRecipes, fetchCategories } from '../services';
 
 function Bebidas() {
   useCurrentPage('Bebidas');
@@ -29,10 +29,13 @@ function Bebidas() {
       setAllRecipes(drinks.slice(0, quantidade));
     }
 
-    async function getByCategory() {
+    function getByCategory() {
       const quantidade = 12;
-      const { drinks } = await fetchByCategory('drinks', selectedCategory);
-      setAllRecipes(drinks.slice(0, quantidade));
+      fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${selectedCategory}`)
+        .then((response) => response.json())
+        .then((response) => setAllRecipes(response.drinks.slice(0, quantidade)));
+      // const { drinks } = await fetchByCategory('drinks', selectedCategory);
+      // setAllRecipes(drinks.slice(0, quantidade));
     }
 
     if (selectedCategory === 'All') {
