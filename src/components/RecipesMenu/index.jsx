@@ -11,11 +11,12 @@ const ELEVEN = 11;
 const FOUR = 4;
 export default function RecipesMenu({ route, array, arrayCategories }) {
   const { setPage, searching } = useContext(AppContext);
+
   useEffect(() => {
     setPage(route);
   }, [setPage, route]);
+
   if (array.length > 0 && arrayCategories.length > 0) {
-    // setPage(route);
     const auxCategories = [...arrayCategories];
     const firstCategories = auxCategories.filter(
       (_category, index) => index <= FOUR,

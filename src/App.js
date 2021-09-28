@@ -8,13 +8,12 @@ import Login from './pages/Login';
 import Explorer from './pages/Explorer';
 import FoodExplorer from './pages/FoodExplorer';
 import DrinkExplorer from './pages/DrinkExplorer';
-import FoodIngredients from './pages/FoodIngredients';
-import DrinkIngredients from './pages/DrinkIngredients';
 import FoodArea from './pages/FoodArea';
 import Profile from './pages/Profile';
 import MainPage from './pages/MainPage';
 import FoodRecipe from './pages/FoodRecipe';
 import NotFound from './pages/NotFound';
+import IngredientsExplorer from './pages/IngredientsExplorer';
 
 function App() {
   return (
@@ -25,13 +24,15 @@ function App() {
         <Route exact path="/bebidas" component={ MainPage } />
         <Route path="/comidas/:recipeId" component={ FoodRecipe } />
         <Route path="/bebidas/:id-da-receita" component={ FoodRecipe } />
-        {/* <Route path="/comidas/:id-da-receita/in-progress" component={ FoodInProgress } /> */}
-        {/* <Route path="/bebidas/:id-da-receita/in-progress" component={ DrinkInProgress } /> */}
+        {/* <Route path="/comidas/:id-da-receita/in-progress"
+        component={ FoodInProgress } /> */}
+        {/* <Route path="/bebidas/:id-da-receita/in-progress"
+        component={ DrinkInProgress } /> */}
         <Route exact path="/explorar" component={ Explorer } />
         <Route exact path="/explorar/comidas" component={ FoodExplorer } />
         <Route exact path="/explorar/bebidas" component={ DrinkExplorer } />
-        <Route path="/explorar/comidas/ingredientes" component={ FoodIngredients } />
-        <Route path="/explorar/bebidas/ingredientes" component={ DrinkIngredients } />
+        <Route path="/explorar/comidas/ingredientes" component={ IngredientsExplorer } />
+        <Route path="/explorar/bebidas/ingredientes" component={ IngredientsExplorer } />
         <Route path="/explorar/comidas/area" component={ FoodArea } />
         <Route path="/perfil" component={ Profile } />
         {/* <Route path="/receitas-feitas" component={ DoneRecipes } />
