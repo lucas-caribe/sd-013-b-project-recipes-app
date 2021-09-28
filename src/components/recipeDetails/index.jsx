@@ -30,7 +30,7 @@ export default function Details() {
       setDetails((prevState) => ({ ...prevState, recipe: 'meal' }));
       dispatch(fetchDetailsThunk(id, 'meal'));
     }
-  }, [details.recipe]);
+  }, [details.recipe, dispatch, id, pathname]);
 
   useEffect(() => {
     if (detailsResult) {
@@ -77,15 +77,14 @@ export default function Details() {
           { handleIngredients() }
           <p data-testid="instructions">{`Instructions: ${strInstructions}`}</p>
           <Recomendations />
-          <Link to={ `${pathname}/in-progress` }>
-            <button
-              type="button"
-              className="start-recipe-btn"
-              data-testid="start-recipe-btn"
-            >
-              { handleButton() }
-            </button>
-          </Link>
+          <button
+            type="button"
+            className="start-recipe-btn"
+            data-testid="start-recipe-btn"
+            onClick={ () => { history.push(`${pathname}/in-progress`); } }
+          >
+            { handleButton() }
+          </button>
         </div>
       );
     }
@@ -114,15 +113,14 @@ export default function Details() {
             src={ embed }
           />
           <Recomendations />
-          <Link to={ `${pathname}/in-progress` }>
-            <button
-              type="button"
-              className="start-recipe-btn"
-              data-testid="start-recipe-btn"
-            >
-              { handleButton() }
-            </button>
-          </Link>
+          <button
+            type="button"
+            className="start-recipe-btn"
+            data-testid="start-recipe-btn"
+            onClick={ () => { history.push(`${pathname}/in-progress`); } }
+          >
+            { handleButton() }
+          </button>
         </div>
       );
     }
