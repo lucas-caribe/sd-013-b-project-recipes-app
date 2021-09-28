@@ -46,7 +46,7 @@ const Main = ({ filterItens }) => {
     <div>
       {showHeaderAndFooter ? renderHeader() : null}
       {showSearch && <SearchBar type={ type } />}
-      <FoodCards type={ type } />
+      {!id && <FoodCards type={ type } />}
       {showDetails && renderDetails()}
       {showHeaderAndFooter ? <LowerMenu /> : null}
     </div>

@@ -53,7 +53,7 @@ const fetchFilteredItems = (userType, userFilter, userInput) => (dispatch) => {
   if (userFilter === 'first-letter' && userInput.length > 1) {
     global.alert('Sua busca deve conter somente 1 (um) caracter');
   } else {
-    // console.log(`https://www.${type}.com/api/json/v1/1/${filter}${userInput}`);
+    console.log(`https://www.${type}.com/api/json/v1/1/${filter}${userInput}`);
     fetch(`https://www.${type}.com/api/json/v1/1/${filter}${userInput}`)
       .then((result) => result.json())
       .then((obj) => {
