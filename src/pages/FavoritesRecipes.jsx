@@ -1,7 +1,7 @@
 // Tela de receitas favoritas: requisitos 60 a 66;
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import copy from 'clipboard-copy';
+import { useHistory } from 'react-router-dom';
 import ButtonFavorite from '../components/ButtonFavorite';
 import shareIcon from '../images/shareIcon.svg';
 import { foodRequest } from '../services/data';
