@@ -12,7 +12,7 @@ import Provider from './context/Provider';
 import FoodDetailsPage from './Pages/FoodDetailsPage';
 import DrinkDetailsPage from './Pages/DrinkDetailsPage';
 
-import RecipeDetails from './components/RecipeDetails';
+// import RecipeDetails from './components/RecipeDetails';
 import CompletedRecipes from './Pages/CompletedRecipes';
 import FavoriteRecipes from './Pages/FavoriteRecipes';
 import Explore from './Pages/Explore';
@@ -20,6 +20,7 @@ import ExploreFood from './Pages/ExploreFood';
 import ExploreDrinks from './Pages/ExploreDrinks';
 import ExploreFoodIngredient from './Pages/ExploreFoodIngredient';
 import ExploreFoodArea from './Pages/ExploreFoodArea';
+import RecipeInProgress from './Pages/RecipeInProgress';
 
 function App() {
   return (
@@ -30,10 +31,10 @@ function App() {
         <Route exact path="/comidas" component={ FoodPage } />
         <Route exact path="/comidas/:id" component={ FoodDetailsPage } />
         <Route exact path="/bebidas" component={ DrinkPage } />
-
+        <Route exact path="/bebidas/:id/in-progress" component={ RecipeInProgress } />
+        <Route exact path="/comidas/:id/in-progress" component={ RecipeInProgress } />
         <Route exact path="/bebidas/:id" component={ DrinkDetailsPage } />
-
-        <Route exact path="/bebidas/:id" component={ RecipeDetails } />
+        {/* <Route exact path="/bebidas/:id" component={ RecipeDetails } /> */}
         <Route exact path="/receitas-feitas" component={ CompletedRecipes } />
         <Route exact path="/receitas-favoritas" component={ FavoriteRecipes } />
         <Route exact path="/explorar" component={ Explore } />
