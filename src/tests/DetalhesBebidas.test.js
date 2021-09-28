@@ -16,7 +16,7 @@ const RECOMENDATIONS_TITLE = /-recomendation-title/;
 const URL = '/bebidas/15997';
 const NUMBER_CARDS = 6;
 
-describe('Progress Recipe tests', () => {
+describe('Detalhes bebidas', () => {
   beforeEach(() => {
     renderWithRouterAndRedux(<App />, {
       initialEntries: [URL],

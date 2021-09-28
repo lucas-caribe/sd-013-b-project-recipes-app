@@ -16,7 +16,7 @@ const RECOMENDATIONS_TITLE = /-recomendation-title/;
 const URL = '/comidas/52878';
 const NUMBER_CARDS = 6;
 
-describe('Progress Recipe tests', () => {
+describe('Detalhes comidas', () => {
   beforeEach(() => {
     renderWithRouterAndRedux(<App />, {
       initialEntries: [URL],

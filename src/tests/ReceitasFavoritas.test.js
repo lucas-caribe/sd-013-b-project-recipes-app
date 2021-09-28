@@ -1,88 +1,99 @@
 import React from 'react';
 import { screen, fireEvent } from '@testing-library/react';
 import renderWithRouterAndRedux from './support/RenderWithRouterAndRedux';
-import App from '../App';
+import favoriteRecipes from './support/MockLocalStorageFavoriteRecipes';
+import ReceitasFavoritas from '../pages/ReceitasFavoritas';
 
-const IMG = 'recipe-photo';
-const TITLE = 'recipe-title';
-const CATEGORY = 'recipe-category';
-const SHARE_BTN = 'share-btn';
-const FAV_BTN = 'favorite-btn';
-const INSTRUCTIONS = 'instructions';
-const VIDEO = 'video';
-const BTN_INICIAR = 'start-recipe-btn';
-const RECOMENDATIONS = /-recomendation-card/;
-const RECOMENDATIONS_TITLE = /-recomendation-title/;
-const URL = '/receitas-favoritas';
-const NUMBER_CARDS = 6;
+const HORIZONTAL_IMAGES = /-horizontal-image/;
+const TEXT_DESCRIPTION = /-horizontal-top-text/;
+const NAME_RECIPE = /-horizontal-name/;
+const SHARE_BTN = /-horizontal-share-btn/;
+const FAVORITE_BTN = /-horizontal-favorite-btn/;
+const PATH_BEBIDAS = '/bebidas/15997';
 
-describe('Progress Recipe tests', () => {
+describe('Receitas favoritas', () => {
   beforeEach(() => {
-    renderWithRouterAndRedux(<App />, {
-      initialEntries: [URL],
-    });
+    renderWithRouterAndRedux(<ReceitasFavoritas />);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
   });
 
   it('Testa se aparece o título na tela', () => {
     const TEXT_TITLE = screen.getByText('Receitas Favoritas');
     expect(TEXT_TITLE).toBeInTheDocument();
   });
-  it('Testa se aparece imagem da comida na tela', async () => {
-    const IMAGEM_COMIDA = await screen.findByTestId(IMG);
-    expect(IMAGEM_COMIDA).toBeInTheDocument();
+  it('Testa se tem o ícone correto na tela', () => {
+    const ICONE_PROFILE = screen.getByTestId('profile-top-btn');
+    expect(ICONE_PROFILE).toBeInTheDocument();
   });
-  it('Testa se aparece o nome da comida na tela', async () => {
-    const NOME_COMIDA = await screen.findByTestId(TITLE);
-    expect(NOME_COMIDA).toBeInTheDocument();
+  it('Verifica se possui o botão All', () => {
+    const BTN_ALL = screen.getByTestId('filter-by-all-btn');
+    expect(BTN_ALL).toBeInTheDocument();
   });
-  it('Testa se existe botão de Share', async () => {
-    const BTN_SHARE = await screen.findByTestId(SHARE_BTN);
-    expect(BTN_SHARE).toBeInTheDocument();
+  it('Verifica se há o botão de filtrar por food', () => {
+    const BTN_FOOD = screen.getByTestId('filter-by-food-btn');
+    expect(BTN_FOOD).toBeInTheDocument();
   });
-  it('Testa se o botão de favorito está na tela', async () => {
-    const BTN_FAVORITE = await screen.findByTestId(FAV_BTN);
-    expect(BTN_FAVORITE).toBeInTheDocument();
+  it('Testa se o botão de favorito está na tela', () => {
+    const BTN_DRINK = screen.getByTestId('filter-by-drink-btn');
+    expect(BTN_DRINK).toBeInTheDocument();
   });
-  it('Testa se o texto de categoria está na tela', async () => {
-    const TEXT_CATEGORY = await screen.findByTestId(CATEGORY);
-    expect(TEXT_CATEGORY).toBeInTheDocument();
+  it('Verifica se possuem as imagens corretas na tela', () => {
+    const RECIPES_PHOTO = screen.getAllByTestId(HORIZONTAL_IMAGES);
+    expect(RECIPES_PHOTO.length).toBe(2);
   });
-  it('Testa se as instruções estão na tela', async () => {
-    const TEXT_INSTRUCTIONS = await screen.findByTestId(INSTRUCTIONS);
-    expect(TEXT_INSTRUCTIONS).toBeInTheDocument();
+  it('Testa se possuem as descrições dos alimentos corretamente na tela', () => {
+    const TEXT_INSTRUCTIONS = screen.getAllByTestId(TEXT_DESCRIPTION);
+    expect(TEXT_INSTRUCTIONS.length).toBe(2);
   });
-  it('Testa se o vídeo está na tela', async () => {
-    const VIDEO_PLAY = await screen.findByTestId(VIDEO);
-    expect(VIDEO_PLAY).toBeInTheDocument();
+  it('Testa se há os nomes corretos na tela', () => {
+    const NAME_RECIPES = screen.getAllByTestId(NAME_RECIPE);
+    expect(NAME_RECIPES.length).toBe(2);
   });
-  it('Testa se possuem os cards de titulos de recomendações na tela', async () => {
-    const CARDS_RECOMENDATIONS_TITLE = await screen.findAllByTestId(RECOMENDATIONS_TITLE);
-    expect(CARDS_RECOMENDATIONS_TITLE.length).toBe(NUMBER_CARDS);
+  it('Testa se possuem os botões de share na tela', () => {
+    const SHARE_BTNS = screen.getAllByTestId(SHARE_BTN);
+    expect(SHARE_BTNS.length).toBe(2);
   });
-  it('Testa se tem a quantidade certa de cards de recomendação na tela', async () => {
-    const CARDS_RECOMENDATIONS = await screen.findAllByTestId(RECOMENDATIONS);
-    expect(CARDS_RECOMENDATIONS.length).toBe(NUMBER_CARDS);
+  it('Testa se há os botões de favoritos na tela', () => {
+    const FAVORITE_BTNS = screen.getAllByTestId(FAVORITE_BTN);
+    expect(FAVORITE_BTNS.length).toBe(2);
   });
-  it('Ao clicar no botão de iniciar receita é levado para página correta', async () => {
-    const { history } = renderWithRouterAndRedux(<App />, {
-      initialEntries: [URL],
-    });
-    const BTN_START = await screen.findAllByTestId(BTN_INICIAR);
-    fireEvent.dblClick(BTN_START[0]);
-    history.push('/comidas/52878/in-progress');
-    expect(history.location.pathname).toBe('/comidas/52878/in-progress');
+  it('Ao clicar na imagem da receita é levado para página correta', async () => {
+    const { history } = renderWithRouterAndRedux(<ReceitasFavoritas />);
+    const IMAGE_RECIPE = screen.getAllByTestId(HORIZONTAL_IMAGES);
+    fireEvent.click(IMAGE_RECIPE[0]);
+    history.push(PATH_BEBIDAS);
+    expect(history.location.pathname).toBe('/bebidas/15997');
   });
-  it('Ao clicar no botão de favorito, é salvo corretamente no localstorage', async () => {
-    const BTN_FAVORITE = await screen.findByTestId(FAV_BTN);
-    fireEvent.click(BTN_FAVORITE);
+  it('Ao clickar no botão de desfavoritar o card é removido', () => {
+    const BTN_FAVORITE = screen.getAllByTestId(FAVORITE_BTN);
+    fireEvent.click(BTN_FAVORITE[0]);
     expect(JSON.parse(localStorage.getItem('favoriteRecipes'))).toEqual([{
-      alcoholicOrNot: '',
-      area: 'British',
-      category: 'Beef',
-      id: '52878',
-      image: 'https://www.themealdb.com/images/media/meals/wrssvt1511556563.jpg',
-      name: 'Beef and Oyster pie',
-      type: 'comida',
+      ...favoriteRecipes[1],
     }]);
+  });
+  it('Ao clicar no titulo da receita é levado para página correta', () => {
+    const { history } = renderWithRouterAndRedux(<ReceitasFavoritas />);
+    const BUTTON_NAME = screen.getAllByTestId(NAME_RECIPE);
+    fireEvent.click(BUTTON_NAME[0]);
+    history.push(PATH_BEBIDAS);
+    expect(history.location.pathname).toBe(PATH_BEBIDAS);
+  });
+  it('Ao clicar no botão All aprecem todas receitas', () => {
+    const BTN_FILTER_ALL = screen.getByTestId('filter-by-all-btn');
+    fireEvent.click(BTN_FILTER_ALL);
+    const IMAGE_RECIPES = screen.getAllByTestId(HORIZONTAL_IMAGES);
+    expect(IMAGE_RECIPES.length).toBe(2);
+  });
+  it('Ao clicar no botão de food só aparece a comida', () => {
+    const BTN_FILTER_FOOD = screen.getByTestId('filter-by-food-btn');
+    fireEvent.click(BTN_FILTER_FOOD);
+    const NAME_FOOD = screen.getByText('Turkish - Side');
+    expect(NAME_FOOD).toBeInTheDocument();
+  });
+  it('Ao clickar no botão de drinks aparecem somente os drinks', () => {
+    const BTN_FILTER_DRINK = screen.getByTestId('filter-by-drink-btn');
+    fireEvent.click(BTN_FILTER_DRINK);
+    const NAME_DRINK = screen.getByText('GG');
+    expect(NAME_DRINK).toBeInTheDocument();
   });
 });
