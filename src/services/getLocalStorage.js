@@ -1,6 +1,6 @@
 const getEmailFromLocalStorage = () => {
-  const { email } = JSON.parse(localStorage.getItem('user'));
-  return email;
+  const user = JSON.parse(localStorage.getItem('user'));
+  return user;
 };
 
 export const getFavoriteRecipesFromLocalStorage = () => {
