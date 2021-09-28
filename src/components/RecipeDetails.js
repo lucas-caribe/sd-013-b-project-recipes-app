@@ -48,7 +48,7 @@ const RecipeDetails = () => {
   const [object, setObject] = useState();
   const [featured, setFeatured] = useState();
   const [copied, setCopied] = useState(false);
-  const [favorite, setFavorite] = useState(whiteHeartIcon);
+  const [favorite, setFavorite] = useState(false);
 
   const history = useHistory();
   const { id } = useParams();
@@ -89,12 +89,14 @@ const RecipeDetails = () => {
       if (isFavorite) {
         const filteredArray = localArray.filter((el) => (el.id !== id));
         localStorage.setItem('favoriteRecipes', JSON.stringify(filteredArray));
-        return;
+        return setFavorite(!favorite);
       }
       const newFavorites = JSON.stringify([...localArray, recipe]);
       localStorage.setItem('favoriteRecipes', newFavorites);
+      setFavorite(!favorite);
     } else {
       localStorage.setItem('favoriteRecipes', JSON.stringify([recipe]));
+      setFavorite(!favorite);
     }
   }
 
