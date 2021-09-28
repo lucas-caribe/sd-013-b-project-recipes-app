@@ -8,7 +8,7 @@ const profileTestId = 'profile-top-btn';
 const pageTitleTestId = 'page-title';
 const searchTopBtnTestId = 'search-top-btn';
 
-describe.only('Testes no componentest Header', () => {
+describe('Testes no componentest Header', () => {
   test('Testa se tem os data-testids', () => {
     const { history } = renderWithRouterAndRedux(<App />);
     history.push('/comidas');
