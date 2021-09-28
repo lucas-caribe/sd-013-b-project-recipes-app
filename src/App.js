@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Details from './pages/Details';
 import DrinkRecipes from './pages/DrinkRecipes';
 import Explore from './pages/Explore';
@@ -18,6 +18,7 @@ import RecipesMade from './pages/RecipesMade';
 class App extends Component {
   render() {
     return (
+    <BrowserRouter>
       <Switch>
         <Route exact path="/comidas" component={ FoodRecipes } />
         <Route exact path="/bebidas" component={ DrinkRecipes } />
@@ -64,6 +65,7 @@ class App extends Component {
         />
         <Route path="/" component={ Login } />
       </Switch>
+    </BrowserRouter>
     );
   }
 }
