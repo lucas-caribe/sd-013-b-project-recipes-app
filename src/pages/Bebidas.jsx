@@ -24,14 +24,19 @@ function Bebidas() {
     getRecipes();
   }, [setAllRecipes]);
 
+  // NAO TENTE ENTENDER ESSE EFFECT !!
+  // PRO SEU PROPRIO BEM
   useEffect(() => {
     const quantidade = 12;
-    if (filter === true) {
+    if (filter === true && apiRadio.drinks !== null) {
       setAllRecipes(apiRadio.drinks.slice(0, quantidade));
       if (window.location.pathname === '/bebidas' && apiRadio.drinks.length === 1) {
         const id = apiRadio.drinks[0].idDrink;
         history.push(`/bebidas/${id}`);
       }
+    }
+    if (apiRadio !== undefined && apiRadio.drinks === null) {
+      global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     }
   }, [apiRadio]);
 

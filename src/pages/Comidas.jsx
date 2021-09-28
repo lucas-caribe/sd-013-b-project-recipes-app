@@ -28,18 +28,21 @@ export default function Comidas() {
     getRecipes();
   }, [setAllRecipes]);
 
+  // NAO TENTE ENTENDER ESSE EFFECT !!
+  // PRO SEU PROPRIO BEM
   useEffect(() => {
     const quantidade = 12;
-    if (filter === true) {
+    console.log(apiRadio);
+    if (filter === true && apiRadio.meals !== null) {
       setAllRecipes(apiRadio.meals.slice(0, quantidade));
       if (window.location.pathname === '/comidas' && apiRadio.meals.length === 1) {
         const id = apiRadio.meals[0].idMeal;
         history.push(`/comidas/${id}`);
       }
     }
-    // if (apiRadio !== undefined && apiRadio.meals.length === 0) {
-    //   global.alert('vaaaaaa');
-    // }
+    if (apiRadio !== undefined && apiRadio.meals === null) {
+      global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    }
   }, [apiRadio]);
 
   return (
