@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import HeaderWithoutSearch from './HeaderWithoutSearch';
 import Footer from '../Components/Footer';
+import HeaderWithSearch from './HeaderWithSearch';
 
 export default function ExploreMealsByArea() {
   const [areas, setAreas] = useState([]);
@@ -19,9 +19,9 @@ export default function ExploreMealsByArea() {
   }, []);
   useEffect(() => {
     async function fetchFilterByAreas() {
-      const filterByAreasAPI = 'https://www.themealdb.com/api/json/v1/1/filter.php?a=Greek';
+      const filterByAreasAPI = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${selectedArea}`;
       const response = await fetch(filterByAreasAPI).then((resp) => resp.json());
-      let mealList = [...response.meals];
+      let mealList = response.meals ? [...response.meals] : [];
       mealList = mealList.slice(0, TWELVE);
       setMeals(mealList);
     }
@@ -30,7 +30,7 @@ export default function ExploreMealsByArea() {
   }, [selectedArea]);
   return (
     <>
-      <HeaderWithoutSearch />
+      <HeaderWithSearch />
       <h3 data-testid="page-title" style={ { alignSelf: 'center' } }>Explorar Origem</h3>
       <select
         value={ selectedArea }
@@ -49,7 +49,7 @@ export default function ExploreMealsByArea() {
         ))}
         <option
           onChange={ (event) => setSelectedArea(event.target.value) }
-          data-testid="all-option"
+          data-testid="All-option"
         >
           All
         </option>
