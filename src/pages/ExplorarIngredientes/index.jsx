@@ -14,6 +14,8 @@ function ExplorarIngredientes() {
 
   useEffect(() => {
     fecthIngredients(type);
+
+    return fecthIngredients;
   }, [fecthIngredients, type]);
 
   const renderFoodPage = useCallback(() => ingredientsList

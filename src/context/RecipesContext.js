@@ -69,7 +69,10 @@ export const RecipesProvider = ({ children }) => {
       ).then((response) => response.json());
       const slice = ingredients.slice(0, MAX_INGREDIENTS);
       setIngredientsList(slice);
+      return;
     }
+
+    setIngredientsList([]);
   }, []);
 
   const context = {
