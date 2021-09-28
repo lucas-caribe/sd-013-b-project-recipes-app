@@ -5,6 +5,7 @@ import shareIcon from '../images/shareIcon.svg';
 import { foodRequest } from '../services/data';
 
 async function buttonCopy(event) {
+  global.alert('Link copiado!');
   const { id } = event.target.parentNode;
   const itemFood = await foodRequest(`lookup.php?i=${id}`);
   if (!itemFood.meals) {
@@ -12,7 +13,6 @@ async function buttonCopy(event) {
   } else {
     copy(`http://localhost:3000/comidas/${id}`);
   }
-  global.alert('Link copiado!');
 }
 
 function ButtonShare(props) {
