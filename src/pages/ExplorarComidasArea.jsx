@@ -9,11 +9,11 @@ export default function ExplorarComidasArea() {
   const QUANTIDADE_RECEITAS = 12;
   const [selectAreas, setSelectAreas] = useState([]);
   const [mealAllByArea, setMealAllByArea] = useState([]);
-  const [selectedArea, setSelectedArea] = useState('All');
+  const [selectedArea, setSelectedArea] = useState('');
   const pegarDozeElementos = () => mealAllByArea.slice(0, QUANTIDADE_RECEITAS);
 
   const getByArea = async () => {
-    setSelectAreas(await getMealAreas('All'));
+    setSelectAreas(await getMealAreas(''));
   };
 
   const mealByArea = async () => {
@@ -28,37 +28,6 @@ export default function ExplorarComidasArea() {
     mealByArea();
   }, [selectedArea]);
 
-  // const verificaLocation = async (input) => {
-  //   switch (initialState) {
-  //   case `${input}`:
-  //     setInitialState(await getMealdCategory(input));
-  //   }
-  // };
-
-  // goTo = useHistory();
-
-  // function createOptions() {
-  //   return (
-  //     locations.map((currency, index) => (
-  //       <option
-  //         key={ index }
-  //         value={ currency }
-  //         data-testid={ `${results}-option` }
-  //       >
-  //         {currency}
-  //       </option>
-  //     ))
-  //   );
-  // }
-
-  // if (initialState.length === 0) {
-  //   return (
-  //     <p>
-  //       Loading...
-  //     </p>
-  //   );
-  // }
-
   return selectAreas.length === 0 ? (
     <p>Loading...</p>
   ) : (
@@ -71,7 +40,6 @@ export default function ExplorarComidasArea() {
             data-testid="explore-by-area-dropdown"
             onChange={ (e) => (setSelectedArea(e.target.value)) }
           >
-            <option>All</option>
             {selectAreas.map(({ strArea }, key) => (
               <option data-testid={ `${strArea}-option` } key={ key }>
                 {strArea}
@@ -80,7 +48,7 @@ export default function ExplorarComidasArea() {
           </select>
         </label>
         {mealAllByArea
-        && <CardsComida comidas={ pegarDozeElementos() } />}
+        && pegarDozeElementos().map(({ strMeal }) => <p>{ strMeal }</p>)}
       </div>
       <Footer />
     </main>

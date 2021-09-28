@@ -18,7 +18,7 @@ export const fetchPrimeiraLetra = async (input) => {
   return data.meals;
 };
 
-export const getMealdCategory = async () => {
+export const getMealCategoriesList = async () => {
   const response = await fetch(`${URL_BASE_API}/list.php?c=list`);
   const data = await response.json();
   return data.meals;
@@ -30,8 +30,20 @@ export const getMealAreas = async (option) => {
   return data.meals;
 };
 
+export const getMealCategoryFilter = async (category) => {
+  const response = await fetch(`${URL_BASE_API}/filter.php?c=${category}`);
+  const data = await response.json();
+  return data.meals;
+};
+
 export const getMealByArea = async (option) => {
   const response = await fetch(`${URL_BASE_API}/filter.php?a=${option}`);
+  const data = await response.json();
+  return data.meals;
+};
+
+export const getMealSurprise = async () => {
+  const response = await fetch(`${URL_BASE_API}/random.php`);
   const data = await response.json();
   return data.meals;
 };

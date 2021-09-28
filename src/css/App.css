@@ -41,3 +41,76 @@
 .card-body h4 {
   margin: 5px;
 }
+
+.recipes-done-cards {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.recipes-done-card {
+  background: white;
+  border: 1px solid rgba(248, 237, 237, 1);
+  border-radius: 6px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  display: flex;
+  height: 143px;
+  margin: 5px 0;
+  width: 330px;
+}
+
+.recipes-done-card h5 {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.recipes-done-card h4 {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.recipes-done-card p {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.recipes-done-card-img {
+  border-radius: 4px 0 0 4px;
+  height: 140px;
+  margin: 0 5px;
+  width: 165px;
+}
+
+.recipes-done-card button {
+  border-radius: 5px;
+}
+
+.recipes-done-card-share {
+  height: 30px;
+  margin: 2px;
+  width: 30px;
+}
+
+.recipes-done-tags {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.recipes-done-tags span {
+  background: rgba(236, 222, 222, 1);
+  border-radius: 12px;
+  margin: 3px;
+  padding: 2px 5px;
+}
+
+.alert-mensage {
+  background-color: rgba(30, 30, 30, 0.7);
+  bottom: 0;
+  color: rgb(200, 200, 200);
+  font-size: 1rem;
+  padding: 5px;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
