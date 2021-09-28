@@ -15,14 +15,12 @@ function ExplorarBebidas() {
           Por Ingredientes
         </button>
       </Link>
-      <Link to="/explorar/random-drink">
-        <button
-          type="button"
-          data-testid="explore-surprise"
-        >
-          Me Surpreenda!
-        </button>
-      </Link>
+      <button
+        type="button"
+        data-testid="explore-surprise"
+      >
+        Me Surpreenda!
+      </button>
       <div className="page">
         <Footer />
       </div>
