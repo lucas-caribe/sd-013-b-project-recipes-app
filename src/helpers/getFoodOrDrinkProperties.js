@@ -32,6 +32,9 @@ function getFoodRecipe(food) {
     id: food.idMeal,
     image: food.strMealThumb,
     subCategory: food.strCategory,
+    category: food.strCategory,
+    alcoholicOrNot: '',
+    area: 'Italian',
     ingredients,
     instructions: food.strInstructions,
     video,
@@ -46,6 +49,9 @@ export function getDrinkRecipe(drink) {
     ingredients: getIngredientsAndMeasures(drink),
     instructions: drink.strInstructions,
     subCategory: drink.strAlcoholic,
+    category: drink.strCategory,
+    alcoholicOrNot: drink.strAlcoholic,
+    area: '',
   };
 }
 

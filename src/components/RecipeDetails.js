@@ -16,6 +16,9 @@ let RECIPE_DATA = {
   instructions: '',
   ingredients: '',
   video: '',
+  area: '',
+  category: '',
+  alcoholicOrNot: '',
 };
 
 const bodyWidth = document.body.offsetWidth;
@@ -81,7 +84,7 @@ const RecipeDetails = () => {
   }
 
   function handleFavorite() {
-    const recipe = { id, ...RECIPE_DATA };
+    const recipe = { id, ...FAV_RECIPE };
     const localFavorites = localStorage.getItem('favoriteRecipes');
     if (localFavorites) {
       const localArray = JSON.parse(localFavorites);
@@ -121,6 +124,9 @@ const RecipeDetails = () => {
   }
 
   const { image, name, subCategory, instructions, ingredients, video } = RECIPE_DATA;
+  const { area, category, alcoholicOrNot} = RECIPE_DATA;
+  const FAV_RECIPE = {type, area, category, alcoholicOrNot, name, image};
+
   return (
     <div className="recipe-details">
       {
