@@ -73,7 +73,7 @@ describe('34 - Realize uma request para a API passando o `id` da receita que dev
   });
 });
 
-describe.only('35 - Desenvolva a tela de forma que contenha uma imagem da receita, o título, a categoria (ou se é ou não alcoólico), uma lista de ingredientes seguidos pelas quantidades, instruções, um vídeo do youtube "embedado" e recomendações', () => {
+describe('35 - Desenvolva a tela de forma que contenha uma imagem da receita, o título, a categoria (ou se é ou não alcoólico), uma lista de ingredientes seguidos pelas quantidades, instruções, um vídeo do youtube "embedado" e recomendações', () => {
   it('Verifica se os elementos descritos no protótipo existem na tela de detalhes de comida', () => {
     cy.visit('http://localhost:3000/comidas/52771', {
       onBeforeLoad(win) {
@@ -141,7 +141,7 @@ describe.only('35 - Desenvolva a tela de forma que contenha uma imagem da receit
   });
 });
 
-describe('36 - Implemente as recomendações, para receitas de comida, a recomendação deverá ser bebida e vice-versa', () => {
+describe.only('36 - Implemente as recomendações, para receitas de comida, a recomendação deverá ser bebida e vice-versa', () => {
   it('Verifica se a requisição para a API de bebidas foi realizada', () => {
     cy.visit('http://localhost:3000/comidas/52771', {
       onBeforeLoad(win) {
@@ -151,7 +151,7 @@ describe('36 - Implemente as recomendações, para receitas de comida, a recomen
 
     cy.window()
       .its('fetch')
-      .should('be.calledWith', 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+      .should('be.calledWith', 'https://www.themealdb.com/api/json/v1/1/search.php?s=');
   });
 
   it('Verifica se a requisição para a API de comidas foi realizada', () => {
@@ -163,13 +163,13 @@ describe('36 - Implemente as recomendações, para receitas de comida, a recomen
 
     cy.window()
       .its('fetch')
-      .should('be.calledWith', 'https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      .should('be.calledWith', 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
   });
 });
 
-describe('37 - Implemente os cards de recomendação, onde serão 6 cards, mas mostrando apenas 2 e o scroll é horizontal, similar a um `carousel`', () => {
+describe.only('37 - Implemente os cards de recomendação, onde serão 6 cards, mas mostrando apenas 2 e o scroll é horizontal, similar a um `carousel`', () => {
   it('Verifica se existem todas as recomendações na tela de detalhes de uma comida', () => {
-    cy.visit('http://localhost:3000/comidas/52771', {
+    cy.visit('http://localhost:3000/bebidas/178319', {
       onBeforeLoad(win) {
         win.fetch = fetchMock;
       },
@@ -193,7 +193,7 @@ describe('37 - Implemente os cards de recomendação, onde serão 6 cards, mas m
   });
 
   it('Verifica se existem todas as recomendações na tela de detalhes de uma bebida', () => {
-    cy.visit('http://localhost:3000/bebidas/178319', {
+    cy.visit('http://localhost:3000/comidas/52771', {
       onBeforeLoad(win) {
         win.fetch = fetchMock;
       },
