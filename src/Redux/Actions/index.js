@@ -124,7 +124,7 @@ const finishRecipe = (items) => (dispatch) => {
 };
 
 const editProgress = (id, foodType, ingredient) => {
-  const type = foodType === 'comidas' ? 'meals' : 'mockTails';
+  const type = foodType === 'comidas' ? 'meals' : 'cocktails';
 
   return {
     type: EDIT_RECIPE,
