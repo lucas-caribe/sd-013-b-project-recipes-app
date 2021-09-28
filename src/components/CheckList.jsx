@@ -6,8 +6,6 @@ let completeStorage = [];
 let marcados = 0;
 
 export default function CheckList({ name, index, type, id, set, qtn }) {
-  // const Ingredientes = localStorage.getItem('inProgressRecipes');
-
   const [idRecipe] = useState(id);
   const [isMark, setIsMark] = useState(false);
 
