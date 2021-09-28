@@ -98,7 +98,6 @@ export default function Main() {
             {pathChange()}
             <Footer />
           </div>)}
-      
     </div>
   );
 }
