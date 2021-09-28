@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 export default function ButtonEndRecipe({ disabled }) {
   const history = useHistory();
@@ -19,3 +20,7 @@ export default function ButtonEndRecipe({ disabled }) {
     </div>
   );
 }
+
+ButtonEndRecipe.propTypes = {
+  disabled: PropTypes.bool,
+}.isRequired;

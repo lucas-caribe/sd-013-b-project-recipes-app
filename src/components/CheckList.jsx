@@ -10,7 +10,6 @@ export default function CheckList({ name, index, type, id, set, qtn }) {
 
   const [idRecipe] = useState(id);
   const [isMark, setIsMark] = useState(false);
-  const [typeRecipe, setTypeRecipe] = useState('');
 
   function ReajustQtn() {
     marcados = completeStorage.length;
@@ -27,6 +26,7 @@ export default function CheckList({ name, index, type, id, set, qtn }) {
   let Ingredientes = JSON.parse(localStorage.getItem('inProgressRecipes'));
 
   function getDataStore() {
+    let renderKey = 'meals';
     if (!Ingredientes) {
       Ingredientes = {
         cocktails: {},
@@ -34,18 +34,14 @@ export default function CheckList({ name, index, type, id, set, qtn }) {
       };
       return;
     }
-    if ((Ingredientes.meals[id] || Ingredientes.cocktails[id]) && (type === 'meals')) {
-      Ingredientes.meals[id].forEach((ingrediente) => {
+    if (type === 'drinks') {
+      renderKey = 'cocktails';
+    }
+    if ((Ingredientes[renderKey])[id]) {
+      Ingredientes[renderKey][id].forEach((ingrediente) => {
         completeStorage.push(ingrediente);
-        completeStorage = completeStorage.filter((item, index) => (
-          completeStorage.indexOf(item) === index));
-      });
-      console.log(completeStorage);
-    } else {
-      Ingredientes.cocktails[id].forEach((ingrediente) => {
-        completeStorage.push(ingrediente);
-        completeStorage = completeStorage.filter((item, index) => (
-          completeStorage.indexOf(item) === index));
+        completeStorage = completeStorage.filter((item, indexStorage) => (
+          completeStorage.indexOf(item) === indexStorage));
       });
     }
   }
@@ -103,30 +99,20 @@ export default function CheckList({ name, index, type, id, set, qtn }) {
   function ChangeCheck() {
     const texto = document.getElementById(`${name}-label`);
     completeStorage.forEach((item) => {
-      console.log(name);
       if (item === name) {
         setIsMark(true);
         texto.classList.add('line');
       }
     });
   }
-  function ChangeTypeName() {
-    if (type === 'meals') {
-      setTypeRecipe('meals');
-    } else {
-      setTypeRecipe('cocktails');
-    }
-  }
 
   useEffect(() => {
     ChangeCheck();
-    ChangeTypeName();
     complete = [...completeStorage];
   }, []);
 
   function addChecked() {
     const input = document.getElementById(`${name}`).attributes;
-    console.log(input);
     const atribute = document.createAttribute('checked');
     input.setNamedItem(atribute);
     if (!isMark) {

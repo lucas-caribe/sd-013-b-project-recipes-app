@@ -43,13 +43,11 @@ function ReceitasInProgress({ match: { params: { id } }, type }) {
   }, []);
 
   const handleShareClick = () => {
-    try{
+    
       setModal('Link copiado!');
       if (type === 'meals') return copy(`http://localhost:3000/comidas/${id}`);
       copy(`http://localhost:3000/bebidas/${id}`); 
-    }catch (e){
-      console.log(e);
-    }
+  
   };
 
   return (
