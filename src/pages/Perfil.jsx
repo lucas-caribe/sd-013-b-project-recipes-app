@@ -4,7 +4,11 @@ import Footer from '../components/footer';
 import Header from '../components/header';
 
 export default function Perfil() {
-  const { email } = JSON.parse(localStorage.getItem('user'));
+  let email = '';
+  const userInLocal = JSON.parse(localStorage.getItem('user'));
+  if (userInLocal) {
+    email = userInLocal.email;
+  }
   const clearLocalStorage = () => {
     localStorage.clear();
   };
