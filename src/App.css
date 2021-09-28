@@ -29,8 +29,8 @@
 }
 
 .img-details {
-  width: 70vw;
   border-radius: 100%;
+  width: 70vw;
 }
 
 .recomendation-carousel {
@@ -41,18 +41,18 @@
 .recomendation-card {
   display: flex;
   flex-direction: column;
-  width: 45vw;
   margin: 10px;
+  width: 45vw;
 }
 
 .img-recomendation {
- width: auto;
- height: auto;
+  height: auto;
+  width: auto;
 }
 
 .start-recipe-btn {
+  bottom: 0;
   position: fixed;
-  bottom: 0px
 }
 
 .main-conteiner-list {
