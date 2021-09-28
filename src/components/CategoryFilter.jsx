@@ -60,7 +60,6 @@ export default function CategoryFilter() {
               id={ `${index}-option` }
               value={ strCategory }
               onClick={ handleCheck }
-              hidden
             />
             <span>{ strCategory }</span>
           </label>
