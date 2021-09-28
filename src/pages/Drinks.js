@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import DrinkCardSpace from '../component/DrinkCardSpace';
 import Context from '../context/Context';
-import Cards from '../component/Cards';
 
 function Drinks() {
   const {

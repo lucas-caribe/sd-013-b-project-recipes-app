@@ -1,5 +1,4 @@
 import React from 'react';
-import Context from '../context/Context';
 import RadialInput from '../mini-components/RadialInput';
 import Button from '../mini-components/Button';
 
