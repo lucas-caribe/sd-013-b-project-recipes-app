@@ -117,3 +117,57 @@
 .profile-page {
   justify-content: center;
 }
+
+/* ------------------------------------------------//
+//                     LOGIN                       //
+//------------------------------------------------ */
+
+.App {
+  /* background-color: darkolivegreen;  */
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.center-form {
+  margin-bottom: 0;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto 0;
+  margin-top: 100px;
+  width: 70%;
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.login-form > input {
+  padding: 5px;
+  text-align: center;
+  margin-top: 10px;
+  border-radius: 10px;
+  width: 100%;
+  font-family: Lobster, sans-serif;
+  background-color: white;
+}
+
+.login-form > button {
+  margin-top: 20px;
+  border-radius: 10px;
+  background-color: white;
+  padding: 5px;
+  font-family: Lobster, sans-serif;
+  border-color: black;
+  color: black;
+}
+
+.login-page > h1 {
+  display: flex;
+  justify-content: center;
+  font-family: Lobster, sans-serif;
+  margin: 100px auto;
+}

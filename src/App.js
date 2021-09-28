@@ -21,33 +21,39 @@ import {
 
 function App() {
   return (
-    <Provider>
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={ Login } />
-          <Route exact path="/comidas/" component={ Comidas } />
-          <Route exact path="/bebidas/" component={ Bebidas } />
-          <Route exact path="/explorar" component={ Explorar } />
-          <Route exact path="/explorar/comidas" component={ ExplorarComidas } />
-          <Route
-            exact
-            path="/explorar/comidas/ingredientes"
-            component={ ExplComidasIng }
-          />
-          <Route exact path="/explorar/comidas/area" component={ ExplorarComidasArea } />
-          <Route exact path="/explorar/bebidas" component={ ExplorarBebidas } />
-          <Route
-            exact
-            path="/explorar/bebidas/ingredientes"
-            component={ ExplBebidasIng }
-          />
-          <Route exact path="/perfil" component={ Perfil } />
-          <Route exact path="/receitas-feitas" component={ Feitas } />
-          <Route exact path="/receitas-favoritas" component={ Favoritas } />
-          <Route exact path="/explorar/bebidas/area" component={ NotFound } />
-        </Switch>
-      </BrowserRouter>
-    </Provider>
+    <div className="App">
+      <Provider>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/" component={ Login } />
+            <Route exact path="/comidas/" component={ Comidas } />
+            <Route exact path="/bebidas/" component={ Bebidas } />
+            <Route exact path="/explorar" component={ Explorar } />
+            <Route exact path="/explorar/comidas" component={ ExplorarComidas } />
+            <Route
+              exact
+              path="/explorar/comidas/ingredientes"
+              component={ ExplComidasIng }
+            />
+            <Route
+              exact
+              path="/explorar/comidas/area"
+              component={ ExplorarComidasArea }
+            />
+            <Route exact path="/explorar/bebidas" component={ ExplorarBebidas } />
+            <Route
+              exact
+              path="/explorar/bebidas/ingredientes"
+              component={ ExplBebidasIng }
+            />
+            <Route exact path="/perfil" component={ Perfil } />
+            <Route exact path="/receitas-feitas" component={ Feitas } />
+            <Route exact path="/receitas-favoritas" component={ Favoritas } />
+            <Route exact path="/explorar/bebidas/area" component={ NotFound } />
+          </Switch>
+        </BrowserRouter>
+      </Provider>
+    </div>
   );
 }
 

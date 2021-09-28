@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Context from '../context/Context';
+import '../App.css';
 
 function Login({ history }) {
   const six = 6;
@@ -47,27 +48,32 @@ function Login({ history }) {
   }
 
   return (
-    <div>
-      <form>
-        <input
-          type="email"
-          data-testid="email-input"
-          onChange={ (event) => VerifyEmail(event) }
-        />
-        <input
-          type="password"
-          data-testid="password-input"
-          onChange={ (event) => VerifyPassword(event) }
-        />
-        <button
-          type="button"
-          data-testid="login-submit-btn"
-          disabled={ statusLoginBtn }
-          onClick={ handleStorage }
-        >
-          Login
-        </button>
-      </form>
+    <div className="login-page">
+      <h1>App de Receitas</h1>
+      <div className="center-form">
+        <form className="login-form">
+          <input
+            type="email"
+            data-testid="email-input"
+            placeholder="E-mail"
+            onChange={ (event) => VerifyEmail(event) }
+          />
+          <input
+            type="password"
+            placeholder="Senha"
+            data-testid="password-input"
+            onChange={ (event) => VerifyPassword(event) }
+          />
+          <button
+            type="button"
+            data-testid="login-submit-btn"
+            disabled={ statusLoginBtn }
+            onClick={ handleStorage }
+          >
+            Login
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
