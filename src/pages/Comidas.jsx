@@ -11,7 +11,7 @@ import SearchBar from '../components/SearchBar';
 import { setLoadFoods as setLoadFoodsAction,
   setLoadDrinks as setLoadDrinksAction } from '../Redux/actions';
 
-function Home({ search, radioButton, searchInput, setLoadFoods }) {
+function Comidas({ search, radioButton, searchInput, setLoadFoods }) {
   const { location: { pathname } } = useHistory();
 
   useEffect(() => {
@@ -55,6 +55,9 @@ function Home({ search, radioButton, searchInput, setLoadFoods }) {
     };
     requestApi[pathname][radioButton](searchInput);
   }
+  // if (setLoadFoods === []) {
+  //   return <p>Loading...</p>;
+  // }
 
   return (
     <div>
@@ -70,7 +73,7 @@ function Home({ search, radioButton, searchInput, setLoadFoods }) {
   );
 }
 
-Home.propTypes = {
+Comidas.propTypes = {
   radioButton: PropTypes.string.isRequired,
   search: PropTypes.bool.isRequired,
   searchInput: PropTypes.string.isRequired,
@@ -90,4 +93,4 @@ const mapDispatchToProps = (dispatch) => ({
   setLoadDrinks: (payload) => dispatch(setLoadDrinksAction(payload)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Comidas);

@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import ButtonFavorite from '../components/ButtonFavorite';
+// import Header from '../components/Header';
 
 const STATE_FAVORITE = {
   buttonFilter: null,
@@ -98,6 +99,8 @@ function FavoritesRecipes() {
   if (buttonFilter === 'comida') {
     return (
       <>
+        {/* <Header setTitle="Receitas Favoritas" /> */}
+        <p>Loading</p>
         { buttonChangeFilter(setState) }
         {
           favoriteRecipes
@@ -115,6 +118,7 @@ function FavoritesRecipes() {
   if (buttonFilter === 'bebida') {
     return (
       <>
+        {/* <Header setTitle="Receitas Favoritas" /> */}
         { buttonChangeFilter(setState) }
         {
           favoriteRecipes
@@ -131,6 +135,7 @@ function FavoritesRecipes() {
 
   return (
     <>
+      {/* <Header setTitle="Receitas Favoritas" /> */}
       { buttonChangeFilter(setState) }
       {
         favoriteRecipes.map((item, index) => (
