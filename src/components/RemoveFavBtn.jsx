@@ -1,11 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import removeFavoriteFromStorage from '../services/removeFavoriteFromStorage';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function RemoveFavBtn({ id, index }) {
-  let favFromLS = localStorage.getItem('favoriteRecipes');
-  favFromLS = JSON.parse(favFromLS);
-
   function handleClick() {
     removeFavoriteFromStorage(id);
   }
@@ -23,3 +21,8 @@ function RemoveFavBtn({ id, index }) {
 }
 
 export default RemoveFavBtn;
+
+RemoveFavBtn.propTypes = {
+  id: PropTypes.string,
+  type: PropTypes.string,
+}.isRequired;

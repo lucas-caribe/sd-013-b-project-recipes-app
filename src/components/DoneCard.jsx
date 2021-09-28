@@ -10,6 +10,8 @@ const copy = require('clipboard-copy');
 function DoneCard({ filteredRecipes }) {
   const { push, location: { pathname } } = useHistory();
 
+  const favoriteRecipesLink = '/receitas-favoritas';
+
   const [modal, setModal] = useState(false);
 
   const handleShareButton = ({ id, type }) => {
@@ -27,7 +29,7 @@ function DoneCard({ filteredRecipes }) {
 
   function handleClick(id) {
     removeFavoriteFromStorage(id);
-    push('/receitas-favoritas');
+    push(favoriteRecipesLink);
   }
 
   return (
@@ -61,7 +63,7 @@ function DoneCard({ filteredRecipes }) {
             />
           </button>
           <div>
-            {pathname !== '/receitas-favoritas' && recipe.tags.map((tag) => (
+            {pathname !== favoriteRecipesLink && recipe.tags.map((tag) => (
               <span
                 data-testid={ `${index}-${tag}-horizontal-tag` }
                 key={ tag }
@@ -71,7 +73,7 @@ function DoneCard({ filteredRecipes }) {
             ))}
           </div>
           {
-            pathname === '/receitas-favoritas' && (
+            pathname === favoriteRecipesLink && (
               <button
                 type="button"
                 onClick={ () => handleClick(recipe.id) }
