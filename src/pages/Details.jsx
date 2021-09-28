@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Ingredients from '../helpers/Ingredients';
+import './details.css';
 
 const URL_SEARCH_FOOD = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
 const URL_SEARCH_DRINK = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
@@ -16,8 +17,6 @@ export default function Details({ match }) {
   const [recipeData, setRecipeData] = useState([]);
   const [recommends, setRecommends] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  console.log(recommends);
 
   useEffect(() => {
     async function requestRecipe(URL_RECIPE) {
@@ -38,11 +37,11 @@ export default function Details({ match }) {
     switch (foodOrDrink) {
     case 'comidas':
       requestRecipe(URL_SEARCH_FOOD + receitaId);
-      requestRecommends(RECOMMENDED_FOOD);
+      requestRecommends(RECOMMENDED_DRINKS);
       break;
     case 'bebidas':
       requestRecipe(URL_SEARCH_DRINK + receitaId);
-      requestRecommends(RECOMMENDED_DRINKS);
+      requestRecommends(RECOMMENDED_FOOD);
       break;
     default:
       return ('Página invalida');
@@ -89,14 +88,17 @@ export default function Details({ match }) {
 
   function recommendsRecipes(type) {
     return (
-      <div>
+      <div className="scroll-recommends">
         {recommends.map((recomm, index) => (
           <Link
             key={ recomm[`id${type}`] }
             // key={ recomm.idMeal }
             to={ `/${foodOrDrink}/${recomm[`id${type}`]}` }
           >
-            <div data-testid={ `${index}-recomendation-card` }>
+            <div
+              className="recomendation-card"
+              data-testid={ `${index}-recomendation-card` }
+            >
               <h4 data-testid={ `${index}-recomendation-title` }>
                 { recomm[`str${type}`] }
               </h4>
@@ -116,7 +118,11 @@ export default function Details({ match }) {
   function renderFooter() {
     return (
       <div>
-        <button type="button" data-testid="start-recipe-btn">
+        <button
+          className="start-recipe-btn"
+          type="button"
+          data-testid="start-recipe-btn"
+        >
           Iniciar receita
         </button>
       </div>
@@ -144,7 +150,7 @@ export default function Details({ match }) {
         />
         {renderIngredients()}
         {renderFooter()}
-        {recommendsRecipes('Meal')}
+        {recommendsRecipes('Drink')}
       </div>
     );
   }
@@ -164,8 +170,7 @@ export default function Details({ match }) {
         <p>{ recipeData[0].strCategory }</p>
         {renderIngredients()}
         {renderFooter()}
-        {recommendsRecipes('Drink')}
-
+        {recommendsRecipes('Meal')}
       </div>
     );
   }

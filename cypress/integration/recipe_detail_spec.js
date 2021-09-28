@@ -141,7 +141,7 @@ describe('35 - Desenvolva a tela de forma que contenha uma imagem da receita, o 
   });
 });
 
-describe.only('36 - Implemente as recomendações, para receitas de comida, a recomendação deverá ser bebida e vice-versa', () => {
+describe('36 - Implemente as recomendações, para receitas de comida, a recomendação deverá ser bebida e vice-versa', () => {
   it('Verifica se a requisição para a API de bebidas foi realizada', () => {
     cy.visit('http://localhost:3000/comidas/52771', {
       onBeforeLoad(win) {
@@ -151,7 +151,7 @@ describe.only('36 - Implemente as recomendações, para receitas de comida, a re
 
     cy.window()
       .its('fetch')
-      .should('be.calledWith', 'https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      .should('be.calledWith', 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
   });
 
   it('Verifica se a requisição para a API de comidas foi realizada', () => {
@@ -163,13 +163,13 @@ describe.only('36 - Implemente as recomendações, para receitas de comida, a re
 
     cy.window()
       .its('fetch')
-      .should('be.calledWith', 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+      .should('be.calledWith', 'https://www.themealdb.com/api/json/v1/1/search.php?s=');
   });
 });
 
-describe.only('37 - Implemente os cards de recomendação, onde serão 6 cards, mas mostrando apenas 2 e o scroll é horizontal, similar a um `carousel`', () => {
+describe('37 - Implemente os cards de recomendação, onde serão 6 cards, mas mostrando apenas 2 e o scroll é horizontal, similar a um `carousel`', () => {
   it('Verifica se existem todas as recomendações na tela de detalhes de uma comida', () => {
-    cy.visit('http://localhost:3000/bebidas/178319', {
+    cy.visit('http://localhost:3000/comidas/52771', {
       onBeforeLoad(win) {
         win.fetch = fetchMock;
       },
@@ -193,7 +193,7 @@ describe.only('37 - Implemente os cards de recomendação, onde serão 6 cards, 
   });
 
   it('Verifica se existem todas as recomendações na tela de detalhes de uma bebida', () => {
-    cy.visit('http://localhost:3000/comidas/52771', {
+    cy.visit('http://localhost:3000/bebidas/178319', {
       onBeforeLoad(win) {
         win.fetch = fetchMock;
       },
@@ -243,7 +243,7 @@ describe('38 - Desenvolva um botão de nome "Iniciar Receita" que deve ficar fix
   });
 });
 
-describe('39 - Implemente a solução de forma que caso a receita já tenha sido feita, o botão "Iniciar Receita" deve sumir', () => {
+describe.only('39 - Implemente a solução de forma que caso a receita já tenha sido feita, o botão "Iniciar Receita" deve sumir', () => {
   it('Verifica se botão de iniciar receita não é visível na tela de detalhes de uma comida', () => {
     cy.visit('http://localhost:3000/comidas/52771', {
       onBeforeLoad(win) {
