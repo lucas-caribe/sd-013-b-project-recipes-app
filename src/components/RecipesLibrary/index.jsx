@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import RecipeCard from '../RecipeCard';
+import './index.css';
 
-export default function MealsLibrary({ recipes }) {
+export default function RecipesLibrary({ recipes }) {
   return (
-    <div>
+    <div id="recipes-lib">
       {recipes.map((recipe, index) => (
         <RecipeCard
           key={ index }
@@ -16,6 +17,6 @@ export default function MealsLibrary({ recipes }) {
   );
 }
 
-MealsLibrary.propTypes = {
+RecipesLibrary.propTypes = {
   recipes: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

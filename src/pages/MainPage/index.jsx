@@ -12,7 +12,9 @@ const DRINK_CATEGORIES_ENDPOINT = 'https://www.thecocktaildb.com/api/json/v1/1/l
 export default function MainPage() {
   const history = useHistory();
   const { currentFoodFilter, currentDrinkFilter,
-    meals, drinks, setMeals, setDrinks } = useContext(AppContext);
+    meals, drinks, setMeals, setDrinks,
+    filteredByIngredient, foodIngredientSituation,
+    drinkIngredientSituation } = useContext(AppContext);
 
   const [mealsCategories, setMealsCategories] = useState([]);
   const [drinksCategories, setDrinksCategories] = useState([]);
@@ -69,10 +71,42 @@ export default function MainPage() {
     }
   }, [setDrinks, currentDrinkFilter]);
 
-  return (history.location.pathname.includes('/comidas') ? (
-    <RecipesMenu route="Comidas" array={ meals } arrayCategories={ mealsCategories } />
-  ) : (
-    <RecipesMenu route="Bebidas" array={ drinks } arrayCategories={ drinksCategories } />
-  )
+  function handleIngredientSituationMeals() {
+    if (foodIngredientSituation === true) {
+      return (
+        <RecipesMenu
+          route="Comidas"
+          array={ filteredByIngredient }
+          arrayCategories={ mealsCategories }
+        />
+      );
+    }
+    return (
+      <RecipesMenu route="Comidas" array={ meals } arrayCategories={ mealsCategories } />
+    );
+  }
+
+  function handleIngredientSituationDrinks() {
+    if (drinkIngredientSituation === true) {
+      return (
+        <RecipesMenu
+          route="Bebidas"
+          array={ filteredByIngredient }
+          arrayCategories={ drinksCategories }
+        />
+      );
+    }
+    return (
+      <RecipesMenu
+        route="Bebidas"
+        array={ drinks }
+        arrayCategories={ drinksCategories }
+      />
+    );
+  }
+
+  return (history.location.pathname.includes('/comidas')
+    ? handleIngredientSituationMeals()
+    : handleIngredientSituationDrinks()
   );
 }

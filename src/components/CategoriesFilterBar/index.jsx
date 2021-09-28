@@ -4,7 +4,9 @@ import AppContext from '../../context/AppContext';
 import CategoryButton from '../CategoryButton';
 
 export default function CategoriesFilterBar({ categories }) {
-  const { setCurrentFoodFilter, setCurrentDrinkFilter, page } = useContext(AppContext);
+  const { setCurrentFoodFilter,
+    setCurrentDrinkFilter, page,
+    setFoodIngredientSituation, setDrinkIngredientSituation } = useContext(AppContext);
 
   return (
     <div>
@@ -18,9 +20,11 @@ export default function CategoriesFilterBar({ categories }) {
         onClick={ () => {
           if (page === 'Comidas') {
             setCurrentFoodFilter('');
+            setFoodIngredientSituation(false);
           }
           if (page === 'Bebidas') {
             setCurrentDrinkFilter('');
+            setDrinkIngredientSituation(false);
           }
         } }
       >

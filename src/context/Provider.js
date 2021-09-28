@@ -13,6 +13,9 @@ function Provider({ children }) {
   const [searching, setSearching] = useState(false);
   const [meals, setMeals] = useState([]);
   const [drinks, setDrinks] = useState([]);
+  const [filteredByIngredient, setFilteredByIngredient] = useState([]);
+  const [foodIngredientSituation, setFoodIngredientSituation] = useState(false);
+  const [drinkIngredientSituation, setDrinkIngredientSituation] = useState(false);
 
   const contextValue = {
     login,
@@ -29,6 +32,12 @@ function Provider({ children }) {
     setMeals,
     drinks,
     setDrinks,
+    filteredByIngredient,
+    setFilteredByIngredient,
+    foodIngredientSituation,
+    setFoodIngredientSituation,
+    drinkIngredientSituation,
+    setDrinkIngredientSituation,
   };
 
   return (

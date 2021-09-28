@@ -9,7 +9,9 @@ const SearchBar = ({ option }) => {
   const SEARCH_TERM = 'searchTerm';
   const [inputSearch, setInputSearch] = useState('');
   const [inputRadio, setInputRadio] = useState('');
-  const { setMeals, setDrinks } = useContext(AppContext);
+  const { setMeals, setDrinks,
+    setDrinkIngredientSituation, setFoodIngredientSituation } = useContext(AppContext);
+
   const handleChange = ({ target }) => (target.name === 'searchBar'
     ? setInputSearch(target.value)
     : setInputRadio(target.id));
@@ -30,6 +32,7 @@ const SearchBar = ({ option }) => {
     };
 
     if (type === 'Comidas') {
+      setFoodIngredientSituation(false);
       const { meals } = await fetchAPI(radioCriteria[radio]);
       // if (meals.length === 1) {
       //   return <Redirect to={ `/comidas}/${meals[0].idMeal}` } />;
@@ -44,6 +47,7 @@ const SearchBar = ({ option }) => {
     // if (drinks.length === 1) {
     //   return <Redirect to={ `/bebidas/${drinks[0].idDrink}` } />;
     // }
+    setDrinkIngredientSituation(false);
     return drinks !== null
       ? setDrinks(drinks)
       : global.alert(
