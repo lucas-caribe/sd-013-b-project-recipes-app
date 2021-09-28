@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useSearch } from '../../context';
 
 import SearchIcon from '../SearchIcon/SearchIcon';
-import SearchBar from '../SearchBar/SearchBar';
+import SearchBar from '../SearchBar';
 
 import profileIcon from '../../images/profileIcon.svg';
 

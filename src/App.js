@@ -1,17 +1,17 @@
 import React from 'react';
-import { Route, Switch } from 'react-router';
-
-import Comidas from './pages/Comidas';
-import Bebidas from './pages/Bebidas';
+import { Route, Switch } from 'react-router-dom';
+import Comidas from './pages/MainScreen/Comidas';
+import Bebidas from './pages/MainScreen/Bebidas';
 import Explorar from './pages/Explorar';
 import ExplorarBebidas from './pages/ExplorarBebidas';
 import ExplorarComidas from './pages/ExplorarComidas';
 import ExplorarIngredientes from './pages/ExplorarIngredientes';
 import ExplorarOrigem from './pages/ExplorarOrigem';
+import Login from './pages/Login-Screen/Login';
 import Perfil from './pages/Perfil';
 import ReceitasFeitas from './pages/ReceitasFeitas';
 import ReceitasFavoritas from './pages/ReceitasFavoritas';
-
+import NotFound from './pages/NotFound';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -38,6 +38,8 @@ function App() {
         <Route exact path="/perfil" component={ Perfil } />
         <Route exact path="/receitas-feitas" component={ ReceitasFeitas } />
         <Route exact path="/receitas-favoritas" component={ ReceitasFavoritas } />
+        <Route exact path="/" component={ Login } />
+        <Route path="*" component={ NotFound } />
       </Switch>
     </div>
   );
