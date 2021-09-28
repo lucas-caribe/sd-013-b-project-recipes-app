@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router';
 
-import Card from '../Card';
-import Header from '../../../components/Header';
-import Footer from '../../../components/Footer';
+import Card from '../../components/Card/Card';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 import FilterButtonsDrinks from './FilterButtonsDrinks';
 
-import { useAuth, useRecipes } from '../../../context';
+import { useAuth, useRecipes } from '../../context';
 
 function Bebidas() {
   const { handleMainPage } = useAuth();

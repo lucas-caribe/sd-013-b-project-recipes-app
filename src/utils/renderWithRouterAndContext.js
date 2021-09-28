@@ -18,30 +18,33 @@ const INITIAL_AUTH = {
 };
 
 const INITIAL_SEARCH = {
-  user: '', // E-mail do usuário conectado,
-  tokens: {
-    mealsToken: '', // Token de acesso a API de comidas
-    cocktailsToken: '', // Token de acesso a API de drinks
-  },
-  page: '', // Página atual (comida ou bebidas)
+  isOpen: false, // Flag para indicar se a searchBar está visível ou não
+  term: '', // Valor do input de texto da searchBar
+  option: '', // Valor do radio btn selecionado (Ingrediente, nome ou Primeira letra)
 };
 
 const INITIAL_RECIPES = {
-  user: '', // E-mail do usuário conectado,
-  tokens: {
-    mealsToken: '', // Token de acesso a API de comidas
-    cocktailsToken: '', // Token de acesso a API de drinks
+  meals: {
+    categories: [], // Lista de categorias recuperadas pela API
+    list: [], // Lista de comidas recuperadas pela API
+    inProgress: {}, // Objeto onde cada chave é o id da receita em andamento e o valor correspondente é o array com os ingredientes já marcados
   },
-  page: '', // Página atual (comida ou bebidas)
+  cocktails: {
+    categories: [], // Lista de categorias recuperadas pela API
+    list: [], // Lista de comidas recuperadas pela API
+    inProgress: {}, // Objeto onde cada chave é o id da receita em andamento e o valor correspondente é o array com os ingredientes já marcados
+  },
+  finishedRecipes: [],
+  favoriteRecipes: [],
 };
 
 const INITIAL_DETAILS = {
-  user: '', // E-mail do usuário conectado,
-  tokens: {
-    mealsToken: '', // Token de acesso a API de comidas
-    cocktailsToken: '', // Token de acesso a API de drinks
+  item: {
+    isFavorite: false,
+    status: 'não iniciada',
   },
-  page: '', // Página atual (comida ou bebidas)
+  recommendations: [],
+  ingredients: [],
 };
 
 const renderWithRouterAndContext = (
@@ -51,10 +54,13 @@ const renderWithRouterAndContext = (
     searchProps = INITIAL_SEARCH,
     recipesProps = INITIAL_RECIPES,
     detailsProps = INITIAL_DETAILS,
+    initialEntries = ['/'],
     ...renderOptions
   } = {},
 ) => {
-  const history = createMemoryHistory();
+  const history = createMemoryHistory({
+    initialEntries,
+  });
 
   return {
     ...render(

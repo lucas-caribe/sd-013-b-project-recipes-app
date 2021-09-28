@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button from 'react-bootstrap/Button';
-import { useRecipes } from '../../../context';
+import { useRecipes } from '../../context';
 
 function FilterButtonsDrinks() {
   const { cocktails: { categories } } = useRecipes();

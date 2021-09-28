@@ -1,20 +1,16 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useState,useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 const mealsInitialState = {
   categories: [], // Lista de categorias recuperadas pela API
   list: [], // Lista de comidas recuperadas pela API
   inProgress: {}, // Objeto onde cada chave é o id da receita em andamento e o valor correspondente é o array com os ingredientes já marcados
-  favorites: [], // Lista de receitas favoritas
-  finished: [], // Lista de receitas finalizadas
 };
 
 const cocktailsInitialState = {
   categories: [], // Lista de categorias recuperadas pela API
   list: [], // Lista de comidas recuperadas pela API
   inProgress: {}, // Objeto onde cada chave é o id da receita em andamento e o valor correspondente é o array com os ingredientes já marcados
-  favorites: [], // Lista de receitas favoritas
-  finished: [], // Lista de receitas finalizadas
 };
 
 const URL_DRINKS_CATEGORIES = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
@@ -26,6 +22,8 @@ export const RecipesContext = createContext();
 export const RecipesProvider = ({ children }) => {
   const [meals, setMeals] = useState(mealsInitialState);
   const [cocktails, setCocktails] = useState(cocktailsInitialState);
+  const [finishedRecipes, setFinishedRecipes] = useState([]);
+  // const [favoriteRecipes, setFavoriteRecipes] = useState([]);
 
   const setMealsList = (mealsList) => {
     setMeals({
@@ -82,12 +80,24 @@ export const RecipesProvider = ({ children }) => {
       });
     }
     fetchMeals();
+  const getRandomRecipe = useCallback(async (page) => {
+    if (page === 'comidas') {
+      const { meals: mealsApi } = await fetch('https://www.themealdb.com/api/json/v1/1/random.php').then((response) => response.json());
+      return mealsApi[0].idMeal;
+    }
+    if (page === 'bebidas') {
+      const { drinks } = await fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php').then((response) => response.json());
+      return drinks[0].idDrink;
+    }
   }, []);
 
   const context = {
+    getRandomRecipe,
     setMealsList,
     setCocktailsList,
     setCocktailsCategorie,
+    setFinishedRecipes,
+    finishedRecipes,
     meals,
     cocktails,
 
