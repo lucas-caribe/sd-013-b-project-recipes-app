@@ -7,10 +7,11 @@ import DetailsInstructions from '../Components/DetailsInstructions';
 import DetailsVideo from '../Components/DetailsVideo';
 import DetailsRecommended from '../Components/DetailsRecommended';
 import StartRecipeButton from '../Components/StartRecipeButton';
-import { finishRecipe as finishRecipeAction } from '../Redux/Actions';
+import { finishRecipe as finishRecipeAction,
+  editProgress as editProgressAction } from '../Redux/Actions';
 
 const Details = (props) => {
-  const { type, id, status, finishRecipe } = props;
+  const { type, id, status, finishRecipe, editProgress } = props;
   const [item, setItem] = useState({});
   const [recommended, setRecommended] = useState([]);
 
@@ -33,20 +34,6 @@ const Details = (props) => {
     recommendedDb = 'meals';
   }
   const url = `${baseUrl}${id}`;
-
-  let itemToRedux = {};
-  if (item) {
-    itemToRedux = {
-      id: type === 'comidas' ? item.idMeal : item.idDrink,
-      type: type === 'comidas' ? 'meals' : 'cocktails',
-      area: item.strArea,
-      category: item.strCategory,
-      alcoholicOrNot: type === 'comidas' ? '' : item.strAlcoholic,
-      name: type === 'comidas' ? item.strMeal : item.strDrink,
-      doneDate: '',
-      tags: item.strTags ? item.strTags.split(',') : [],
-    };
-  }
 
   useEffect(() => {
     fetch(url)
@@ -78,8 +65,8 @@ const Details = (props) => {
   const subTitle = type === 'comidas' ? item.strCategory : item.strAlcoholic;
   const instructions = item.strInstructions;
   const videoUrl = item.strYoutube;
-  // console.log(item);
   return (
+
     <div>
       <DetailsHeader
         item={ item }
@@ -91,10 +78,22 @@ const Details = (props) => {
       <button
         type="button"
         onClick={ () => {
-          finishRecipe(itemToRedux);
+          finishRecipe(item);
+          // a action finishRecipe recebe o item retornado diretamente do fetch, ela mesma é responsavel por gerenciar o que for necessario. Ela remove a receita das receitas em progresso e coloca em doneRecipes.
         } }
       >
         Finalizar
+
+      </button>
+      <button
+        type="button"
+        onClick={ () => {
+          editProgress(id, type, 'batata');
+          // A action editProgress recebe como parametros o id da comida, o tipo dela (comida ou bebida) e o nome do ingrediente. Caso chame a action e o ingrediente já exista ele é removido
+          // Os items já marcados estão disponiveis na chave inProgressRecipes.type.id, que é um array com o nome dos ingredientes (onde type é meals para comidas e cocktails para bebidas, e o id é o id da receita )
+        } }
+      >
+        Adicionar Elemento
 
       </button>
       <DetailsIngredients
@@ -116,10 +115,14 @@ Details.propTypes = {
   id: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
   finishRecipe: PropTypes.func.isRequired,
+  editProgress: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   finishRecipe: (items) => dispatch(finishRecipeAction(items)),
+  editProgress: (id, type, ingredient) => {
+    dispatch(editProgressAction(id, type, ingredient));
+  },
 });
 
 export default connect(null, mapDispatchToProps)(Details);

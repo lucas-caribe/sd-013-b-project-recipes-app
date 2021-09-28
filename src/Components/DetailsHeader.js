@@ -5,19 +5,7 @@ import Icon from './Icon';
 import { toggleFavorite as toggleFavoriteAction } from '../Redux/Actions';
 
 const DetailsHeader = (props) => {
-  const { imgSrc, title, subTitle, item, toggleFavorite, type } = props;
-
-  let itemToRedux = {};
-  if (item) {
-    itemToRedux = {
-      id: type === 'comidas' ? item.idMeal : item.idDrink,
-      type: type === 'comidas' ? 'meals' : 'cocktails',
-      area: item.strArea,
-      category: item.strCategory,
-      alcoholicOrNot: type === 'comidas' ? '' : item.strAlcoholic,
-      name: type === 'comidas' ? item.strMeal : item.strDrink,
-    };
-  }
+  const { imgSrc, title, subTitle, item, toggleFavorite } = props;
   return (
     <div>
 
@@ -35,8 +23,19 @@ const DetailsHeader = (props) => {
           testid="favorite-btn"
         />
         <button
+          type="button"
           onClick={ () => {
-            toggleFavorite(itemToRedux);
+            toggleFavorite(item);
+            // A action toggleFavorite recebe como parametro o item recebido diretamente pelo fetch e altera o estado de favorito da receita
+            // As receitas favoritadas podem ser acessadas na chave favoriteRecipes do redux, que é um array de objetos na seguinte estrutura:
+            // {
+            //   id: type === 'comidas' ? item.idMeal : item.idDrink,
+            //   type: type === 'comidas' ? 'meals' : 'cocktails',
+            //   area: item.strArea,
+            //   category: item.strCategory,
+            //   name: type === 'comidas' ? item.strMeal : item.strDrink,
+            // caso seja bebida possui uma chave  alcoholicOrNot
+            // }
           } }
         >
           Teste

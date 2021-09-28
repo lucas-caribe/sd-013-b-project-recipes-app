@@ -4,9 +4,6 @@ const CLEAN_ITENS = 'CLEAN_ITENS';
 const START_RECIPE = 'START_RECIPE';
 const EDIT_RECIPE = 'EDIT_RECIPE';
 const TOGGLE_FAVORITE = 'TOGGLE_FAVORITE';
-const LOAD_STORAGE_FAVORITES_TO_REDUX = 'LOAD_STORAGE_FAVORITES_TO_REDUX';
-const LOAD_STORAGE_IN_PROGRESS_TO_REDUX = 'LOAD_STORAGE_IN_PROGRESS_TO_REDUX';
-const LOAD_STORAGE_DONE_TO_REDUX = 'LOAD_STORAGE_DONE_TO_REDUX';
 const FINISH_RECIPE = 'FINISH_RECIPE';
 const REMOVE_FROM_IN_PROGRESS = 'REMOVE_FROM_IN_PROGRESS';
 
@@ -72,63 +69,66 @@ const startRecipe = (id, type) => ({
   payload: { id, type: type === 'comidas' ? 'meals' : 'cocktails' },
 });
 
-const toggleFavorite = (item) => ({
-  type: TOGGLE_FAVORITE,
-  payload: {
-    item,
-  },
-});
-
-const loadFavoriteStorageToRedux = (items) => ({
-  type: LOAD_STORAGE_FAVORITES_TO_REDUX,
-  payload: items,
-});
-
-const loadInProgressStorageToRedux = (items) => ({
-  type: LOAD_STORAGE_IN_PROGRESS_TO_REDUX,
-  payload: items,
-});
-
-const loadDoneStorageToRedux = (items) => ({
-  type: LOAD_STORAGE_DONE_TO_REDUX,
-  payload: items,
-});
-
-const loadLocalStorage = () => (dispatch) => {
-  const localFavoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  if (localFavoriteRecipes) {
-    dispatch(loadFavoriteStorageToRedux(localFavoriteRecipes));
-  }
-  const localInProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-  if (localInProgressRecipes) {
-    dispatch(loadInProgressStorageToRedux(localInProgressRecipes));
-  }
-  const localDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-  if (localDoneRecipes) {
-    dispatch(loadDoneStorageToRedux(localDoneRecipes));
-  }
+const toggleFavorite = (item) => {
+  const type = Object.keys(item).some((key) => key === 'idMeal') ? 'comidas' : 'bebidas';
+  const itemToRedux = {
+    id: type === 'comidas' ? item.idMeal : item.idDrink,
+    type: type === 'comidas' ? 'meals' : 'cocktails',
+    area: item.strArea,
+    category: item.strCategory,
+    name: type === 'comidas' ? item.strMeal : item.strDrink,
+  };
+  if (type === 'bebidas') itemToRedux.alcoholicOrNot = item.strAlcoholic;
+  return {
+    type: TOGGLE_FAVORITE,
+    payload: {
+      item: itemToRedux,
+    },
+  };
 };
 
-const removeInProgress = ({ id, type }) => ({
-  type: REMOVE_FROM_IN_PROGRESS,
-  payload: { id, type },
-});
+const removeInProgress = (items) => {
+  // console.log(items);
+  const id = Object.keys(items).some((key) => key === 'idMeal')
+    ? items.idMeal : items.idDrink;
+  const type = Object.keys(items).some((key) => key === 'idMeal') ? 'meals' : 'cocktails';
+  console.log(type);
+  return {
+    type: REMOVE_FROM_IN_PROGRESS,
+    payload: { id, type },
+  };
+};
 
-const addToDone = (items) => ({
-  type: FINISH_RECIPE,
-  payload: items,
-});
+const addToDone = (item) => {
+  const type = Object.keys(item).some((key) => key === 'idMeal') ? 'comidas' : 'bebidas';
+  const itemToRedux = {
+    id: type === 'comidas' ? item.idMeal : item.idDrink,
+    type: type === 'comidas' ? 'meals' : 'cocktails',
+    area: item.strArea,
+    category: item.strCategory,
+    name: type === 'comidas' ? item.strMeal : item.strDrink,
+    doneDate: '',
+    tags: item.strTags ? item.strTags.split(',') : [],
+  };
+  if (type === 'bebidas') itemToRedux.alcoholicOrNot = item.strAlcoholic;
+
+  return {
+    type: FINISH_RECIPE,
+    payload: itemToRedux,
+  };
+};
 
 const finishRecipe = (items) => (dispatch) => {
   dispatch(removeInProgress(items));
   dispatch(addToDone(items));
 };
 
-const editProgress = (id, type, ingredient) => {
-  const typeName = type === 'comidas' ? 'meals' : 'cocktails';
+const editProgress = (id, foodType, ingredient) => {
+  const type = foodType === 'comidas' ? 'meals' : 'mockTails';
+
   return {
     type: EDIT_RECIPE,
-    payload: { id, typeName, ingredient },
+    payload: { id, type, ingredient },
   };
 };
 
@@ -138,17 +138,13 @@ export {
   START_RECIPE,
   EDIT_RECIPE,
   TOGGLE_FAVORITE,
-  LOAD_STORAGE_FAVORITES_TO_REDUX,
-  LOAD_STORAGE_IN_PROGRESS_TO_REDUX,
   FINISH_RECIPE,
   REMOVE_FROM_IN_PROGRESS,
-  LOAD_STORAGE_DONE_TO_REDUX,
   storeUser,
   fetchFilteredItems,
   cleanFilter,
   startRecipe,
   toggleFavorite,
-  loadLocalStorage,
   finishRecipe,
   editProgress,
 };

@@ -1,6 +1,8 @@
-import { TOGGLE_FAVORITE, LOAD_STORAGE_FAVORITES_TO_REDUX } from '../Actions';
+import { TOGGLE_FAVORITE } from '../Actions';
 
-const INITIAL_STATE = [];
+const favoritesLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+
+const INITIAL_STATE = favoritesLocalStorage || [];
 
 const favoriteRecipes = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -14,8 +16,6 @@ const favoriteRecipes = (state = INITIAL_STATE, action) => {
       item.id === action.payload.item.id))
       ? [...state.filter((item) => item.id !== action.payload.item.id)]
       : [...state, action.payload.item];
-  case LOAD_STORAGE_FAVORITES_TO_REDUX:
-    return action.payload;
   default:
     return state;
   }

@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { connect } from 'react-redux';
 import Header from '../Components/Header';
 import SearchBar from '../Components/SearchBar';
 import FoodCards from '../Components/FoodCards';
 import Details from './Details';
-import { loadLocalStorage as loadLocalStorageAction } from '../Redux/Actions';
 
-const Main = ({ loadLocalStorage }) => {
+const Main = () => {
   const { id, type, status } = useParams();
   const [showSearch, toggleShowSeatch] = useState(false);
   console.log(`type: ${type}\nid: ${id}\nstatus: ${status}`);
@@ -20,8 +18,6 @@ const Main = ({ loadLocalStorage }) => {
     showHeader = false;
     showDetails = true;
   }
-
-  useEffect(() => { loadLocalStorage(); }, [loadLocalStorage]);
 
   const toggleSearch = () => {
     toggleShowSeatch(!showSearch);
@@ -45,8 +41,4 @@ const Main = ({ loadLocalStorage }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  loadLocalStorage: () => dispatch(loadLocalStorageAction()),
-});
-
-export default connect(null, mapDispatchToProps)(Main);
+export default Main;
