@@ -144,7 +144,8 @@ describe('Progress Recipe tests', () => {
         alcoholicOrNot: 'Alcoholic',
         area: '',
         category: 'Cocktail',
-        doneDate: '27/08/2021',
+        doneDate: `${new Date()
+          .getDate()}/0${new Date().getMonth()}/${new Date().getFullYear()}`,
         id: '178319',
         image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
         name: 'Aquamarine',
