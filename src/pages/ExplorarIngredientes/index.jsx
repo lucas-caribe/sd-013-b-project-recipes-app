@@ -1,6 +1,8 @@
 import React, { useEffect, useCallback } from 'react';
 import { Link, useParams, Redirect } from 'react-router-dom';
 
+import './styles.css';
+
 import { useRecipes, useSearch } from '../../context';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -57,7 +59,7 @@ function ExplorarIngredientes() {
   return (
     <>
       <Header pageTitle="Explorar Ingredientes" showSearchIcon={ false } />
-      <main>
+      <main className="ingredients-container">
         { (type === 'comidas') && renderFoodPage() }
         { (type === 'bebidas') && renderDrinksPage() }
       </main>
