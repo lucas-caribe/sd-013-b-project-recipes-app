@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
+import { saveEmail } from '../redux/actions';
 // import PropTypes from 'prop-types';
 
 function Login() {
   const history = useHistory();
   const [email, setUserEmail] = useState('');
   const [password, setPassword] = useState('');
+  // substito para mapDispatchToProps
+  const dispatch = useDispatch();
 
   // caso precisem pegar algo no local storage;
   // const mealisAuthenticated = () => localStorage.getItem(mealsToken) !== null;
@@ -19,8 +23,8 @@ function Login() {
   const loginCock = (token) => {
     localStorage.setItem('cocktailsToken', JSON.stringify(token));
   };
-  const emailStorage = (usemail) => {
-    localStorage.setItem('user', JSON.stringify({ email: usemail }));
+  const emailStorage = (userEmail) => {
+    localStorage.setItem('user', JSON.stringify({ email: userEmail }));
   };
   // caso precisem remover do storage
   // const logout = () => {
@@ -36,10 +40,11 @@ function Login() {
   };
 
   const redirectToTarget = () => {
-    history.push('/comidas');
     loginmeals(1);
     loginCock(1);
     emailStorage(email);
+    dispatch(saveEmail(email));
+    history.push('/comidas');
   };
 
   const validaPassword = () => {
