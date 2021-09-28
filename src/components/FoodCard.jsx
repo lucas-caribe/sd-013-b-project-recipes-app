@@ -4,6 +4,7 @@ import foodContext from '../context/FoodContext';
 
 function FoodCard() {
   const { foodState } = useContext(foodContext);
+
   const MAX_NUMBER = 12;
 
   if (foodState.length === 1) {
