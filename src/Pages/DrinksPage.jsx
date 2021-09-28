@@ -73,18 +73,25 @@ export default function DrinksPage() {
               {category}
             </button>))
       }
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ fetchDrinkAPI }
+      >
+        All
+      </button>
       {
         drinks.map((drink, index) => (
-          <div key={ index } className="card" data-testid={ `${index}-recipe-card` }>
-            <img
-              src={ `${drink.strDrinkThumb}` }
-              alt={ drink.strDrink }
-              data-testid={ `${index}-card-img` }
-            />
-            <Link to={ `/bebidas/${drink.idDrink}` }>
+          <Link key={ index } to={ `/bebidas/${drink.idDrink}` }>
+            <div className="card" data-testid={ `${index}-recipe-card` }>
+              <img
+                src={ `${drink.strDrinkThumb}` }
+                alt={ drink.strDrink }
+                data-testid={ `${index}-card-img` }
+              />
               <h4 data-testid={ `${index}-card-name` }><b>{drink.strDrink}</b></h4>
-            </Link>
-          </div>
+            </div>
+          </Link>
         ))
       }
       <Footer />

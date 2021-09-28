@@ -43,6 +43,13 @@ export default function CategoriesButtons({ props: { mealsCategories, categoryTo
             </button>),
         )
       }
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ fetchMealAPI }
+      >
+        All
+      </button>
     </>
   );
 }

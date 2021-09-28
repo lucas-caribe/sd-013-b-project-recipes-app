@@ -49,16 +49,16 @@ export default function MealsPage() {
       <HeaderWithSearch />
       {location.includes('/comidas') && <CategoriesButtons props={ buttonsUtils } />}
       {location.includes('/comidas') && meals.map((meal, index) => (
-        <div key={ index } className="card" data-testid={ `${index}-recipe-card` }>
-          <img
-            src={ `${meal.strMealThumb}` }
-            alt={ meal.strIngredient }
-            data-testid={ `${index}-card-img` }
-          />
-          <Link to={ `/comidas/${meal.idMeal}` }>
+        <Link key={ index } to={ `/comidas/${meal.idMeal}` }>
+          <div className="card" data-testid={ `${index}-recipe-card` }>
+            <img
+              src={ `${meal.strMealThumb}` }
+              alt={ meal.strIngredient }
+              data-testid={ `${index}-card-img` }
+            />
             <h4 data-testid={ `${index}-card-name` }><b>{meal.strMeal}</b></h4>
-          </Link>
-        </div>
+          </div>
+        </Link>
       ))}
       <Footer />
     </>
