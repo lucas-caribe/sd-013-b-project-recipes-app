@@ -27,7 +27,7 @@ export default function Comidas() {
 
     getRecipes();
     getCategories();
-  }, [setAllRecipes, setCategories]);
+  }, []);
 
   return (
     <div className="page">

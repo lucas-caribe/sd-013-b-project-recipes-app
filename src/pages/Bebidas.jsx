@@ -27,7 +27,7 @@ function Bebidas() {
 
     getRecipes();
     getCategories();
-  }, [setAllRecipes, setCategories]);
+  }, []);
 
   return (
     <div className="page">
