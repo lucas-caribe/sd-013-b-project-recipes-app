@@ -15,7 +15,6 @@ import { fetchCocktailDetails, fetchMealDetails } from '../../services/fetchDeta
 
 export const SET_USER = 'SET_USER';
 export const SET_DETAILS = 'SET_DETAILS';
-export const SET_RECOMENDATIONS = 'SET_RECOMENDATIONS';
 export const SET_ITENS_OF_FETCH = 'SET_ITENS_OF_FETCH';
 export const SET_NEW_FITLER_BY_CATEGORY = 'SET_NEW_FITLER_BY_CATEGORY';
 export const SET_MAIN_LIST_FILTER_CATEGORY = 'SET_MAIN_LIST_FILTER_CATEGORY';
@@ -42,11 +41,6 @@ export const setDetails = (payload) => ({
   payload,
 });
 
-export const setRecomendations = (payload) => ({
-  type: SET_RECOMENDATIONS,
-  payload,
-});
-
 // Thunk
 
 export const fetchDetailsThunk = (id, recipe) => async (dispatch) => {
@@ -59,23 +53,6 @@ export const fetchDetailsThunk = (id, recipe) => async (dispatch) => {
   case 'cocktail': {
     const { drinks } = await fetchCocktailDetails(id);
     dispatch(setDetails(drinks));
-    break;
-  }
-  default:
-    break;
-  }
-};
-
-export const fetchRecomendationThunk = (recomendation) => async (dispatch) => {
-  switch (recomendation) {
-  case 'meal': {
-    const response = await fetchMealByName('fish');
-    dispatch(setRecomendations(response));
-    break;
-  }
-  case 'cocktail': {
-    const response = await fetchCocktailByName('margarita');
-    dispatch(setRecomendations(response));
     break;
   }
   default:

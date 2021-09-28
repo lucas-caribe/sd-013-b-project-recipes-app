@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import copy from 'clipboard-copy';
+import FavButton from './FavButton';
 
 export default function ButtonsFavoriteAndShare() {
   const history = useHistory();
@@ -28,7 +29,7 @@ export default function ButtonsFavoriteAndShare() {
         Compartilhar
       </button>
       {Copied && <p>Link copiado!</p>}
-      <button type="button" data-testid="favorite-btn">Favoritar</button>
+      <FavButton />
     </>
   );
 }

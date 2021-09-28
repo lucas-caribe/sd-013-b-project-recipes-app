@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { fetchCocktailDetails, fetchMealDetails } from '../services/fetchDetails';
-import getIngredientsInArray from '../helpers/getIngredientsInArray';
+import { getIngredientsInArray } from '../helpers/getIngredientsInArray';
 import MealsInProgress from '../components/mealsInProgress';
 import DrinksInProgress from '../components/drinksInProgress';
 

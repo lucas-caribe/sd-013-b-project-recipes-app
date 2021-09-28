@@ -1,37 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
-import { fetchRecomendationThunk } from '../../redux/action';
+import { fetchCocktailArray, fetchMealsArray } from '../../services/fetchItens';
 
 export default function MealsRecomendations() {
   const THE_LAST_ONE = 6;
-  const mealRecomendations = useSelector((state) => state.detailsReducer
-    .recomendations.meals);
-  const drinkRecomendations = useSelector((state) => state.detailsReducer
-    .recomendations.drinks);
   const [state, setState] = useState({ loading: true, Top6: [] });
-  const dispatch = useDispatch();
   const { pathname } = useLocation();
 
-  useEffect(() => {
-    if (pathname.includes('bebidas')) {
-      dispatch(fetchRecomendationThunk('meal'));
-    }
-    if (pathname.includes('comidas')) {
-      dispatch(fetchRecomendationThunk('cocktail'));
-    }
+  const fetchCocktails = useCallback(async () => {
+    const { drinks } = await fetchCocktailArray();
+    const Top6 = drinks.slice(0, THE_LAST_ONE);
+    setState({ loading: false, Top6 });
+  }, []);
+
+  const fetchMeals = useCallback(async () => {
+    const { meals } = await fetchMealsArray();
+    const Top6 = meals.slice(0, THE_LAST_ONE);
+    setState({ loading: false, Top6 });
   }, []);
 
   useEffect(() => {
-    if (mealRecomendations) {
-      const Top6 = mealRecomendations.slice(0, THE_LAST_ONE);
-      setState({ loading: false, Top6 });
+    if (pathname.includes('bebidas')) {
+      fetchMeals();
     }
-    if (drinkRecomendations) {
-      const Top6 = drinkRecomendations.slice(0, THE_LAST_ONE);
-      setState({ loading: false, Top6 });
+    if (pathname.includes('comidas')) {
+      fetchCocktails();
     }
-  }, [mealRecomendations, drinkRecomendations]);
+  }, [fetchCocktails, fetchMeals, pathname]);
 
   function handleRecomendations() {
     if (pathname.includes('bebidas')) {
@@ -42,7 +37,7 @@ export default function MealsRecomendations() {
             className="recomendation-card"
             key={ result.idMeal }
           >
-            <p>{result.strMeal}</p>
+            <p data-testid={ `${index}-recomendation-title` }>{result.strMeal}</p>
             <img
               className="img-recomendation"
               src={ result.strMealThumb }
@@ -60,7 +55,7 @@ export default function MealsRecomendations() {
             className="recomendation-card"
             key={ result.idDrink }
           >
-            <p>{result.strDrink}</p>
+            <p data-testid={ `${index}-recomendation-title` }>{result.strDrink}</p>
             <img
               className="img-recomendation"
               src={ result.strDrinkThumb }
@@ -74,7 +69,7 @@ export default function MealsRecomendations() {
 
   return (
     <div className="recomendation-carousel">
-      { state.loading || handleRecomendations() }
+      { handleRecomendations()}
     </div>
   );
 }
