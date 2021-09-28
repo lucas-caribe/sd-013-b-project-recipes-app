@@ -29,7 +29,7 @@ function FavoriteRecipeCards() {
 
   return (
     <div>
-      { favoriteRecipesFromStorage.filter((recipe) => (
+      { favoriteRecipesFromStorage ? favoriteRecipesFromStorage.filter((recipe) => (
         recipe.type !== filteredRecipes))
         .map((recipe, index) => (
           <div key={ recipe.id }>
@@ -64,7 +64,7 @@ function FavoriteRecipeCards() {
               btnFunction={ () => handleFavoriteButton(recipe) }
             />
           </div>
-        )) }
+        )) : <p>Loading...</p>}
     </div>
   );
 }

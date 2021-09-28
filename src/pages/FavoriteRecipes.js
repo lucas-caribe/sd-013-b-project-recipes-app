@@ -16,7 +16,7 @@ function FavoriteRecipes() {
       setShowHeader(true);
       setShowSearchHeaderIcon(false);
       setShowFooter(false);
-      setTitleName('Receitas Feitas');
+      setTitleName('Receitas Favoritas');
       setFilteredRecipes('');
     }
     handleHeader();
