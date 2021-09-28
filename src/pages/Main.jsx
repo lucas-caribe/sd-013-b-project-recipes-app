@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 import contextCreat from '../context/contextCreate';
-import SearchBar from '../components/SearchBar';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import ButtonComponent from '../components/ButtonComponent';
@@ -12,8 +11,7 @@ const URL_DRINKS = 'https://www.thecocktaildb.com/api/json/v1/1/';
 const maxTwelve = 12;
 
 export default function Main() {
-  const history = useHistory();
-  const { mapDrink, mapFood } = useContext(contextCreat);
+  const { mapDrink, mapFood, toggleSearch } = useContext(contextCreat);
   const [noFilterDrinkList, setNoFilterDrinkList] = useState();
   const [noFilterMealsList, setNoFilterMealsList] = useState();
   const [categoryFilter, setCategoryFilter] = useState('');
@@ -70,9 +68,7 @@ export default function Main() {
 
   function pathChange() {
     if (pathname === '/comidas') {
-      return recipeCards(
-        mealsList, 'comidas',
-      );
+      return recipeCards(mealsList, 'comidas');
     }
     return recipeCards(drinkList, 'drinks');
   }
@@ -83,22 +79,24 @@ export default function Main() {
     setCategoryFilter('');
   }
 
+  function renderDefaultRecipes() {
+    return loadingItems ? 'Loading...'
+      : (
+        <div className="cardDisplay">
+          <ButtonComponent
+            handleClick={ handleClick }
+            resetAll={ resetAll }
+          />
+          {pathChange()}
+        </div>);
+  }
+
   return (
     <div>
       <h2>Main</h2>
       <Header />
-      <SearchBar history={ history } />
-      { loadingItems ? 'Loading...'
-        : (
-          <div className="cardDisplay">
-            <ButtonComponent
-              handleClick={ handleClick }
-              resetAll={ resetAll }
-            />
-            {pathChange()}
-            <Footer />
-          </div>)}
-      
+      {toggleSearch && renderDefaultRecipes()}
+      <Footer />
     </div>
   );
 }

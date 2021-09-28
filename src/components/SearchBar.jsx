@@ -10,7 +10,7 @@ const ERROR_MESSAGE_CHARACTER = 'Sua busca deve conter somente 1 (um) caracter';
 const ERROR_MESSAGE = 'Sinto muito, não encontramos nenhuma receita para esses filtros.';
 
 export default function SearchBar({ history }) {
-  const { mapDrink, mapFood } = useContext(contextCreate);
+  const { mapDrink, mapFood, setToggleSearch, toggleSearch } = useContext(contextCreate);
   const [searchValue, setSearchText] = useState('');
   const [radioSelect, setRadioSelect] = useState('');
   const [showResult, setShowResult] = useState({
@@ -38,7 +38,7 @@ export default function SearchBar({ history }) {
   }
 
   function lengthMeals(result, typeResult) {
-    if (!result) return global.alert(ERROR_MESSAGE);
+    if (!result || result.length === 0) return global.alert(ERROR_MESSAGE);
     if (result.length === 1) {
       if (typeResult === 'meals') {
         const idMeal = result[0];
@@ -56,6 +56,7 @@ export default function SearchBar({ history }) {
   }
 
   async function handleClick() {
+    setToggleSearch(!toggleSearch);
     if (radioSelect === 'search.php?f=') {
       if (pathname.includes('/comidas')) {
         return checkLength(URL_FOODS);
