@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Footer from '../components/Footer/index';
 import Header from '../components/Header';
 import Button from '../components/Button/index';
 import DoneRecipeCard from '../components/DoneRecipeCard/index';
@@ -32,7 +31,6 @@ const ReceitasFeitas = () => {
         doneRecipes={ doneRecipes }
         filter={ filter }
       />
-      <Footer />
     </>
   );
 };
