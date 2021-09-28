@@ -1,4 +1,9 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
 
 const mealsInitialState = {
@@ -19,6 +24,7 @@ export const RecipesProvider = ({ children }) => {
   const [meals, setMeals] = useState(mealsInitialState);
   const [cocktails, setCocktails] = useState(cocktailsInitialState);
   const [finishedRecipes, setFinishedRecipes] = useState([]);
+  const [ingredientsList, setIngredientsList] = useState([]);
 
   const setMealsList = (mealsList) => {
     setMeals({
@@ -45,11 +51,35 @@ export const RecipesProvider = ({ children }) => {
     }
   }, []);
 
+  const fecthIngredients = useCallback(async (type) => {
+    const MAX_INGREDIENTS = 12;
+
+    if (type === 'comidas') {
+      const { meals: ingredients } = await fetch(
+        'https://www.themealdb.com/api/json/v1/1/list.php?i=list',
+      ).then((response) => response.json());
+      const slice = ingredients.slice(0, MAX_INGREDIENTS);
+      setIngredientsList(slice);
+      return;
+    }
+
+    if (type === 'bebidas') {
+      console.log('bebidas');
+      const { drinks: ingredients } = await fetch(
+        'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list',
+      ).then((response) => response.json());
+      const slice = ingredients.slice(0, MAX_INGREDIENTS);
+      setIngredientsList(slice);
+    }
+  }, []);
+
   const context = {
     getRandomRecipe,
     setMealsList,
     setCocktailsList,
     setFinishedRecipes,
+    fecthIngredients,
+    ingredientsList,
     finishedRecipes,
     meals,
     cocktails,

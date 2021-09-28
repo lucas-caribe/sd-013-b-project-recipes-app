@@ -58,7 +58,7 @@ export const DetailsProvider = ({ children }) => {
         drink,
       });
     }
-  }, []);
+  }, [item]);
 
   const fetchRecommendations = useCallback(async (pathname) => {
     if (pathname.includes('comidas')) {

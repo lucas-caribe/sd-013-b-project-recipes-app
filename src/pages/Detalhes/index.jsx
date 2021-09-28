@@ -30,7 +30,7 @@ function Detalhes({ location: { pathname }, history }) {
     fetchRecipe(pathname);
 
     return setIsCopied(false);
-  }, [pathname]);
+  }, [fetchRecipe, fetchRecommendations, pathname]);
 
   const handleCopy = (bool) => {
     setIsCopied(bool);
