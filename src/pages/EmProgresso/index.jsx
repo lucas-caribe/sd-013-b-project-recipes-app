@@ -9,12 +9,16 @@ import { useDetails } from '../../context/DetailsContext';
 import blackHeart from '../../images/blackHeartIcon.svg';
 import whiteHeart from '../../images/whiteHeartIcon.svg';
 import shareIcon from '../../images/shareIcon.svg';
+import FinishRecipeButton from '../../components/FinishRecipeButton';
+import IngredientCheckbox from '../../components/IngredientCheckbox';
 
 function EmProgresso() {
   const [isCopied, setIsCopied] = useState(false);
+  const [allChecked, setAllChecked] = useState(false);
+  const [ingredientsChecked, setIngredientsChecked] = useState({});
+
   const { pathname } = useLocation();
   const { id } = useParams();
-  const [ingredientsChecked, setIngredientsChecked] = useState({});
 
   const {
     item,
@@ -26,30 +30,13 @@ function EmProgresso() {
     fetchRecipe(pathname, id);
 
     return setIsCopied(false);
-  }, [pathname]);
+  }, [pathname, id, fetchRecipe]);
 
   useEffect(() => {
-    console.log(ingredientsChecked);
     const handleCheck = () => setIngredientsChecked(JSON
       .parse(localStorage.getItem('checkedIngredients')));
     handleCheck();
   }, []);
-
-  const checkIngredient = (target) => {
-    if (!target.checked) {
-      setIngredientsChecked({
-        ...ingredientsChecked,
-        [target.id]: false,
-      });
-      target.parentElement.style.textDecoration = 'none';
-    } else {
-      setIngredientsChecked({
-        ...ingredientsChecked,
-        [target.id]: true,
-      });
-      target.parentElement.style.textDecoration = 'line-through';
-    }
-  };
 
   useEffect(() => {
     localStorage.setItem('checkedIngredients', JSON.stringify({ ...ingredientsChecked }));
@@ -59,24 +46,28 @@ function EmProgresso() {
     setIsCopied(bool);
   };
 
+  // Referência para implementar lógica de checar as checkbox: https://stackoverflow.com/questions/5541387/check-if-all-checkboxes-are-selected
+  const checkAllCheckbox = () => {
+    const allCheckbox = document.querySelectorAll('.ingredient-checkbox');
+    const allCheckboxChecked = document.querySelectorAll('.ingredient-checkbox:checked');
+    if (allCheckboxChecked.length === allCheckbox.length) {
+      setAllChecked(true);
+    } else {
+      setAllChecked(false);
+    }
+  };
+
   const renderIngredients = () => (
     <form>
       { ingredients.map((ingredient, index) => (
-        <div key={ index } data-testid={ `${index}-ingredient-step` }>
-          <label
-            htmlFor={ `${index}-ingredient-step` }
-          >
-            <input
-              id={ `${index}-ingredient-step` }
-              type="checkbox"
-              name="ingredients"
-              checked={ ingredientsChecked
-                ? (/true/i).test(ingredientsChecked[`${index}-ingredient-step`]) : false }
-              onChange={ (e) => checkIngredient(e.target) }
-            />
-            {ingredient}
-          </label>
-        </div>
+        <IngredientCheckbox
+          key={ index }
+          ingredient={ ingredient }
+          index={ index }
+          ingredientsChecked={ ingredientsChecked }
+          setIngredientsChecked={ setIngredientsChecked }
+          checkAllCheckbox={ checkAllCheckbox }
+        />
       ))}
     </form>
   );
@@ -137,7 +128,7 @@ function EmProgresso() {
           title={ item[type][0][`str${property}`] }
           frameBorder="0"
         />}
-        <button type="button" data-testid="finish-recipe-btn">Finalizar Receita</button>
+        <FinishRecipeButton enableBtn={ !allChecked } />
       </main>
     );
   };
