@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
 import Recomendations from './Recomendations';
 import { fetchDetailsThunk } from '../../redux/action';
 import ButtonsFavoriteAndShare from '../buttonsFavoriteAndShare';

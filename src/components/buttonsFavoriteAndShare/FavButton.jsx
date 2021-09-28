@@ -47,7 +47,15 @@ export default function FavButton() {
       const isFav = storage.find(({ id }) => id === thisRecipe.id);
       if (isFav) setFav(blackHeartIcon);
     }
-  }, [detailsResult]);
+  }, [detailsResult, storage]);
+
+  useEffect(() => {
+    if (storage) {
+      const thisRecipe = handleType();
+      const isFav = storage.find(({ id }) => id !== thisRecipe.id);
+      if (isFav) setFav(whiteHeartIcon);
+    }
+  }, []);
 
   useEffect(() => {
     if (fav === blackHeartIcon && storage) {
@@ -69,7 +77,6 @@ export default function FavButton() {
   }, [fav]);
 
   function handleClick() {
-    console.log(storage);
     if (fav === whiteHeartIcon) return setFav(blackHeartIcon);
     if (fav === blackHeartIcon) return setFav(whiteHeartIcon);
   }
@@ -79,7 +86,7 @@ export default function FavButton() {
       type="image"
       alt="fav-btn"
       data-testid="favorite-btn"
-      src={ fav || whiteHeartIcon }
+      src={ fav }
       onClick={ handleClick }
     />
   );
