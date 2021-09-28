@@ -7,18 +7,18 @@ export default function Explore() {
     <div>
       <Header />
       <div>
-        <button type="button" data-testid="explore-food">
-          <Link to="/explorar/comidas">
+        <Link to="/explorar/comidas">
+          <button type="button" data-testid="explore-food">
             Explore Comidas
-          </Link>
-        </button>
+          </button>
+        </Link>
       </div>
       <div>
-        <button type="button" data-testid="explore-drinks">
-          <Link to="/explorar/bebidas">
+        <Link to="/explorar/bebidas">
+          <button type="button" data-testid="explore-drinks">
             Explore Bebidas
-          </Link>
-        </button>
+          </button>
+        </Link>
       </div>
       Footer aqui!!!
     </div>
