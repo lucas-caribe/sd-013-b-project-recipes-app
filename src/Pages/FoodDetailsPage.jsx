@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import copy from 'clipboard-copy';
 import foodContext from '../context/FoodContext';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -13,6 +14,7 @@ export default function FoodDetailsPage() {
   const { foodState } = useContext(foodContext);
   const [mealDetails, setMealDetails] = useState();
   const [suggestions, setSuggestions] = useState();
+  const [hidden, setHidden] = useState(false);
   const url = window.location.href;
   const urlSlicePoint = 30;
   const identifier = url.slice(urlSlicePoint);
@@ -26,6 +28,11 @@ export default function FoodDetailsPage() {
   async function getSuggestions() {
     const answer = await suggestionsAPI();
     return answer;
+  }
+
+  function handleShare() {
+    copy(url);
+    setHidden(true);
   }
 
   useEffect(() => {
@@ -106,7 +113,7 @@ export default function FoodDetailsPage() {
         </div> */}
         <DrinksSuggestions drinks={ drinks } />
         {/* {console.log(drinks)} */}
-        <button data-testid="share-btn" type="button">
+        <button data-testid="share-btn" type="button" onClick={ handleShare }>
           <img
             src={ shareIcon }
             alt="share-button"
@@ -126,6 +133,7 @@ export default function FoodDetailsPage() {
         >
           Continuar Receita
         </button>
+        {hidden ? <span>Link copiado!</span> : null}
       </div>
     );
   }
