@@ -30,9 +30,6 @@ function Provider({ children }) {
       .setItem(LOCAL_STORAGE_KEY, JSON.stringify(startedRecipes));
   }
 
-  console.log('ls', localState);
-  console.log('ctx', startedRecipes);
-
   const contextValue = { startedRecipes, setStartedRecipes };
 
   return (
