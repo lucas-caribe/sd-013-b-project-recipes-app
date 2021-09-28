@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { fetchIngrediente, fetchName,
   fetchPrimeiraLetra, getMealCategoriesList,
   getMealCategoryFilter } from '../services/fetchRadioComidas';
@@ -10,8 +12,8 @@ import Category from '../components/Category';
 
 const QUANTIDADE_RECEITAS = 12;
 
-function Comidas() {
-  const [radioSelecionado, setRadioSelecionado] = useState('');
+function Comidas({ inputTextInitialValue, filterTypeInitialValue }) {
+  const [radioSelecionado, setRadioSelecionado] = useState(filterTypeInitialValue);
   const [resultFetch, setResultFetch] = useState([]);
   const { push } = useHistory();
   const [categoryList, setCategoryList] = useState([]);
@@ -19,11 +21,12 @@ function Comidas() {
 
   const componentLoad = async () => {
     setCategoryList(await getMealCategoriesList());
-    setResultFetch(await fetchName(''));
+    setResultFetch(await fetchName(inputTextInitialValue));
   };
 
   useEffect(() => {
     componentLoad();
+    console.log('a');
   }, []);
 
   const selectCategoryFilter = async (category) => {
@@ -90,4 +93,14 @@ function Comidas() {
   } return enviarAlerta();
 }
 
-export default Comidas;
+Comidas.propTypes = {
+  inputTextInitialValue: PropTypes.string.isRequired,
+  filterTypeInitialValue: PropTypes.string.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  inputTextInitialValue: state.reducerFilter.text,
+  filterTypeInitialValue: state.reducerFilter.type,
+});
+
+export default connect(mapStateToProps)(Comidas);
