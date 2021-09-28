@@ -8,8 +8,8 @@ import Footer from '../components/Footer';
 import { foodRequest } from '../services/data';
 import CardList from '../components/CardList';
 import SearchBar from '../components/SearchBar';
-import { setLoadFoods as setLoadFoodsAction,
-  setLoadDrinks as setLoadDrinksAction } from '../Redux/actions';
+import handleSubmitFoods from '../helper/helperFunctionsFoods';
+import { setLoadFoods as setLoadFoodsAction } from '../Redux/actions';
 
 function Comidas({ search, radioButton, searchInput, setLoadFoods }) {
   const { location: { pathname } } = useHistory();
@@ -31,40 +31,46 @@ function Comidas({ search, radioButton, searchInput, setLoadFoods }) {
   https://blog.rocketseat.com.br/substituindo-a-instrucao-switch-por-object-literal/
   */
 
-  async function handleSubmitButton() {
-    const requestApi = {
-      '/comidas': {
-        ingredient: async (input) => {
-          const { meals } = await foodRequest(`filter.php?i=${input}`);
-          setLoadFoods(meals);
-        },
-        name: async (input) => {
-          const { meals } = await foodRequest(`search.php?s=${input}`);
-          setLoadFoods(meals);
-        },
-        'first-letter': async (input) => {
-          if (input.length === 1) {
-            const { meals } = foodRequest(`search.php?f=${input}`);
-            setLoadFoods(await meals);
-          } else {
-            global.alert('Sua busca deve conter somente 1 (um) caracter');
-            console.log('2 letras');
-          }
-        },
-      },
-    };
-    requestApi[pathname][radioButton](searchInput);
-  }
+  // async function handleSubmitButton() {
+  //   const requestApi = {
+  //     '/comidas': {
+  //       ingredient: async (input) => {
+  //         const { meals } = await foodRequest(`filter.php?i=${input}`);
+  //         setLoadFoods(meals);
+  //       },
+  //       name: async (input) => {
+  //         const { meals } = await foodRequest(`search.php?s=${input}`);
+  //         setLoadFoods(meals);
+  //       },
+  //       'first-letter': async (input) => {
+  //         if (input.length === 1) {
+  //           const { meals } = foodRequest(`search.php?f=${input}`);
+  //           setLoadFoods(await meals);
+  //         } else {
+  //           global.alert('Sua busca deve conter somente 1 (um) caracter');
+  //           console.log('2 letras');
+  //         }
+  //       },
+  //     },
+  //   };
+  //   requestApi[pathname][radioButton](searchInput);
+  // }
   // if (setLoadFoods === []) {
   //   return <p>Loading...</p>;
   // }
+  // const setFoods = handleSubmitFoods(
+  //   searchInput, setLoadFoods, radioButton, history,
+  // );
 
   return (
     <div>
       <Header setTitle="Comidas" />
 
-      {search === true
-        ? <SearchBar handleSubmitButton={ handleSubmitButton } />
+      {search === true ? <SearchBar
+        handleSubmitButton={ () => handleSubmitFoods(
+          searchInput, setLoadFoods, radioButton,
+        ) }
+      />
         : null}
       <CardList />
 
@@ -76,8 +82,8 @@ function Comidas({ search, radioButton, searchInput, setLoadFoods }) {
 Comidas.propTypes = {
   radioButton: PropTypes.string.isRequired,
   search: PropTypes.bool.isRequired,
-  searchInput: PropTypes.string.isRequired,
   setLoadFoods: PropTypes.func.isRequired,
+  searchInput: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -90,7 +96,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setLoadFoods: (payload) => dispatch(setLoadFoodsAction(payload)),
-  setLoadDrinks: (payload) => dispatch(setLoadDrinksAction(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Comidas);

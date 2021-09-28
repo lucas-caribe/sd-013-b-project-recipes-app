@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import ButtonFavorite from '../components/ButtonFavorite';
 // import Header from '../components/Header';
+import ButtonShare from '../components/ButtonShare';
 
 const STATE_FAVORITE = {
   buttonFilter: null,
@@ -62,6 +63,7 @@ function FavoritesRecipes() {
           </button>
           <p data-testid={ `${index}-horizontal-top-text` }>{`${area} - ${category}`}</p>
           <ButtonFavorite id={ id } index={ index } />
+          <ButtonShare index={ index } />
         </div>
       );
     }
@@ -86,6 +88,7 @@ function FavoritesRecipes() {
         <p>{ category }</p>
         <p data-testid={ `${index}-horizontal-top-text` }>{ alcoholicOrNot }</p>
         <ButtonFavorite id={ id } index={ index } />
+        <ButtonShare index={ index } />
       </div>
     );
   }
