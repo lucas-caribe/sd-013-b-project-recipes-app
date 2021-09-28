@@ -23,3 +23,15 @@ export const getMealdCategory = async () => {
   const data = await response.json();
   return data.meals;
 };
+
+export const getMealAreas = async (option) => {
+  const response = await fetch(`${URL_BASE_API}/list.php?a=${option}`);
+  const data = await response.json();
+  return data.meals;
+};
+
+export const getMealByArea = async (option) => {
+  const response = await fetch(`${URL_BASE_API}/filter.php?a=${option}`);
+  const data = await response.json();
+  return data.meals;
+};
