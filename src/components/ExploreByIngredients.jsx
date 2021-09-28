@@ -7,10 +7,15 @@ import { setFilterTypeAndText } from '../redux/actions';
 function ExploreByIngredients({ ingredients, type, SetFilterByIngrdients }) {
   const history = useHistory();
 
+  const strIngredient = {
+    meal: 'strIngredient',
+    drink: 'strIngredient1',
+  };
+
   const checkType = (ingredient) => {
     const types = {
-      meal: `https://www.themealdb.com/images/ingredients/${ingredient}-Medium.png`,
-      drink: `https://www.thecocktaildb.com/images/ingredients/${ingredient}-Medium.png`,
+      meal: `https://www.themealdb.com/images/ingredients/${ingredient}-Small.png`,
+      drink: `https://www.thecocktaildb.com/images/ingredients/${ingredient}-Small.png`,
     };
     return types[type];
   };
@@ -26,19 +31,23 @@ function ExploreByIngredients({ ingredients, type, SetFilterByIngrdients }) {
 
   return (
     <>
-      {ingredients.map(({ strIngredient }, index) => (
+      {ingredients.map((ingredient, index) => (
         <button
           type="button"
           key={ index }
           data-testid={ `${index}-ingredient-card` }
-          onClick={ () => handleClick(strIngredient) }
+          onClick={ () => handleClick(ingredient[strIngredient[type]]) }
         >
           <img
-            src={ checkType(strIngredient) }
+            src={ checkType(ingredient[strIngredient[type]]) }
             alt="Ingredient Icone"
-            data-testid={ `${index}-ingredient-img` }
+            data-testid={ `${index}-card-img` }
           />
-          <span data-testid={ `${index}-ingredient-name` }>{ strIngredient }</span>
+          <span
+            data-testid={ `${index}-card-name` }
+          >
+            { ingredient[strIngredient[type]] }
+          </span>
         </button>
       ))}
     </>
@@ -46,7 +55,7 @@ function ExploreByIngredients({ ingredients, type, SetFilterByIngrdients }) {
 }
 
 ExploreByIngredients.propTypes = {
-  ingredients: PropTypes.objectOf(PropTypes.string).isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.object).isRequired,
   type: PropTypes.string.isRequired,
   SetFilterByIngrdients: PropTypes.func.isRequired,
 };

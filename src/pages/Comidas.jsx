@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -12,22 +12,29 @@ import Category from '../components/Category';
 
 const QUANTIDADE_RECEITAS = 12;
 
-function Comidas({ inputTextInitialValue, filterTypeInitialValue }) {
-  const [radioSelecionado, setRadioSelecionado] = useState(filterTypeInitialValue);
+function Comidas({ inputTextInitialValue }) {
+  const [radioSelecionado, setRadioSelecionado] = useState('');
   const [resultFetch, setResultFetch] = useState([]);
   const { push } = useHistory();
   const [categoryList, setCategoryList] = useState([]);
   const [alreadySelectedCategory, setAlreadySelectedCategory] = useState('');
 
-  const componentLoad = async () => {
+  const componentLoad = useCallback(async () => {
     setCategoryList(await getMealCategoriesList());
     setResultFetch(await fetchName(inputTextInitialValue));
-  };
+  }, [inputTextInitialValue]);
+
+  const getByIngredient = useCallback(async () => {
+    setResultFetch(await fetchIngrediente(inputTextInitialValue));
+  }, [inputTextInitialValue]);
 
   useEffect(() => {
-    componentLoad();
-    console.log('a');
-  }, []);
+    if (inputTextInitialValue.length > 0) {
+      getByIngredient();
+    } else {
+      componentLoad();
+    }
+  }, [componentLoad, getByIngredient, inputTextInitialValue]);
 
   const selectCategoryFilter = async (category) => {
     if (alreadySelectedCategory === category) {
@@ -64,7 +71,7 @@ function Comidas({ inputTextInitialValue, filterTypeInitialValue }) {
   function enviarAlerta() {
     return (
       <main className="main-content">
-        <Header pageTitle="Comida" />
+        <Header pageTitle="Bebida" />
         {global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.')}
         <Footer />
       </main>
@@ -95,12 +102,10 @@ function Comidas({ inputTextInitialValue, filterTypeInitialValue }) {
 
 Comidas.propTypes = {
   inputTextInitialValue: PropTypes.string.isRequired,
-  filterTypeInitialValue: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   inputTextInitialValue: state.reducerFilter.text,
-  filterTypeInitialValue: state.reducerFilter.type,
 });
 
 export default connect(mapStateToProps)(Comidas);

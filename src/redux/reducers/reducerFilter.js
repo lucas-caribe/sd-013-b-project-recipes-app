@@ -1,5 +1,4 @@
 const INITIAL_STATE = {
-  type: '',
   text: '',
 };
 
@@ -8,7 +7,6 @@ const reducerFilter = (state = INITIAL_STATE, action) => {
   case 'SET_FILTER_TYPE_AND_TEXT':
     return {
       ...state,
-      type: action.payload.type,
       text: action.payload.text,
     };
   default:

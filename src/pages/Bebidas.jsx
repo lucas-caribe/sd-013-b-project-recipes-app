@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
+import { connect } from 'react-redux';
 import { fetchIngredienteBeb, fetchNameBeb,
   fetchPrimeiraLetraBeb, getDrinksCategoriesList,
   getDrinksCategoryFilter } from '../services/fetchRadioBebidas';
@@ -10,21 +12,29 @@ import Category from '../components/Category';
 
 const QUANTIDADE_RECEITAS = 12;
 
-function Bebidas() {
+function Bebidas({ inputTextInitialValue }) {
   const [radioSelecionado, setRadioSelecionado] = useState('');
   const [resultFetch, setResultFetch] = useState([]);
   const { push } = useHistory();
   const [categoryList, setCategoryList] = useState([]);
   const [alreadySelectedCategory, setAlreadySelectedCategory] = useState('');
 
-  const componentLoad = async () => {
+  const componentLoad = useCallback(async () => {
     setCategoryList(await getDrinksCategoriesList());
-    setResultFetch(await fetchNameBeb(''));
-  };
+    setResultFetch(await fetchNameBeb(inputTextInitialValue));
+  }, [inputTextInitialValue]);
+
+  const getByIngredient = useCallback(async () => {
+    setResultFetch(await fetchIngredienteBeb(inputTextInitialValue));
+  }, [inputTextInitialValue]);
 
   useEffect(() => {
-    componentLoad();
-  }, []);
+    if (inputTextInitialValue.length > 0) {
+      getByIngredient();
+    } else {
+      componentLoad();
+    }
+  }, [componentLoad, getByIngredient, inputTextInitialValue]);
 
   const selectCategoryFilter = async (category) => {
     if (alreadySelectedCategory === category) {
@@ -89,4 +99,12 @@ function Bebidas() {
   } return enviarAlerta();
 }
 
-export default Bebidas;
+Bebidas.propTypes = {
+  inputTextInitialValue: PropTypes.string.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  inputTextInitialValue: state.reducerFilter.text,
+});
+
+export default connect(mapStateToProps)(Bebidas);
