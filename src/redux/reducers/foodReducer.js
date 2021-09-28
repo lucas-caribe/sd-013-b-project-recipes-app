@@ -3,6 +3,7 @@ import { allActions } from '../actions';
 const initialState = {
   mealsOrDrinks: [],
   startedRecipes: [],
+  favoriteRecipes: [],
 };
 
 const foodReducer = (state = initialState, { type, payload }) => {
@@ -13,7 +14,6 @@ const foodReducer = (state = initialState, { type, payload }) => {
       mealsOrDrinks: payload,
     };
   case allActions.ADD_STARTED_RECIPES:
-    console.log(payload);
     return {
       ...state,
       startedRecipes: [...state.startedRecipes, payload],
