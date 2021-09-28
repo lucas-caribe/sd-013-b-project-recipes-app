@@ -1,11 +1,16 @@
 import React, { useContext, useEffect } from 'react';
 import { useLocation } from 'react-router';
+import { useSelector } from 'react-redux';
 
 import RecipesContext from '../../context/Recipes/RecipesContext';
 
 import RecipeCard from '../RecipeCard';
+import Footer from '../Footer';
+import RenderFilteredRecipes from '../RenderFilteredRecipes';
+import Header from '../Header';
 
 function RecipesList() {
+  const mealsOrDrinks = useSelector(({ foods }) => foods.mealsOrDrinks);
   const {
     fetchRecipesCategory,
     handleClickCategory,
@@ -14,50 +19,63 @@ function RecipesList() {
     recipes,
   } = useContext(RecipesContext);
   const location = useLocation();
-  const type = location.pathname === '/comidas' ? 'Meal' : 'Drink';
+  const type = location.pathname.includes('comidas') ? 'Meal' : 'Drink';
 
   useEffect(() => {
-    const recipeType = location.pathname === '/comidas' ? 'meals' : 'drinks';
+    const recipeType = type === 'Meal' ? 'meals' : 'drinks';
     fetchRecipesCategory(recipeType);
-  }, [fetchRecipesCategory, location]);
+  }, [fetchRecipesCategory, type]);
 
   useEffect(() => {
-    const recipeType = location.pathname === '/comidas' ? 'meals' : 'drinks';
+    const recipeType = type === 'Meal' ? 'meals' : 'drinks';
     fetchRecipesList(recipeType);
-  }, [fetchRecipesList, location]);
+  }, [fetchRecipesList, type]);
 
   if (!(recipes.length && categories.length)) return <div />;
 
+  if (Object.keys(mealsOrDrinks).length > 0) {
+    return (
+      <RenderFilteredRecipes />
+    );
+  }
+
   return (
-    <div>
+    <>
+      <Header
+        title={ type === 'Meal' ? 'Comidas' : 'Bebidas' }
+        displaySearchBtn
+      />
       <div>
-        <button
-          type="button"
-          onClick={ handleClickCategory }
-          data-testid="All-category-filter"
-        >
-          All
-        </button>
-        { categories.map((category) => (
+        <div>
           <button
             type="button"
-            key={ category }
             onClick={ handleClickCategory }
-            data-testid={ `${category}-category-filter` }
+            data-testid="All-category-filter"
           >
-            {category}
+            All
           </button>
+          { categories.map((category) => (
+            <button
+              type="button"
+              key={ category }
+              onClick={ handleClickCategory }
+              data-testid={ `${category}-category-filter` }
+            >
+              {category}
+            </button>
+          )) }
+        </div>
+        { recipes.map((recipe, index) => (
+          <RecipeCard
+            key={ recipe[`id${type}`] }
+            recipe={ recipe }
+            index={ index }
+            type={ type }
+          />
         )) }
       </div>
-      { recipes.map((recipe, index) => (
-        <RecipeCard
-          key={ recipe[`id${type}`] }
-          recipe={ recipe }
-          index={ index }
-          type={ type }
-        />
-      )) }
-    </div>
+      <Footer />
+    </>
   );
 }
 

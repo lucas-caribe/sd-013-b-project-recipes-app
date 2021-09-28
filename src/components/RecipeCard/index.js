@@ -9,8 +9,10 @@ function RecipeCard({ recipe, index, type }) {
   const src = `str${type}Thumb`;
   const pathname = type === 'Meal' ? '/comidas' : '/bebidas';
   const id = `id${type}`;
+
   return (
     <Link
+      className="card"
       to={ `${pathname}/${recipe[id]}` }
       data-testid={ `${index}-recipe-card` }
     >
