@@ -88,7 +88,6 @@ const toggleFavorite = (item) => {
 };
 
 const removeInProgress = (items) => {
-  // console.log(items);
   const id = Object.keys(items).some((key) => key === 'idMeal')
     ? items.idMeal : items.idDrink;
   const type = Object.keys(items).some((key) => key === 'idMeal') ? 'meals' : 'cocktails';
