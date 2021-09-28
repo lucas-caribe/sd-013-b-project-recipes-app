@@ -10,6 +10,7 @@ import Profile from './pages/Profile';
 import Recipes from './pages/Recipes';
 import Loading from './components/Loading';
 import ContextProvider from './context/ContextProvider';
+import RecipesDone from './pages/RecipesDone';
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
         <Route path="/bebidas/:receitaId" component={ Details } />
         <Route path="/comidas/:receitaId/in-progress" component={ Recipes } />
         <Route path="/bebidas/:receitaId/in-progress" component={ Recipes } />
-        <Route exact path="/receitas-feitas" component={ Recipes } />
+        <Route exact path="/receitas-feitas" component={ RecipesDone } />
         <Route exact path="/receitas-favoritas" component={ Recipes } />
         <Route exact path="/explorar" component={ Explore } />
         <Route exact path="/explorar/comidas" component={ Explore } />
