@@ -1,28 +1,49 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
+import copy from 'clipboard-copy';
 import { idDrinkAPI } from '../services/drinksAPI';
+import { suggestionsAPI } from '../services/foodAPI';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import MealsSuggestions from '../components/MealsSuggestions';
+import '../App.css';
 
 function DrinkDetailsPage() {
   const [drinkDetails, setDrinkDetails] = useState();
+  const [meals, setMeals] = useState();
+  const [hidden, setHidden] = useState(false);
+  // const [btnStatus, setBtnStatus] = useState('Iniciar Receita');
   const url = window.location.href;
   const urlSlicePoint = 30;
   const identifier = url.slice(urlSlicePoint);
+  const history = useHistory();
 
   async function getDrink(id) {
     const answer = await idDrinkAPI(id);
     return answer;
   }
 
+  async function getSuggestions() {
+    const answer = await suggestionsAPI();
+    return answer;
+  }
+
+  function handleShare() {
+    copy(url);
+    setHidden(true);
+  }
+
   useEffect(() => {
     getDrink(identifier)
       .then((drinkDet) => setDrinkDetails(drinkDet));
     // console.log(identifier);
+    getSuggestions()
+      .then((suggestions) => setMeals(suggestions));
   }, []);
 
-  if (drinkDetails) {
+  if (drinkDetails && meals) {
     const { strDrink,
-      strDrinkThumb, strAlcoholic, strInstructions } = drinkDetails.drinks[0];
+      strDrinkThumb, strAlcoholic, strInstructions, idDrink } = drinkDetails.drinks[0];
     // console.log(drinkDetails.drinks[0]);
 
     const ingredients = [];
@@ -40,7 +61,7 @@ function DrinkDetailsPage() {
         <p data-testid="recipe-title">{ strDrink }</p>
         <img data-testid="recipe-photo" src={ strDrinkThumb } alt="foto" />
         <p data-testid="recipe-category">{strAlcoholic}</p>
-        {console.log(ingredients, measures)}
+        {/* {console.log(ingredients, measures)} */}
         <p data-testid="instructions">{strInstructions}</p>
         <ul>
           {ingredients.map((ingredient, index) => {
@@ -61,8 +82,8 @@ function DrinkDetailsPage() {
         </ul>
         {/*
         <iframe title="How To" data-testid="video" src={ `https://www.youtube.com/embed${videoId}` } /> */}
-        <div data-testid={ `${0}-recomendation-card` }>Recomendacoes???</div>
-        <button data-testid="share-btn" type="button">
+        <MealsSuggestions meals={ meals } />
+        <button data-testid="share-btn" type="button" onClick={ handleShare }>
           <img
             src={ shareIcon }
             alt="share-button"
@@ -74,7 +95,16 @@ function DrinkDetailsPage() {
             alt="add-to-fav-button"
           />
         </button>
-        <button type="button" data-testid="start-recipe-btn">Iniciar a receita</button>
+        <button
+          className="start-recipe-btn"
+          type="button"
+          data-testid="start-recipe-btn"
+          onClick={ () => history.push(`/bebidas/${idDrink}/in-progress`) }
+        >
+          {/* {btnStatus} */}
+          Continuar Receita
+        </button>
+        {hidden ? <span>Link copiado!</span> : null}
       </div>
     );
   } return <span>Loading....</span>;
