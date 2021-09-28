@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { addStartedRecipes } from '../../redux/actions';
+
 const copy = require('clipboard-copy');
 
 export const handleShareBtn = (pathname) => {
@@ -33,7 +35,17 @@ export const renderRecomendationList = (card, index, type) => (
   </div>
 );
 
-export const handleStartRecipe = (history) => {
+export const handleStartRecipe = (history, url, recipe, dispatch) => {
   const { pathname } = history.location;
+  const arrUrl = url.split('/');
+  const startedRecipe = {
+    id: Number(arrUrl[arrUrl.length - 1]),
+    type: arrUrl[arrUrl.length - 2],
+    recipe,
+    url,
+    startedRecipe: true,
+  };
+  dispatch(addStartedRecipes(startedRecipe));
+  console.log(startedRecipe);
   history.push(`${pathname}/in-progress`);
 };

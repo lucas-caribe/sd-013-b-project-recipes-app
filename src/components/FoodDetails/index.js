@@ -1,5 +1,6 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import RecipesContext from '../../context/Recipes/RecipesContext';
 
@@ -22,14 +23,30 @@ function FoodDetails() {
     recipesRecommendedList,
     fetchRecipesRecommendedList,
   } = useContext(RecipesContext);
+
+  const [isStarted, setIsStarted] = useState(false);
+
+  const startedRecipes = useSelector(({ foods }) => foods.startedRecipes);
+  const dispatch = useDispatch();
+
   const history = useHistory();
 
   useEffect(() => {
     const [type, id] = history.location.pathname.split('/').splice(1);
     const recipeType = type === 'comidas' ? 'meals' : 'drinks';
+    const recommendedType = type === 'comidas' ? 'drinks' : 'meals';
     fetchRecipeById(recipeType, id);
-    fetchRecipesRecommendedList('drinks');
+    fetchRecipesRecommendedList(recommendedType);
   }, [history, fetchRecipeById, fetchRecipesRecommendedList]);
+
+  useEffect(() => {
+    const [id] = history.location.pathname.split('/').splice(2);
+    if (startedRecipes.length) {
+      startedRecipes
+        .find((recipe) => recipe.id === id && recipe.startedRecipe);
+      setIsStarted(true);
+    }
+  }, [history, startedRecipes]);
 
   const handleFavotiteBtn = ({ target }) => {
     const { src } = target || target.firstElementChild;
@@ -94,9 +111,11 @@ function FoodDetails() {
         type="button"
         data-testid="start-recipe-btn"
         className="start-recipe-btn"
-        onClick={ () => handleStartRecipe(history) }
+        onClick={
+          () => handleStartRecipe(history, window.location.href, recipeDetails, dispatch)
+        }
       >
-        Iniciar receita
+        { isStarted ? 'Iniciar receita' : 'Continuar Receita'}
       </button>
     </div>
   );

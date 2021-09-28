@@ -8,7 +8,7 @@ export const saveFoods = (foods) => ({
   payload: foods,
 });
 
-export const addStartedRecipes = (foods) => ({
-  type: allActions.ADD_FOODS,
-  payload: foods,
+export const addStartedRecipes = (recipe) => ({
+  type: allActions.ADD_STARTED_RECIPES,
+  payload: recipe,
 });
