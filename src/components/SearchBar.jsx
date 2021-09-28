@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import './SearchBar.css';
+import contextCreate from '../context/contextCreate';
 
 const URL_FOODS = 'https://www.themealdb.com/api/json/v1/1/';
 const URL_DRINKS = 'https://www.thecocktaildb.com/api/json/v1/1/';
@@ -8,6 +10,7 @@ const ERROR_MESSAGE_CHARACTER = 'Sua busca deve conter somente 1 (um) caracter';
 const ERROR_MESSAGE = 'Sinto muito, não encontramos nenhuma receita para esses filtros.';
 
 export default function SearchBar({ history }) {
+  const { mapDrink, mapFood, setToggleSearch, toggleSearch } = useContext(contextCreate);
   const [searchValue, setSearchText] = useState('');
   const [radioSelect, setRadioSelect] = useState('');
   const [showResult, setShowResult] = useState({
@@ -27,25 +30,6 @@ export default function SearchBar({ history }) {
     } return global.alert(ERROR_MESSAGE_CHARACTER);
   }
 
-  function mapFood(slicingTwelve) {
-    return slicingTwelve.map((card, index) => (
-      <div key={ index }>
-        <p data-testid={ `${index}-recipe-card` }>{card.strMeal}</p>
-        <img data-testid={ `${index}-card-img` } src={ card.strMealThumb } alt="" />
-        <p data-testid={ `${index}-card-name` }>{card.strMeal}</p>
-      </div>
-    ));
-  }
-  function mapDrink(slicingTwelve) {
-    return slicingTwelve.map((card, index) => (
-      <div key={ index }>
-        <p data-testid={ `${index}-recipe-card` }>{card.strDrink}</p>
-        <img data-testid={ `${index}-card-img` } src={ card.strDrinkThumb } alt="" />
-        <p data-testid={ `${index}-card-name` }>{card.strDrink}</p>
-      </div>
-    ));
-  }
-
   const numberMax = 12;
   function recipeCards({ result }) {
     const slicingTwelve = result.slice(0, numberMax);
@@ -54,7 +38,7 @@ export default function SearchBar({ history }) {
   }
 
   function lengthMeals(result, typeResult) {
-    if (!result) return global.alert(ERROR_MESSAGE);
+    if (!result || result.length === 0) return global.alert(ERROR_MESSAGE);
     if (result.length === 1) {
       if (typeResult === 'meals') {
         const idMeal = result[0];
@@ -72,6 +56,7 @@ export default function SearchBar({ history }) {
   }
 
   async function handleClick() {
+    setToggleSearch(!toggleSearch);
     if (radioSelect === 'search.php?f=') {
       if (pathname.includes('/comidas')) {
         return checkLength(URL_FOODS);
@@ -84,6 +69,7 @@ export default function SearchBar({ history }) {
       .json();
     return lengthMeals(drinks, 'drinks');
   }
+
   return (
     <div>
       <div>
@@ -144,7 +130,9 @@ export default function SearchBar({ history }) {
       >
         Buscar
       </button>
-      { showResult.show.value && recipeCards(showResult.show.resultSearch) }
+      <div className="cardDisplay">
+        { showResult.show.value && recipeCards(showResult.show.resultSearch) }
+      </div>
     </div>
   );
 }
