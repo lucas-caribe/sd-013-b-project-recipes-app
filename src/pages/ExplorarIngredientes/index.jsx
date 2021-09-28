@@ -1,24 +1,27 @@
 import React, { useEffect, useCallback } from 'react';
-import { useParams, Redirect } from 'react-router-dom';
+import { Link, useParams, Redirect } from 'react-router-dom';
 
-import { useRecipes } from '../../context';
+import { useRecipes, useSearch } from '../../context';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
 function ExplorarIngredientes() {
   const { type } = useParams();
   const { ingredientsList, fecthIngredients } = useRecipes();
+  const { handleSearch } = useSearch();
 
   useEffect(() => {
     fecthIngredients(type);
   }, [fecthIngredients, type]);
 
   const renderFoodPage = useCallback(() => ingredientsList
-    .map(({ idIngredient, strIngredient }, index) => (
-      <section
+    .map(({ strIngredient }, index) => (
+      <Link
+        to={ `/${type}` }
         className="ingredient-card"
-        key={ idIngredient }
+        key={ strIngredient }
         data-testid={ `${index}-ingredient-card` }
+        onClick={ () => handleSearch(strIngredient, 'ingredient') }
       >
         <img
           data-testid={ `${index}-card-img` }
@@ -26,15 +29,17 @@ function ExplorarIngredientes() {
           alt=""
         />
         <p data-testid={ `${index}-card-name` }>{ strIngredient }</p>
-      </section>
-    )), [ingredientsList]);
+      </Link>
+    )), [handleSearch, ingredientsList, type]);
 
   const renderDrinksPage = useCallback(() => ingredientsList
     .map(({ strIngredient1 }, index) => (
-      <section
+      <Link
+        to={ `/${type}` }
         className="ingredient-card"
         key={ strIngredient1 }
         data-testid={ `${index}-ingredient-card` }
+        onClick={ () => handleSearch(strIngredient1, 'ingredient') }
       >
         <img
           data-testid={ `${index}-card-img` }
@@ -42,8 +47,8 @@ function ExplorarIngredientes() {
           alt=""
         />
         <p data-testid={ `${index}-card-name` }>{ strIngredient1 }</p>
-      </section>
-    )), [ingredientsList]);
+      </Link>
+    )), [handleSearch, ingredientsList, type]);
 
   if (type !== 'comidas' && type !== 'bebidas') {
     return <Redirect to="/explorar" />;

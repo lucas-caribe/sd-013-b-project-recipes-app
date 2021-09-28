@@ -64,7 +64,6 @@ export const RecipesProvider = ({ children }) => {
     }
 
     if (type === 'bebidas') {
-      console.log('bebidas');
       const { drinks: ingredients } = await fetch(
         'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list',
       ).then((response) => response.json());
