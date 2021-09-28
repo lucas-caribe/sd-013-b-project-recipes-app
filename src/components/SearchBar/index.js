@@ -14,7 +14,6 @@ const SearchBar = ({ option }) => {
     setDrinkIngredientSituation, setFoodIngredientSituation } = useContext(AppContext);
   const history = useHistory();
 
-
   const handleChange = ({ target }) => (target.name === 'searchBar'
     ? setInputSearch(target.value)
     : setInputRadio(target.id));
@@ -64,7 +63,6 @@ const SearchBar = ({ option }) => {
       const { drinks } = await fetchAPI(radioCriteria[radio]);
       checkResult(type, drinks);
     }
-
   };
 
   return (
