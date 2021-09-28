@@ -26,7 +26,7 @@ class Recipes extends Component {
     return undefined;
   }
 
-  renderRecipes(data, api, page, endpoint) {
+  renderRecipes(data, api, page, endpoint, path) {
     this.redirectDetails(api, data);
     const { type } = this.props;
     const limitImgs = 12;
@@ -41,8 +41,10 @@ class Recipes extends Component {
                 ? curr[`str${api}Thumb`]
                 : `${ingredientsURL}${curr[key].split(' ')
                   .join(' ')}-Small.png`;
+                const linkTo = page !== 'ingredient' 
+                  ?  `/${type.toLowerCase()}/${curr[`id${api}`]}` : path;
               return (
-                <Link to={ `/${type.toLowerCase()}/${curr[`id${api}`]}` }>
+                <Link to={ linkTo }>
                   <div key={ index } data-testid={ `${index}-${page}-card` }>
                     <img
                       src={ src }
@@ -81,11 +83,11 @@ class Recipes extends Component {
           : '' }
         {type === 'explore-drinks' && drinks.length
           ? this
-            .renderRecipes(drinks, 'Ingredient1', 'ingredient', 'thecocktaildb')
+            .renderRecipes(drinks, 'Ingredient1', 'ingredient', 'thecocktaildb', '/bebidas')
           : '' }
         {type === 'explore-ingrediente' && data.length
           ? this
-            .renderRecipes(data, 'Ingredient', 'ingredient', 'themealdb')
+            .renderRecipes(data, 'Ingredient', 'ingredient', 'themealdb', '/comidas')
           : '' }
       </div>
     );

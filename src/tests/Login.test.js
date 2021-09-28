@@ -1,41 +1,26 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { cleanup, render } from '@testing-library/react';
-import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import thunk from 'redux-thunk';
-import rootReducer from '../redux/reducers/index';
+import { cleanup } from '@testing-library/react';
 import App from '../App';
 import userEvent from '@testing-library/user-event';
-import renderWithRouter from '../renderWithRouter';
-import Store from '../redux/store';
+import renderWithRouterAndRedux from './Helpers/renderWithRouterAndRedux';
 
-const renderWithRedux = (
-  component,
-  { initialState,
-    Store = createStore(rootReducer,
-      composeWithDevTools(applyMiddleware(thunk)), initialState) } = {},
-) => ({
-  ...render(<Provider store={ Store }>{component}</Provider>),
-  Store,
-});
 
 describe('testing Login page', () => {
   beforeEach(cleanup);
   test('Page contains a title with text `Recipes App`',() => {
-    const { getByRole } = renderWithRedux(<App />);
+    const { getByRole } = renderWithRouterAndRedux(<App />);
     const title = getByRole('heading', { name: 'Recipes App', level: 2});
     expect(title).toBeInTheDocument();
   
   });
   test('Page contains button with text `Entrar`', () => {
-    const { getByRole } = renderWithRedux(<App />);
+    const { getByRole } = renderWithRouterAndRedux(<App />);
     const button = getByRole('button', { name: /entrar/i});
     expect(button).toBeInTheDocument();
   });
 
   test('Login button works only with correct input format infos', () => {
-    const { getByRole, getAllByRole, getByTestId } = renderWithRedux(<App />);
+    const { getByRole, getAllByRole, getByTestId } = renderWithRouterAndRedux(<App />);
     const button = getByRole('button', { name: /entrar/i});
     const emailInput = getAllByRole('textbox')[0];
     const passwordInput = getByTestId('password-input');
@@ -51,10 +36,7 @@ describe('testing Login page', () => {
   });
 
   test('Login redirect user to `/comidas`', () => {
-    const { getByRole, getAllByRole, getByTestId, history } = renderWithRouter(
-      <Provider store={Store}>,
-        <App />,
-      </Provider>);
+    const { getByRole, getAllByRole, getByTestId, history } = renderWithRouterAndRedux(<App />);
 
     const emailInput = getAllByRole('textbox')[0];
     const button = getByRole('button', { name: /entrar/i});
@@ -66,6 +48,6 @@ describe('testing Login page', () => {
     userEvent.click(button);
     
     const { location: { pathname } } = history;
-    // expect(pathname).toBe('/comidas');
+    expect(pathname).toBe('/comidas');
   });
 });

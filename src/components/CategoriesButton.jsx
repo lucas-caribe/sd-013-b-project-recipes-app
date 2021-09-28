@@ -22,8 +22,8 @@ class CategoriesButton extends Component {
 
   async setResponse(category) {
     const requisition = category === 'meals'
-      ? await getFoodApi('list.php?c=list', '')
-      : await getDrinksApi('list.php?c=list', '');
+      ? await getFoodApi('list.php?c=', 'list')
+      : await getDrinksApi('list.php?c=', 'list');
 
     return this.setState({
       response: requisition[category],
