@@ -19,17 +19,17 @@ function RecipesList() {
     recipes,
   } = useContext(RecipesContext);
   const location = useLocation();
-  const type = location.pathname === '/comidas' ? 'Meal' : 'Drink';
+  const type = location.pathname.includes('comidas') ? 'Meal' : 'Drink';
 
   useEffect(() => {
-    const recipeType = location.pathname === '/comidas' ? 'meals' : 'drinks';
+    const recipeType = type === 'Meal' ? 'meals' : 'drinks';
     fetchRecipesCategory(recipeType);
-  }, [fetchRecipesCategory, location]);
+  }, [fetchRecipesCategory, type]);
 
   useEffect(() => {
-    const recipeType = location.pathname === '/comidas' ? 'meals' : 'drinks';
+    const recipeType = type === 'Meal' ? 'meals' : 'drinks';
     fetchRecipesList(recipeType);
-  }, [fetchRecipesList, location]);
+  }, [fetchRecipesList, type]);
 
   if (!(recipes.length && categories.length)) return <div />;
 
@@ -42,7 +42,7 @@ function RecipesList() {
   return (
     <>
       <Header
-        title={ location.pathname === '/comidas' ? 'Comidas' : 'Bebidas' }
+        title={ type === 'Meal' ? 'Comidas' : 'Bebidas' }
         displaySearchBtn
       />
       <div>
