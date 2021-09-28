@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import SearchHeader from '../components/Header/SearchHeader';
 import CardReceitasFeitas from '../components/Card/CardReceitasFeitas';
+import SearchHeader from '../components/Header/SearchHeader';
 
 function ReceitasFeitas() {
   const pageTitle = 'Receitas Feitas';
@@ -22,6 +22,7 @@ function ReceitasFeitas() {
     const typeDrink = recipes.filter((recipe) => recipe.type === 'bebida');
     setDoneRecipe(typeDrink);
   }
+
   useEffect(() => {
     getRecipeDone();
   }, []);
