@@ -40,7 +40,6 @@ export default function CategoryFilter() {
             id="all"
             value="All"
             onClick={ handleCheck }
-            hidden
           />
           <span>All</span>
         </label>
