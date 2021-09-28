@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import copy from 'clipboard-copy';
 import { idDrinkAPI } from '../services/drinksAPI';
 import { suggestionsAPI } from '../services/foodAPI';
 import shareIcon from '../images/shareIcon.svg';
@@ -10,6 +11,7 @@ import '../App.css';
 function DrinkDetailsPage() {
   const [drinkDetails, setDrinkDetails] = useState();
   const [meals, setMeals] = useState();
+  const [hidden, setHidden] = useState(false);
   // const [btnStatus, setBtnStatus] = useState('Iniciar Receita');
   const url = window.location.href;
   const urlSlicePoint = 30;
@@ -26,6 +28,11 @@ function DrinkDetailsPage() {
     return answer;
   }
 
+  function handleShare() {
+    copy(url);
+    setHidden(true);
+  }
+
   useEffect(() => {
     getDrink(identifier)
       .then((drinkDet) => setDrinkDetails(drinkDet));
@@ -37,7 +44,7 @@ function DrinkDetailsPage() {
   if (drinkDetails && meals) {
     const { strDrink,
       strDrinkThumb, strAlcoholic, strInstructions, idDrink } = drinkDetails.drinks[0];
-    console.log(drinkDetails.drinks[0]);
+    // console.log(drinkDetails.drinks[0]);
 
     const ingredients = [];
     Object.keys(drinkDetails.drinks[0]).forEach((key) => {
@@ -76,7 +83,7 @@ function DrinkDetailsPage() {
         {/*
         <iframe title="How To" data-testid="video" src={ `https://www.youtube.com/embed${videoId}` } /> */}
         <MealsSuggestions meals={ meals } />
-        <button data-testid="share-btn" type="button">
+        <button data-testid="share-btn" type="button" onClick={ handleShare }>
           <img
             src={ shareIcon }
             alt="share-button"
@@ -97,6 +104,7 @@ function DrinkDetailsPage() {
           {/* {btnStatus} */}
           Continuar Receita
         </button>
+        {hidden ? <span>Link copiado!</span> : null}
       </div>
     );
   } return <span>Loading....</span>;
