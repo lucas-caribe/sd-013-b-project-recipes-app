@@ -4,12 +4,13 @@ import FoodCategorySpace from './FoodCategorySpace';
 import FoodCards from './FoodCards';
 
 function FoodCardSpace() {
-  const { foods, setFoods } = useContext(Context);
+  const { foods, setFoods, setFiltered } = useContext(Context);
 
   useEffect(() => {
     async function fetchFoods() {
       const foodsResult = await (await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')).json();
       setFoods([...foodsResult.meals]);
+      setFiltered(false);
     }
     fetchFoods();
   }, []);

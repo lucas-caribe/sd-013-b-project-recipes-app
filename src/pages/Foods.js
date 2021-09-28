@@ -7,16 +7,7 @@ function Foods() {
     setShowHeader,
     setTitleName,
     setShowSearchHeaderIcon,
-    setShowFooter,
-    setCategoryFoodButtons } = useContext(Context);
-
-  useEffect(() => {
-    async function fetchCategoryButtons() {
-      const categoryResult = await (await fetch('https://www.themealdb.com/api/json/v1/1/categories.php')).json();
-      setCategoryFoodButtons([...categoryResult.categories]);
-    }
-    fetchCategoryButtons();
-  }, []);
+    setShowFooter } = useContext(Context);
 
   useEffect(() => {
     function handleHeader() {

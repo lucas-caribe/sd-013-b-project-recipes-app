@@ -12,6 +12,9 @@ function Provider({ children }) {
   const [foods, setFoods] = useState([]);
   const [drinks, setDrinks] = useState([]);
   const [categoryFoodButtons, setCategoryFoodButtons] = useState([]);
+  const [categoryDrinkButtons, setCategoryDrinkButtons] = useState([]);
+  const [filtered, setFiltered] = useState(false);
+  const [filterButton, setFilterButton] = useState('');
 
   const contextDefault = {
     showHeader,
@@ -23,6 +26,9 @@ function Provider({ children }) {
     foods,
     drinks,
     categoryFoodButtons,
+    categoryDrinkButtons,
+    filtered,
+    filterButton,
     setShowHeader,
     setShowSearchBar,
     setShowFooter,
@@ -32,6 +38,9 @@ function Provider({ children }) {
     setFoods,
     setDrinks,
     setCategoryFoodButtons,
+    setCategoryDrinkButtons,
+    setFiltered,
+    setFilterButton,
   };
 
   return (
