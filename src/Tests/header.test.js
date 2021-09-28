@@ -194,7 +194,7 @@ describe.only('Testes no componentest Header', () => {
 
     fireEvent.click(button);
 
-    expect(screen.getByTestId(inputSearch)).toBeInTheDocument(); // idéia pega no site "https://stackoverflow.com/questions/66043164/testing-click-event-in-react-testing-library"
+    expect(screen.getByTestId(inputSearch)).toBeInTheDocument(); // idéia de código pego no site "https://stackoverflow.com/questions/66043164/testing-click-event-in-react-testing-library"
 
     fireEvent.click(button);
 
