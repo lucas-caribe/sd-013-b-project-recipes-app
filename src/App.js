@@ -21,6 +21,7 @@ import MealDetails from './Pages/MealDetails';
 import MealsPage from './Pages/MealsPage';
 import ExploreRecipesByIngredient from './Pages/ExploreMealsRecipesByIngredient';
 import ExploreDrinksRecipesByIngredient from './Pages/ExploreDrinksRecipesByIngredient';
+import NotFound from './Pages/NotFound';
 // import RecipesContext from './Context/RecipesContext';
 
 function App() {
@@ -80,6 +81,7 @@ function App() {
             path="/receitas-favoritas"
             component={ FavoriteRecipes }
           />
+          <Route exact path="/explorar/bebidas/area" component={ NotFound } />
         </Switch>
       </BrowserRouter>
     </RecipesProvider>
