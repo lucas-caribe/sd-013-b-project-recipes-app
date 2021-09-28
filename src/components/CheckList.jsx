@@ -5,15 +5,23 @@ let complete = [];
 let completeStorage = [];
 let marcados = 0;
 
-export default function CheckList({ name, key, type, id, set, qtn }) {
+export default function CheckList({ name, index, type, id, set, qtn }) {
   // const Ingredientes = localStorage.getItem('inProgressRecipes');
 
   const [idRecipe] = useState(id);
   const [isMark, setIsMark] = useState(false);
   const [typeRecipe, setTypeRecipe] = useState('');
 
+  function ReajustQtn() {
+    marcados = completeStorage.length;
+    if (marcados < 0) {
+      marcados = 0;
+    }
+  }
+
   useEffect(() => {
     complete = [];
+    ReajustQtn();
   }, [idRecipe]);
 
   let Ingredientes = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -113,20 +121,36 @@ export default function CheckList({ name, key, type, id, set, qtn }) {
   useEffect(() => {
     ChangeCheck();
     ChangeTypeName();
+    complete = [...completeStorage];
   }, []);
 
+  function addChecked() {
+    const input = document.getElementById(`${name}`).attributes;
+    console.log(input);
+    const atribute = document.createAttribute('checked');
+    input.setNamedItem(atribute);
+    if (!isMark) {
+      input.removeNamedItem('checked');
+    }
+  }
+  useEffect(() => {
+    addChecked();
+  }, [isMark]);
   return (
-    <label id={ `${name}-label` } htmlFor={ name } k>
+    <label
+      id={ `${name}-label` }
+      htmlFor={ name }
+      data-testid={ `${index}-ingredient-step` }
+    >
       <input
-        key={ key }
         id={ name }
         onClick={ HandleClick }
         type="checkbox"
-        data-testid={ `${key}-ingredient-step` }
         value={ name }
         checked={ isMark }
 
       />
+
       {
         name
       }

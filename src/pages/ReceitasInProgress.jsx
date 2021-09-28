@@ -27,8 +27,6 @@ function ReceitasInProgress({ match: { params: { id } }, type }) {
   const endPoints = {
     meal: `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`,
     drink: `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`,
-    suggestedDrinks: 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=',
-    suggestedMeals: 'https://www.themealdb.com/api/json/v1/1/search.php?s=',
   };
 
   useEffect(() => {
@@ -46,8 +44,8 @@ function ReceitasInProgress({ match: { params: { id } }, type }) {
 
   const handleShareClick = () => {
     setModal('Link copiado!');
-    if (type === 'meals') return copy(`http://localhost:3000/comidas/${id}`);
-    copy(`http://localhost:3000/bebidas/${id}`);
+    if (type === 'meals') return copy(`http://localhost:3000/comidas/${id}/in-progress`);
+    copy(`http://localhost:3000/bebidas/${id}/in-progress`); 
   };
 
   return (
@@ -83,12 +81,13 @@ function ReceitasInProgress({ match: { params: { id } }, type }) {
             { getIngredients(selectedRecipe).map((ingredient, index, array) => (
 
               <CheckList
+                key={ ingredient }
                 qtn={ array.length }
                 set={ setDisableButton }
                 id={ id }
                 type={ type }
                 name={ ingredient }
-                key={ index }
+                index={ index }
               />
 
             ))}
