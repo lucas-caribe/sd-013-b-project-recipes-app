@@ -10,6 +10,10 @@ import Perfil from './pages/Perfil';
 import ReceitasFeitas from './pages/ReceitasFeitas';
 import ReceitasFavoritas from './pages/ReceitasFavoritas';
 import NotFound from './pages/NotFound';
+import Comidas from './pages/Comidas';
+import Bebidas from './pages/Bebidas';
+import Detalhes from './pages/Detalhes';
+import Login from './pages/Login-Screen/Login';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';

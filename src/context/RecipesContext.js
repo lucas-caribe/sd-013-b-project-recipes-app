@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState,useEffect, useCallback } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
 
 const mealsInitialState = {
@@ -80,6 +86,8 @@ export const RecipesProvider = ({ children }) => {
       });
     }
     fetchMeals();
+  });
+
   const getRandomRecipe = useCallback(async (page) => {
     if (page === 'comidas') {
       const { meals: mealsApi } = await fetch('https://www.themealdb.com/api/json/v1/1/random.php').then((response) => response.json());
