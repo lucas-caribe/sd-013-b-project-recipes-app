@@ -7,7 +7,7 @@ function RecipesProvider({ children }) {
   const [password, setPassword] = useState('');
   const [searchBar, setsearchBar] = useState(false);
   const [api, setApi] = useState({ meals: [], drinks: [] });
-  const [randomMeal, setRandomMeal] = useState({});
+  const [mealDetails, setMealDetails] = useState({});
   const [meals, setMeals] = useState([]);
   const [drinks, setDrinks] = useState([]);
   const [mealsAndInputs, setMealsAndInputs] = useState(
@@ -22,8 +22,8 @@ function RecipesProvider({ children }) {
     setsearchBar,
     api,
     setApi,
-    randomMeal,
-    setRandomMeal,
+    mealDetails,
+    setMealDetails,
     meals,
     setMeals,
     mealsAndInputs,
