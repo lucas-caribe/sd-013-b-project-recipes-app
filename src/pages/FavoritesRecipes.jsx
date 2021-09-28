@@ -1,10 +1,12 @@
 // Tela de receitas favoritas: requisitos 60 a 66;
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import copy from 'clipboard-copy';
 import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import ButtonFavorite from '../components/ButtonFavorite';
 import shareIcon from '../images/shareIcon.svg';
-import { foodRequest } from '../services/data';
+import Header from '../components/Header';
 
 const STATE_FAVORITE = {
   buttonFilter: null,
@@ -38,19 +40,22 @@ function buttonChangeFilter(setState) {
   );
 }
 
-function FavoritesRecipes() {
+function FavoritesRecipes({ loadFoods }) {
   const history = useHistory();
-  const [visibleMessage, setVisibleMessage] = useState(false);
+  const [visibleMessage, setVisibleMessage] = useState(true);
+  const [state, setState] = useState(STATE_FAVORITE);
+  const { buttonFilter } = state;
+  const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
-  async function buttonCopy(event) {
+  function buttonCopy(event) {
     setVisibleMessage(false);
     const oneSecond = 1000;
     const { id } = event.target.parentNode;
-    const itemFood = await foodRequest(`lookup.php?i=${id}`);
-    if (!itemFood.meals) {
-      copy(`http://localhost:3000/bebidas/${id}`);
-    } else {
+    const validation = loadFoods.some((food) => (food.idMeal === id));
+    if (!validation) {
       copy(`http://localhost:3000/comidas/${id}`);
+    } else {
+      copy(`http://localhost:3000/bebidas/${id}`);
     }
     setTimeout(() => setVisibleMessage(true), oneSecond);
   }
@@ -62,7 +67,7 @@ function FavoritesRecipes() {
         <div id={ id }>
           <input
             type="image"
-            width="150px"
+            width="70px"
             data-testid={ `${index}-horizontal-image` }
             src={ image }
             alt={ name }
@@ -92,7 +97,7 @@ function FavoritesRecipes() {
       <div id={ id }>
         <input
           type="image"
-          width="150px"
+          width="70px"
           data-testid={ `${index}-horizontal-image` }
           src={ image }
           alt={ name }
@@ -120,15 +125,21 @@ function FavoritesRecipes() {
     );
   }
 
-  const [state, setState] = useState(STATE_FAVORITE);
-  const { buttonFilter } = state;
-  const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  if (!loadFoods) {
+    return (
+      <>
+        <Header setTitle="Receitas Favoritas" />
+        <h1> Carregando...</h1>
+      </>
+    );
+  }
 
-  if (favoriteRecipes.length === 0) { return (<h1> Não há favoritos</h1>); }
+  if (favoriteRecipes.length === 0) { return (<Header setTitle="Receitas Favoritas" />); }
 
   if (buttonFilter === 'comida') {
     return (
       <>
+        <Header setTitle="Receitas Favoritas" />
         <p hidden={ visibleMessage }>Link copiado!</p>
         { buttonChangeFilter(setState) }
         {
@@ -147,6 +158,7 @@ function FavoritesRecipes() {
   if (buttonFilter === 'bebida') {
     return (
       <>
+        <Header setTitle="Receitas Favoritas" />
         <p hidden={ visibleMessage }>Link copiado!</p>
         { buttonChangeFilter(setState) }
         {
@@ -164,6 +176,7 @@ function FavoritesRecipes() {
 
   return (
     <>
+      <Header setTitle="Receitas Favoritas" />
       <p hidden={ visibleMessage }>Link copiado!</p>
       { buttonChangeFilter(setState) }
       {
@@ -177,4 +190,12 @@ function FavoritesRecipes() {
   );
 }
 
-export default FavoritesRecipes;
+const mapStateToProps = (state) => ({
+  loadFoods: state.loadFoods,
+});
+
+FavoritesRecipes.propTypes = {
+  object: PropTypes.objectOf(PropTypes.object),
+}.isRequired;
+
+export default connect(mapStateToProps)(FavoritesRecipes);

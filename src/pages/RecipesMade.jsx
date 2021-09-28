@@ -1,9 +1,9 @@
 // Tela de receitas feitas: requisitos 54 a 59;
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
-import { foodRequest } from '../services/data';
+import Header from '../components/Header';
 
 const STATE_DONE = {
   buttonFilter: null,
@@ -39,17 +39,31 @@ function buttonChangeFilter(setState) {
 
 function RecipesMade() {
   const history = useHistory();
-  const [visibleMessage, setVisibleMessage] = useState(false);
+  const [state, setState] = useState(STATE_DONE);
+  const { buttonFilter } = state;
+  const [dataFoods, setFoods] = useState();
+  const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes') || '[]');
+  const [visibleMessage, setVisibleMessage] = useState(true);
 
-  async function buttonCopy(event) {
+  useEffect(() => {
+    async function updateData() {
+      const urlFoods = 'https://www.themealdb.com/api/json/v1/1/search.php?s';
+      const responseFoods = await fetch(urlFoods).then((res) => res.json());
+      setFoods(responseFoods.meals);
+    }
+
+    updateData();
+  }, []);
+
+  function buttonCopy(event) {
     setVisibleMessage(false);
     const oneSecond = 1000;
     const { id } = event.target.parentNode;
-    const itemFood = await foodRequest(`lookup.php?i=${id}`);
-    if (!itemFood.meals) {
-      copy(`http://localhost:3000/bebidas/${id}`);
-    } else {
+    const validation = dataFoods.some((food) => (food.idMeal === id));
+    if (!validation) {
       copy(`http://localhost:3000/comidas/${id}`);
+    } else {
+      copy(`http://localhost:3000/bebidas/${id}`);
     }
     setTimeout(() => setVisibleMessage(true), oneSecond);
   }
@@ -128,9 +142,14 @@ function RecipesMade() {
     );
   }
 
-  const [state, setState] = useState(STATE_DONE);
-  const { buttonFilter } = state;
-  const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes') || '[]');
+  if (!dataFoods) {
+    return (
+      <>
+        <Header setTitle="Receitas Favoritas" />
+        <h1> Carregando...</h1>
+      </>
+    );
+  }
 
   if (doneRecipes.length === 0) { return (<h1> Não há receitas finalizadas </h1>); }
 
