@@ -5,7 +5,7 @@ import './index.css';
 
 export default function RecipesLibrary({ recipes }) {
   return (
-    <div id="recipes-lib">
+    <div className="recipes-lib">
       {recipes.map((recipe, index) => (
         <RecipeCard
           key={ index }
