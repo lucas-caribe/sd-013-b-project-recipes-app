@@ -13,7 +13,7 @@ const VIDEO = 'video';
 const BTN_INICIAR = 'start-recipe-btn';
 const RECOMENDATIONS = /-recomendation-card/;
 const RECOMENDATIONS_TITLE = /-recomendation-title/;
-const URL = '/comidas/52878';
+const URL = '/bebidas/15997';
 const NUMBER_CARDS = 6;
 
 describe('Progress Recipe tests', () => {
@@ -24,7 +24,7 @@ describe('Progress Recipe tests', () => {
   });
 
   it('Testa se aparece o título na tela', async () => {
-    const TEXT_TITLE = await screen.findByText('Detalhes comidas');
+    const TEXT_TITLE = await screen.findByText('Detalhes bebidas');
     expect(TEXT_TITLE).toBeInTheDocument();
   });
   it('Testa se aparece imagem da comida na tela', async () => {
@@ -73,20 +73,20 @@ describe('Progress Recipe tests', () => {
     });
     const BTN_START = await screen.findAllByTestId(BTN_INICIAR);
     fireEvent.dblClick(BTN_START[0]);
-    history.push('/comidas/52878/in-progress');
-    expect(history.location.pathname).toBe('/comidas/52878/in-progress');
+    history.push('/bebidas/15997/in-progress');
+    expect(history.location.pathname).toBe('/bebidas/15997/in-progress');
   });
   it('Ao clicar no botão de favorito, é salvo corretamente no localstorage', async () => {
     const BTN_FAVORITE = await screen.findByTestId(FAV_BTN);
     fireEvent.click(BTN_FAVORITE);
     expect(JSON.parse(localStorage.getItem('favoriteRecipes'))).toEqual([{
-      alcoholicOrNot: '',
-      area: 'British',
-      category: 'Beef',
-      id: '52878',
-      image: 'https://www.themealdb.com/images/media/meals/wrssvt1511556563.jpg',
-      name: 'Beef and Oyster pie',
-      type: 'comida',
+      alcoholicOrNot: 'Optional alcohol',
+      area: '',
+      category: 'Ordinary Drink',
+      id: '15997',
+      image: 'https://www.thecocktaildb.com/images/media/drink/vyxwut1468875960.jpg',
+      name: 'GG',
+      type: 'bebida',
     }]);
   });
 });

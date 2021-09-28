@@ -1,5 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
 import renderWithRouterAndRedux from './support/RenderWithRouterAndRedux';
 import recipes from './support/RecipesExample';
@@ -26,25 +27,36 @@ const URL = '/bebidas/178319/in-progress';
 let HISTORY;
 
 describe('Progress Recipe tests', () => {
-  beforeEach(() => {
-    const { history } = renderWithRouterAndRedux(<App />, {
-      initialState: { reducerRecipe: { recipeDrink } },
-      initialEntries: [URL],
+  beforeEach(async () => {
+    global.fetch = jest.fn(async () => ({
+      json: async () => ({ drinks: [recipeDrink] }),
+    }));
+
+    await act(async () => {
+      const { history } = renderWithRouterAndRedux(<App />, {
+        initialEntries: [URL],
+      });
+      HISTORY = history;
+      // Referencia do act:
+      // https://reactjs.org/docs/testing-recipes.html#act
     });
-    HISTORY = history;
   });
 
-  test('Se os elementos corretos estão aparecendo, na tela de comida', () => {
+  afterEach(() => jest.clearAllMocks());
+
+  test('Se os elementos corretos estão aparecendo, na tela de Bebida', async () => {
     const INGREDIENTS_NUMBER = 3;
 
-    const img = screen.getByTestId(IMG);
-    const title = screen.getByTestId(TITLE);
-    const category = screen.getByTestId(CATEGORY);
-    const shareBtn = screen.getByTestId(SHARE_BTN);
-    const favBtn = screen.getByTestId(FAV_BTN);
-    const instructions = screen.getByTestId(INTRUCTIONS);
-    const finishBtn = screen.getByTestId(FINISH_BTN);
-    const ingredients = screen.getAllByTestId(INGREDIENTS);
+    const img = await screen.findByTestId(IMG);
+    const title = await screen.findByTestId(TITLE);
+    const category = await screen.findByTestId(CATEGORY);
+    const shareBtn = await screen.findByTestId(SHARE_BTN);
+    const favBtn = await screen.findByTestId(FAV_BTN);
+    const instructions = await screen.findByTestId(INTRUCTIONS);
+    const finishBtn = await screen.findByTestId(FINISH_BTN);
+    const ingredients = await screen.findAllByTestId(INGREDIENTS);
+
+    expect(global.fetch).toHaveBeenCalled();
 
     expect(img).toBeInTheDocument();
     expect(img.src).toBe(image);
@@ -68,9 +80,9 @@ describe('Progress Recipe tests', () => {
     expect(path).toContain(id);
   });
 
-  test('Se as funcionalidades da lista de ingredientes estão funcionando', () => {
-    const ingredients = screen.getAllByTestId(INGREDIENTS);
-    const finishBtn = screen.getByTestId(FINISH_BTN);
+  test('Se as funcionalidades da lista de ingredientes estão funcionando', async () => {
+    const ingredients = await screen.findAllByTestId(INGREDIENTS);
+    const finishBtn = await screen.findByTestId(FINISH_BTN);
 
     ingredients.forEach((ingredient) => {
       expect(ingredient.firstChild.checked).toBeFalsy();
@@ -82,9 +94,10 @@ describe('Progress Recipe tests', () => {
     expect(JSON.parse(localStorage.getItem('inProgressRecipes')))
       .toMatchObject({ meals: {}, cocktails: { 178319: { '0-ingredient-step': true } } });
 
-    renderWithRouterAndRedux(<App />, {
-      initialState: { reducerRecipe: { recipeDrink } },
-      initialEntries: [URL],
+    await act(async () => {
+      renderWithRouterAndRedux(<App />, {
+        initialEntries: [URL],
+      });
     });
 
     expect(ingredients[0].firstChild.checked).toBeTruthy();
@@ -93,11 +106,6 @@ describe('Progress Recipe tests', () => {
     expect(JSON.parse(localStorage.getItem('inProgressRecipes')))
       .toMatchObject({ meals: {},
         cocktails: { 178319: { '0-ingredient-step': false } } });
-
-    renderWithRouterAndRedux(<App />, {
-      initialState: { reducerRecipe: { recipeDrink } },
-      initialEntries: [URL],
-    });
 
     ingredients.forEach((ingredient) => {
       expect(ingredient.firstChild.checked).toBeFalsy();
@@ -118,21 +126,11 @@ describe('Progress Recipe tests', () => {
           '2-ingredient-step': true,
         } },
       });
-
-    renderWithRouterAndRedux(<App />, {
-      initialState: { reducerRecipe: { recipeDrink } },
-      initialEntries: [URL],
-    });
-
-    ingredients.forEach((ingredient) => {
-      expect(ingredient.firstChild.checked).toBeTruthy();
-    });
-    expect(finishBtn.disabled).toBeFalsy();
   });
 
-  test('Se as funcionalidades do finish button estão funcionando', () => {
-    const ingredients = screen.getAllByTestId(INGREDIENTS);
-    const finishBtn = screen.getByTestId(FINISH_BTN);
+  test('Se as funcionalidades do finish button estão funcionando', async () => {
+    const ingredients = await screen.findAllByTestId(INGREDIENTS);
+    const finishBtn = await screen.findByTestId(FINISH_BTN);
 
     ingredients.forEach((ingredient) => {
       expect(ingredient.firstChild.checked).toBeTruthy();
@@ -157,7 +155,10 @@ describe('Progress Recipe tests', () => {
     expect(JSON.parse(localStorage.getItem('inProgressRecipes')))
       .toMatchObject({ meals: {}, cocktails: {} });
 
-    HISTORY.push(URL);
+    await act(async () => {
+      renderWithRouterAndRedux(<App />, { initialEntries: [URL] });
+    });
+
     screen.getAllByTestId(INGREDIENTS).forEach((ingredient) => {
       expect(ingredient.firstChild.checked).toBeFalsy();
     });

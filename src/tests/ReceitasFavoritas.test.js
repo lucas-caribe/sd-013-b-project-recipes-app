@@ -13,7 +13,7 @@ const VIDEO = 'video';
 const BTN_INICIAR = 'start-recipe-btn';
 const RECOMENDATIONS = /-recomendation-card/;
 const RECOMENDATIONS_TITLE = /-recomendation-title/;
-const URL = '/comidas/52878';
+const URL = '/receitas-favoritas';
 const NUMBER_CARDS = 6;
 
 describe('Progress Recipe tests', () => {
@@ -23,8 +23,8 @@ describe('Progress Recipe tests', () => {
     });
   });
 
-  it('Testa se aparece o título na tela', async () => {
-    const TEXT_TITLE = await screen.findByText('Detalhes comidas');
+  it('Testa se aparece o título na tela', () => {
+    const TEXT_TITLE = screen.getByText('Receitas Favoritas');
     expect(TEXT_TITLE).toBeInTheDocument();
   });
   it('Testa se aparece imagem da comida na tela', async () => {
@@ -62,10 +62,6 @@ describe('Progress Recipe tests', () => {
   it('Testa se tem a quantidade certa de cards de recomendação na tela', async () => {
     const CARDS_RECOMENDATIONS = await screen.findAllByTestId(RECOMENDATIONS);
     expect(CARDS_RECOMENDATIONS.length).toBe(NUMBER_CARDS);
-  });
-  it('Testa se há o botão de iniciar receita', async () => {
-    const BTN_START = await screen.findByTestId(BTN_INICIAR);
-    expect(BTN_START).toBeInTheDocument();
   });
   it('Ao clicar no botão de iniciar receita é levado para página correta', async () => {
     const { history } = renderWithRouterAndRedux(<App />, {
