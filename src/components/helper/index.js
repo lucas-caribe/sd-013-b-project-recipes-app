@@ -49,3 +49,5 @@ export const handleStartRecipe = (history, url, recipe, dispatch) => {
   console.log(startedRecipe);
   history.push(`${pathname}/in-progress`);
 };
+
+export const getLocalStorage = () => JSON.parse(localStorage.getItem('doneRecipes'));

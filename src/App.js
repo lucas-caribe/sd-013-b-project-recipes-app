@@ -15,12 +15,15 @@ import ExplorarIngredientes from './pages/ExplorarIngredientes';
 import ExplorarOrigem from './pages/ExplorarOrigem';
 import ExplorarBebidas from './pages/ExplorarBebidas';
 import ReceitasFeitas from './pages/ReceitasFeitas';
+import ReceitaProgresso from './pages/ReceitaProgresso';
 
 function App() {
   return (
     <RecipesProvider>
       <Switch>
+        <Route exact path="/comidas/:id/in-progress" component={ ReceitaProgresso } />
         <Route exact path="/comidas/:id" component={ FoodDetails } />
+        <Route exact path="/bebidas/:id/in-progress" component={ ReceitaProgresso } />
         <Route exact path="/bebidas/:id" component={ DrinkDetails } />
         <Route exact path="/comidas" component={ RecipesList } />
         <Route exact path="/bebidas" component={ RecipesList } />
