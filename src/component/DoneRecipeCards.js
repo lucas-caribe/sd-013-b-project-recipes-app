@@ -21,7 +21,7 @@ function DoneRecipeCards() {
 
   return (
     <div>
-      { doneRecipesFromStorage.filter((recipe) => (
+      { doneRecipesFromStorage ? doneRecipesFromStorage.filter((recipe) => (
         recipe.type !== filteredRecipes))
         .map((recipe, index) => (
           <div key={ recipe.id }>
@@ -64,7 +64,7 @@ function DoneRecipeCards() {
               )) }
             </div>
           </div>
-        )) }
+        )) : <p>Loading...</p> }
     </div>
   );
 }
