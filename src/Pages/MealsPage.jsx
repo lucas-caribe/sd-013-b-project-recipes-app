@@ -10,7 +10,8 @@ export default function MealsPage() {
   const [mealsCategories, setMealsCategories] = useState([]);
   const [categoryToogle, setCategoryToogle] = useState({ category: '', toogle: false });
   const { mealsAndInputs,
-    mealsAndInputs: { meals }, setMealsAndInputs } = useContext(RecipesContext);
+    mealsAndInputs: { meals },
+    setMealsAndInputs, setMealDetails } = useContext(RecipesContext);
   const location = useLocation().pathname;
   const TWELVE = 12;
   const FIVE = 5;
@@ -49,7 +50,11 @@ export default function MealsPage() {
       <HeaderWithSearch />
       {location.includes('/comidas') && <CategoriesButtons props={ buttonsUtils } />}
       {location.includes('/comidas') && meals.map((meal, index) => (
-        <Link key={ index } to={ `/comidas/${meal.idMeal}` }>
+        <Link
+          onClick={ () => setMealDetails(meal) }
+          key={ index }
+          to={ `/comidas/${meal.idMeal}` }
+        >
           <div className="card" data-testid={ `${index}-recipe-card` }>
             <img
               src={ `${meal.strMealThumb}` }
