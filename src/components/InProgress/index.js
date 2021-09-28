@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import shareIcon from '../../images/shareIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
-
 import { renderIngredientsCheck, handleDoneRecipes } from '../helper';
 import RecipesContext from '../../context/Recipes/RecipesContext';
 
