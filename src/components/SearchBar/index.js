@@ -131,4 +131,5 @@ const SearchBar = ({ option }) => {
 SearchBar.propTypes = {
   option: PropTypes.string.isRequired,
 };
+
 export default SearchBar;

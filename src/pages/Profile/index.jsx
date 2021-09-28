@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Footer from '../../components/Footer';
+import Header from '../../components/Header';
 
 export default function Profile() {
   const history = useHistory();
@@ -20,6 +21,7 @@ export default function Profile() {
 
   return (
     <div>
+      <Header searchRender titlePage="Perfil" />
       <h3 data-testid="profile-email">
         {JSON.parse(localStorage.getItem('user')).email}
       </h3>
