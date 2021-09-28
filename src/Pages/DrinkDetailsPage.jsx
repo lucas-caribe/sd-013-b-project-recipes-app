@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 import { idDrinkAPI } from '../services/drinksAPI';
 import { suggestionsAPI } from '../services/foodAPI';
 import shareIcon from '../images/shareIcon.svg';
@@ -9,9 +10,11 @@ import '../App.css';
 function DrinkDetailsPage() {
   const [drinkDetails, setDrinkDetails] = useState();
   const [meals, setMeals] = useState();
+  // const [btnStatus, setBtnStatus] = useState('Iniciar Receita');
   const url = window.location.href;
   const urlSlicePoint = 30;
   const identifier = url.slice(urlSlicePoint);
+  const history = useHistory();
 
   async function getDrink(id) {
     const answer = await idDrinkAPI(id);
@@ -33,8 +36,8 @@ function DrinkDetailsPage() {
 
   if (drinkDetails && meals) {
     const { strDrink,
-      strDrinkThumb, strAlcoholic, strInstructions } = drinkDetails.drinks[0];
-    // console.log(drinkDetails.drinks[0]);
+      strDrinkThumb, strAlcoholic, strInstructions, idDrink } = drinkDetails.drinks[0];
+    console.log(drinkDetails.drinks[0]);
 
     const ingredients = [];
     Object.keys(drinkDetails.drinks[0]).forEach((key) => {
@@ -89,8 +92,10 @@ function DrinkDetailsPage() {
           className="start-recipe-btn"
           type="button"
           data-testid="start-recipe-btn"
+          onClick={ () => history.push(`/bebidas/${idDrink}/in-progress`) }
         >
-          Iniciar Receita
+          {/* {btnStatus} */}
+          Continuar Receita
         </button>
       </div>
     );
