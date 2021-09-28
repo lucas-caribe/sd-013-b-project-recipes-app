@@ -22,6 +22,7 @@ function Provider({ children }) {
       strArea: 'Italian',
       date: '23/06/2020',
       type: 'Meal',
+      url: 'http://localhost:3000/comidas/52771',
     },
     {
       idDrink: 178319,
@@ -32,9 +33,12 @@ function Provider({ children }) {
       strTags: null,
       date: '23/06/2020',
       type: 'Drink',
+      url: 'http://localhost:3000/bebidas/52771',
     },
   ]);
   const [filterRecipeDone, setFilterRecipeDone] = useState([]);
+  const [linkCopied, setLinkCopied] = useState('');
+  const [copied, setCopied] = useState(false);
   const [inputText, setInputText] = useState('');
   const [inputRadio, setInputRadio] = useState('');
   const [apiRadio, setApiRadio] = useState();
@@ -64,6 +68,10 @@ function Provider({ children }) {
     setAllRecipesDone,
     filterRecipeDone,
     setFilterRecipeDone,
+    linkCopied,
+    setLinkCopied,
+    copied,
+    setCopied,
   };
 
   return (
