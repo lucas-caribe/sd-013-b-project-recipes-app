@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Route } from 'react-router-dom';
-import Switch from 'react-bootstrap/esm/Switch';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+// import Switch from 'react-bootstrap/esm/Switch';
 import Provider from './context/Provider';
 import {
   Login,
@@ -17,6 +17,7 @@ import {
   Perfil,
   Feitas,
   Favoritas,
+  BebidaAleatoria,
   NotFound } from './pages/index';
 
 function App() {
@@ -25,6 +26,15 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={ Login } />
+          <Route exact path="/explorar" component={ Explorar } />
+          <Route exact path="/explorar/comidas" component={ ExplorarComidas } />
+          <Route exact path="/explorar/bebidas" component={ ExplorarBebidas } />
+          <Route exact path="/explorar/:id/" component={ BebidaAleatoria } />
+          <Route exact path="/comidas" component={ Comidas } />
+          <Route exact path="/bebidas" component={ Bebidas } />
+          <Route exact path="/perfil" component={ Perfil } />
+          <Route exact path="/receitas-feitas" component={ Feitas } />
+          <Route exact path="/receitas-favoritas" component={ Favoritas } />
           <Route exact path="/comidas/" component={ Comidas } />
           <Route exact path="/bebidas/" component={ Bebidas } />
           <Route exact path="/explorar" component={ Explorar } />
