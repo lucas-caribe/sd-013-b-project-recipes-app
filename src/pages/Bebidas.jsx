@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import HomeRecipeCard from '../components/HomeRecipeCard';
@@ -9,7 +10,9 @@ import { fetchAllRecipes } from '../services';
 function Bebidas() {
   useCurrentPage('Bebidas');
 
-  const { setAllRecipes } = useContext(Context);
+  const history = useHistory();
+
+  const { setAllRecipes, apiRadio, filter } = useContext(Context);
 
   useEffect(() => {
     async function getRecipes() {
@@ -20,6 +23,17 @@ function Bebidas() {
 
     getRecipes();
   }, [setAllRecipes]);
+
+  useEffect(() => {
+    const quantidade = 12;
+    if (filter === true) {
+      setAllRecipes(apiRadio.drinks.slice(0, quantidade));
+      if (window.location.pathname === '/bebidas' && apiRadio.drinks.length === 1) {
+        const id = apiRadio.drinks[0].idDrink;
+        history.push(`/bebidas/${id}`);
+      }
+    }
+  }, [apiRadio]);
 
   return (
     <div className="page">
