@@ -10,8 +10,8 @@ import shareIcon from '../images/shareIcon.svg';
 export default function RecipeDoneCardFilter() {
   const {
     filterRecipeDone,
-    copied,
-    setCopied,
+    linkCopied,
+    setLinkCopied,
   } = useContext(Context);
 
   function renderTags(stringTags) {
@@ -105,7 +105,7 @@ export default function RecipeDoneCardFilter() {
                   data-testid={ `${index}-horizontal-share-btn` }
                   type="button"
                   src={ shareIcon }
-                  onClick={ () => setCopied(true) }
+                  onClick={ () => setLinkCopied(true) }
                 >
                   <img src={ shareIcon } alt="share" />
                 </button>
@@ -113,7 +113,7 @@ export default function RecipeDoneCardFilter() {
             </div>
 
             <div className="recipe-card-link-copied">
-              { copied ? <span> Link copiado!</span> : null }
+              { linkCopied ? <span> Link copiado!</span> : null }
             </div>
 
           </div>
