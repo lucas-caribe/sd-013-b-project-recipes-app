@@ -71,8 +71,6 @@ export default function CheckList({ name, index, type, id, set, qtn }) {
     const { target } = e;
     setIsMark(false);
 
-    // const [completeIngredientsMeals, setCompleteIngredientsMeals] = useState({ meals: { id: [] } });
-
     if (target.checked) {
       texto.classList.add('line');
       complete.push(target.value);
