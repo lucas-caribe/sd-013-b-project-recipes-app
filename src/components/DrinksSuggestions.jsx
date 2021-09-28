@@ -22,7 +22,7 @@ export default function DrinksSuggestions({ drinks }) {
           <img alt="drink-pic" className="imgs" src={ drink.strDrinkThumb } />
         </div>
       ) : null))}
-      {console.log(drinks)}
+      {/* {console.log(drinks)} */}
     </div>
   );
 }

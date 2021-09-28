@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 import foodContext from '../context/FoodContext';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -15,6 +16,7 @@ export default function FoodDetailsPage() {
   const url = window.location.href;
   const urlSlicePoint = 30;
   const identifier = url.slice(urlSlicePoint);
+  const history = useHistory();
 
   async function getRecipe(id) {
     const recipeDetails = await idAPI(id);
@@ -42,7 +44,8 @@ export default function FoodDetailsPage() {
 
   if (mealDetails && suggestions) {
     const { strMeal,
-      strMealThumb, strCategory, strInstructions, strYoutube } = mealDetails.meals[0];
+      strMealThumb, strCategory,
+      strInstructions, strYoutube, idMeal } = mealDetails.meals[0];
     const { drinks } = suggestions;
     // const drinksSugg = drinks.slice(0, 6);
 
@@ -61,7 +64,7 @@ export default function FoodDetailsPage() {
 
     return (
       <div>
-        {/* {console.log(mealDetails.meals[0])} */}
+        {console.log(mealDetails.meals[0])}
         {/*
         {console.log(Object.values(mealDetails.meals[0]).slice(9, 29))}
         {console.log(Object.values(mealDetails.meals[0]).slice(29, 49))} */}
@@ -119,8 +122,9 @@ export default function FoodDetailsPage() {
           className="start-recipe-btn"
           type="button"
           data-testid="start-recipe-btn"
+          onClick={ () => history.push(`/comidas/${idMeal}/in-progress`) }
         >
-          Iniciar Receita
+          Continuar Receita
         </button>
       </div>
     );
