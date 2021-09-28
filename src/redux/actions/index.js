@@ -12,20 +12,4 @@ export const actionInputHeader = (inpHeader) => ({
   },
 });
 
-export const sendRecipeToGlobalMeal = (meals, status) => ({
-  type: 'BTN_START_RECIPE_MEALS',
-  payload: {
-    meals,
-    status,
-  },
-});
-
-export const sendRecipeToGlobalDrinks = (drinks, status) => ({
-  type: 'BTN_START_RECIPE_DRINKS',
-  payload: {
-    drinks,
-    status,
-  },
-});
-
 export default actionLogin;
