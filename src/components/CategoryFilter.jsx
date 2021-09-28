@@ -5,6 +5,7 @@ import { fetchAllRecipes, fetchByCategory } from '../services';
 export default function CategoryFilter() {
   const { categories, setAllRecipes, currentPage } = useContext(Context);
 
+  // NÃO USEI RADIO POIS É PRECISO SER POSSÍVEL DESMARCAR A OPÇÃO
   // ideia pra função que seleciona apenas um checkbox encontrada em https://abre.ai/dk5x
   function onlyOne(target) {
     const checkboxes = document.getElementsByName('category');
@@ -29,32 +30,57 @@ export default function CategoryFilter() {
 
   function handleCheck({ target }) {
     onlyOne(target);
-    const category = target.value.split(' ').join('_');
 
-    if (target.checked) { getByCategory(category); } else { getAllRecipes(); }
+    // SE FOR NÃO FOR O BOTÃO 'ALL' E ESTIVER SELECIONADO, BUSCA POR CATEGORIA
+    // CASO ESTEJA DESMARCADO FAZ A BUSCA DE TODAS AS RECEITAS
+    if (target.value !== 'all') {
+      const category = target.value.split(' ').join('_');
+      if (target.checked) { getByCategory(category); } else { getAllRecipes(); }
+    } else { getAllRecipes(); }
   }
 
   return (
-    categories.map(({ strCategory }, index) => (
+    <>
       <div
-        key={ index }
         className="category-button"
+        data-testid="All-category-filter"
       >
         <label
-          htmlFor={ `${index}-option` }
-          data-testid={ `${strCategory}-category-filter` }
+          htmlFor="all"
         >
           <input
             type="checkbox"
             name="category"
-            id={ `${index}-option` }
-            value={ strCategory }
+            id="all"
+            value="all"
             onClick={ handleCheck }
             hidden
           />
-          <span>{ strCategory }</span>
+          <span>All</span>
         </label>
       </div>
-    ))
+
+      {categories.map(({ strCategory }, index) => (
+        <div
+          key={ index }
+          className="category-button"
+          data-testid={ `${strCategory}-category-filter` }
+        >
+          <label
+            htmlFor={ `${index}-option` }
+          >
+            <input
+              type="checkbox"
+              name="category"
+              id={ `${index}-option` }
+              value={ strCategory }
+              onClick={ handleCheck }
+              hidden
+            />
+            <span>{ strCategory }</span>
+          </label>
+        </div>
+      ))}
+    </>
   );
 }
