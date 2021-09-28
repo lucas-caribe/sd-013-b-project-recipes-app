@@ -42,7 +42,6 @@ function Comidas() {
       <div>
         <Header pageTitle="Comidas" showSearchIcon />
         <FilterButtonsMeals />
-
         {mapMeallist(list)}
         <Footer />
       </div>

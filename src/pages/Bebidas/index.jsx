@@ -20,9 +20,8 @@ function Bebidas() {
 
   const MAX_ELEMENTS = 12;
 
-  const mapDrinklist = (drinksList) => drinksList.map((
-    drink, index,
-  ) => Card(drink.strDrink, drink.strDrinkThumb, index))
+  const mapDrinklist = (drinksList) => drinksList
+    .map((drink, index) => Card(drink.strDrink, drink.strDrinkThumb, index))
     .slice(0, MAX_ELEMENTS);
 
   if (list.length === 0) {
@@ -43,7 +42,6 @@ function Bebidas() {
       <div>
         <Header pageTitle="Bebidas" showSearchIcon />
         <FilterButtonsDrinks />
-
         {mapDrinklist(list)}
         <Footer />
       </div>

@@ -53,10 +53,12 @@ export const SearchBarProvider = ({ children }) => {
       setCocktailsList(result.drinks);
     }
     if (result.meals === null) {
+      console.log('entrou');
       global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       return null;
     }
     if (result.drinks === null) {
+      console.log('entrou');
       global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       return null;
     }
@@ -105,7 +107,7 @@ export const SearchBarProvider = ({ children }) => {
     default:
       break;
     }
-  }, [page, term, option, fetchByOption]);
+  }, [term, option, fetchByOption]);
 
   return (
     <SearchBarContext.Provider

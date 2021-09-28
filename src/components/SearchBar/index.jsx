@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRecipes } from '../../context';
 
 import { useSearch } from '../../context/SearchBarContext';
 
@@ -9,6 +10,8 @@ function SearchBar() {
   const [searchTerm, setSearchTerm] = useState();
   const [searchOption, setSearchOption] = useState();
 
+  const { checkTermAndOption } = useRecipes();
+
   return (
     <div className="search-bar-inputs">
       <input
@@ -16,7 +19,10 @@ function SearchBar() {
         data-testid="search-input"
         type="text "
         placeholder="Buscar receita"
-        onChange={ (e) => setSearchTerm(e.target.value) }
+        onChange={ (e) => {
+          checkTermAndOption();
+          setSearchTerm(e.target.value);
+        } }
       />
       <div className="radio-btns">
         <input
@@ -24,7 +30,10 @@ function SearchBar() {
           type="radio"
           name="radio-search"
           value="ingredient"
-          onClick={ (e) => setSearchOption(e.target.value) }
+          onClick={ (e) => {
+            checkTermAndOption();
+            setSearchOption(e.target.value);
+          } }
         />
         Ingrediente
         <input
@@ -32,7 +41,10 @@ function SearchBar() {
           type="radio"
           name="radio-search"
           value="name"
-          onClick={ (e) => setSearchOption(e.target.value) }
+          onClick={ (e) => {
+            checkTermAndOption();
+            setSearchOption(e.target.value);
+          } }
         />
         Nome
         <input
@@ -40,7 +52,10 @@ function SearchBar() {
           type="radio"
           name="radio-search"
           value="first-letter"
-          onClick={ (e) => setSearchOption(e.target.value) }
+          onClick={ (e) => {
+            checkTermAndOption();
+            setSearchOption(e.target.value);
+          } }
         />
         Primeira letra
       </div>

@@ -19,9 +19,8 @@ const cocktailsInitialState = {
   inProgress: {}, // Objeto onde cada chave é o id da receita em andamento e o valor correspondente é o array com os ingredientes já marcados
 };
 
-const URL_DRINKS_CATEGORIES = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
-
-const URL_MEALS_CATEGORIES = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
+// finishedRecipes: Array com as receitas finalizadas
+// favoriteRecipes: Array com as receitas favoritas
 
 export const RecipesContext = createContext();
 
@@ -29,7 +28,23 @@ export const RecipesProvider = ({ children }) => {
   const [meals, setMeals] = useState(mealsInitialState);
   const [cocktails, setCocktails] = useState(cocktailsInitialState);
   const [finishedRecipes, setFinishedRecipes] = useState([]);
+  const [hasTermAndOption, setHasTermAndOption] = useState(false);
   // const [favoriteRecipes, setFavoriteRecipes] = useState([]);
+
+  const checkTermAndOption = () => {
+    setHasTermAndOption(true);
+  };
+
+  const getRandomRecipe = useCallback(async (page) => {
+    if (page === 'comidas') {
+      const { meals: mealsApi } = await fetch('https://www.themealdb.com/api/json/v1/1/random.php').then((response) => response.json());
+      return mealsApi[0].idMeal;
+    }
+    if (page === 'bebidas') {
+      const { drinks } = await fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php').then((response) => response.json());
+      return drinks[0].idDrink;
+    }
+  }, []);
 
   const setMealsList = (mealsList) => {
     setMeals({
@@ -45,70 +60,65 @@ export const RecipesProvider = ({ children }) => {
     });
   };
 
-  const setCocktailsCategorie = (cocktailsCategorie) => {
-    setCocktails({
-      ...cocktails,
-      categories: cocktailsCategorie,
-    });
-  };
-
   useEffect(() => {
-    const fetchDrinks = async () => {
-      const API_URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-      const responseList = await fetch(API_URL);
-      const dataList = await responseList.json();
-      const drinksList = await dataList.drinks;
-      const responseCategories = await fetch(URL_DRINKS_CATEGORIES);
-      const dataCategories = await responseCategories.json();
-      const drinksCategories = await dataCategories.drinks;
-      setCocktails({
-        ...cocktails,
-        list: drinksList,
-        categories: drinksCategories,
-      });
-    };
-    fetchDrinks();
+    if (!hasTermAndOption) {
+      console.log('entrou');
+      const fetchDrinks = async () => {
+        const LIST_URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+        const responseList = await fetch(LIST_URL);
+        const dataList = await responseList.json();
+        const drinksList = await dataList.drinks;
+
+        const CATEGORIES_URL = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+        const responseCategories = await fetch(CATEGORIES_URL);
+        const dataCategories = await responseCategories.json();
+        const drinksCategories = await dataCategories.drinks;
+
+        setCocktails({
+          ...cocktails,
+          list: drinksList,
+          categories: drinksCategories,
+        });
+      };
+      fetchDrinks();
+    }
+    return undefined;
   }, []);
 
   useEffect(() => {
-    async function fetchMeals() {
-      const API_URL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-      const responseList = await fetch(API_URL);
-      const dataList = await responseList.json();
-      const mealsList = await dataList.meals;
-      const responseCategories = await fetch(URL_MEALS_CATEGORIES);
-      const dataCategories = await responseCategories.json();
-      const mealsCategories = await dataCategories.meals;
-      setMeals({
-        ...meals,
-        list: mealsList,
-        categories: mealsCategories,
-      });
-    }
-    fetchMeals();
-  });
+    if (!hasTermAndOption) {
+      console.log('entrou');
+      const fetchMeals = async () => {
+        const API_URL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+        const responseList = await fetch(API_URL);
+        const dataList = await responseList.json();
+        const mealsList = await dataList.meals;
 
-  const getRandomRecipe = useCallback(async (page) => {
-    if (page === 'comidas') {
-      const { meals: mealsApi } = await fetch('https://www.themealdb.com/api/json/v1/1/random.php').then((response) => response.json());
-      return mealsApi[0].idMeal;
+        const URL_MEALS_CATEGORIES = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
+        const responseCategories = await fetch(URL_MEALS_CATEGORIES);
+        const dataCategories = await responseCategories.json();
+        const mealsCategories = await dataCategories.meals;
+
+        setMeals({
+          ...meals,
+          list: mealsList,
+          categories: mealsCategories,
+        });
+      };
+      fetchMeals();
     }
-    if (page === 'bebidas') {
-      const { drinks } = await fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php').then((response) => response.json());
-      return drinks[0].idDrink;
-    }
+    return undefined;
   }, []);
 
   const context = {
     getRandomRecipe,
+    setFinishedRecipes,
     setMealsList,
     setCocktailsList,
-    setCocktailsCategorie,
-    setFinishedRecipes,
+    checkTermAndOption,
     finishedRecipes,
     meals,
     cocktails,
-
   };
 
   return (
