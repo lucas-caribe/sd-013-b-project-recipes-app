@@ -11,9 +11,10 @@ export default function Comidas() {
   const [filterCategory, setFilterCategory] = useState([]);
 
   const categoryNumber = 5;
+  const cardNumber = 12;
 
   const pageTitle = 'Comidas';
-  const limits = 12;
+  const limits = 10;
   const { recipesDb, redirect } = useContext(RecipesContext);
   const history = useHistory();
 
@@ -53,18 +54,14 @@ export default function Comidas() {
           {
             recipesDb.map((meal, index) => (// requisito 17, card com limite de 12
               (index < limits) && (
-                <div key={ index }>
-                  <div>
-                    <span data-testid={ `${index}-card-name` }>{ meal.strMeal }</span>
-                  </div>
-                  <div data-testid={ `${index}-recipe-card` }>
-                    <img
-                      src={ meal.strMealThumb }
-                      data-testid={ `${index}-card-img` }
-                      alt={ meal.strMeal }
-                      width="150px"
-                    />
-                  </div>
+                <div key={ index } data-testid={ `${index}-recipe-card` }>
+                  <span data-testid={ `${index}-card-name` }>{ meal.strMeal }</span>
+                  <img
+                    src={ meal.strMealThumb }
+                    data-testid={ `${index}-card-img` }
+                    alt={ meal.strMeal }
+                    width="150px"
+                  />
                 </div>
               )
             ))
@@ -108,7 +105,7 @@ export default function Comidas() {
                   <p data-testid={ `${selectedCategory}-category-filter` } />
                 </div>
               </Link>
-            )).slice(0, limits))
+            )).slice(0, cardNumber))
 
           : meals
             .map((meal, index) => (
@@ -123,7 +120,7 @@ export default function Comidas() {
                   <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
                 </div>
               </Link>
-            )).slice(0, limits)}
+            )).slice(0, cardNumber)}
       </div>
       <Footer />
     </div>

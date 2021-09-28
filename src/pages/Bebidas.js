@@ -11,6 +11,7 @@ export default function Bebidas() {
   const [filterCategory, setFilterCategory] = useState([]);
 
   const categoryNumber = 5;
+  const cardNumber = 12;
 
   const pageTitle = 'Bebidas';
   const limits = 12;
@@ -53,18 +54,14 @@ export default function Bebidas() {
           {
             recipesDb.map((drink, index) => (// requisito 17, card com limite de 12
               (index < limits) && (
-                <div key={ index }>
-                  <div>
-                    <span data-testid={ `${index}-card-name` }>{ drink.strDrink }</span>
-                  </div>
-                  <div data-testid={ `${index}-recipe-card` }>
-                    <img
-                      src={ drink.strDrinkThumb }
-                      data-testid={ `${index}-card-img` }
-                      alt={ drink.strDrink }
-                      width="150px"
-                    />
-                  </div>
+                <div key={ index } data-testid={ `${index}-recipe-card` }>
+                  <span data-testid={ `${index}-card-name` }>{ drink.strDrink }</span>
+                  <img
+                    src={ drink.strDrinkThumb }
+                    data-testid={ `${index}-card-img` }
+                    alt={ drink.strDrink }
+                    width="150px"
+                  />
                 </div>
               )
             ))
@@ -108,7 +105,7 @@ export default function Bebidas() {
                   <p data-testid={ `${selectedCategory}-category-filter` } />
                 </div>
               </Link>
-            )).slice(0, limits))
+            )).slice(0, cardNumber))
 
           : drinks
             .map((drink, index) => (
@@ -123,7 +120,7 @@ export default function Bebidas() {
                   <p data-testid={ `${index}-card-name` }>{drink.strDrink}</p>
                 </div>
               </Link>
-            )).slice(0, limits)}
+            )).slice(0, cardNumber)}
       </div>
       <Footer />
     </div>
