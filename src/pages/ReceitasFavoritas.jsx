@@ -20,17 +20,17 @@ export default function ReceitasFavoritas() {
   };
 
   const onClickFilter = (type) => {
+    const arrayFromStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
     switch (type) {
     case 'All':
       setFavoritesFromStorage(JSON.parse(localStorage.getItem('favoriteRecipes')));
       break;
     case 'Food':
-      setFavoritesFromStorage(favoritesFromStorage
-        .filter((element) => element.type === 'comida'));
+      setFavoritesFromStorage(arrayFromStorage.filter((food) => food.type === 'comida'));
       break;
     case 'Drinks':
-      setFavoritesFromStorage(favoritesFromStorage
-        .filter((element) => element.type === 'bebida'));
+      setFavoritesFromStorage(arrayFromStorage
+        .filter((drink) => drink.type === 'bebida'));
       break;
     default:
       setFavoritesFromStorage(favoritesFromStorage);
@@ -78,55 +78,53 @@ export default function ReceitasFavoritas() {
       <Header pageTitle="Receitas Favoritas" searchButton={ false } />
       <div>
         {buttonsFilters()}
-        <div>
-          {favoritesFromStorage !== null && favoritesFromStorage.map((recipes, index) => (
-            <div key={ index }>
-              <button
-                alt="imageRecipe"
-                type="button"
-                data-testid={ `${index}-horizontal-image` }
-                onClick={ () => sendToDetails(recipes.type, recipes.id) }
+        {favoritesFromStorage !== null && favoritesFromStorage.map((recipes, index) => (
+          <div key={ index }>
+            <button
+              alt="imageRecipe"
+              type="button"
+              data-testid={ `${index}-horizontal-image` }
+              onClick={ () => sendToDetails(recipes.type, recipes.id) }
+              src={ recipes.image }
+            >
+              <img
                 src={ recipes.image }
-              >
-                <img
-                  src={ recipes.image }
-                  alt="imagemComida"
-                  style={ { width: '200px' } }
-                />
-              </button>
-              <p
-                data-testid={ `${index}-horizontal-top-text` }
-              >
-                {recipes.type === 'bebida' ? recipes.alcoholicOrNot
-                  : `${recipes.area} - ${recipes.category}`}
-              </p>
-              <button
-                type="button"
-                data-testid={ `${index}-horizontal-name` }
-                onClick={ () => sendToDetails(recipes.type, recipes.id) }
-              >
-                {recipes.name}
-              </button>
-              <button
-                type="button"
-                onClick={ () => clickShare(setCopyOk, recipes.type, recipes.id) }
-                data-testid={ `${index}-horizontal-share-btn` }
-                src={ shareIcon }
-              >
-                <img src={ shareIcon } alt="shareIcon" />
-              </button>
-              <button
-                type="button"
-                data-testid={ `${index}-horizontal-favorite-btn` }
-                onClick={ () => clickFavoriteButton(recipes.id) }
-                src={ blackHeartIcon }
-              >
-                <img src={ blackHeartIcon } alt="blackHeart" />
-              </button>
-            </div>
-          ))}
-          <p>{copyOk ? 'Link copiado!' : null}</p>
-        </div>
+                alt="imagemComida"
+                style={ { width: '200px' } }
+              />
+            </button>
+            <p
+              data-testid={ `${index}-horizontal-top-text` }
+            >
+              {recipes.type === 'bebida' ? recipes.alcoholicOrNot
+                : `${recipes.area} - ${recipes.category}`}
+            </p>
+            <button
+              type="button"
+              data-testid={ `${index}-horizontal-name` }
+              onClick={ () => sendToDetails(recipes.type, recipes.id) }
+            >
+              {recipes.name}
+            </button>
+            <button
+              type="button"
+              onClick={ () => clickShare(setCopyOk, recipes.type, recipes.id) }
+              data-testid={ `${index}-horizontal-share-btn` }
+              src={ shareIcon }
+            >
+              <img src={ shareIcon } alt="shareIcon" />
+            </button>
+            <button
+              type="button"
+              data-testid={ `${index}-horizontal-favorite-btn` }
+              onClick={ () => clickFavoriteButton(recipes.id) }
+              src={ blackHeartIcon }
+            >
+              <img src={ blackHeartIcon } alt="blackHeart" />
+            </button>
+          </div>
+        ))}
+        <p>{copyOk ? 'Link copiado!' : null}</p>
       </div>
     </div>
   );

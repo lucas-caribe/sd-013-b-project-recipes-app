@@ -44,18 +44,13 @@ export const ChoiceButton = (inFButton, push) => {
 };
 export const clickShare = (setCopyOk, type, id) => {
   if (type === 'bebida') {
-    console.log(type);
     navigator.clipboard.writeText(`http://localhost:3000/bebidas/${id}`);
     setCopyOk(true);
   }
   if (type === 'comida') {
-    console.log('comida');
     navigator.clipboard.writeText(`http://localhost:3000/comidas/${id}`);
     setCopyOk(true);
   }
-  // source link : https://stackoverflow.com/questions/66338574/button-copy-to-clipboard-window-location-href
-  // navigator.clipboard.writeText(window.location.href);
-  // setCopyOk(true);
 };
 
 export const getEmbedVideo = (objIdReceita) => {
@@ -101,68 +96,6 @@ export const getMeasure = (objIdReceita, type) => {
       .filter((measures2) => measures2[1] !== ' ')
       .map((measures3) => measures3[1]);
     return measure;
-  }
-};
-
-export const formatObjForStorageMeal = (id, objIdReceita) => {
-  if (localStorage.getItem('favoriteRecipes') === null) {
-    localStorage.setItem('favoriteRecipes', JSON.stringify([]));
-  }
-  if (objIdReceita) {
-    const obj = [{
-      id,
-      type: 'comida',
-      area: objIdReceita.strArea,
-      category: objIdReceita.strCategory,
-      alcoholicOrNot: '',
-      name: objIdReceita.strMeal,
-      image: objIdReceita.strMealThumb,
-    }];
-    const recipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    recipes.push(obj);
-    localStorage.setItem('favoriteRecipes', JSON.stringify(obj));
-  }
-};
-
-export const formatObjForStorageDrink = (id, objIdReceita) => {
-  if (localStorage.getItem('favoriteRecipes') === null) {
-    localStorage.setItem('favoriteRecipes', JSON.stringify([]));
-  }
-  if (objIdReceita) {
-    const obj = {
-      id,
-      type: 'bebida',
-      area: '',
-      category: objIdReceita.strCategory,
-      alcoholicOrNot: objIdReceita.strAlcoholic,
-      name: objIdReceita.strDrink,
-      image: objIdReceita.strDrinkThumb,
-    };
-    const recipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    recipes.push(obj);
-    localStorage.setItem('favoriteRecipes', JSON.stringify(recipes));
-  }
-};
-
-export const clickFavoriteMeal = (obj, setFavorite, id) => {
-  setFavorite((prevState) => !prevState);
-  formatObjForStorageMeal(id, obj);
-};
-
-export const clickFavoriteDrink = (obj, setFavorite, id) => {
-  setFavorite((prevState) => !prevState);
-  formatObjForStorageDrink(id, obj);
-};
-
-export const verifyFavorite = (foodId, setFavorite) => {
-  const objFromStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  if (objFromStorage) {
-    const recipeFavorite = objFromStorage.some((algum) => algum.id === foodId);
-    if (recipeFavorite) {
-      setFavorite(true);
-    } else {
-      setFavorite(false);
-    }
   }
 };
 
