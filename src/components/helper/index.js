@@ -29,14 +29,15 @@ export const renderIngredientsCheck = (recipeDetails) => {
     .filter((e) => (e[0].includes('Ingredient') && e[1]));
   const measuresList = Object.entries(recipeDetails)
     .filter((e) => (e[0].includes('Measure') && e[1]));
-  return ingredientsList.map((ingredient, i) => (
+  return ingredientsList.map((ingredient, index) => (
     <div key={ ingredient[0] }>
-      <input type="checkbox" />
-      <h5
-        data-testid={ `${i}-ingredient-step` }
+      <label
+        htmlFor="checkbox"
+        data-testid={ `${index}-ingredient-step` }
       >
-        {`${ingredient[1]} - ${measuresList[i][1]}`}
-      </h5>
+        <input type="checkbox" name="checkbox" />
+        {`${ingredient[1]} - ${measuresList[index][1]}`}
+      </label>
     </div>));
 };
 
