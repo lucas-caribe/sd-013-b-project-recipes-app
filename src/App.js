@@ -14,6 +14,7 @@ import FoodArea from './pages/FoodArea';
 import Profile from './pages/Profile';
 import MainPage from './pages/MainPage';
 import FoodRecipe from './pages/FoodRecipe';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={ Login } />
         <Route exact path="/comidas" component={ MainPage } />
-        <Route path="/bebidas" component={ MainPage } />
+        <Route exact path="/bebidas" component={ MainPage } />
         <Route path="/comidas/:recipeId" component={ FoodRecipe } />
         <Route path="/bebidas/:id-da-receita" component={ FoodRecipe } />
         {/* <Route path="/comidas/:id-da-receita/in-progress" component={ FoodInProgress } /> */}
@@ -35,6 +36,7 @@ function App() {
         <Route path="/perfil" component={ Profile } />
         {/* <Route path="/receitas-feitas" component={ DoneRecipes } />
         <Route path="/receitas-favoritas" component={ FavoriteRecipes } /> */}
+        <Route component={ NotFound } />
       </Switch>
     </Provider>
   );

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useState, useContext } from 'react';
-// import { Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Input from './Input';
 import fetchAPI from '../../services';
 import AppContext from '../../context/AppContext';
@@ -31,9 +31,9 @@ const SearchBar = ({ option }) => {
 
     if (type === 'Comidas') {
       const { meals } = await fetchAPI(radioCriteria[radio]);
-      // if (meals.length === 1) {
-      //   return <Redirect to={ `/comidas}/${meals[0].idMeal}` } />;
-      // }
+      if (meals.length === 1) {
+        return (<Redirect to={ `/comidas}/${meals[0].idMeal}` } />);
+      }
       return meals !== null
         ? setMeals(meals)
         : global.alert(
@@ -41,9 +41,9 @@ const SearchBar = ({ option }) => {
         );
     }
     const { drinks } = await fetchAPI(radioCriteria[radio]);
-    // if (drinks.length === 1) {
-    //   return <Redirect to={ `/bebidas/${drinks[0].idDrink}` } />;
-    // }
+    if (drinks.length === 1) {
+      return (<Redirect to={ `/bebidas/${drinks[0].idDrink}` } />);
+    }
     return drinks !== null
       ? setDrinks(drinks)
       : global.alert(
@@ -112,4 +112,5 @@ const SearchBar = ({ option }) => {
 SearchBar.propTypes = {
   option: PropTypes.string.isRequired,
 };
+
 export default SearchBar;
