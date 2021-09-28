@@ -24,6 +24,22 @@ export const renderIngredients = (recipeDetails) => {
     </li>));
 };
 
+export const renderIngredientsCheck = (recipeDetails) => {
+  const ingredientsList = Object.entries(recipeDetails)
+    .filter((e) => (e[0].includes('Ingredient') && e[1]));
+  const measuresList = Object.entries(recipeDetails)
+    .filter((e) => (e[0].includes('Measure') && e[1]));
+  return ingredientsList.map((ingredient, i) => (
+    <div key={ ingredient[0] }>
+      <input type="checkbox" />
+      <h5
+        data-testid={ `${i}-ingredient-step` }
+      >
+        {`${ingredient[1]} - ${measuresList[i][1]}`}
+      </h5>
+    </div>));
+};
+
 export const renderRecomendationList = (card, index, type) => (
   <div
     key={ index }
@@ -48,4 +64,57 @@ export const handleStartRecipe = (history, url, recipe, dispatch) => {
   dispatch(addStartedRecipes(startedRecipe));
   console.log(startedRecipe);
   history.push(`${pathname}/in-progress`);
+};
+
+export const handleDoneRecipes = (recipeDetails, type) => {
+  const newDate = new Date();
+  const date = newDate.getDate();
+  const month = newDate.getMonth();
+  const year = newDate.getFullYear();
+  const doneDate = `${date}-${month}-${year}`;
+  let takeTags = '';
+
+  if (recipeDetails.strTags !== null) {
+    takeTags = (recipeDetails.strTags).split(',');
+  }
+  let prevDoneRecipes = [];
+  if (localStorage.getItem('doneRecipes') !== null) {
+    prevDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    console.log(prevDoneRecipes);
+  }
+
+  if (type === 'comidas') {
+    const {
+      idMeal, strArea, strCategory, strMeal, strMealThumb } = recipeDetails;
+    const doneRecipes = {
+      id: idMeal,
+      type,
+      area: strArea,
+      category: strCategory,
+      alcoholicOrNot: '',
+      name: strMeal,
+      image: strMealThumb,
+      doneDate,
+      tags: takeTags,
+    };
+    const jsonDoneRecipes = JSON.stringify([...prevDoneRecipes, doneRecipes]);
+    localStorage.setItem('doneRecipes', jsonDoneRecipes);
+  } else {
+    const
+      { idDrink, strCategory, strDrink, strDrinkThumb, strAlcoholic, strTags,
+      } = recipeDetails;
+    const doneRecipes = {
+      id: idDrink,
+      type,
+      area: '',
+      category: strCategory,
+      alcoholicOrNot: strAlcoholic,
+      name: strDrink,
+      image: strDrinkThumb,
+      doneDate,
+      tags: strTags,
+    };
+    const jsonDoneRecipes = JSON.stringify([...prevDoneRecipes, doneRecipes]);
+    localStorage.setItem('doneRecipes', jsonDoneRecipes);
+  }
 };
