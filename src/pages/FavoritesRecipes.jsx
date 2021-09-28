@@ -1,8 +1,10 @@
 // Tela de receitas favoritas: requisitos 60 a 66;
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import copy from 'clipboard-copy';
 import ButtonFavorite from '../components/ButtonFavorite';
-import ButtonShare from '../components/ButtonShare';
+import shareIcon from '../images/shareIcon.svg';
+import { foodRequest } from '../services/data';
 
 const STATE_FAVORITE = {
   buttonFilter: null,
@@ -38,6 +40,20 @@ function buttonChangeFilter(setState) {
 
 function FavoritesRecipes() {
   const history = useHistory();
+  const [visibleMessage, setVisibleMessage] = useState(false);
+
+  async function buttonCopy(event) {
+    setVisibleMessage(false);
+    const oneSecond = 1000;
+    const { id } = event.target.parentNode;
+    const itemFood = await foodRequest(`lookup.php?i=${id}`);
+    if (!itemFood.meals) {
+      copy(`http://localhost:3000/bebidas/${id}`);
+    } else {
+      copy(`http://localhost:3000/comidas/${id}`);
+    }
+    setTimeout(() => setVisibleMessage(true), oneSecond);
+  }
 
   function itemFavorite(item, index) {
     const { id, type, area, category, alcoholicOrNot, name, image } = item;
@@ -62,7 +78,13 @@ function FavoritesRecipes() {
           </button>
           <p data-testid={ `${index}-horizontal-top-text` }>{`${area} - ${category}`}</p>
           <ButtonFavorite id={ id } index={ index } />
-          <ButtonShare index={ index } />
+          <input
+            data-testid={ `${index}-horizontal-share-btn` }
+            type="image"
+            onClick={ buttonCopy }
+            src={ shareIcon }
+            alt="shareIcon"
+          />
         </div>
       );
     }
@@ -87,7 +109,13 @@ function FavoritesRecipes() {
         <p>{ category }</p>
         <p data-testid={ `${index}-horizontal-top-text` }>{ alcoholicOrNot }</p>
         <ButtonFavorite id={ id } index={ index } />
-        <ButtonShare index={ index } />
+        <input
+          data-testid={ `${index}-horizontal-share-btn` }
+          type="image"
+          onClick={ buttonCopy }
+          src={ shareIcon }
+          alt="shareIcon"
+        />
       </div>
     );
   }
@@ -101,6 +129,7 @@ function FavoritesRecipes() {
   if (buttonFilter === 'comida') {
     return (
       <>
+        <p hidden={ visibleMessage }>Link copiado!</p>
         { buttonChangeFilter(setState) }
         {
           favoriteRecipes
@@ -118,6 +147,7 @@ function FavoritesRecipes() {
   if (buttonFilter === 'bebida') {
     return (
       <>
+        <p hidden={ visibleMessage }>Link copiado!</p>
         { buttonChangeFilter(setState) }
         {
           favoriteRecipes
@@ -134,6 +164,7 @@ function FavoritesRecipes() {
 
   return (
     <>
+      <p hidden={ visibleMessage }>Link copiado!</p>
       { buttonChangeFilter(setState) }
       {
         favoriteRecipes.map((item, index) => (

@@ -1,7 +1,9 @@
 // Tela de receitas feitas: requisitos 54 a 59;
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import ButtonShare from '../components/ButtonShare';
+import copy from 'clipboard-copy';
+import shareIcon from '../images/shareIcon.svg';
+import { foodRequest } from '../services/data';
 
 const STATE_DONE = {
   buttonFilter: null,
@@ -37,6 +39,20 @@ function buttonChangeFilter(setState) {
 
 function RecipesMade() {
   const history = useHistory();
+  const [visibleMessage, setVisibleMessage] = useState(false);
+
+  async function buttonCopy(event) {
+    setVisibleMessage(false);
+    const oneSecond = 1000;
+    const { id } = event.target.parentNode;
+    const itemFood = await foodRequest(`lookup.php?i=${id}`);
+    if (!itemFood.meals) {
+      copy(`http://localhost:3000/bebidas/${id}`);
+    } else {
+      copy(`http://localhost:3000/comidas/${id}`);
+    }
+    setTimeout(() => setVisibleMessage(true), oneSecond);
+  }
 
   function itemDone(item, index) {
     const { id, type, area, category, alcoholicOrNot, name, image,
@@ -70,7 +86,13 @@ function RecipesMade() {
             </p>
           ))}
           <p data-testid={ `${index}-horizontal-done-date` }>{ doneDate }</p>
-          <ButtonShare index={ index } />
+          <input
+            data-testid={ `${index}-horizontal-share-btn` }
+            type="image"
+            onClick={ buttonCopy }
+            src={ shareIcon }
+            alt="shareIcon"
+          />
         </div>
       );
     }
@@ -95,7 +117,13 @@ function RecipesMade() {
         <p>{ category }</p>
         <p data-testid={ `${index}-horizontal-top-text` }>{ alcoholicOrNot }</p>
         <p data-testid={ `${index}-horizontal-done-date` }>{ doneDate }</p>
-        <ButtonShare index={ index } />
+        <input
+          data-testid={ `${index}-horizontal-share-btn` }
+          type="image"
+          onClick={ buttonCopy }
+          src={ shareIcon }
+          alt="shareIcon"
+        />
       </div>
     );
   }
@@ -109,6 +137,7 @@ function RecipesMade() {
   if (buttonFilter === 'comida') {
     return (
       <>
+        <p hidden={ visibleMessage }>Link copiado!</p>
         { buttonChangeFilter(setState) }
         {
           doneRecipes
@@ -126,6 +155,7 @@ function RecipesMade() {
   if (buttonFilter === 'bebida') {
     return (
       <>
+        <p hidden={ visibleMessage }>Link copiado!</p>
         { buttonChangeFilter(setState) }
         {
           doneRecipes
@@ -142,6 +172,7 @@ function RecipesMade() {
 
   return (
     <>
+      <p hidden={ visibleMessage }>Link copiado!</p>
       { buttonChangeFilter(setState) }
       {
         doneRecipes.map((item, index) => (
