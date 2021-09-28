@@ -18,11 +18,11 @@ export default function Header({ title }) {
         <Link
           to="/perfil"
           type="submit"
+          data-testid="profile-top-btn"
         >
           <img
             src={ profileIcon }
             alt="profile-icon"
-            data-testid="profile-top-btn"
           />
         </Link>
         <h1
