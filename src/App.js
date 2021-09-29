@@ -5,7 +5,6 @@ import { Route, Switch } from 'react-router';
 import Login from './pages/Login';
 import Comidas from './pages/Comidas';
 import Bebidas from './pages/Bebidas';
-import Footer from './components/Footer';
 import Explorer from './pages/Explorer';
 import ExplorerCountries from './pages/ExplorerCountries';
 import FavoritesRecipes from './pages/FavoritesRecipes';
