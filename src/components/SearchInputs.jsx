@@ -9,22 +9,13 @@ function SearchInputs() {
     setInputRadio,
     setInputText,
     setApiRadio,
+    setFilter,
   } = useContext(Context);
 
   const handleClickFiltrarReceita = () => {
     searchBarTextFetch(inputRadio, inputText, setApiRadio);
+    setFilter(true);
   };
-
-  // const mudaDetails = () => {
-  //   // history.push(`${window.location.pathname}/${id}`);
-  //   // console.log(`REDIRECIONADO P/ ${window.location.pathname}/${id}`);
-  //   const id = apiRadio.meals[0].idMeal;
-
-  //   if (window.location.pathname === '/comidas') {
-  //     return (<Redirect to={ `/comidas/${id}` } />);
-  //   }
-  //   return (<Redirect to={ `/bebidas/${id}` } />);
-  // };
 
   return (
     <div>

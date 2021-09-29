@@ -14,6 +14,7 @@ function Provider({ children }) {
   const [inputText, setInputText] = useState('');
   const [inputRadio, setInputRadio] = useState('');
   const [apiRadio, setApiRadio] = useState();
+  const [filter, setFilter] = useState(false);
 
   const contextValue = {
     statusLoginBtn,
@@ -36,6 +37,8 @@ function Provider({ children }) {
     setShowSearchBar,
     allRecipes,
     setAllRecipes,
+    filter,
+    setFilter,
   };
 
   return (
