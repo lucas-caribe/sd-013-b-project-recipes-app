@@ -16,7 +16,6 @@ describe('Verfica os elementos do footer', () => {
   const btnExplore = screen.getByTestId(btnExploreTestId);
   const btnMeals = screen.getByTestId(btnFoodTestId);
   const mealsPageTitle = screen.getByTestId(pageTitleTestId);
-  const searchBtn = screen.getByAltText('search icon');
 
   it('should aparecer 3 botões no footer e cada um deles leva para sua respectiva página',
     () => {
@@ -44,5 +43,6 @@ describe('Verfica os elementos do footer', () => {
       expect(explorePageTitle).toHaveTextContent('Explorar');
       const exploreIcon = screen.getByAltText('explore icon');
       expect(exploreIcon).toBeInTheDocument();
+      // expect(searchBtn).notToBeInTheDocument();
     });
 });

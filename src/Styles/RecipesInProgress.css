@@ -1,0 +1,8 @@
+.ingredients-in-progress {
+  display: flex;
+  flex-direction: column;
+}
+
+.ingredient-checked {
+  text-decoration: none solid rgb(0, 0, 0);
+}

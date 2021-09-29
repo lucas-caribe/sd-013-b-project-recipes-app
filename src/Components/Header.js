@@ -21,7 +21,7 @@ function Header({ title, containBtnSearch = false }) {
           <img
             data-testid="search-icon"
             src={ searchIcon }
-            alt="Icone de pesquisa"
+            alt="search icon"
           />
         </button>
         <SearchBar />
