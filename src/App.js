@@ -7,8 +7,7 @@ import Comidas from './pages/Comidas';
 import Provider from './context/Provider';
 import Bebidas from './pages/Bebidas';
 import Explorar from './pages/Explorar';
-import ExplorarComidas from './pages/ExplorarComidas';
-import ExplorarBebidas from './pages/ExplorarBebidas';
+import ExplorarComidasOuBebidas from './pages/ExplorarComidasOuBebidas';
 import BebidasIgredientes from './pages/BebidasIngredientes';
 import ComidasIngredientes from './pages/ComidasIngredientes';
 import ComidasArea from './pages/ComidasArea';
@@ -47,8 +46,8 @@ function App() {
           render={ (props) => <ReceitasInProgress { ...props } type="drinks" /> }
         />
         <Route exact path="/explorar" component={ Explorar } />
-        <Route exact path="/explorar/comidas" component={ ExplorarComidas } />
-        <Route exact path="/explorar/bebidas" component={ ExplorarBebidas } />
+        <Route exact path="/explorar/comidas" component={ ExplorarComidasOuBebidas } />
+        <Route exact path="/explorar/bebidas" component={ ExplorarComidasOuBebidas } />
         <Route exact path="/explorar/comidas/area" component={ ComidasArea } />
         <Route
           exact
