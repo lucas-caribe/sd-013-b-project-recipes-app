@@ -40,31 +40,34 @@ const DetailsIngredients = (props) => {
           {ingredients.map((x, i) => {
             if (measures[i] !== null) {
               return (
-                <li
-                  data-testid={ `${i}-ingredient-name-and-measure` }
-                  style={ { listStyle: 'none' } }
-                  key={ x }
-                >
+                <>
                   <input type="checkbox" />
-                  {x}
-                  {' '}
-                  -
-                  {' '}
-                  {measures[i]}
-                </li>
+                  <li
+                    data-testid={ `${i}-ingredient-step` }
+                    style={ { listStyle: 'none' } }
+                    key={ x }
+                  >
+
+                    {x}
+                    {' '}
+                    -
+                    {' '}
+                    {measures[i]}
+                  </li>
+                </>
               );
             }
             return (
-              <li
-                data-testid={ `${i}-ingredient-name-and-measure` }
-                style={ { listStyle: 'none' } }
-                key={ x }
-              >
-                {' '}
+              <>
                 <input type="checkbox" />
-                {' '}
-                {x}
-              </li>
+                <li
+                  data-testid={ `${i}-ingredient-step` }
+                  style={ { listStyle: 'none' } }
+                  key={ x }
+                >
+                  {x}
+                </li>
+              </>
             );
           })}
         </ul>

@@ -117,7 +117,12 @@ const Details = (props) => {
       <DetailsInstructions instructions={ instructions } />
       {type === 'comidas' && <DetailsVideo videoUrl={ videoUrl } />}
       <DetailsRecommended recommended={ recommended } recommendedDb={ recommendedDb } />
-      <StartRecipeButton type={ type } id={ id } recipeStatus={ recipeStatus } />
+      <StartRecipeButton
+        type={ type }
+        id={ id }
+        status={ status }
+        recipeStatus={ recipeStatus }
+      />
 
     </div>
   );
