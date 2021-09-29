@@ -1,15 +1,11 @@
-import React, { useState } from 'react';
-import { useRecipes } from '../../context';
+import React from 'react';
 
-import { useSearch } from '../../context/SearchBarContext';
+import { useRecipes, useSearch } from '../../context';
 
 import './SearchBar.css';
 
 function SearchBar() {
-  const { handleSearch } = useSearch();
-  const [searchTerm, setSearchTerm] = useState();
-  const [searchOption, setSearchOption] = useState();
-
+  const { handleSearch, setTerm, setOption } = useSearch();
   const { checkTermAndOption } = useRecipes();
 
   return (
@@ -21,7 +17,7 @@ function SearchBar() {
         placeholder="Buscar receita"
         onChange={ (e) => {
           checkTermAndOption();
-          setSearchTerm(e.target.value);
+          setTerm(e.target.value);
         } }
       />
       <div className="radio-btns">
@@ -32,7 +28,7 @@ function SearchBar() {
           value="ingredient"
           onClick={ (e) => {
             checkTermAndOption();
-            setSearchOption(e.target.value);
+            setOption(e.target.value);
           } }
         />
         Ingrediente
@@ -43,7 +39,7 @@ function SearchBar() {
           value="name"
           onClick={ (e) => {
             checkTermAndOption();
-            setSearchOption(e.target.value);
+            setOption(e.target.value);
           } }
         />
         Nome
@@ -54,7 +50,7 @@ function SearchBar() {
           value="first-letter"
           onClick={ (e) => {
             checkTermAndOption();
-            setSearchOption(e.target.value);
+            setOption(e.target.value);
           } }
         />
         Primeira letra
@@ -62,7 +58,7 @@ function SearchBar() {
       <button
         data-testid="exec-search-btn"
         type="button"
-        onClick={ () => handleSearch(searchTerm, searchOption) }
+        onClick={ () => handleSearch() }
       >
         Buscar
       </button>

@@ -1,21 +1,19 @@
 import React, { createContext,
   useContext,
   useState,
-  useEffect,
-  useCallback } from 'react';
+  useCallback,
+  useEffect } from 'react';
 
 import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 
-import { AuthContext } from './AuthContext';
 import { RecipesContext } from './RecipesContext';
+import { AuthContext } from './AuthContext';
 
 //   {
 //     isOpen: false, // Flag para indicar se a searchBar está visível ou não
-//     searchInfo: {
 //     term: '', // Valor do input de texto da searchBar
 //     option: '', // Valor do radio btn selecionado (Ingrediente, nome ou Primeira letra)
-//     },
 //   }
 
 export const SearchBarContext = createContext();
@@ -28,18 +26,20 @@ export const SearchBarProvider = ({ children }) => {
   const [option, setOption] = useState('');
 
   const { page } = useContext(AuthContext);
+
   const { setMealsList, setCocktailsList } = useContext(RecipesContext);
+
+  useEffect(() => {
+    setTerm('');
+    setOption('');
+  }, [page]);
 
   const toggleSearchBar = () => {
     setIsOpen((prevState) => !prevState);
   };
 
-  const handleSearch = (searchTerm, searchOption) => {
-    setTerm(searchTerm);
-    setOption(searchOption);
-  };
-
   const checkResult = useCallback((result) => {
+    console.log('entrou check');
     if (result.meals && result.meals.length === 1) {
       history.push(`/comidas/${result.meals[0].idMeal}`);
     }
@@ -53,18 +53,17 @@ export const SearchBarProvider = ({ children }) => {
       setCocktailsList(result.drinks);
     }
     if (result.meals === null) {
-      console.log('entrou');
       global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       return null;
     }
     if (result.drinks === null) {
-      console.log('entrou');
       global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       return null;
     }
   }, [history, setMealsList, setCocktailsList]);
 
   const fetchByOption = useCallback(async (url, searchOption, searchTerm) => {
+    console.log('entrou fetch');
     switch (searchOption) {
     case 'ingredient': {
       const response = await fetch(`https://www.${url}.com/api/json/v1/1/filter.php?i=${searchTerm}`);
@@ -92,7 +91,7 @@ export const SearchBarProvider = ({ children }) => {
     }
   }, [checkResult]);
 
-  useEffect(() => {
+  const checkPageAndFetch = () => {
     switch (page) {
     case '/comidas': {
       const mealURL = 'themealdb';
@@ -107,15 +106,22 @@ export const SearchBarProvider = ({ children }) => {
     default:
       break;
     }
-  }, [term, option, fetchByOption]);
+  };
+
+  const handleSearch = () => {
+    checkPageAndFetch();
+  };
+
+  const context = {
+    isOpen,
+    toggleSearchBar,
+    handleSearch,
+    setTerm,
+    setOption,
+  };
 
   return (
-    <SearchBarContext.Provider
-      value={ { isOpen,
-        toggleSearchBar,
-        handleSearch,
-      } }
-    >
+    <SearchBarContext.Provider value={ context }>
       { children }
     </SearchBarContext.Provider>
   );
