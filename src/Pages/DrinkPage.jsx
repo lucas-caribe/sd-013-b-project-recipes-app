@@ -15,7 +15,7 @@ export default function DrinkPage() {
       setDrinkState(response.drinks);
     }
     if (booleanDrink === false) requestAPI();
-  }, [setDrinkState]);
+  }, [booleanDrink, setDrinkState]);
 
   return (
     <div>

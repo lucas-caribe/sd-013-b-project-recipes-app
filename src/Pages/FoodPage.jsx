@@ -15,7 +15,7 @@ export default function FoodPage() {
       setFoodState(response.meals);
     }
     if (boolean === false) requestAPI();
-  }, [setFoodState]);
+  }, [boolean, setFoodState]);
 
   return (
     <div>
