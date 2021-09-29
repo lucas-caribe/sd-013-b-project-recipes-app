@@ -28,7 +28,7 @@ export const SearchBarProvider = ({ children }) => {
 
   const { page } = useContext(AuthContext);
 
-  const { setMealsList, setCocktailsList } = useContext(RecipesContext);
+  const { meals, cocktails, setMeals, setCocktails } = useContext(RecipesContext);
 
   useEffect(() => {
     setTerm('');
@@ -47,10 +47,16 @@ export const SearchBarProvider = ({ children }) => {
       history.push(`/bebidas/${result.drinks[0].idDrink}`);
     }
     if (result.meals && result.meals.length > 1) {
-      setMealsList(result.meals);
+      setMeals({
+        ...meals,
+        list: result.meals,
+      });
     }
     if (result.drinks && result.drinks.length > 1) {
-      setCocktailsList(result.drinks);
+      setCocktails({
+        ...cocktails,
+        list: result.drinks,
+      });
     }
     if (result.meals === null) {
       global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');

@@ -45,20 +45,6 @@ export const RecipesProvider = ({ children }) => {
     }
   }, []);
 
-  const setMealsList = (mealsList) => {
-    setMeals({
-      ...meals,
-      list: mealsList,
-    });
-  };
-
-  const setCocktailsList = (cocktailsList) => {
-    setCocktails({
-      ...cocktails,
-      list: cocktailsList,
-    });
-  };
-
   // useEffect(() => {
   //   if (hasTermAndOption === false) {
   //     console.log('entrou');
@@ -113,9 +99,7 @@ export const RecipesProvider = ({ children }) => {
     getRandomRecipe,
     setFinishedRecipes,
     setMeals,
-    setMealsList,
     setCocktails,
-    setCocktailsList,
     checkTermAndOption,
     hasTermAndOption,
     finishedRecipes,
