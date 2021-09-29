@@ -11,6 +11,8 @@ function Provider({ children }) {
   const [filteredItem, setFilteredItem] = useState([]);
   const [filterRadio, setFilterRadio] = useState('s');
   const [filterText, setFilterText] = useState('');
+  const [foods, setFoods] = useState([]);
+  const [drinks, setDrinks] = useState([]);
 
   async function fetchFood() {
     let endPoint = `https://www.themealdb.com/api/json/v1/1/search.php?${filterRadio}=${filterText}`;
@@ -21,7 +23,7 @@ function Provider({ children }) {
     const response = await request.json();
     const data = response.meals;
     if (data !== null) {
-      setFilteredItem(data);
+      setFoods(data);
     } else {
       global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     }
@@ -36,14 +38,13 @@ function Provider({ children }) {
     const response = await request.json();
     const data = response.drinks;
     if (data !== null) {
-      setFilteredItem(data);
+      setDrinks(data);
     } else {
       global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     }
   }
+
   const [filteredRecipes, setFilteredRecipes] = useState('');
-  const [foods, setFoods] = useState([]);
-  const [drinks, setDrinks] = useState([]);
   const [categoryFoodButtons, setCategoryFoodButtons] = useState([]);
   const [categoryDrinkButtons, setCategoryDrinkButtons] = useState([]);
   const [filtered, setFiltered] = useState(false);
