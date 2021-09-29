@@ -21,7 +21,6 @@ export default function CategoriesButtons({ props: { mealsCategories, categoryTo
               type="button"
               key={ category }
               onClick={ () => {
-                console.log(category, categoryToogle);
                 if (categoryToogle.toogle) {
                   if (category === categoryToogle.category) {
                     fetchMealAPI();

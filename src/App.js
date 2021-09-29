@@ -1,9 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-// import './App.css';
-// import rockGlass from './images/rockGlass.svg';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// Início
 import RecipesProvider from './Context/RecipesProvider';
 import DrinksPage from './Pages/DrinksPage';
 import ProfilePage from './Pages/ProfilePage';
@@ -22,7 +18,7 @@ import MealsPage from './Pages/MealsPage';
 import ExploreRecipesByIngredient from './Pages/ExploreMealsRecipesByIngredient';
 import ExploreDrinksRecipesByIngredient from './Pages/ExploreDrinksRecipesByIngredient';
 import NotFound from './Pages/NotFound';
-// import RecipesContext from './Context/RecipesContext';
+import MealsInProgress from './Pages/MealsInProgress';
 
 function App() {
   // const { randomMeal } = useContext(RecipesContext);
@@ -82,6 +78,7 @@ function App() {
             component={ FavoriteRecipes }
           />
           <Route exact path="/explorar/bebidas/area" component={ NotFound } />
+          <Route exact path="/comidas/:id/in-progress" component={ MealsInProgress } />
         </Switch>
       </BrowserRouter>
     </RecipesProvider>

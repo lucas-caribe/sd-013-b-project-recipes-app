@@ -294,3 +294,10 @@ footer {
     transform: translate(0) scale(1);
   }
 }
+
+.startRecipeButton {
+  bottom: 0;
+  margin-top: 50px;
+  position: fixed;
+  text-align: center;
+}

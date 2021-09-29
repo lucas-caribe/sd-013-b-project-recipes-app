@@ -1,14 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router';
+import { Carousel, CarouselItem } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link } from 'react-router-dom';
 
 export default function MealDetalis() {
   const [mealDetails, setMealDetails] = useState({});
+  // const [inProgress, setinProgress] = useState(false);
   const [drinks, setDrinks] = useState([]);
+  let count1 = 0;
+  let count2 = 1;
+
+  const recipesDone = JSON.parse(localStorage.getItem('doneRecipes'));
+  let recipeInProgress = JSON
+    .parse(localStorage.getItem('inProgressRecipes'));
+  if (recipeInProgress) recipeInProgress = recipeInProgress.meals;
+  if (!recipeInProgress) recipeInProgress = {};
+  const test = recipesDone || [];
   const SIX = 6;
-  // const TREE = 3;
+
   // id => API
   const id = useLocation().pathname.replace('/comidas/', '');
-  console.log(id);
+  const test2 = test.some((recipe) => recipe.id === id);
+
   // ref: Lucas Caribé
   const youtubeSource = mealDetails.strYoutube ? mealDetails
     .strYoutube.replace(/watch\?v=/, 'embed/') : '';
@@ -16,9 +30,6 @@ export default function MealDetalis() {
   const str2 = 'encrypted-media; gyroscope; picture-in-picture';
   const youtubeConf = str1 + str2;
   const TWENTY = 20;
-
-  // const firstCarousel = drinks.slice(0, TREE);
-  // const secondCarousel = drinks.slice(0, SIX);
 
   const ingredientList = [];
   const fetchMealIdAPi = async () => {
@@ -37,6 +48,9 @@ export default function MealDetalis() {
     fetchMealIdAPi();
   }, []);
 
+  const firstCarousel = drinks.length ? [drinks[0], drinks[2], drinks[4]] : [];
+  const secondCarousel = drinks.length ? [drinks[1], drinks[3], drinks[5]] : [];
+
   for (let index = 1; index <= TWENTY; index += 1) {
     if (mealDetails[`strIngredient${index}`] !== '') {
       ingredientList.push({
@@ -45,6 +59,13 @@ export default function MealDetalis() {
       });
     }
   }
+
+  console.log(recipeInProgress);
+
+  const hiddenButton = (
+    <button type="button" data-testid="start-recipe-btn" className="startRecipeButton">
+      {recipeInProgress[id] ? 'Continuar Receita' : 'Iniciar Receita'}
+    </button>);
 
   return (
     <>
@@ -68,24 +89,52 @@ export default function MealDetalis() {
       </ul>
       <h3>Instruções</h3>
       <p data-testid="instructions">{mealDetails.strInstructions}</p>
-      <iframe
-        data-testid="video"
-        width="560"
-        height="315"
+      <iframed-block
+        w-100
         src={ youtubeSource }
+        data-testid="video"
         title="YouTube video player"
         frameBorder="0"
         allow="accelerometer;
          autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen={ youtubeConf }
       />
-      {drinks.map((meal, index) => (
-        <div data-testid={ `${index}-recomendation-card` } key={ `meal${index}` }>
-          <img src={ meal.strDrinkThumb } alt="Meal" />
-          <p>{meal.strCategory}</p>
-          <p data-testid="0-recomendation-title">{meal.strDrink}</p>
-        </div>))}
-      <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
+      <Carousel>
+        {firstCarousel.map((drink, index) => {
+          if (index > 0) count1 += 2;
+          return (
+            <CarouselItem
+              key={ `drink${index}` }
+              data-testid={ `${count1}-recomendation-card` }
+            >
+              <img className="d-block w-100" src={ drink.strDrinkThumb } alt="drink" />
+              <Carousel.Caption>
+                <p>{drink.strCategory}</p>
+                <p data-testid={ `${count1}-recomendation-title` }>{drink.strDrink}</p>
+              </Carousel.Caption>
+            </CarouselItem>);
+        })}
+      </Carousel>
+      <Carousel style={ { marginBottom: '100px' } }>
+        {secondCarousel.map((drink, index) => {
+          if (index > 0) count2 += 2;
+          return (
+            <CarouselItem
+              key={ `drink${index}` }
+              data-testid={ `${count2}-recomendation-card` }
+            >
+              {/* Comment */}
+              <img className="d-block w-100" src={ drink.strDrinkThumb } alt="Meal" />
+              <Carousel.Caption>
+                <p>{drink.strCategory}</p>
+                <p data-testid={ `${count2}-recomendation-title` }>{drink.strDrink}</p>
+              </Carousel.Caption>
+            </CarouselItem>);
+        })}
+      </Carousel>
+      <Link to={ `/comidas/${id}/in-progress` }>
+        {!test2 ? hiddenButton : null}
+      </Link>
     </>
   );
 }

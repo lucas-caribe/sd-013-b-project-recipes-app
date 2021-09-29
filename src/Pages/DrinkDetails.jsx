@@ -1,13 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import { Carousel, CarouselItem } from 'react-bootstrap';
 import { useLocation } from 'react-router';
+import { Link } from 'react-router-dom';
+import '../App.css';
 
 export default function DrinkDetalis() {
   const [drinkDetails, setDrinkDetails] = useState({});
   const [meals, setMeals] = useState([]);
   const SIX = 6;
-  // id => API
+
+  let count1 = 0;
+  let count2 = 1;
+
+  const recipesDone = JSON.parse(localStorage.getItem('doneRecipes'));
+  const test = recipesDone || [];
+  let recipeInProgress = JSON
+    .parse(localStorage.getItem('inProgressRecipes'));
+  if (recipeInProgress) recipeInProgress = recipeInProgress.drinks;
+  if (!recipeInProgress) recipeInProgress = {};
+
+  const firstCarousel = meals.length ? [meals[0], meals[2], meals[4]] : [];
+  const secondCarousel = meals.length ? [meals[1], meals[3], meals[5]] : [];
+
   const id = useLocation().pathname.replace('/bebidas/', '');
-  console.log(id);
+  const test2 = test.some((recipe) => recipe.id === id);
+
   // ref: Lucas Caribé
   const youtubeSource = drinkDetails.strYoutube ? drinkDetails
     .strYoutube.replace(/watch\?v=/, 'embed/') : '';
@@ -21,12 +38,6 @@ export default function DrinkDetalis() {
     const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`).then((res) => res.json());
     setDrinkDetails(response.drinks[0]);
   };
-  // https://www.thecocktaildb.com/api/json/v1/1/search.php?s=
-  // async function fetchDrinkAPI() {
-  //   const APIDrinks = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-  //   const response = await fetch(APIDrinks).then((resp) => resp.json());
-  //   setDrinks(response.drinks.slice(0, TWO));
-  // }
 
   async function fetchMealAPI() {
     const APIMeals = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
@@ -47,6 +58,11 @@ export default function DrinkDetalis() {
       });
     }
   }
+
+  const hiddenButton = (
+    <button type="button" data-testid="start-recipe-btn" className="startRecipeButton">
+      {recipeInProgress[id] ? 'Continuar Receita' : 'Iniciar Receita'}
+    </button>);
 
   return (
     <>
@@ -82,13 +98,42 @@ export default function DrinkDetalis() {
          autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen={ youtubeConf }
       />
-      {meals.map((drink, index) => (
-        <div data-testid={ `${index}-recomendation-card` } key={ `drink${index}` }>
-          <img src={ drink.strMealThumb } alt="drink" />
-          <p>{drink.strCategory}</p>
-          <p>{drink.strMeal}</p>
-        </div>))}
-      <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
+      <Carousel>
+        {firstCarousel.map((meal, index) => {
+          if (index > 0) count1 += 2;
+          return (
+            <CarouselItem
+              key={ `meal${index}` }
+              data-testid={ `${count1}-recomendation-card` }
+            >
+              <img className="d-block w-100" src={ meal.strMealThumb } alt="meal" />
+              <Carousel.Caption>
+                <p>{meal.strCategory}</p>
+                <p data-testid={ `${count1}-recomendation-title` }>{meal.strMeal}</p>
+              </Carousel.Caption>
+            </CarouselItem>);
+        })}
+      </Carousel>
+      <Carousel>
+        {secondCarousel.map((meal, index) => {
+          if (index > 0) count2 += 2;
+          return (
+            <CarouselItem
+              key={ `meal${index}` }
+              data-testid={ `${count2}-recomendation-card` }
+            >
+              {/* Comment */}
+              <img className="d-block w-100" src={ meal.strMealThumb } alt="Meal" />
+              <Carousel.Caption>
+                <p>{meal.strCategory}</p>
+                <p data-testid={ `${count2}-recomendation-title` }>{meal.strMeal}</p>
+              </Carousel.Caption>
+            </CarouselItem>);
+        })}
+      </Carousel>
+      <Link to={ `/bebidas/${id}/in-progress` }>
+        {!test2 ? hiddenButton : null}
+      </Link>
     </>
   );
 }
