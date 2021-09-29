@@ -15,8 +15,7 @@ export default function FavButton() {
 
   const storage = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
-  const createObjectMeal = (details) => {
-    console.log(details);
+  const createObjectMeal = (details = {}) => {
     const { idMeal, strArea, strCategory, strMealThumb, strMeal } = details;
     const obj = {
       id: idMeal,
@@ -30,7 +29,7 @@ export default function FavButton() {
     setRecipeFavorite(obj);
   };
 
-  const createObjectDrink = (details) => {
+  const createObjectDrink = (details = {}) => {
     const { idDrink, strAlcoholic,
       strDrink, strDrinkThumb, strCategory } = details;
     const obj = {
@@ -46,17 +45,17 @@ export default function FavButton() {
   };
 
   useEffect(() => {
-    if (detailsResult.length === 0) {
+    if (detailsResult.length === {}) {
       dispatch(fetchDetailsThunk(id, 'meal'));
     }
   }, []);
 
   useEffect(() => {
-    if (pathname.includes('comida') && detailsResult.length > 0) {
-      createObjectMeal(detailsResult[0]);
+    if (pathname.includes('comida') && detailsResult) {
+      createObjectMeal(detailsResult);
     }
-    if (pathname.includes('bebida') && detailsResult.length > 0) {
-      createObjectDrink(detailsResult[0]);
+    if (pathname.includes('bebida') && detailsResult) {
+      createObjectDrink(detailsResult);
     }
     if (storage) {
       const verification = storage.some(({ id: idLocal }) => idLocal === id);
