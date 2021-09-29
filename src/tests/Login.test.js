@@ -44,7 +44,7 @@ describe(' Login page works correctly', () => {
     userEvent.type(passwordInput, '1234567');
 
     expect(button).toBeEnabled();
-    fireEvent.click(button);
+    userEvent.click(button);
 
     const { location: { pathname } } = history;
     expect(pathname).toBe('/comidas');
