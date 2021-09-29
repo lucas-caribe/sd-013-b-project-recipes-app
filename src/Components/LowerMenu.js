@@ -14,7 +14,6 @@ class LowerMenu extends Component {
             data-testid="drinks-bottom-btn"
           >
             <img src={ drinkIcon } alt="" />
-            bebidas
           </button>
         </Link>
         <Link to="/explorar">
@@ -23,7 +22,6 @@ class LowerMenu extends Component {
             data-testid="explore-bottom-btn"
           >
             <img src={ exploreIcon } alt="" />
-            explorar
           </button>
         </Link>
         <Link to="/comidas">
@@ -32,7 +30,6 @@ class LowerMenu extends Component {
             data-testid="food-bottom-btn"
           >
             <img src={ mealIcon } alt="" />
-            comidas
           </button>
         </Link>
       </footer>
