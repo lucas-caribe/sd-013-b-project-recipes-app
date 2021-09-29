@@ -7,18 +7,30 @@ import { fetchInitialMeals, fetchMealsByIngredients } from '../services/fetchMea
 import FilteringMealsButtons from '../components/FilteringMealsButtons';
 
 function Comidas() {
-  const { meals, setMeals, mealsByIngredients } = useContext(RecipesContext);
+  const { meals, setMeals, currentIngredient } = useContext(RecipesContext);
 
   useEffect(() => {
-    fetchInitialMeals()
-      .then((data) => setMeals([...data]));
-  }, [setMeals, mealsByIngredients, mealsByIngredients.length]);
+    if (currentIngredient) {
+      const ingredient = currentIngredient.replace(/\s/g, '_').toLowerCase();
+      fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${'chicken'}`)
+        .then((response) => response.json())
+        .then((data) => setMeals(data.meals));
+      console.log('INGREDIENT');
+      return;
+    }
 
-  let teste = meals;
-  if (mealsByIngredients.length) teste = mealsByIngredients;
+    if (!currentIngredient) {
+      console.log('INITIAL FETCH');
+      fetchInitialMeals()
+        .then((data) => setMeals([...data]));
+    }
+  }, [setMeals, currentIngredient]);
+
+  // let teste = meals;
+  // if (mealsByIngredients.length) teste = mealsByIngredients;
 
   const renderMeals = () => (
-    teste.map(({ idMeal, strMeal, strMealThumb }, index) => (
+    meals.map(({ idMeal, strMeal, strMealThumb }, index) => (
       <div key={ strMeal }>
         <RecipeCard
           id={ idMeal }
