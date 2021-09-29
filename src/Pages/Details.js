@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import DetailsHeader from '../Components/DetailsHeader';
 import DetailsIngredients from '../Components/DetailsIngredients';
 import DetailsInstructions from '../Components/DetailsInstructions';
@@ -16,6 +17,7 @@ const Details = (props) => {
   const { type, id, status, finishRecipe,
     editProgress, doneRecipes, inProgressRecipes } = props;
   const [actualIngredients, setActualIngredients] = useState([]);
+
   const [item, setItem] = useState({});
   // Cada receita vai ter um recipeStatus:
   // - default: receita não iniciada
@@ -56,11 +58,21 @@ const Details = (props) => {
   };
 
   useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        setItem(data[db][0]);
-      });
+    const fetchURL = async () => {
+      await fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          setItem(data[db][0]);
+          console.log('linha 46', data);
+        });
+    };
+    fetchURL();
+    console.log('montando');
+  }, [db, url]);
+
+  useEffect(() => () => {
+    console.log('desmontando');
+  });
 
     fetch(recommendationUrl).then((res) => res.json()).then((data) => {
       const rec = data[recommendedDb];
@@ -150,9 +162,6 @@ const Details = (props) => {
 };
 
 Details.propTypes = {
-  type: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
   finishRecipe: PropTypes.func.isRequired,
   editProgress: PropTypes.func.isRequired,
   doneRecipes: PropTypes.arrayOf(PropTypes.object).isRequired,

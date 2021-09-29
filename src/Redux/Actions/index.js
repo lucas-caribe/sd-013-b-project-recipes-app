@@ -6,6 +6,8 @@ const EDIT_RECIPE = 'EDIT_RECIPE';
 const TOGGLE_FAVORITE = 'TOGGLE_FAVORITE';
 const FINISH_RECIPE = 'FINISH_RECIPE';
 const REMOVE_FROM_IN_PROGRESS = 'REMOVE_FROM_IN_PROGRESS';
+const RANDOM_FOOD = 'https://www.themealdb.com/api/json/v1/1/random.php';
+const RANDOM_DRINKS = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
 
 const storeUser = (email, password) => {
   localStorage.setItem('mealsToken', 1);
@@ -47,7 +49,7 @@ const fetchFilteredItems = (userType, userFilter, userInput) => (dispatch) => {
     filter = 'filter.php?c=';
     break;
   default:
-    filter = 'filter.php?i=';
+    filter = 'filter.php?s=';
     break;
   }
   if (userFilter === 'first-letter' && userInput.length > 1) {
@@ -56,6 +58,7 @@ const fetchFilteredItems = (userType, userFilter, userInput) => (dispatch) => {
     fetch(`https://www.${type}.com/api/json/v1/1/${filter}${userInput}`)
       .then((result) => result.json())
       .then((obj) => {
+        console.log(obj);
         if (obj[Object.keys(obj)]) {
           dispatch(setFilteredItens(obj));
         } else {
@@ -146,4 +149,24 @@ export {
   toggleFavorite,
   finishRecipe,
   editProgress,
+};
+
+export const fetchRandomMeal = async () => {
+  try {
+    const response = await fetch(RANDOM_FOOD);
+    const { meals } = await response.json();
+    return meals;
+  } catch (error) {
+    throw new Error('Não foi possível realizar pesquisa');
+  }
+};
+
+export const fetchRandomDrink = async () => {
+  try {
+    const response = await fetch(RANDOM_DRINKS);
+    const { drinks } = await response.json();
+    return drinks;
+  } catch (error) {
+    throw new Error('Não foi possível realizar pesquisa');
+  }
 };
