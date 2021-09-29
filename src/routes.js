@@ -39,6 +39,7 @@ function Routes() {
         <Route exact path="/comidas" component={ Comidas } />
         <Route exact path="/bebidas" component={ Bebidas } />
         <Route exact path="/explorar/bebidas/area" component={ NotFound } />
+        <Route path="*" component={ NotFound } />
       </Switch>
     </div>
   );
