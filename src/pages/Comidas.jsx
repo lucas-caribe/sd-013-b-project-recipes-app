@@ -3,19 +3,22 @@ import Header from '../components/Header';
 import RecipesContext from '../context/RecipesContext';
 import RecipeCard from '../components/RecipeCard';
 import Footer from '../components/Footer';
-import { fetchInitialMeals } from '../services/fetchMeals';
+import { fetchInitialMeals, fetchMealsByIngredients } from '../services/fetchMeals';
 import FilteringMealsButtons from '../components/FilteringMealsButtons';
 
 function Comidas() {
-  const { meals, setMeals } = useContext(RecipesContext);
+  const { meals, setMeals, mealsByIngredients } = useContext(RecipesContext);
 
   useEffect(() => {
     fetchInitialMeals()
       .then((data) => setMeals([...data]));
-  }, [setMeals]);
+  }, [setMeals, mealsByIngredients, mealsByIngredients.length]);
+
+  let teste = meals;
+  if (mealsByIngredients.length) teste = mealsByIngredients;
 
   const renderMeals = () => (
-    meals.map(({ idMeal, strMeal, strMealThumb }, index) => (
+    teste.map(({ idMeal, strMeal, strMealThumb }, index) => (
       <div key={ strMeal }>
         <RecipeCard
           id={ idMeal }

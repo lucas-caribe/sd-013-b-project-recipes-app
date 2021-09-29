@@ -8,6 +8,7 @@ export default function Provider({ children }) {
   const [filterMealButtons, setFilterMealButtons] = useState([]);
   const [filterDrinkButtons, setFilterDrinkButtons] = useState([]);
   const [currentCategory, setCurrentCategory] = useState('');
+  const [currentIngredient, setCurrentIngredient] = useState('');
 
   const contextValue = {
     meals,
@@ -20,6 +21,8 @@ export default function Provider({ children }) {
     setFilterDrinkButtons,
     currentCategory,
     setCurrentCategory,
+    currentIngredient,
+    setCurrentIngredient,
   };
 
   return (
