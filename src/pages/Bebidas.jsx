@@ -18,7 +18,7 @@ function DrinksPage(
   const { location: { pathname } } = history;
 
   useEffect(() => {
-    if (drinksIngredients) {
+    if (drinksIngredients.length !== 0) {
       setLoadDrinks(drinksIngredients);
     } else {
       const initialRequest = {
