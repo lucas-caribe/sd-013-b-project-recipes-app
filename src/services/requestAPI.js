@@ -30,3 +30,14 @@ export const requestByFirstLetter = async (firstLetter, domain) => {
     console.log(err.message);
   }
 };
+
+// 75 80
+// INGREDIENTS //
+
+// AREA //
+
+export const fetchArea = async () => {
+  const response = await fetch('//www.themealdb.com/api/json/v1/1/list.php?a=list');
+  const result = await response.json();
+  return result;
+};

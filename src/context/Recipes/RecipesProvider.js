@@ -1,8 +1,9 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import RecipesContext from './RecipesContext';
 import fetchApi from '../../services';
+// import { fetchFoodsIngredients, fetchDrinksIngredients } from '../../services/requestAPI';
 
 const URL = {
   meals: {
@@ -24,6 +25,10 @@ function RecipesProvider({ children }) {
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState('');
   const [type, setType] = useState('');
+  const [foodsIngredients, setFoodsIngredients] = useState([]);
+  const [drinksIngredients, setDrinksIngredients] = useState([]);
+  const [byIngredient, setByIngredient] = useState(false);
+  const [ingredientByName, setIngredientByName] = useState([]);
 
   const fetchRecipesCategory = useCallback(async (recipeType) => {
     const data = await fetchApi(URL[recipeType].categories);
@@ -55,12 +60,44 @@ function RecipesProvider({ children }) {
     setCategory(target.innerText);
   };
 
+  const fetchFoodsIngredients = async () => {
+    const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?i=list');
+    const result = await response.json();
+    return result;
+  };
+
+  const fetchDrinksIngredients = async () => {
+    const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list');
+    const result = await response.json();
+    return result;
+  };
+
+  useEffect(() => {
+    fetchFoodsIngredients().then((results) => setFoodsIngredients(
+      results.meals.slice([0], RECIPES_TO_SHOW),
+    ));
+  }, []);
+
+  useEffect(() => {
+    fetchDrinksIngredients().then((results) => setDrinksIngredients(
+      results.drinks.slice([0], RECIPES_TO_SHOW),
+    ));
+  }, []);
+
   const context = {
     fetchRecipesCategory,
     handleClickCategory,
     fetchRecipesList,
     categories,
     recipes,
+    foodsIngredients,
+    setFoodsIngredients,
+    drinksIngredients,
+    setDrinksIngredients,
+    byIngredient,
+    setByIngredient,
+    ingredientByName,
+    setIngredientByName,
   };
 
   return (
