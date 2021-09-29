@@ -1,11 +1,13 @@
-import React, { useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory, Redirect } from 'react-router-dom';
 import shareIcon from '../../images/shareIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import { renderIngredientsCheck, handleDoneRecipes } from '../helper';
 import RecipesContext from '../../context/Recipes/RecipesContext';
 
 function ReceitasEmProcesso() {
+  const [redirect, setRedirect] = useState(false);
+
   const { recipeDetails, fetchRecipeById } = useContext(RecipesContext);
   const { strMeal, strMealThumb, strInstructions, strCategory,
     strDrink, strDrinkThumb } = recipeDetails;
@@ -16,6 +18,10 @@ function ReceitasEmProcesso() {
     const recipeType = type === 'comidas' ? 'meals' : 'drinks';
     fetchRecipeById(recipeType, id);
   }, [history, fetchRecipeById, id, type]);
+
+  if (redirect) {
+    return <Redirect to="/receitas-feitas" />;
+  }
 
   if (type === 'comidas') {
     return (
@@ -46,7 +52,7 @@ function ReceitasEmProcesso() {
         <button
           data-testid="finish-recipe-btn"
           type="button"
-          onClick={ () => handleDoneRecipes(recipeDetails, type) }
+          onClick={ (() => handleDoneRecipes(recipeDetails, type), () => setRedirect(true)) }
         >
           Finalizar Receita
         </button>
@@ -81,7 +87,7 @@ function ReceitasEmProcesso() {
       <button
         data-testid="finish-recipe-btn"
         type="button"
-        onClick={ () => handleDoneRecipes(recipeDetails, type) }
+        onClick={ (() => handleDoneRecipes(recipeDetails, type), () => setRedirect(true)) }
       >
         Finalizar Receita
       </button>
