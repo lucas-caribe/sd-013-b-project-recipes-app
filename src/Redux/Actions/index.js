@@ -53,7 +53,6 @@ const fetchFilteredItems = (userType, userFilter, userInput) => (dispatch) => {
   if (userFilter === 'first-letter' && userInput.length > 1) {
     global.alert('Sua busca deve conter somente 1 (um) caracter');
   } else {
-    console.log(`https://www.${type}.com/api/json/v1/1/${filter}${userInput}`);
     fetch(`https://www.${type}.com/api/json/v1/1/${filter}${userInput}`)
       .then((result) => result.json())
       .then((obj) => {
@@ -93,7 +92,6 @@ const removeInProgress = (items) => {
   const id = Object.keys(items).some((key) => key === 'idMeal')
     ? items.idMeal : items.idDrink;
   const type = Object.keys(items).some((key) => key === 'idMeal') ? 'meals' : 'cocktails';
-  console.log(type);
   return {
     type: REMOVE_FROM_IN_PROGRESS,
     payload: { id, type },

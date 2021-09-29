@@ -12,16 +12,15 @@ import { fetchFilteredItems } from '../Redux/Actions';
 const Main = ({ filterItens }) => {
   const { id, type, status } = useParams();
   const [showSearch, toggleShowSeatch] = useState(false);
-  console.log(`type: ${type}\nid: ${id}\nstatus: ${status}`);
   let main;
+  let showHeaderAndFooter = true;
   let showDetails = false;
   if (type === 'comidas') main = 'Comidas';
   else if (type === 'bebidas') main = 'Bebidas';
   if (id) {
-    showHeader = false;
+    showHeaderAndFooter = false;
     showDetails = true;
   }
-  let showHeaderAndFooter = true;
   if (type === 'comidas') main = 'Comidas';
   else if (type === 'bebidas') main = 'Bebidas';
   if (id) showHeaderAndFooter = false;
@@ -45,7 +44,7 @@ const Main = ({ filterItens }) => {
     <div>
       {showHeaderAndFooter ? renderHeader() : null}
       {showSearch && <SearchBar type={ type } />}
-      <FoodCards type={ type } />
+      {!id && <FoodCards type={ type } /> }
       {showDetails && renderDetails()}
       {showHeaderAndFooter ? <LowerMenu /> : null}
     </div>

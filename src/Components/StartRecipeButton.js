@@ -5,14 +5,15 @@ import { connect } from 'react-redux';
 import { startRecipe as startRecipeAction } from '../Redux/Actions';
 
 const StartRecipeButton = (props) => {
-  const { type, id, startRecipe, inProgressRecipes } = props;
+  const { type, id, startRecipe, recipeStatus } = props;
+  let buttonText = 'Iniciar Receita';
+  if (recipeStatus === 'in-progress') buttonText = 'Continuar Receita';
 
   const saveItens = async () => {
     await startRecipe(id, type);
-    console.log(inProgressRecipes);
   };
 
-  return (
+  const renderButton = () => (
     <Link to={ `/${type}/${id}/in-progress` }>
       <button
         style={ { position: 'fixed', bottom: '0px' } }
@@ -20,18 +21,24 @@ const StartRecipeButton = (props) => {
         type="button"
         onClick={ saveItens }
       >
-        Iniciar Receita
+        {buttonText}
 
       </button>
     </Link>
+  );
+
+  return (
+    <div>
+      {recipeStatus !== 'done' && renderButton()}
+    </div>
   );
 };
 
 StartRecipeButton.propTypes = {
   type: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  recipeStatus: PropTypes.string.isRequired,
   startRecipe: PropTypes.func.isRequired,
-  inProgressRecipes: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

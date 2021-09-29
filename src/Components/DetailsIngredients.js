@@ -35,7 +35,6 @@ const DetailsIngredients = (props) => {
         </div>
       );
     } if (status === 'in-progress') {
-      console.log('inprogress');
       return (
         <ul>
           {ingredients.map((x, i) => {

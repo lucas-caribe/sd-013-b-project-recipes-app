@@ -9,10 +9,18 @@ import DetailsRecommended from '../Components/DetailsRecommended';
 import StartRecipeButton from '../Components/StartRecipeButton';
 import { finishRecipe as finishRecipeAction,
   editProgress as editProgressAction } from '../Redux/Actions';
+import { checkRecipeStatus } from '../Utils/functions';
 
 const Details = (props) => {
-  const { type, id, status, finishRecipe, editProgress } = props;
+  const { type, id, status, finishRecipe,
+    editProgress, doneRecipes, inProgressRecipes } = props;
   const [item, setItem] = useState({});
+  // Cada receita vai ter um recipeStatus:
+  // - default: receita não iniciada
+  // - in-progress: receita iniciada
+  // - done: receita finalizada
+  const [recipeStatus, setRecipeStatus] = useState('default');
+  // Cada receita vai ter um isFavorite (true) ou (false)
   const [recommended, setRecommended] = useState([]);
 
   let baseUrl;
@@ -48,7 +56,11 @@ const Details = (props) => {
       const sixFirst = rec.splice(0, spliceNumber);
       setRecommended(sixFirst);
     });
-  }, [id, db, recommendationUrl, recommendedDb, url]);
+
+    const actualStatus = checkRecipeStatus(type, id, inProgressRecipes, doneRecipes);
+    setRecipeStatus(actualStatus);
+  }, [id, db, recommendationUrl,
+    recommendedDb, url, doneRecipes, inProgressRecipes, type]);
 
   const ingredients = [];
   const measures = [];
@@ -74,6 +86,7 @@ const Details = (props) => {
         title={ title }
         subTitle={ subTitle }
         type={ type }
+        id={ id }
       />
       <button
         type="button"
@@ -104,7 +117,7 @@ const Details = (props) => {
       <DetailsInstructions instructions={ instructions } />
       {type === 'comidas' && <DetailsVideo videoUrl={ videoUrl } />}
       <DetailsRecommended recommended={ recommended } recommendedDb={ recommendedDb } />
-      <StartRecipeButton type={ type } id={ id } />
+      <StartRecipeButton type={ type } id={ id } recipeStatus={ recipeStatus } />
 
     </div>
   );
@@ -116,7 +129,12 @@ Details.propTypes = {
   status: PropTypes.string.isRequired,
   finishRecipe: PropTypes.func.isRequired,
   editProgress: PropTypes.func.isRequired,
+  doneRecipes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  inProgressRecipes: PropTypes.objectOf(PropTypes.object).isRequired,
 };
+
+const mapStateToProps = (state) => ({ doneRecipes: state.doneRecipes,
+  inProgressRecipes: state.inProgressRecipes });
 
 const mapDispatchToProps = (dispatch) => ({
   finishRecipe: (items) => dispatch(finishRecipeAction(items)),
@@ -125,4 +143,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(null, mapDispatchToProps)(Details);
+export default connect(mapStateToProps, mapDispatchToProps)(Details);
