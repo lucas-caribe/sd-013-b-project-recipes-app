@@ -11,5 +11,4 @@ export { default as Favoritas } from './Favoritas';
 export { default as Feitas } from './Feitas';
 export { default as Perfil } from './Perfil';
 export { default as BebidaAleatoria } from './BebidaAleatoria';
-export { default as ExplorarComidaIngredientes } from './ExplorarComidaIngredientes';
 export { default as NotFound } from './NotFound';
