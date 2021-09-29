@@ -11,6 +11,7 @@ import InProgress from './pages/InProgress';
 import ExploreRecipes from './pages/ExploreRecipes';
 import ExploreIngredients from './pages/ExploreIngredients';
 import ExploreArea from './pages/ExploreArea';
+import RecipeDone from './components/RecipeDone';
 
 function Routes() {
   return (
@@ -27,6 +28,7 @@ function Routes() {
         <Route exact path="/bebidas/:id/in-progress" component={ InProgress } />
         <Route exact path="/explorar/comidas" component={ ExploreRecipes } />
         <Route exact path="/explorar/bebidas" component={ ExploreRecipes } />
+        <Route exact path="/Receitas-feitas" component={ RecipeDone } />
         <Route
           path="/explorar/comidas/ingredientes"
           component={ ExploreIngredients }
