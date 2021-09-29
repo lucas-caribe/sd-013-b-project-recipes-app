@@ -11,19 +11,25 @@ import SearchBar from '../components/SearchBar';
 import handleSubmitDrinks from '../helper/helperFunctionsDrinks';
 import { setLoadDrinks as setLoadDrinksAction } from '../Redux/actions';
 
-function DrinksPage({ search, radioButton, searchInput, setLoadDrinks }) {
+function DrinksPage(
+  { search, radioButton, searchInput, setLoadDrinks, drinksIngredients },
+) {
   const history = useHistory();
   const { location: { pathname } } = history;
 
   useEffect(() => {
-    const initialRequest = {
-      '/bebidas': async () => {
-        const { drinks } = await drinkRequest('search.php?s');
-        setLoadDrinks(drinks);
-      },
-    };
-    initialRequest[pathname]();
-  }, [pathname, setLoadDrinks]);
+    if (drinksIngredients) {
+      setLoadDrinks(drinksIngredients);
+    } else {
+      const initialRequest = {
+        '/bebidas': async () => {
+          const { drinks } = await drinkRequest('search.php?s');
+          setLoadDrinks(drinks);
+        },
+      };
+      initialRequest[pathname]();
+    }
+  }, [pathname, setLoadDrinks, drinksIngredients]);
 
   /*
   Object Literals realizado por sugestão do Gabs para resolver o problema de complexidade do código gerado
@@ -54,6 +60,7 @@ DrinksPage.propTypes = {
   search: PropTypes.bool.isRequired,
   searchInput: PropTypes.string.isRequired,
   setLoadDrinks: PropTypes.func.isRequired,
+  drinksIngredients: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -62,6 +69,7 @@ const mapStateToProps = (state) => ({
   searchInput: state.searchInput,
   drinks: state.drinks,
   foods: state.foods,
+  drinksIngredients: state.loadDrinksIngredients,
 });
 
 const mapDispatchToProps = (dispatch) => ({
