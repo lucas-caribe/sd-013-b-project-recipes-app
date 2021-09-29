@@ -15,8 +15,8 @@ import RecipesDetails from './pages/RecipesDetails';
 import RecipesInProgress from './pages/RecipesInProgress';
 import ExplorerFoods from './pages/ExplorerFoods';
 import ExplorerDrinks from './pages/ExplorerDrinks';
-import ExploreIngredients from './pages/ExploreIngredients';
-import ExploreIngredientsDrinks from './pages/ExploreIngredientsDrinks';
+import ExploreFoodsIngredients from './pages/ExploreFoodsIngredients';
+import ExploreDrinksIngredients from './pages/ExploreDrinksIngredients';
 
 function App() {
   return (
@@ -36,12 +36,12 @@ function App() {
         <Route
           exact
           path="/explorar/comidas/ingredientes"
-          component={ ExploreIngredients }
+          component={ ExploreFoodsIngredients }
         />
         <Route
           exact
           path="/explorar/bebidas/ingredientes"
-          component={ ExploreIngredientsDrinks }
+          component={ ExploreDrinksIngredients }
         />
         <Route exact path="/explorar/comidas/area" component={ ExplorerCountries } />
         <Route exact path="/perfil" component={ Perfil } />

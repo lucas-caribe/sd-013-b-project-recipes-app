@@ -11,18 +11,23 @@ import SearchBar from '../components/SearchBar';
 import handleSubmitFoods from '../helper/helperFunctionsFoods';
 import { setLoadFoods as setLoadFoodsAction } from '../Redux/actions';
 
-function Comidas({ search, radioButton, searchInput, setLoadFoods }) {
-  const { location: { pathname } } = useHistory();
+function FoodsPage({ search, setLoadFoods, radioButton, searchInput, foodsIngredients }) {
+  const history = useHistory();
+  const { location: { pathname } } = history;
 
   useEffect(() => {
-    const initialRequest = {
-      '/comidas': async () => {
-        const { meals } = await foodRequest('search.php?s');
-        setLoadFoods(meals);
-      },
-    };
-    initialRequest[pathname]();
-  }, [pathname, setLoadFoods]);
+    if (foodsIngredients) {
+      setLoadFoods(foodsIngredients);
+    } else {
+      const initialRequest = {
+        '/comidas': async () => {
+          const { meals } = await foodRequest('search.php?s');
+          setLoadFoods(meals);
+        },
+      };
+      initialRequest[pathname]();
+    }
+  }, [pathname, setLoadFoods, foodsIngredients]);
 
   /*
   Object Literals realizado por sugestão do Gabs para resolver o problema de complexidade do código gerado
@@ -79,11 +84,12 @@ function Comidas({ search, radioButton, searchInput, setLoadFoods }) {
   );
 }
 
-Comidas.propTypes = {
+FoodsPage.propTypes = {
   radioButton: PropTypes.string.isRequired,
   search: PropTypes.bool.isRequired,
   setLoadFoods: PropTypes.func.isRequired,
   searchInput: PropTypes.string.isRequired,
+  foodsIngredients: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -92,10 +98,11 @@ const mapStateToProps = (state) => ({
   searchInput: state.searchInput,
   drinks: state.drinks,
   foods: state.foods,
+  foodsIngredients: state.loadFoodsIngredients,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setLoadFoods: (payload) => dispatch(setLoadFoodsAction(payload)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Comidas);
+export default connect(mapStateToProps, mapDispatchToProps)(FoodsPage);
