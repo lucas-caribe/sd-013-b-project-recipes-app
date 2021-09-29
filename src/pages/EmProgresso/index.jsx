@@ -128,7 +128,11 @@ function EmProgresso() {
           title={ item[type][0][`str${property}`] }
           frameBorder="0"
         />}
-        <FinishRecipeButton enableBtn={ !allChecked } />
+        <FinishRecipeButton
+          enableBtn={ !allChecked }
+          type={ `${type}s` }
+          recipe={ item[type][0] }
+        />
       </main>
     );
   };

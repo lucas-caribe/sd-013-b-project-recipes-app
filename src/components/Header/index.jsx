@@ -24,7 +24,7 @@ function Header({ pageTitle, showSearchIcon }) {
         <h1 data-testid="page-title">{pageTitle}</h1>
         {showSearchIcon && <SearchIcon onClick={ toggleSearchBar } />}
       </header>
-      {isOpen && <SearchBar />}
+      {showSearchIcon && isOpen && <SearchBar />}
     </section>
   );
 }

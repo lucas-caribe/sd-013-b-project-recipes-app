@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Badge, Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import { useRecipes } from '../../context';
 import ShareButton from '../../components/ShareButton';
+import shareIcon from '../../images/shareIcon.svg';
 
 function ReceitasFeitas() {
   const { finishedRecipes } = useRecipes();
   const [visibleRecipes, setVisibleRecipes] = useState(finishedRecipes);
-
   const filterAll = () => {
     setVisibleRecipes(finishedRecipes);
   };
@@ -55,38 +56,42 @@ function ReceitasFeitas() {
       </button>
 
       <ul>
-        {visibleRecipes.map((recipe) => (
-          <Card key={ recipe.index }>
-            <Card.Img
-              variant="top"
-              data-testid={ `${index}-horizontal-image` }
-              src={ recipe.path }
-            />
-            <Card.Body>
+        {visibleRecipes.map((recipe, index) => (
+          <Card key={ index }>
+            <Link
+              to={ recipe.type === 'meals'
+                ? `/comidas/${recipe.idMeal}` : `/bebidas/${recipe.idDrink}` }
+            >
+              <Card.Img
+                variant="top"
+                data-testid={ `${index}-horizontal-image` }
+                src={ recipe.strMealThumb || recipe.strDrinkThumb }
+              />
               <Card.Title
                 data-testid={ `${index}-horizontal-name` }
               >
                 {recipe.strMeal || recipe.strDrink}
               </Card.Title>
+            </Link>
+            <Card.Body>
               <Card.Subtitle
                 data-testid={ `${index}-horizontal-top-text` }
                 className="mb-2 text-muted"
               >
-                {recipe.strAlcoholic || `${strArea} - ${strCategory}`}
+                {recipe.strAlcoholic || `${recipe.strArea} - ${recipe.strCategory}`}
               </Card.Subtitle>
               {/* <Card.Text data-testid={`${index}-horizontal-done-date`}>
              Data em que a receita foi feita
             </Card.Text> */}
             </Card.Body>
             <ShareButton
-              path={ path }
-              id={ strMeal || strDrink }
-              handleCopy={ handleCopy }
+              icon={ shareIcon }
+              id={ recipe.idMeal || recipe.idDrink }
               data-testid={ `${index}-horizontal-share-btn` }
             />
             <h4>
               <Badge
-                data-testid={ `${index}-${tagName}-horizontal-tag` }
+                data-testid={ `${index}-${recipe.tagName}-horizontal-tag` }
               >
                 {visibleRecipes.strTags}
               </Badge>

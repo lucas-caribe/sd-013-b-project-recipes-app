@@ -1,4 +1,9 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect }
+  from 'react';
 import PropTypes from 'prop-types';
 
 const mealsInitialState = {
@@ -20,6 +25,12 @@ export const RecipesProvider = ({ children }) => {
   const [cocktails, setCocktails] = useState(cocktailsInitialState);
   const [finishedRecipes, setFinishedRecipes] = useState([]);
   // const [favoriteRecipes, setFavoriteRecipes] = useState([]);
+  useEffect(() => {
+    const finishedRecipesFromLocal = JSON.parse(localStorage.getItem('finished recipes'));
+    if (finishedRecipesFromLocal) {
+      setFinishedRecipes(finishedRecipesFromLocal);
+    }
+  }, []);
 
   const setMealsList = (mealsList) => {
     setMeals({
@@ -36,7 +47,9 @@ export const RecipesProvider = ({ children }) => {
   };
 
   const addTypeWhenFinishRecipe = (type, recipe) => {
-    setFinishedRecipes([...finishedRecipes, { type, ...recipe }]);
+    setFinishedRecipes((prevState) => [...prevState, { type, ...recipe }]);
+    localStorage.setItem('finished recipes',
+      JSON.stringify([...finishedRecipes, recipe]));
   };
 
   const getRandomRecipe = useCallback(async (page) => {
