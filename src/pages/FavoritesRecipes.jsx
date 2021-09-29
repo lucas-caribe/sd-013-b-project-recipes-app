@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import ButtonFavorite from '../components/ButtonFavorite';
-// import Header from '../components/Header';
 import ButtonShare from '../components/ButtonShare';
+import Header from '../components/Header';
 
 const STATE_FAVORITE = {
   buttonFilter: null,
@@ -96,13 +96,24 @@ function FavoritesRecipes() {
   const [state, setState] = useState(STATE_FAVORITE);
   const { buttonFilter } = state;
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  console.log(favoriteRecipes);
 
-  if (favoriteRecipes.length === 0) { return (<h1> Não há favoritos</h1>); }
+  function noFavorites() {
+    return (
+      <>
+        {/* <Header setTitle="Receitas Favoritas" /> */}
+        <h1> Não há favoritos</h1>
+        {console.log(favoriteRecipes, 'xablau') }
+      </>
+    );
+  }
+
+  if (favoriteRecipes === null) { return noFavorites; }
 
   if (buttonFilter === 'comida') {
     return (
       <>
-        {/* <Header setTitle="Receitas Favoritas" /> */}
+        <Header setTitle="Receitas Favoritas" />
         <p>Loading</p>
         { buttonChangeFilter(setState) }
         {
@@ -121,7 +132,7 @@ function FavoritesRecipes() {
   if (buttonFilter === 'bebida') {
     return (
       <>
-        {/* <Header setTitle="Receitas Favoritas" /> */}
+        <Header setTitle="Receitas Favoritas" />
         { buttonChangeFilter(setState) }
         {
           favoriteRecipes
@@ -138,7 +149,7 @@ function FavoritesRecipes() {
 
   return (
     <>
-      {/* <Header setTitle="Receitas Favoritas" /> */}
+      <Header setTitle="Receitas Favoritas" />
       { buttonChangeFilter(setState) }
       {
         favoriteRecipes.map((item, index) => (

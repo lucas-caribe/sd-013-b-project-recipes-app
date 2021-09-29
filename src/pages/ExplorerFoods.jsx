@@ -28,7 +28,7 @@ function ExplorerFoods() {
 
   return (
     <div>
-      <Header setTitle="Explorar Bebidas" />
+      <Header setTitle="Explorar Comidas" />
       <button
         onClick={ handleClick }
         id="ingredient"

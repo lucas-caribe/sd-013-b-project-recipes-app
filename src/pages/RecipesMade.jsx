@@ -105,7 +105,15 @@ function RecipesMade() {
   const { buttonFilter } = state;
   const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes') || '[]');
 
-  if (doneRecipes.length === 0) { return (<h1> Não há receitas finalizadas </h1>); }
+  // function noRecepiesDone() {
+  //   return (
+  //     <>
+  //       <Header setTitle="Receitas Favoritas" />
+  //       <h1> Não há receitas finalizadas</h1>
+  //     </>
+  //   );
+  // }
+  // if (doneRecipes.length === 0) { return noRecepiesDone; }
 
   if (buttonFilter === 'comida') {
     return (
@@ -143,7 +151,7 @@ function RecipesMade() {
 
   return (
     <>
-      <Header setTitle="Explorar Bebidas" />
+      <Header setTitle="Receitas Feitas" />
       { buttonChangeFilter(setState) }
       {
         doneRecipes.map((item, index) => (

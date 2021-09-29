@@ -2,13 +2,13 @@
 import React from 'react';
 import Header from '../components/Header';
 
-function ExplorerCountries() {
+function ExploreIngredientsFoods() {
   return (
     <div>
-      <Header setTitle="Explorar Origem" />
-      Explorer Countries Page
+      <Header setTitle="Explorar Ingredientes" />
+      Explorer Ingredients Foods Page
     </div>
   );
 }
 
-export default ExplorerCountries;
+export default ExploreIngredientsFoods;
