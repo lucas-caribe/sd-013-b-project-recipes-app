@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ExploreBy from './ExplorerBy';
 
 function Explorer() {
   return (
@@ -20,6 +21,7 @@ function Explorer() {
           Explorar Bebidas
         </button>
       </Link>
+      <ExploreBy />
     </div>
   );
 }
