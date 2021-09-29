@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Link } from 'react-router-dom';
 import Context from '../context/Context';
-import shareIcon from '../images/shareIcon.svg';
+import CopyToClipboardFunc from './CopyToClipboard';
 
 // RENDERIZA TODAS AS RECEITAS FEITAS
 
@@ -10,7 +9,6 @@ export default function RecipeDoneCard() {
   const {
     allRecipesDone,
     linkCopied,
-    setLinkCopied,
   } = useContext(Context);
 
   function renderTags(stringTags) {
@@ -97,7 +95,7 @@ export default function RecipeDoneCard() {
             </div>
 
             <div className="recipe-card-share-btn">
-              <CopyToClipboard
+              {/* <CopyToClipboard
                 text={
                   recipe.type === 'Meal'
                     ? `http://localhost:3000/comidas/${recipe.idMeal}`
@@ -112,7 +110,8 @@ export default function RecipeDoneCard() {
                 >
                   <img src={ shareIcon } alt="share" />
                 </button>
-              </CopyToClipboard>
+              </CopyToClipboard> */}
+              <CopyToClipboardFunc recipe={ recipe } index={ index } />
             </div>
 
             <div className="recipe-card-link-copied">
