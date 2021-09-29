@@ -5,7 +5,7 @@ import Header from '../components/header';
 
 export default function ReceitasFavoritas() {
   const favoriteLocal = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  const [LocalFavorite, setLocalFavorite] = useState(favoriteLocal);
+  const [LocalFavorite, setLocalFavorite] = useState(favoriteLocal || []);
   const [backupFilters] = useState(LocalFavorite);
 
   const handlerClickFilter = ({ target: { innerText } }) => {
