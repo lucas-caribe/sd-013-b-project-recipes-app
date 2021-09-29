@@ -27,12 +27,7 @@ export const RecipesProvider = ({ children }) => {
   const [meals, setMeals] = useState(mealsInitialState);
   const [cocktails, setCocktails] = useState(cocktailsInitialState);
   const [finishedRecipes, setFinishedRecipes] = useState([]);
-  const [hasTermAndOption, setHasTermAndOption] = useState(false);
   // const [favoriteRecipes, setFavoriteRecipes] = useState([]);
-
-  const checkTermAndOption = () => {
-    setHasTermAndOption(true);
-  };
 
   const getRandomRecipe = useCallback(async (page) => {
     if (page === 'comidas') {
@@ -100,8 +95,6 @@ export const RecipesProvider = ({ children }) => {
     setFinishedRecipes,
     setMeals,
     setCocktails,
-    checkTermAndOption,
-    hasTermAndOption,
     finishedRecipes,
     meals,
     cocktails,

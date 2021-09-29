@@ -30,11 +30,6 @@ export const SearchBarProvider = ({ children }) => {
 
   const { meals, cocktails, setMeals, setCocktails } = useContext(RecipesContext);
 
-  useEffect(() => {
-    setTerm('');
-    setOption('');
-  }, [page]);
-
   const toggleSearchBar = () => {
     setIsOpen((prevState) => !prevState);
   };
