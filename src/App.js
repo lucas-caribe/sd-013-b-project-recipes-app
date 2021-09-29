@@ -16,10 +16,10 @@ function App() {
       <Route exact path="/" component={ Login } />
       <Route exact path="/comidas" component={ Main } />
       <Route exact path="/bebidas" component={ Main } />
-      <Route path="/comidas/:receitaId" component={ Details } />
-      <Route path="/bebidas/:receitaId" component={ Details } />
-      <Route path="/comidas/:receitaId/in-progress" component={ Recipes } />
-      <Route path="/bebidas/:receitaId/in-progress" component={ Recipes } />
+      <Route exact path="/comidas/:receitaId" component={ Details } />
+      <Route exact path="/bebidas/:receitaId" component={ Details } />
+      <Route exact path="/comidas/:receitaId/in-progress" component={ Recipes } />
+      <Route exact path="/bebidas/:receitaId/in-progress" component={ Recipes } />
       <Route exact path="/receitas-feitas" component={ Recipes } />
       <Route exact path="/receitas-favoritas" component={ Recipes } />
       <Route exact path="/explorar" component={ Explore } />
