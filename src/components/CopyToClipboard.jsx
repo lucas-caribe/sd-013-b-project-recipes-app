@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+// biblioteca responsável por copiar para a área de transferência o que estiver em sua propriedade "text"
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import PropTypes from 'prop-types';
 
@@ -18,6 +19,8 @@ export default function CopyToClipboardFunc({ recipe, index }) {
           : `http://localhost:3000/bebidas/${recipe.idDrink}`
       }
     >
+      {/** a biblioteca é responsável pela cópia e
+       * o botão é quem dispara o gatilho da cópia */}
       <button
         data-testid={ `${index}-horizontal-share-btn` }
         type="button"
