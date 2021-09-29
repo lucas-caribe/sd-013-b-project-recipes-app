@@ -11,7 +11,7 @@ export default function ButtonRecipesFavorites(
       <ButtonShare url={ url } datatestid={ testeidShare } />
       <ButtonFav
         id={ id }
-        arroz={ testeidFavorite }
+        datatestid={ testeidFavorite }
         setLocalFavorite={ setLocalFavorite }
       />
     </>
