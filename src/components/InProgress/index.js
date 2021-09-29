@@ -52,7 +52,8 @@ function ReceitasEmProcesso() {
         <button
           data-testid="finish-recipe-btn"
           type="button"
-          onClick={ (() => handleDoneRecipes(recipeDetails, type), () => setRedirect(true)) }
+          onClick={ (() => handleDoneRecipes(recipeDetails, type),
+          () => setRedirect(true)) }
         >
           Finalizar Receita
         </button>
@@ -87,7 +88,8 @@ function ReceitasEmProcesso() {
       <button
         data-testid="finish-recipe-btn"
         type="button"
-        onClick={ (() => handleDoneRecipes(recipeDetails, type), () => setRedirect(true)) }
+        onClick={ (() => handleDoneRecipes(recipeDetails, type),
+        () => setRedirect(true)) }
       >
         Finalizar Receita
       </button>
