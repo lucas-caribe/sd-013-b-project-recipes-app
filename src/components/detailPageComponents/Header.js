@@ -10,6 +10,7 @@ function Header({ thumb, title, category, recipe, type, id }) {
         src={ thumb }
         alt={ title }
         data-testid="recipe-photo"
+        width="100%"
       />
       <h1 data-testid="recipe-title">{ title }</h1>
       <h2 data-testid="recipe-category">{ category }</h2>
