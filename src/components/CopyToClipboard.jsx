@@ -10,9 +10,6 @@ export default function CopyToClipboardFunc({ recipe, index }) {
     setLinkCopied,
   } = useContext(Context);
 
-  console.log(recipe);
-  console.log(index);
-
   return (
     <CopyToClipboard
       text={
