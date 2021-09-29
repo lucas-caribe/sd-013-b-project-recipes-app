@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { setLoadDrinksIngredients } from '../Redux/actions';
 import { drinkRequest } from '../services/data';
@@ -57,6 +58,7 @@ function ExploreDrinksIngredients() {
           />
         </div>
       )) }
+      <Footer />
     </div>
   );
 }
