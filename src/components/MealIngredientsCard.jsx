@@ -5,12 +5,15 @@ import RecipesContext from '../context/RecipesContext';
 import { fetchMealsByIngredients } from '../services/fetchMeals';
 
 function MealIngredientsCard({ ingredients }) {
-  const { setCurrentIngredient } = useContext(RecipesContext);
+  const { setMeals } = useContext(RecipesContext);
   const { push } = useHistory();
 
   const handleClick = (currentIngredient) => {
-    setCurrentIngredient(currentIngredient);
-    push('/comidas');
+    fetchMealsByIngredients(currentIngredient)
+      .then((data) => {
+        setMeals(data);
+        push('/comidas');
+      });
   };
 
   return (

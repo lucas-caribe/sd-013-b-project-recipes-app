@@ -3,31 +3,18 @@ import Header from '../components/Header';
 import RecipesContext from '../context/RecipesContext';
 import RecipeCard from '../components/RecipeCard';
 import Footer from '../components/Footer';
-import { fetchInitialMeals, fetchMealsByIngredients } from '../services/fetchMeals';
+import { fetchInitialMeals } from '../services/fetchMeals';
 import FilteringMealsButtons from '../components/FilteringMealsButtons';
 
 function Comidas() {
-  const { meals, setMeals, currentIngredient } = useContext(RecipesContext);
+  const { meals, setMeals } = useContext(RecipesContext);
 
   useEffect(() => {
-    if (currentIngredient) {
-      const ingredient = currentIngredient.replace(/\s/g, '_').toLowerCase();
-      fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${'chicken'}`)
-        .then((response) => response.json())
-        .then((data) => setMeals(data.meals));
-      console.log('INGREDIENT');
-      return;
-    }
+    if (meals.length) return;
 
-    if (!currentIngredient) {
-      console.log('INITIAL FETCH');
-      fetchInitialMeals()
-        .then((data) => setMeals([...data]));
-    }
-  }, [setMeals, currentIngredient]);
-
-  // let teste = meals;
-  // if (mealsByIngredients.length) teste = mealsByIngredients;
+    fetchInitialMeals()
+      .then((data) => setMeals([...data]));
+  }, [setMeals, meals.length]);
 
   const renderMeals = () => (
     meals.map(({ idMeal, strMeal, strMealThumb }, index) => (
