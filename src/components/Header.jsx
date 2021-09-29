@@ -7,15 +7,52 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
 function Header({ setTitle, setSearchbar, search }) {
+  const history = useHistory();
+  const { location: { pathname } } = history;
+
   function openSearchBar() {
     setSearchbar(!search);
   }
 
-  const history = useHistory();
-
   function perfilRoute() {
     history.push('/perfil');
   }
+
+  function renderSearchButton() {
+    return (<input
+      type="image"
+      data-testid="search-top-btn"
+      src={ searchIcon }
+      alt="pesquisar"
+      onClick={ openSearchBar }
+    />);
+  }
+  const verifyPathName = {
+    '/comidas': renderSearchButton(),
+    '/bebidas': renderSearchButton(),
+    '/explorar/comidas/area': renderSearchButton(),
+    '/explorar/bebidas/ingredientes': renderSearchButton(),
+  };
+
+  // function checkRouteToSearchButton(pathnamePage) {
+  //   console.log(pathnamePage);
+  //   if (pathnamePage === '/explorar') {
+  //     return null;
+  //   }
+  //   if (pathnamePage === '/explorar/comidas') {
+  //     return null;
+  //   }
+  //   if (pathnamePage === '/explorar/bebidas') {
+  //     return null;
+  //   }
+  //   return (<input
+  //     type="image"
+  //     data-testid="search-top-btn"
+  //     src={ searchIcon }
+  //     alt="pesquisar"
+  //     onClick={ openSearchBar }
+  //   />);
+  // }
 
   return (
     <header>
@@ -28,13 +65,7 @@ function Header({ setTitle, setSearchbar, search }) {
           onClick={ perfilRoute }
         />
         <h1 data-testid="page-title">{ setTitle }</h1>
-        <input
-          type="image"
-          data-testid="search-top-btn"
-          src={ searchIcon }
-          alt="pesquisar"
-          onClick={ openSearchBar }
-        />
+        {verifyPathName[pathname]}
       </nav>
     </header>
   );

@@ -5,7 +5,7 @@ import Header from '../components/Header';
 function ExplorerCountries() {
   return (
     <div>
-      <Header setTitle="Comidas" />
+      <Header setTitle="Explorar Origem" />
       Explorer Countries Page
     </div>
   );

@@ -1,6 +1,7 @@
 // Tela de explorar bebidas ou comidas: Requisitos 70 a 74;
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import Header from '../components/Header';
 
 function ExplorerFoods() {
   const [randomFood, setRandomFood] = useState({});
@@ -27,6 +28,7 @@ function ExplorerFoods() {
 
   return (
     <div>
+      <Header setTitle="Explorar Comidas" />
       <button
         onClick={ handleClick }
         id="ingredient"
