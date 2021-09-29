@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { objectOf, string } from 'prop-types';
-// import useRedoRecipe from '../../hook/useRedoRecipe';
 import createIngredientsAndMesure from '../../helper/redoRecipe';
 
 function IngredientsAndMeasures({ recipe }) {
-  // const [ingredient, measure] = useRedoRecipe(recipe);
   const [ingredient, setIngredient] = useState([]);
   const [measure, setMeasure] = useState([]);
 

@@ -13,17 +13,17 @@ function Recommendations({ recommendation }) {
           data-testid={ `${index}-recomendation-card` }
         >
           <img
-            src={ item.strMealThumb && item.strDrinkThumb }
+            src={ item.strMealThumb || item.strDrinkThumb }
             data-testid={ `${index}-card-img` }
-            alt={ item.strMeal && item.strDrink }
+            alt={ item.strMeal || item.strDrink }
           />
           <Carousel.Caption>
             <div>
               <span data-testid={ `${index}-card-name` }>
-                { item.strMeal && item.strDrink }
+                { item.strMeal || item.strDrink }
               </span>
               <span>
-                { item.strCategory && item.strAlcoholic }
+                { item.strCategory || item.strAlcoholic }
               </span>
             </div>
           </Carousel.Caption>

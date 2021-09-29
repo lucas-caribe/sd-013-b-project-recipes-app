@@ -12,7 +12,9 @@ import {
 
 export default function RecipeProvider({ children }) {
   const [email, setEmail] = useState('');
-
+  const [enable, setEnable] = useState(true);
+  const [isChecked, setIsChecked] = useState(false);
+  const [progressSaved, setProgressSaved] = useState([]);
   const [loginState, setLogin] = useState({
     email: '',
     password: '',
@@ -95,6 +97,12 @@ export default function RecipeProvider({ children }) {
     redirect,
     ingredientFilter,
     setIngredientFilter,
+    enable,
+    setEnable,
+    isChecked,
+    setIsChecked,
+    progressSaved,
+    setProgressSaved,
   };
 
   return (
