@@ -10,12 +10,12 @@ import Login from './pages/Login';
 import Perfil from './pages/Perfil';
 import Explorar from './pages/Explorar';
 import ExplorarComidas from './pages/ExplorarComidas';
-import receitasFavoritas from './components/testes/receitas favoritas';
 import ExplorarIngredientes from './pages/ExplorarIngredientes';
 import ExplorarOrigem from './pages/ExplorarOrigem';
 import ExplorarBebidas from './pages/ExplorarBebidas';
 import ReceitasFeitas from './pages/ReceitasFeitas';
 import InProgress from './components/InProgress';
+import FavoritesRe from './FavoritesRecipes';
 
 function App() {
   return (
@@ -43,7 +43,7 @@ function App() {
           component={ ExplorarIngredientes }
         />
         <Route exact path="/receitas-feitas" component={ ReceitasFeitas } />
-        <Route exact path="/receitas-favoritas" component={ receitasFavoritas } />
+        <Route exact path="/receitas-favoritas" component={ FavoritesRe } />
         <Route exact path="/" component={ Login } />
       </Switch>
     </RecipesProvider>
