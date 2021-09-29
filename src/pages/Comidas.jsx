@@ -11,9 +11,8 @@ import SearchBar from '../components/SearchBar';
 import handleSubmitFoods from '../helper/helperFunctionsFoods';
 import { setLoadFoods as setLoadFoodsAction } from '../Redux/actions';
 
-function FoodsPage({ search, setLoadFoods, radioButton, searchInput }) {
-  const history = useHistory();
-  const { location: { pathname } } = history;
+function Comidas({ search, radioButton, searchInput, setLoadFoods }) {
+  const { location: { pathname } } = useHistory();
 
   useEffect(() => {
     const initialRequest = {
@@ -31,6 +30,34 @@ function FoodsPage({ search, setLoadFoods, radioButton, searchInput }) {
 
   https://blog.rocketseat.com.br/substituindo-a-instrucao-switch-por-object-literal/
   */
+
+  // async function handleSubmitButton() {
+  //   const requestApi = {
+  //     '/comidas': {
+  //       ingredient: async (input) => {
+  //         const { meals } = await foodRequest(`filter.php?i=${input}`);
+  //         setLoadFoods(meals);
+  //       },
+  //       name: async (input) => {
+  //         const { meals } = await foodRequest(`search.php?s=${input}`);
+  //         setLoadFoods(meals);
+  //       },
+  //       'first-letter': async (input) => {
+  //         if (input.length === 1) {
+  //           const { meals } = foodRequest(`search.php?f=${input}`);
+  //           setLoadFoods(await meals);
+  //         } else {
+  //           global.alert('Sua busca deve conter somente 1 (um) caracter');
+  //           console.log('2 letras');
+  //         }
+  //       },
+  //     },
+  //   };
+  //   requestApi[pathname][radioButton](searchInput);
+  // }
+  // if (setLoadFoods === []) {
+  //   return <p>Loading...</p>;
+  // }
   // const setFoods = handleSubmitFoods(
   //   searchInput, setLoadFoods, radioButton, history,
   // );
@@ -41,7 +68,7 @@ function FoodsPage({ search, setLoadFoods, radioButton, searchInput }) {
 
       {search === true ? <SearchBar
         handleSubmitButton={ () => handleSubmitFoods(
-          searchInput, setLoadFoods, radioButton, history,
+          searchInput, setLoadFoods, radioButton,
         ) }
       />
         : null}
@@ -52,10 +79,10 @@ function FoodsPage({ search, setLoadFoods, radioButton, searchInput }) {
   );
 }
 
-FoodsPage.propTypes = {
+Comidas.propTypes = {
+  radioButton: PropTypes.string.isRequired,
   search: PropTypes.bool.isRequired,
   setLoadFoods: PropTypes.func.isRequired,
-  radioButton: PropTypes.string.isRequired,
   searchInput: PropTypes.string.isRequired,
 };
 
@@ -71,4 +98,4 @@ const mapDispatchToProps = (dispatch) => ({
   setLoadFoods: (payload) => dispatch(setLoadFoodsAction(payload)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(FoodsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(Comidas);

@@ -1,6 +1,7 @@
 // Tela de receitas feitas: requisitos 54 a 59;
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import ButtonShare from '../components/ButtonShare';
 import copy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
 import Header from '../components/Header';
@@ -151,7 +152,15 @@ function RecipesMade() {
     );
   }
 
-  if (doneRecipes.length === 0) { return (<h1> Não há receitas finalizadas </h1>); }
+  // function noRecepiesDone() {
+  //   return (
+  //     <>
+  //       <Header setTitle="Receitas Favoritas" />
+  //       <h1> Não há receitas finalizadas</h1>
+  //     </>
+  //   );
+  // }
+  // if (doneRecipes.length === 0) { return noRecepiesDone; }
 
   if (buttonFilter === 'comida') {
     return (
@@ -191,6 +200,7 @@ function RecipesMade() {
 
   return (
     <>
+      <Header setTitle="Receitas Feitas" />
       <p hidden={ visibleMessage }>Link copiado!</p>
       { buttonChangeFilter(setState) }
       {

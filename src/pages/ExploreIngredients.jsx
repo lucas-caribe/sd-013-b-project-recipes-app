@@ -6,7 +6,7 @@ function ExploreIngredients() {
   return (
     <div>
       <Header setTitle="Explorar Ingredientes" />
-      Explore Ingredients Page
+      Explore Ingredients
     </div>
   );
 }

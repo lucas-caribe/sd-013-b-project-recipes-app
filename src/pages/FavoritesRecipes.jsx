@@ -5,6 +5,7 @@ import copy from 'clipboard-copy';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ButtonFavorite from '../components/ButtonFavorite';
+import ButtonShare from '../components/ButtonShare';
 import shareIcon from '../images/shareIcon.svg';
 import Header from '../components/Header';
 
@@ -125,6 +126,22 @@ function FavoritesRecipes({ loadFoods }) {
     );
   }
 
+  const [state, setState] = useState(STATE_FAVORITE);
+  const { buttonFilter } = state;
+  const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  console.log(favoriteRecipes);
+
+  function noFavorites() {
+    return (
+      <>
+        {/* <Header setTitle="Receitas Favoritas" /> */}
+        <h1> Não há favoritos</h1>
+        {console.log(favoriteRecipes, 'xablau') }
+      </>
+    );
+  }
+
+  if (favoriteRecipes === null) { return noFavorites; }
   if (!loadFoods) {
     return (
       <>
@@ -140,6 +157,7 @@ function FavoritesRecipes({ loadFoods }) {
     return (
       <>
         <Header setTitle="Receitas Favoritas" />
+        <p>Loading</p>
         <p hidden={ visibleMessage }>Link copiado!</p>
         { buttonChangeFilter(setState) }
         {
