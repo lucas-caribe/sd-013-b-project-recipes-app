@@ -27,6 +27,7 @@ export const RecipesProvider = ({ children }) => {
   const [meals, setMeals] = useState(mealsInitialState);
   const [cocktails, setCocktails] = useState(cocktailsInitialState);
   const [finishedRecipes, setFinishedRecipes] = useState([]);
+  const [ingredientsList, setIngredientsList] = useState([]);
   // const [favoriteRecipes, setFavoriteRecipes] = useState([]);
 
   const getRandomRecipe = useCallback(async (page) => {
@@ -40,61 +41,37 @@ export const RecipesProvider = ({ children }) => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (hasTermAndOption === false) {
-  //     console.log('entrou');
-  //     const fetchDrinks = async () => {
-  //       const LIST_URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-  //       const responseList = await fetch(LIST_URL);
-  //       const dataList = await responseList.json();
-  //       const drinksList = await dataList.drinks;
+  const fecthIngredients = useCallback(async (type) => {
+    const MAX_INGREDIENTS = 12;
 
-  //       const CATEGORIES_URL = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
-  //       const responseCategories = await fetch(CATEGORIES_URL);
-  //       const dataCategories = await responseCategories.json();
-  //       const drinksCategories = await dataCategories.drinks;
+    if (type === 'comidas') {
+      const { meals: ingredients } = await fetch(
+        'https://www.themealdb.com/api/json/v1/1/list.php?i=list',
+      ).then((response) => response.json());
+      const slice = ingredients.slice(0, MAX_INGREDIENTS);
+      setIngredientsList(slice);
+      return;
+    }
 
-  //       setCocktails({
-  //         ...cocktails,
-  //         list: drinksList,
-  //         categories: drinksCategories,
-  //       });
-  //     };
-  //     fetchDrinks();
-  //   }
-  //   return undefined;
-  // }, []);
+    if (type === 'bebidas') {
+      const { drinks: ingredients } = await fetch(
+        'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list',
+      ).then((response) => response.json());
+      const slice = ingredients.slice(0, MAX_INGREDIENTS);
+      setIngredientsList(slice);
+      return;
+    }
 
-  // useEffect(() => {
-  //   if (hasTermAndOption === false) {
-  //     console.log('entrou');
-  //     const fetchMeals = async () => {
-  //       const API_URL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-  //       const responseList = await fetch(API_URL);
-  //       const dataList = await responseList.json();
-  //       const mealsList = await dataList.meals;
-
-  //       const URL_MEALS_CATEGORIES = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
-  //       const responseCategories = await fetch(URL_MEALS_CATEGORIES);
-  //       const dataCategories = await responseCategories.json();
-  //       const mealsCategories = await dataCategories.meals;
-
-  //       setMeals({
-  //         ...meals,
-  //         list: mealsList,
-  //         categories: mealsCategories,
-  //       });
-  //     };
-  //     fetchMeals();
-  //   }
-  //   return undefined;
-  // }, []);
+    setIngredientsList([]);
+  }, []);
 
   const context = {
     getRandomRecipe,
     setFinishedRecipes,
     setMeals,
     setCocktails,
+    fecthIngredients,
+    ingredientsList,
     finishedRecipes,
     meals,
     cocktails,

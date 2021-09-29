@@ -43,18 +43,18 @@ export const DetailsProvider = ({ children }) => {
       const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
       const { meals: meal } = await response.json();
       organizeIngredients(meal);
-      setItem({
-        ...item,
+      setItem((prevState) => ({
+        ...prevState,
         meal,
-      });
+      }));
     } else {
       const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
       const { drinks: drink } = await response.json();
       organizeIngredients(drink);
-      setItem({
-        ...item,
+      setItem((prevstate) => ({
+        ...prevstate,
         drink,
-      });
+      }));
     }
   }, []);
 

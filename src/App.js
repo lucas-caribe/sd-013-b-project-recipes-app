@@ -24,12 +24,7 @@ function App() {
       <Switch>
         <Route
           exact
-          path="/explorar/comidas/ingredientes"
-          component={ ExplorarIngredientes }
-        />
-        <Route
-          exact
-          path="/explorar/bebidas/ingredientes"
+          path="/explorar/:type/ingredientes"
           component={ ExplorarIngredientes }
         />
         <Route exact path="/explorar/comidas/area" component={ ExplorarOrigem } />
