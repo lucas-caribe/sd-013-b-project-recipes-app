@@ -16,6 +16,7 @@ import ProgressoBebida from './pages/ProgressoBebida';
 import ProgressoComida from './pages/ProgressoComida';
 import ReceitasFavoritas from './pages/ReceitasFavoritas';
 import ReceitasFeitas from './pages/ReceitasFeitas';
+import NotFound from './pages/NotFound';
 
 function Routes() {
   return (
@@ -37,6 +38,7 @@ function Routes() {
         <Route exact path="/receitas-favoritas" component={ ReceitasFavoritas } />
         <Route exact path="/comidas" component={ Comidas } />
         <Route exact path="/bebidas" component={ Bebidas } />
+        <Route exact path="/explorar/bebidas/area" component={ NotFound } />
       </Switch>
     </div>
   );

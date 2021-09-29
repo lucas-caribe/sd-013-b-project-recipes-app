@@ -24,8 +24,20 @@ export const getMealCategoriesList = async () => {
   return data.meals;
 };
 
+export const getMealAreas = async () => {
+  const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list');
+  const data = await response.json();
+  return data.meals;
+};
+
 export const getMealCategoryFilter = async (category) => {
   const response = await fetch(`${URL_BASE_API}/filter.php?c=${category}`);
+  const data = await response.json();
+  return data.meals;
+};
+
+export const getMealByArea = async (option) => {
+  const response = await fetch(`${URL_BASE_API}/filter.php?a=${option}`);
   const data = await response.json();
   return data.meals;
 };
