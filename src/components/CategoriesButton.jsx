@@ -91,7 +91,6 @@ class CategoriesButton extends Component {
           All
         </button>
         { response !== '' ? this.renderButton(response) : <span> Carregando </span> }
-        Categories
       </div>
     );
   }

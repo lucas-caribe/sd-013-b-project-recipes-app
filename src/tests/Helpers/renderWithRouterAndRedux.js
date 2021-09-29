@@ -12,12 +12,9 @@ import rootReducer from '../../redux/reducers';
 const renderWithRouterAndRedux = (
   component,
   {
-
     store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk))),
 
-    initialEntries = ['/'],
-
-    history = createMemoryHistory({ initialEntries }),
+    history = createMemoryHistory(),
   } = {},
 ) => ({
 
