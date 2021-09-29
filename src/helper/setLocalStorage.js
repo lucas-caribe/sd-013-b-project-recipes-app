@@ -1,4 +1,4 @@
-const favoriteRecipes = (recipe, type) => {
+export const favoriteRecipes = (recipe, type) => {
   if (type === 'comida') {
     return (
       [{
@@ -25,4 +25,9 @@ const favoriteRecipes = (recipe, type) => {
   );
 };
 
-export default favoriteRecipes;
+export const savingProgress = (progress, type, id, prevProgress) => ({
+  [type]: {
+    ...prevProgress[type],
+    [id]: [...progress],
+  },
+});

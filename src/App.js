@@ -14,6 +14,8 @@ import Profile from './pages/Profile';
 import MealsDetails from './pages/MealsDetails';
 import DrinksDetails from './pages/DrinksDetails';
 import Login from './pages/Login';
+import CurrentMeal from './pages/CurrentMeal';
+import CurrentDrink from './pages/CurrentDrink';
 
 import './App.css';
 import NotFound from './pages/NotFound';
@@ -44,6 +46,8 @@ function App() {
           />
           <Route exact path="/comidas/:id" component={ MealsDetails } />
           <Route exact path="/bebidas/:id" component={ DrinksDetails } />
+          <Route exact path="/comidas/:id/in-progress" component={ CurrentMeal } />
+          <Route exact path="/bebidas/:id/in-progress" component={ CurrentDrink } />
           <Route exact path="/perfil" component={ Profile } />
           <Route component={ NotFound } />
         </Switch>

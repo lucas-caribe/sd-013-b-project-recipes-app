@@ -5,7 +5,7 @@ import { verificationIsFavorite } from '../../helper/recipeStatus';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import shareIcon from '../../images/shareIcon.svg';
-import favoriteRecipes from '../../helper/setLocalStorage';
+import { favoriteRecipes } from '../../helper/setLocalStorage';
 
 function ShareAndFavorite({ recipe, type, id }) {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -13,7 +13,6 @@ function ShareAndFavorite({ recipe, type, id }) {
 
   useEffect(() => {
     let bool;
-    console.log(type, recipe);
     if (type === 'comida') {
       bool = verificationIsFavorite(recipe.idMeal);
     } else {
@@ -28,7 +27,7 @@ function ShareAndFavorite({ recipe, type, id }) {
       JSON.stringify(favoriteRecipes(recipe, type)));
   };
 
-  const handleShare = async () => {
+  const handleShare = () => {
     const time = 2000;
     if (type === 'comida') {
       navigator.clipboard.writeText(`http://localhost:3000/comidas/${id}`);
@@ -36,7 +35,7 @@ function ShareAndFavorite({ recipe, type, id }) {
       navigator.clipboard.writeText(`http://localhost:3000/bebidas/${id}`);
     }
     setShow(true);
-    await setTimeout(() => setShow(false), time);
+    setTimeout(() => setShow(false), time);
   };
 
   return (
