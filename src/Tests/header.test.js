@@ -54,28 +54,28 @@ describe('Testes no componentest Header', () => {
 
   test('Testa se não tem header na tela de receita de comida', () => {
     const { history } = renderWithRouterAndRedux(<App />);
-    history.push('/comidas/{id-da-receita}');
+    history.push('/comidas/53060');
     const foodNotHeader = screen.queryByTestId(profileTestId);
     expect(foodNotHeader).toBeNull();
   });
 
   test('Testa se não tem header na tela de receita de bebida', () => {
     const { history } = renderWithRouterAndRedux(<App />);
-    history.push('/bebidas/{id-da-receita}');
+    history.push('/bebidas/15997');
     const drinkNotHeader = screen.queryByTestId(profileTestId);
     expect(drinkNotHeader).toBeNull();
   });
 
   test('Testa se não tem header na tela de processo de comida', () => {
     const { history } = renderWithRouterAndRedux(<App />);
-    history.push('/comidas/{id-da-receita}/in-progress');
+    history.push('/comidas/53060/in-progress');
     const processFoodNotHeader = screen.queryByTestId(profileTestId);
     expect(processFoodNotHeader).toBeNull();
   });
 
   test('Testa se não tem header na tela de processo de bebida', () => {
     const { history } = renderWithRouterAndRedux(<App />);
-    history.push('/bebidas/{id-da-receita}/in-progress');
+    history.push('/bebidas/15997/in-progress');
     const processDrinkNotHeader = screen.queryByTestId(profileTestId);
     expect(processDrinkNotHeader).toBeNull();
   });
