@@ -10,6 +10,7 @@ import FoodExplorer from './pages/FoodExplorer';
 import DrinkExplorer from './pages/DrinkExplorer';
 import FoodArea from './pages/FoodArea';
 import Profile from './pages/Profile';
+import DetailsPage from './pages/DetailsPage';
 import MainPage from './pages/MainPage';
 import FoodRecipe from './pages/FoodRecipe';
 import NotFound from './pages/NotFound';
@@ -22,8 +23,16 @@ function App() {
         <Route exact path="/" component={ Login } />
         <Route exact path="/comidas" component={ MainPage } />
         <Route exact path="/bebidas" component={ MainPage } />
-        <Route path="/comidas/:recipeId" component={ FoodRecipe } />
-        <Route path="/bebidas/:id-da-receita" component={ FoodRecipe } />
+        <Route
+          exact
+          path="/comidas/:id"
+          render={ (props) => <DetailsPage { ...props } /> }
+        />
+        <Route
+          exact
+          path="/bebidas/:id"
+          render={ (props) => <DetailsPage { ...props } /> }
+        />
         {/* <Route path="/comidas/:id-da-receita/in-progress"
         component={ FoodInProgress } /> */}
         {/* <Route path="/bebidas/:id-da-receita/in-progress"
