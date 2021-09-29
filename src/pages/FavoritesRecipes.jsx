@@ -1,8 +1,12 @@
 // Tela de receitas favoritas: requisitos 60 a 66;
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import copy from 'clipboard-copy';
 import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import ButtonFavorite from '../components/ButtonFavorite';
 import ButtonShare from '../components/ButtonShare';
+import shareIcon from '../images/shareIcon.svg';
 import Header from '../components/Header';
 
 const STATE_FAVORITE = {
@@ -37,8 +41,25 @@ function buttonChangeFilter(setState) {
   );
 }
 
-function FavoritesRecipes() {
+function FavoritesRecipes({ loadFoods }) {
   const history = useHistory();
+  const [visibleMessage, setVisibleMessage] = useState(true);
+  const [state, setState] = useState(STATE_FAVORITE);
+  const { buttonFilter } = state;
+  const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+
+  function buttonCopy(event) {
+    setVisibleMessage(false);
+    const oneSecond = 1000;
+    const { id } = event.target.parentNode;
+    const validation = loadFoods.some((food) => (food.idMeal === id));
+    if (!validation) {
+      copy(`http://localhost:3000/comidas/${id}`);
+    } else {
+      copy(`http://localhost:3000/bebidas/${id}`);
+    }
+    setTimeout(() => setVisibleMessage(true), oneSecond);
+  }
 
   function itemFavorite(item, index) {
     const { id, type, area, category, alcoholicOrNot, name, image } = item;
@@ -47,7 +68,7 @@ function FavoritesRecipes() {
         <div id={ id }>
           <input
             type="image"
-            width="150px"
+            width="70px"
             data-testid={ `${index}-horizontal-image` }
             src={ image }
             alt={ name }
@@ -63,7 +84,13 @@ function FavoritesRecipes() {
           </button>
           <p data-testid={ `${index}-horizontal-top-text` }>{`${area} - ${category}`}</p>
           <ButtonFavorite id={ id } index={ index } />
-          <ButtonShare index={ index } />
+          <input
+            data-testid={ `${index}-horizontal-share-btn` }
+            type="image"
+            onClick={ buttonCopy }
+            src={ shareIcon }
+            alt="shareIcon"
+          />
         </div>
       );
     }
@@ -71,7 +98,7 @@ function FavoritesRecipes() {
       <div id={ id }>
         <input
           type="image"
-          width="150px"
+          width="70px"
           data-testid={ `${index}-horizontal-image` }
           src={ image }
           alt={ name }
@@ -88,7 +115,13 @@ function FavoritesRecipes() {
         <p>{ category }</p>
         <p data-testid={ `${index}-horizontal-top-text` }>{ alcoholicOrNot }</p>
         <ButtonFavorite id={ id } index={ index } />
-        <ButtonShare index={ index } />
+        <input
+          data-testid={ `${index}-horizontal-share-btn` }
+          type="image"
+          onClick={ buttonCopy }
+          src={ shareIcon }
+          alt="shareIcon"
+        />
       </div>
     );
   }
@@ -109,12 +142,23 @@ function FavoritesRecipes() {
   }
 
   if (favoriteRecipes === null) { return noFavorites; }
+  if (!loadFoods) {
+    return (
+      <>
+        <Header setTitle="Receitas Favoritas" />
+        <h1> Carregando...</h1>
+      </>
+    );
+  }
+
+  if (favoriteRecipes.length === 0) { return (<Header setTitle="Receitas Favoritas" />); }
 
   if (buttonFilter === 'comida') {
     return (
       <>
         <Header setTitle="Receitas Favoritas" />
         <p>Loading</p>
+        <p hidden={ visibleMessage }>Link copiado!</p>
         { buttonChangeFilter(setState) }
         {
           favoriteRecipes
@@ -133,6 +177,7 @@ function FavoritesRecipes() {
     return (
       <>
         <Header setTitle="Receitas Favoritas" />
+        <p hidden={ visibleMessage }>Link copiado!</p>
         { buttonChangeFilter(setState) }
         {
           favoriteRecipes
@@ -150,6 +195,7 @@ function FavoritesRecipes() {
   return (
     <>
       <Header setTitle="Receitas Favoritas" />
+      <p hidden={ visibleMessage }>Link copiado!</p>
       { buttonChangeFilter(setState) }
       {
         favoriteRecipes.map((item, index) => (
@@ -162,4 +208,12 @@ function FavoritesRecipes() {
   );
 }
 
-export default FavoritesRecipes;
+const mapStateToProps = (state) => ({
+  loadFoods: state.loadFoods,
+});
+
+FavoritesRecipes.propTypes = {
+  object: PropTypes.objectOf(PropTypes.object),
+}.isRequired;
+
+export default connect(mapStateToProps)(FavoritesRecipes);
