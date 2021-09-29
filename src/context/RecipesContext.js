@@ -2,7 +2,6 @@ import React, {
   createContext,
   useContext,
   useState,
-  useEffect,
   useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -60,62 +59,65 @@ export const RecipesProvider = ({ children }) => {
     });
   };
 
-  useEffect(() => {
-    if (!hasTermAndOption) {
-      console.log('entrou');
-      const fetchDrinks = async () => {
-        const LIST_URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-        const responseList = await fetch(LIST_URL);
-        const dataList = await responseList.json();
-        const drinksList = await dataList.drinks;
+  // useEffect(() => {
+  //   if (hasTermAndOption === false) {
+  //     console.log('entrou');
+  //     const fetchDrinks = async () => {
+  //       const LIST_URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+  //       const responseList = await fetch(LIST_URL);
+  //       const dataList = await responseList.json();
+  //       const drinksList = await dataList.drinks;
 
-        const CATEGORIES_URL = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
-        const responseCategories = await fetch(CATEGORIES_URL);
-        const dataCategories = await responseCategories.json();
-        const drinksCategories = await dataCategories.drinks;
+  //       const CATEGORIES_URL = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+  //       const responseCategories = await fetch(CATEGORIES_URL);
+  //       const dataCategories = await responseCategories.json();
+  //       const drinksCategories = await dataCategories.drinks;
 
-        setCocktails({
-          ...cocktails,
-          list: drinksList,
-          categories: drinksCategories,
-        });
-      };
-      fetchDrinks();
-    }
-    return undefined;
-  }, []);
+  //       setCocktails({
+  //         ...cocktails,
+  //         list: drinksList,
+  //         categories: drinksCategories,
+  //       });
+  //     };
+  //     fetchDrinks();
+  //   }
+  //   return undefined;
+  // }, []);
 
-  useEffect(() => {
-    if (!hasTermAndOption) {
-      console.log('entrou');
-      const fetchMeals = async () => {
-        const API_URL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-        const responseList = await fetch(API_URL);
-        const dataList = await responseList.json();
-        const mealsList = await dataList.meals;
+  // useEffect(() => {
+  //   if (hasTermAndOption === false) {
+  //     console.log('entrou');
+  //     const fetchMeals = async () => {
+  //       const API_URL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+  //       const responseList = await fetch(API_URL);
+  //       const dataList = await responseList.json();
+  //       const mealsList = await dataList.meals;
 
-        const URL_MEALS_CATEGORIES = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
-        const responseCategories = await fetch(URL_MEALS_CATEGORIES);
-        const dataCategories = await responseCategories.json();
-        const mealsCategories = await dataCategories.meals;
+  //       const URL_MEALS_CATEGORIES = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
+  //       const responseCategories = await fetch(URL_MEALS_CATEGORIES);
+  //       const dataCategories = await responseCategories.json();
+  //       const mealsCategories = await dataCategories.meals;
 
-        setMeals({
-          ...meals,
-          list: mealsList,
-          categories: mealsCategories,
-        });
-      };
-      fetchMeals();
-    }
-    return undefined;
-  }, []);
+  //       setMeals({
+  //         ...meals,
+  //         list: mealsList,
+  //         categories: mealsCategories,
+  //       });
+  //     };
+  //     fetchMeals();
+  //   }
+  //   return undefined;
+  // }, []);
 
   const context = {
     getRandomRecipe,
     setFinishedRecipes,
+    setMeals,
     setMealsList,
+    setCocktails,
     setCocktailsList,
     checkTermAndOption,
+    hasTermAndOption,
     finishedRecipes,
     meals,
     cocktails,

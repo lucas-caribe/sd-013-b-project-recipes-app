@@ -12,9 +12,34 @@ function Comidas() {
   const { handleMainPage } = useAuth();
   const { location: { pathname } } = useHistory();
 
-  const { meals: { list } } = useRecipes();
+  const { hasTermAndOption, setMeals, meals: { list }, meals } = useRecipes();
 
   const MAX_ELEMENTS = 12;
+
+  useEffect(() => {
+    if (hasTermAndOption === false) {
+      console.log('entrou');
+      const fetchMeals = async () => {
+        const API_URL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+        const responseList = await fetch(API_URL);
+        const dataList = await responseList.json();
+        const mealsList = await dataList.meals;
+
+        const URL_MEALS_CATEGORIES = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
+        const responseCategories = await fetch(URL_MEALS_CATEGORIES);
+        const dataCategories = await responseCategories.json();
+        const mealsCategories = await dataCategories.meals;
+
+        setMeals({
+          ...meals,
+          list: mealsList,
+          categories: mealsCategories,
+        });
+      };
+      fetchMeals();
+    }
+    return undefined;
+  }, []);
 
   useEffect(() => {
     handleMainPage(pathname);

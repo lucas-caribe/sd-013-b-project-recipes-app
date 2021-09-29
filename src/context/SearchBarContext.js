@@ -1,8 +1,9 @@
-import React, { createContext,
+import React, {
+  createContext,
   useContext,
   useState,
-  useCallback,
-  useEffect } from 'react';
+  useEffect,
+} from 'react';
 
 import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
@@ -38,8 +39,7 @@ export const SearchBarProvider = ({ children }) => {
     setIsOpen((prevState) => !prevState);
   };
 
-  const checkResult = useCallback((result) => {
-    console.log('entrou check');
+  const checkResult = (result) => {
     if (result.meals && result.meals.length === 1) {
       history.push(`/comidas/${result.meals[0].idMeal}`);
     }
@@ -60,10 +60,9 @@ export const SearchBarProvider = ({ children }) => {
       global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       return null;
     }
-  }, [history, setMealsList, setCocktailsList]);
+  };
 
-  const fetchByOption = useCallback(async (url, searchOption, searchTerm) => {
-    console.log('entrou fetch');
+  const fetchByOption = async (url, searchOption, searchTerm) => {
     switch (searchOption) {
     case 'ingredient': {
       const response = await fetch(`https://www.${url}.com/api/json/v1/1/filter.php?i=${searchTerm}`);
@@ -89,7 +88,7 @@ export const SearchBarProvider = ({ children }) => {
     default:
       return null;
     }
-  }, [checkResult]);
+  };
 
   const checkPageAndFetch = () => {
     switch (page) {

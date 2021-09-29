@@ -12,7 +12,32 @@ function Bebidas() {
   const { handleMainPage } = useAuth();
   const { location: { pathname } } = useHistory();
 
-  const { cocktails: { list } } = useRecipes();
+  const { hasTermAndOption, setCocktails, cocktails: { list }, cocktails } = useRecipes();
+
+  useEffect(() => {
+    if (hasTermAndOption === false) {
+      console.log('entrou');
+      const fetchDrinks = async () => {
+        const LIST_URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+        const responseList = await fetch(LIST_URL);
+        const dataList = await responseList.json();
+        const drinksList = await dataList.drinks;
+
+        const CATEGORIES_URL = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+        const responseCategories = await fetch(CATEGORIES_URL);
+        const dataCategories = await responseCategories.json();
+        const drinksCategories = await dataCategories.drinks;
+
+        setCocktails({
+          ...cocktails,
+          list: drinksList,
+          categories: drinksCategories,
+        });
+      };
+      fetchDrinks();
+    }
+    return undefined;
+  }, []);
 
   useEffect(() => {
     handleMainPage(pathname);
