@@ -16,7 +16,7 @@ function FoodsPage({ search, setLoadFoods, radioButton, searchInput, foodsIngred
   const { location: { pathname } } = history;
 
   useEffect(() => {
-    if (foodsIngredients) {
+    if (foodsIngredients.length !== 0) {
       setLoadFoods(foodsIngredients);
     } else {
       const initialRequest = {
