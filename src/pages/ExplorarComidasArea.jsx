@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-// import { useHistory } from 'react-router';
+import React, { useCallback, useEffect, useState } from 'react';
 import { getMealAreas, getMealByArea } from '../services/fetchRadioComidas';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import CardsComida from '../components/CardsComida';
 
 export default function ExplorarComidasArea() {
   const QUANTIDADE_RECEITAS = 12;
@@ -15,9 +15,9 @@ export default function ExplorarComidasArea() {
     setSelectAreas(await getMealAreas(''));
   };
 
-  const mealByArea = async () => {
+  const mealByArea = useCallback(async () => {
     setMealAllByArea(await getMealByArea(selectedArea));
-  };
+  }, [selectedArea]);
 
   useEffect(() => {
     getByArea();
@@ -25,7 +25,7 @@ export default function ExplorarComidasArea() {
 
   useEffect(() => {
     mealByArea();
-  }, [selectedArea]);
+  }, [mealByArea]);
 
   return selectAreas.length === 0 ? (
     <p>Loading...</p>
@@ -39,6 +39,7 @@ export default function ExplorarComidasArea() {
             data-testid="explore-by-area-dropdown"
             onChange={ (e) => (setSelectedArea(e.target.value)) }
           >
+            <option data-testid="All-option">All</option>
             {selectAreas.map(({ strArea }, key) => (
               <option data-testid={ `${strArea}-option` } key={ key }>
                 {strArea}
@@ -47,7 +48,9 @@ export default function ExplorarComidasArea() {
           </select>
         </label>
         {mealAllByArea
-        && pegarDozeElementos().map(({ strMeal }, key) => <p key={ key }>{ strMeal }</p>)}
+        && <CardsComida
+          comidas={ pegarDozeElementos() }
+        />}
       </div>
       <Footer />
     </main>
