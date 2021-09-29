@@ -95,22 +95,6 @@ export default function RecipeDoneCardFilter() {
             </div>
 
             <div className="recipe-card-share-btn">
-              {/* <CopyToClipboard
-                text={
-                  recipe.type === 'Meal'
-                    ? `http://localhost:3000/comidas/${recipe.idMeal}`
-                    : `http://localhost:3000/bebidas/${recipe.idDrink}`
-                }
-              >
-                <button
-                  data-testid={ `${index}-horizontal-share-btn` }
-                  type="button"
-                  src={ shareIcon }
-                  onClick={ () => setLinkCopied(true) }
-                >
-                  <img src={ shareIcon } alt="share" />
-                </button>
-              </CopyToClipboard> */}
               <CopyToClipboardFunc recipe={ recipe } index={ index } />
             </div>
 
