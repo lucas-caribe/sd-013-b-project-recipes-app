@@ -1,6 +1,4 @@
 import React from 'react';
-// import getPageArgs from '../services/Service';
-import { useHistory } from 'react-router-dom';
 import { loadProgressRecipeById, getPageArgs, saveProgress } from '../services/Service';
 
 const fakeMeasure = 'kg';
@@ -8,9 +6,6 @@ const fakeIngVolume = `10${fakeMeasure}`;
 const fakeIngList = [`ing1 - ${fakeIngVolume}`, `ing2 - ${fakeIngVolume}`];
 
 export default function Recipes(props) {
-  const history = useHistory();
-  console.log(history);
-  console.log(props);
   // this url must be: /comida.. or /bebida.. followed by '/id' and '/inProgress
   // getPageArgs separe these sessions in a args array
   // args = ['comidas', '123', 'inProgress']

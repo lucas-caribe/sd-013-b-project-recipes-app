@@ -3,9 +3,9 @@
 const OUT_ARRAY_LENGTH = 3;
 const KEY_STORAGEPROGRESS = 'inProgressRecipes';
 
-export function getPageArgs(props) {
-  const { match: { url } } = props;
-  const args = url.slice(1).trim().split('/', OUT_ARRAY_LENGTH);
+export function getPageArgs(object) {
+  const { location: { pathname } } = object;
+  const args = pathname.slice(1).trim().split('/', OUT_ARRAY_LENGTH);
   return args;
 }
 

@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import searchIcon from '../images/searchIcon.svg';
 import profileIcon from '../images/profileIcon.svg';
 import SearchBar from './SearchBar';
+import contextCreate from '../context/contextCreate';
 
 export default function Header() {
+  const { setToggleSearch } = useContext(contextCreate);
   const [showFilters, setShowFilters] = useState(false);
   const { pathname } = useLocation(); // Component em uma Pagina busca histórico
   const history = useHistory();
@@ -32,7 +34,10 @@ export default function Header() {
               type="image"
               alt="searchIcon"
               data-testid="search-top-btn"
-              onClick={ () => setShowFilters(!showFilters) }
+              onClick={ () => {
+                setShowFilters(!showFilters);
+                setToggleSearch(true);
+              } }
               src={ searchIcon }
             />)
           : <div /> }
