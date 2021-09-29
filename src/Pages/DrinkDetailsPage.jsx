@@ -5,18 +5,22 @@ import { idDrinkAPI } from '../services/drinksAPI';
 import { suggestionsAPI } from '../services/foodAPI';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import MealsSuggestions from '../components/MealsSuggestions';
+import IngredientsList from '../components/IngredientsList';
 import '../App.css';
 
 function DrinkDetailsPage() {
   const [drinkDetails, setDrinkDetails] = useState();
   const [meals, setMeals] = useState();
   const [hidden, setHidden] = useState(false);
-  // const [btnStatus, setBtnStatus] = useState('Iniciar Receita');
   const url = window.location.href;
   const urlSlicePoint = 30;
   const identifier = url.slice(urlSlicePoint);
   const history = useHistory();
+  const favorite = localStorage.getItem('favoriteRecipes');
+  const SB = 'share-btn';
+  const FB = 'favorite-btn';
 
   async function getDrink(id) {
     const answer = await idDrinkAPI(id);
@@ -36,15 +40,14 @@ function DrinkDetailsPage() {
   useEffect(() => {
     getDrink(identifier)
       .then((drinkDet) => setDrinkDetails(drinkDet));
-    // console.log(identifier);
     getSuggestions()
       .then((suggestions) => setMeals(suggestions));
+    // localStorage.setItem('favoriteRecipes', JSON.stringify(array));
   }, []);
 
   if (drinkDetails && meals) {
     const { strDrink,
       strDrinkThumb, strAlcoholic, strInstructions, idDrink } = drinkDetails.drinks[0];
-    // console.log(drinkDetails.drinks[0]);
 
     const ingredients = [];
     Object.keys(drinkDetails.drinks[0]).forEach((key) => {
@@ -61,47 +64,25 @@ function DrinkDetailsPage() {
         <p data-testid="recipe-title">{ strDrink }</p>
         <img data-testid="recipe-photo" src={ strDrinkThumb } alt="foto" />
         <p data-testid="recipe-category">{strAlcoholic}</p>
-        {/* {console.log(ingredients, measures)} */}
         <p data-testid="instructions">{strInstructions}</p>
-        <ul>
-          {ingredients.map((ingredient, index) => {
-            if (ingredient) {
-              return (
-                <li
-                  key={ ingredient }
-                  data-testid={ `${index}-ingredient-name-and-measure` }
-                >
-                  {ingredient}
-                  {' '}
-                  -
-                  {' '}
-                  {measures[index]}
-                </li>);
-            } return null;
-          })}
-        </ul>
-        {/*
-        <iframe title="How To" data-testid="video" src={ `https://www.youtube.com/embed${videoId}` } /> */}
+        <IngredientsList ingredients={ ingredients } measures={ measures } />
         <MealsSuggestions meals={ meals } />
-        <button data-testid="share-btn" type="button" onClick={ handleShare }>
-          <img
-            src={ shareIcon }
-            alt="share-button"
-          />
-        </button>
-        <button data-testid="favorite-btn" type="button">
-          <img
-            src={ whiteHeartIcon }
-            alt="add-to-fav-button"
-          />
-        </button>
+        <input
+          onClick={ handleShare }
+          data-testid={ SB }
+          type="image"
+          alt="favorite"
+          src={ shareIcon }
+        />
+        {favorite
+          ? <input data-testid={ FB } type="image" alt="fa" src={ blackHeartIcon } />
+          : <input data-testid={ FB } type="image" alt="fa" src={ whiteHeartIcon } />}
         <button
           className="start-recipe-btn"
           type="button"
           data-testid="start-recipe-btn"
           onClick={ () => history.push(`/bebidas/${idDrink}/in-progress`) }
         >
-          {/* {btnStatus} */}
           Continuar Receita
         </button>
         {hidden ? <span>Link copiado!</span> : null}
