@@ -49,7 +49,7 @@ const fetchFilteredItems = (userType, userFilter, userInput) => (dispatch) => {
     filter = 'filter.php?c=';
     break;
   default:
-    filter = 'filter.php?i=';
+    filter = 'filter.php?s=';
     break;
   }
   if (userFilter === 'first-letter' && userInput.length > 1) {
@@ -59,6 +59,7 @@ const fetchFilteredItems = (userType, userFilter, userInput) => (dispatch) => {
     fetch(`https://www.${type}.com/api/json/v1/1/${filter}${userInput}`)
       .then((result) => result.json())
       .then((obj) => {
+        console.log(obj);
         if (obj[Object.keys(obj)]) {
           dispatch(setFilteredItens(obj));
         } else {

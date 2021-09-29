@@ -16,22 +16,27 @@ const Main = ({ filterItens }) => {
   if (type === 'comidas') main = 'Comidas';
   else if (type === 'bebidas') main = 'Bebidas';
   let showHeaderAndFooter = true;
+
   if (id) {
     showHeaderAndFooter = false;
   }
   if (type === 'comidas') main = 'Comidas';
   else if (type === 'bebidas') main = 'Bebidas';
   if (id) showHeaderAndFooter = false;
+
   useEffect(() => {
     filterItens(type, 'name', '');
   }, [filterItens, type]);
+
   const toggleSearch = () => {
     toggleShowSeatch(!showSearch);
   };
+
   const renderHeader = () => (
     <div>
       <Header main={ main } left="profile" right="search" fright={ toggleSearch } />
     </div>);
+
   return (
     <div>
       {showHeaderAndFooter ? renderHeader() : null}
@@ -41,12 +46,15 @@ const Main = ({ filterItens }) => {
     </div>
   );
 };
+
 const mapDispatchToProps = (dispatch) => ({
   filterItens: (userType, userFilter, userInput) => {
     dispatch(fetchFilteredItems(userType, userFilter, userInput));
   },
 });
+
 Main.propTypes = {
   filterItens: PropTypes.func.isRequired,
 };
+
 export default connect(null, mapDispatchToProps)(Main);
