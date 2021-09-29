@@ -97,8 +97,8 @@ export default function MealDetalis() {
         Compartilhar
       </button>
       <button type="button" data-testid="favorite-btn">Favoritar</button>
-      <p data-testid="recipe-category">{mealDetails.strCategory}</p>
       {copyLink && <p>Link copiado!</p>}
+      <p data-testid="recipe-category">{mealDetails.strCategory}</p>
       <ul>
         { ingredientList.map((ingredient, index) => (
           <li key={ index } data-testid={ `${index}-ingredient-name-and-measure` }>
