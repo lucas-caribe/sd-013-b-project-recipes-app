@@ -7,12 +7,12 @@ import getEmailFromLocalStorage from '../services/getLocalStorage';
 const Perfil = () => {
   const history = useHistory();
   // substito para mapStateToProps
-  const email = getEmailFromLocalStorage();
+  const user = getEmailFromLocalStorage() || '';
   return (
     <>
       <Header title="Perfil" displaySearchBtn={ false } />
       <div>
-        <p data-testid="profile-email">{ email }</p>
+        <p data-testid="profile-email">{ user.email }</p>
         <button
           type="button"
           data-testid="profile-done-btn"
