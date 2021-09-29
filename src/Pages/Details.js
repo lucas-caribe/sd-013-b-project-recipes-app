@@ -9,7 +9,7 @@ import DetailsRecommended from '../Components/DetailsRecommended';
 import StartRecipeButton from '../Components/StartRecipeButton';
 import { finishRecipe as finishRecipeAction,
   editProgress as editProgressAction } from '../Redux/Actions';
-import { checkRecipeStatus } from '../Utils/functions';
+import { checkRecipeStatus, fetchRecomendation } from '../Utils/functions';
 
 const Details = (props) => {
   const MINUSONE = -1;
@@ -56,18 +56,16 @@ const Details = (props) => {
   };
 
   useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        setItem(data[db][0]);
-      });
+    const fetchURL = async () => {
+      await fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          setItem(data[db][0]);
+        });
+    };
+    fetchURL();
 
-    fetch(recommendationUrl).then((res) => res.json()).then((data) => {
-      const rec = data[recommendedDb];
-      const spliceNumber = 6;
-      const sixFirst = rec.splice(0, spliceNumber);
-      setRecommended(sixFirst);
-    });
+    fetchRecomendation(recommendationUrl, recommendedDb, setRecommended);
 
     const actualStatus = checkRecipeStatus(type, id, inProgressRecipes, doneRecipes);
     setRecipeStatus(actualStatus);

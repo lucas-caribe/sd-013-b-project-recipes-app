@@ -71,3 +71,17 @@ export const checkDisabled = (status, actualIngredients, ingredients) => {
   if (status === INPROGRESS
     && actualIngredients.length === ingredients.length) return false;
 };
+
+export const fetchRecomendation = async (recommendationUrl, recommendedDb, func) => {
+  await fetch(recommendationUrl).then((res) => res.json()).then((data) => {
+    const rec = data[recommendedDb];
+    const spliceNumber = 6;
+    const sixFirst = rec.reduce((acc, act, index) => {
+      if (index < spliceNumber) {
+        return [...acc, act];
+      }
+      return acc;
+    }, []);
+    func(sixFirst);
+  });
+};
