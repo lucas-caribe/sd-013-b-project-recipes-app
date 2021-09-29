@@ -1,8 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { editProgress as editProgressAction } from '../Redux/Actions';
 
 const DetailsIngredients = (props) => {
-  const { ingredients, measures, status } = props;
+  const { type, ingredients, measures, status, id,
+    editProgress, actualIngredientsChange, actualIngredients,
+  } = props;
+  const MINUSONE = -1;
+
+  const checkBoxClick = async (ingredient) => {
+    actualIngredientsChange(ingredient);
+    await editProgress(id, type, ingredient);
+  };
 
   const renderIngredients = () => {
     if (status !== 'in-progress') {
@@ -40,34 +50,42 @@ const DetailsIngredients = (props) => {
           {ingredients.map((x, i) => {
             if (measures[i] !== null) {
               return (
-                <>
-                  <input type="checkbox" />
-                  <li
-                    data-testid={ `${i}-ingredient-step` }
-                    style={ { listStyle: 'none' } }
-                    key={ x }
-                  >
+                <li
+                  data-testid={ `${i}-ingredient-step` }
+                  style={ { listStyle: 'none',
+                    textDecoration: actualIngredients.indexOf(i) !== MINUSONE
+                      ? 'line-through' : 'none' } }
+                  key={ x }
+                >
+                  <input
+                    type="checkbox"
+                    checked={ actualIngredients.indexOf(i) !== MINUSONE }
+                    onClick={ () => checkBoxClick(i) }
+                  />
 
-                    {x}
-                    {' '}
-                    -
-                    {' '}
-                    {measures[i]}
-                  </li>
-                </>
+                  {x}
+                  {' '}
+                  -
+                  {' '}
+                  {measures[i]}
+                </li>
               );
             }
             return (
-              <>
-                <input type="checkbox" />
-                <li
-                  data-testid={ `${i}-ingredient-step` }
-                  style={ { listStyle: 'none' } }
-                  key={ x }
-                >
-                  {x}
-                </li>
-              </>
+              <li
+                data-testid={ `${i}-ingredient-step` }
+                style={ { listStyle: 'none',
+                  textDecoration: actualIngredients.indexOf(i) !== MINUSONE
+                    ? 'line-through' : 'none' } }
+                key={ x }
+              >
+                <input
+                  type="checkbox"
+                  checked={ actualIngredients.indexOf(i) !== MINUSONE }
+                  onClick={ () => checkBoxClick(i) }
+                />
+                {x}
+              </li>
             );
           })}
         </ul>
@@ -84,6 +102,17 @@ DetailsIngredients.propTypes = {
   ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
   measures: PropTypes.arrayOf(PropTypes.string).isRequired,
   status: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  editProgress: PropTypes.func.isRequired,
+  actualIngredientsChange: PropTypes.func.isRequired,
+  actualIngredients: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
-export default DetailsIngredients;
+const mapDispatchToProps = (dispatch) => ({
+  editProgress: (id, type, ingredient) => {
+    dispatch(editProgressAction(id, type, ingredient));
+  },
+});
+
+export default connect(null, mapDispatchToProps)(DetailsIngredients);

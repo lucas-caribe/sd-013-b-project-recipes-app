@@ -12,8 +12,10 @@ import { finishRecipe as finishRecipeAction,
 import { checkRecipeStatus } from '../Utils/functions';
 
 const Details = (props) => {
+  const MINUSONE = -1;
   const { type, id, status, finishRecipe,
     editProgress, doneRecipes, inProgressRecipes } = props;
+  const [actualIngredients, setActualIngredients] = useState([]);
   const [item, setItem] = useState({});
   // Cada receita vai ter um recipeStatus:
   // - default: receita não iniciada
@@ -22,6 +24,9 @@ const Details = (props) => {
   const [recipeStatus, setRecipeStatus] = useState('default');
   // Cada receita vai ter um isFavorite (true) ou (false)
   const [recommended, setRecommended] = useState([]);
+
+  const ingDB = type === 'comidas'
+    ? inProgressRecipes.meals : inProgressRecipes.cocktails;
 
   let baseUrl;
   let recommendationUrl;
@@ -43,6 +48,13 @@ const Details = (props) => {
   }
   const url = `${baseUrl}${id}`;
 
+  const actualIngredientsChange = (ingredient) => {
+    const actIng = [...actualIngredients];
+    if (actIng.indexOf(ingredient) === MINUSONE) actIng.push(ingredient);
+    else actIng.splice(actIng.indexOf(ingredient), 1);
+    setActualIngredients(actIng);
+  };
+
   useEffect(() => {
     fetch(url)
       .then((res) => res.json())
@@ -60,7 +72,7 @@ const Details = (props) => {
     const actualStatus = checkRecipeStatus(type, id, inProgressRecipes, doneRecipes);
     setRecipeStatus(actualStatus);
   }, [id, db, recommendationUrl,
-    recommendedDb, url, doneRecipes, inProgressRecipes, type]);
+    recommendedDb, url, doneRecipes, inProgressRecipes, type, recipeStatus]);
 
   const ingredients = [];
   const measures = [];
@@ -77,6 +89,8 @@ const Details = (props) => {
   const subTitle = type === 'comidas' ? item.strCategory : item.strAlcoholic;
   const instructions = item.strInstructions;
   const videoUrl = item.strYoutube;
+
+  if (Object.keys(item).length === 0) return <div>loading...</div>;
   return (
 
     <div>
@@ -113,6 +127,10 @@ const Details = (props) => {
         ingredients={ ingredients }
         measures={ measures }
         status={ status }
+        type={ type }
+        id={ id }
+        actualIngredients={ actualIngredients }
+        actualIngredientsChange={ actualIngredientsChange }
       />
       <DetailsInstructions instructions={ instructions } />
       {type === 'comidas' && <DetailsVideo videoUrl={ videoUrl } />}
@@ -122,6 +140,9 @@ const Details = (props) => {
         id={ id }
         status={ status }
         recipeStatus={ recipeStatus }
+        ingredients={ ingredients }
+        db={ ingDB }
+        actualIngredients={ actualIngredients }
       />
 
     </div>

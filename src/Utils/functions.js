@@ -7,6 +7,8 @@
 //   });
 // };
 
+const INPROGRESS = 'in-progress';
+
 const checkDone = (doneRecipes, id) => {
   let done = false;
   if (doneRecipes.length > 0) {
@@ -58,7 +60,14 @@ export const checkRecipeStatus = (type, id, inProgressRecipes, doneRecipes) => {
   if (done) return 'done';
 
   const inProgress = checkInProgress(inProgressRecipes, type, id);
-  if (inProgress) return 'in-progress';
+  if (inProgress) return INPROGRESS;
 
   return 'default';
+};
+
+export const checkDisabled = (status, actualIngredients, ingredients) => {
+  if (status === INPROGRESS
+  && actualIngredients.length !== ingredients.length) return true;
+  if (status === INPROGRESS
+    && actualIngredients.length === ingredients.length) return false;
 };

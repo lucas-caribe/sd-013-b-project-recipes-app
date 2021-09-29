@@ -10,7 +10,10 @@ const DetailsHeader = (props) => {
   const [copyClicked, setCopyClicked] = useState(false);
 
   const shareClick = () => {
-    const link = window.location.href;
+    const ONZE = -11;
+    const DOZE = -12;
+    let link = window.location.href;
+    if (link.slice(ONZE) === 'in-progress') link = link.slice(0, DOZE);
     navigator.clipboard.writeText(link);
     setCopyClicked(true);
   };
