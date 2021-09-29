@@ -6,7 +6,6 @@ import HeaderWithSearch from './HeaderWithSearch';
 
 export default function ExploreDrinksRecipesByIngredient() {
   const { drinks } = useContext(RecipesContext);
-  console.log(drinks);
 
   return (
     <>

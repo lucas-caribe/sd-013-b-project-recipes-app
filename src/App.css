@@ -115,11 +115,26 @@ footer {
   justify-content: center;
 }
 
+.carouselCard {
+  border-color: solid orange 3px;
+  border-radius: 25px;
+}
+
 .textInput {
   border-radius: 10px;
   bottom: 50px;
   padding: 10px;
   position: relative;
+}
+
+.carouselDiv {
+  border: 2px solid orange;
+  display: inline-block;
+}
+
+.carouselImage {
+  max-height: 25%;
+  max-width: 25%;
 }
 
 /* Ref: https://codepen.io/kh-mamun/pen/NdwZdW */
@@ -278,4 +293,11 @@ footer {
     opacity: 1;
     transform: translate(0) scale(1);
   }
+}
+
+.startRecipeButton {
+  bottom: 0;
+  margin-top: 50px;
+  position: fixed;
+  text-align: center;
 }
