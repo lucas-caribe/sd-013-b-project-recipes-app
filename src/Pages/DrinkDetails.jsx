@@ -3,6 +3,7 @@ import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import '../App.css';
 import CustomCarousel from './CustomCarousel';
+import FavoriteButton from './Utils/FavoriteButton';
 
 const copy = require('clipboard-copy');
 
@@ -89,7 +90,7 @@ export default function DrinkDetalis() {
       >
         Compartilhar
       </button>
-      <button type="button" data-testid="favorite-btn">Favoritar</button>
+      <FavoriteButton props={ { drinkDetails } } />
       {copyLink && <p>Link copiado!</p>}
       <p data-testid="recipe-category">{drinkDetails.strCategory}</p>
       <ul>

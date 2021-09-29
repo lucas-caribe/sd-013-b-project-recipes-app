@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 import CustomCarousel from './CustomCarousel';
 
+import FavoriteButton from './Utils/FavoriteButton';
+
 const copy = require('clipboard-copy');
 
 export default function MealDetalis() {
@@ -67,8 +69,6 @@ export default function MealDetalis() {
     }
   }
 
-  console.log(recipeInProgress);
-
   const hiddenButton = (
     <button
       type="button"
@@ -96,7 +96,7 @@ export default function MealDetalis() {
       >
         Compartilhar
       </button>
-      <button type="button" data-testid="favorite-btn">Favoritar</button>
+      <FavoriteButton props={ { mealDetails } } />
       {copyLink && <p>Link copiado!</p>}
       <p data-testid="recipe-category">{mealDetails.strCategory}</p>
       <ul>
