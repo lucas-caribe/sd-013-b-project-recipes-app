@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import drinkIcon from '../../images/drinkIcon.svg';
 import exploreIcon from '../../images/exploreIcon.svg';
 import mealIcon from '../../images/mealIcon.svg';
-
 import './footer.css';
 
 const Footer = () => {
@@ -21,7 +20,7 @@ const Footer = () => {
 
   return (
     <div data-testid="footer" className="main-footer">
-      { renderIcon('/bebida', 'drinks-bottom-btn', drinkIcon, 'ícone para bebida') }
+      { renderIcon('/bebidas', 'drinks-bottom-btn', drinkIcon, 'ícone para bebida') }
       { renderIcon('/explorar', 'explore-bottom-btn', exploreIcon, 'ícone para explore') }
       { renderIcon('/comidas', 'food-bottom-btn', mealIcon, 'ícone de comida') }
     </div>

@@ -7,15 +7,41 @@ function Provider({ children }) {
     user: '',
     password: '',
   });
+  const [currentFoodFilter, setCurrentFoodFilter] = useState('');
+  const [currentDrinkFilter, setCurrentDrinkFilter] = useState('');
+  const [page, setPage] = useState('Comidas');
+  const [searching, setSearching] = useState(false);
+  const [meals, setMeals] = useState([]);
+  const [drinks, setDrinks] = useState([]);
+  const [filteredByIngredient, setFilteredByIngredient] = useState([]);
+  const [foodIngredientSituation, setFoodIngredientSituation] = useState(false);
+  const [drinkIngredientSituation, setDrinkIngredientSituation] = useState(false);
 
   const contextValue = {
-    login, setLogin,
+    login,
+    setLogin,
+    currentFoodFilter,
+    setCurrentFoodFilter,
+    currentDrinkFilter,
+    setCurrentDrinkFilter,
+    page,
+    setPage,
+    searching,
+    setSearching,
+    meals,
+    setMeals,
+    drinks,
+    setDrinks,
+    filteredByIngredient,
+    setFilteredByIngredient,
+    foodIngredientSituation,
+    setFoodIngredientSituation,
+    drinkIngredientSituation,
+    setDrinkIngredientSituation,
   };
 
   return (
-    <AppContext.Provider value={ contextValue }>
-      {children}
-    </AppContext.Provider>
+    <AppContext.Provider value={ contextValue }>{children}</AppContext.Provider>
   );
 }
 
