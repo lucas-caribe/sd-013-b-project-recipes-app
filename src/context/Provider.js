@@ -10,6 +10,8 @@ const Provider = ({ children }) => {
   const [foodFilter, setFoodFilter] = useState([]);
   const [boolean, setBoolean] = useState(false);
   const [booleanDrink, setBooleanDrink] = useState(false);
+  const [selectFoodCategory, setSelectFoodCategory] = useState([]);
+  const [clickBtn, setClickBtn] = useState(true);
 
   const contextValue = {
     foodState,
@@ -26,6 +28,10 @@ const Provider = ({ children }) => {
     setBoolean,
     booleanDrink,
     setBooleanDrink,
+    selectFoodCategory,
+    setSelectFoodCategory,
+    clickBtn,
+    setClickBtn,
   };
 
   return (
