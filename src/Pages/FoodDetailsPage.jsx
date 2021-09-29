@@ -1,20 +1,38 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
+import copy from 'clipboard-copy';
 import foodContext from '../context/FoodContext';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import { idAPI } from '../services/foodAPI';
+import { suggestionsAPI } from '../services/drinksAPI';
+import DrinksSuggestions from '../components/DrinksSuggestions';
+import '../App.css';
 
 export default function FoodDetailsPage() {
   // const [recipe, setRecipe] = useState({});
   const { foodState } = useContext(foodContext);
   const [mealDetails, setMealDetails] = useState();
+  const [suggestions, setSuggestions] = useState();
+  const [hidden, setHidden] = useState(false);
   const url = window.location.href;
   const urlSlicePoint = 30;
   const identifier = url.slice(urlSlicePoint);
+  const history = useHistory();
 
   async function getRecipe(id) {
     const recipeDetails = await idAPI(id);
     return recipeDetails;
+  }
+
+  async function getSuggestions() {
+    const answer = await suggestionsAPI();
+    return answer;
+  }
+
+  function handleShare() {
+    copy(url);
+    setHidden(true);
   }
 
   useEffect(() => {
@@ -23,13 +41,20 @@ export default function FoodDetailsPage() {
       // console.log(foodState[0])
       getRecipe(idMeal)
         .then((mealDet) => setMealDetails(mealDet));
+      getSuggestions()
+        .then((answer) => setSuggestions(answer));
     } getRecipe(identifier)
       .then((mealDet) => setMealDetails(mealDet));
+    getSuggestions()
+      .then((answer) => setSuggestions(answer));
   }, []);
 
-  if (mealDetails) {
+  if (mealDetails && suggestions) {
     const { strMeal,
-      strMealThumb, strCategory, strInstructions, strYoutube } = mealDetails.meals[0];
+      strMealThumb, strCategory,
+      strInstructions, strYoutube, idMeal } = mealDetails.meals[0];
+    const { drinks } = suggestions;
+    // const drinksSugg = drinks.slice(0, 6);
 
     const youTubeUrlSlicePoint = 23;
     const videoId = strYoutube.slice(youTubeUrlSlicePoint);
@@ -46,7 +71,7 @@ export default function FoodDetailsPage() {
 
     return (
       <div>
-        {/* {console.log(mealDetails.meals[0])} */}
+        {console.log(mealDetails.meals[0])}
         {/*
         {console.log(Object.values(mealDetails.meals[0]).slice(9, 29))}
         {console.log(Object.values(mealDetails.meals[0]).slice(29, 49))} */}
@@ -74,9 +99,21 @@ export default function FoodDetailsPage() {
         <img data-testid="recipe-photo" src={ strMealThumb } alt="foto" />
         <p data-testid="recipe-category">{strCategory}</p>
         <p data-testid="instructions">{strInstructions}</p>
-        <iframe title="How To" data-testid="video" src={ `https://www.youtube.com/embed${videoId}` } />
-        <div data-testid={ `${0}-recomendation-card` }>Recomendacoes???</div>
-        <button data-testid="share-btn" type="button">
+        <iframe className="i-frame" title="How To" data-testid="video" src={ `https://www.youtube.com/embed${videoId}` } />
+        {/* <div data-testid="recomendation-card">
+          {drinks.map((drink, index) => (index < 6 ? (
+            <div
+              key={ drink.idDrink }
+              data-testid={ `${index}-recomendation-card` }
+            >
+              <p data-testid={ `${index}-recomendation-title` }>{drink.strDrink}</p>
+            </div>
+          ) : null))}
+           {console.log(drinksSugg)}
+        </div> */}
+        <DrinksSuggestions drinks={ drinks } />
+        {/* {console.log(drinks)} */}
+        <button data-testid="share-btn" type="button" onClick={ handleShare }>
           <img
             src={ shareIcon }
             alt="share-button"
@@ -88,10 +125,17 @@ export default function FoodDetailsPage() {
             alt="add-to-fav-button"
           />
         </button>
-        <button type="button" data-testid="start-recipe-btn">Iniciar a receita</button>
+        <button
+          className="start-recipe-btn"
+          type="button"
+          data-testid="start-recipe-btn"
+          onClick={ () => history.push(`/comidas/${idMeal}/in-progress`) }
+        >
+          Continuar Receita
+        </button>
+        {hidden ? <span>Link copiado!</span> : null}
       </div>
     );
   }
   return <span>Loading!!!</span>;
 }
-console.log('change1');

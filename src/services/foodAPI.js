@@ -49,3 +49,9 @@ export async function AreaFood() {
   const response = await request.json();
   return response.meals;
 }
+
+export async function suggestionsAPI() {
+  const request = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+  const response = await request.json();
+  return response;
+}

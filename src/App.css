@@ -5,3 +5,30 @@
   position: fixed;
   width: 100%;
 }
+
+.start-recipe-btn {
+  bottom: 0;
+  position: fixed;
+}
+
+.div-sugg {
+  display: flex;
+  height: 210px;
+  overflow: scroll;
+  overflow-y: hidden;
+  width: 100%;
+}
+
+.drink-box {
+  height: 100px;
+  text-align: center;
+}
+
+.imgs {
+  max-height: 150px;
+  width: 180px;
+}
+
+.i-frame {
+  width: 360px;
+}
