@@ -3,11 +3,11 @@ import { Redirect } from 'react-router';
 import foodContext from '../context/FoodContext';
 
 function FoodCard() {
-  const { foodState } = useContext(foodContext);
+  const { foodState, prevent } = useContext(foodContext);
 
   const MAX_NUMBER = 12;
 
-  if (foodState.length === 1) {
+  if (foodState.length === 1 && !prevent) {
     return (
       <Redirect to={ `comidas/${foodState[0].idMeal}` } />
     );

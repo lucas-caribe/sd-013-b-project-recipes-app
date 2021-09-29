@@ -3,7 +3,7 @@ import foodContext from '../context/FoodContext';
 
 export default function FoodCategory() {
   const { foodCategory, setFoodCategory,
-    setFoodState, clickBtn, setClickBtn } = useContext(foodContext);
+    setFoodState, clickBtn, setClickBtn, prevent, setPrevent } = useContext(foodContext);
   const MAX_NUMBER = 5;
 
   useEffect(() => {
@@ -17,7 +17,6 @@ export default function FoodCategory() {
 
   async function categoryAPI(category) {
     const request = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
-    console.log(request);
     const response = await request.json();
     setFoodState(response.meals);
     setClickBtn(!clickBtn);
@@ -31,6 +30,7 @@ export default function FoodCategory() {
   }
 
   function handleClick(category) {
+    if (category === 'Goat') setPrevent(!prevent);
     if (clickBtn) categoryAPI(category);
     if (!clickBtn) noCategory();
   }
