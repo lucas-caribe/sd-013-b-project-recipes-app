@@ -10,7 +10,11 @@ const MEAL = 'Meal';
 
 export default function Feitas() {
   useCurrentPage('Receitas Feitas');
-  const { allRecipesDone, setFilterRecipeDone } = useContext(Context);
+  const {
+    allRecipesDone,
+    setFilterRecipeDone,
+    setLinkCopied,
+  } = useContext(Context);
 
   function filterRecipes(foodType) {
     const recipesFiltereds = allRecipesDone.filter((recipe) => recipe.type === foodType);
@@ -25,21 +29,30 @@ export default function Feitas() {
         <button
           type="button"
           data-testid="filter-by-all-btn"
-          onClick={ () => setFilterRecipeDone([]) }
+          onClick={ () => {
+            setFilterRecipeDone([]);
+            setLinkCopied(false);
+          } }
         >
           All
         </button>
         <button
           type="button"
           data-testid="filter-by-food-btn"
-          onClick={ () => filterRecipes(MEAL) }
+          onClick={ () => {
+            filterRecipes(MEAL);
+            setLinkCopied(false);
+          } }
         >
           Food
         </button>
         <button
           type="button"
           data-testid="filter-by-drink-btn"
-          onClick={ () => filterRecipes(DRINK) }
+          onClick={ () => {
+            filterRecipes(DRINK);
+            setLinkCopied(false);
+          } }
         >
           Drinks
         </button>

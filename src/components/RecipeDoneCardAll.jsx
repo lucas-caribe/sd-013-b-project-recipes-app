@@ -23,7 +23,10 @@ export default function RecipeDoneCard() {
   if (allRecipesDone.length !== 0) {
     return (
       <div className="recipe-card-link-copied">
-        { linkCopied ? <span> Link copiado!</span> : null }
+        { linkCopied
+          ? <div className="alert alert-success" role="alert"> Link copiado!</div>
+          : null }
+
         { allRecipesDone
           .map((recipe, index) => (
             <div
