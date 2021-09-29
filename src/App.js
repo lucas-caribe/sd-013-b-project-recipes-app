@@ -48,7 +48,7 @@ function App() {
         <Route exact path="/receitas-feitas" component={ RecipesMade } />
         <Route exact path="/receitas-favoritas" component={ FavoritesRecipes } />
       </Switch>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
