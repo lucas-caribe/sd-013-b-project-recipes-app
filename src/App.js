@@ -8,6 +8,7 @@ import Perfil from './Pages/Perfil';
 import DoneRecipes from './Pages/DoneRecipes';
 import FavoriteRecipes from './Pages/FavoriteRecipes';
 import Login from './Pages/Login';
+import Details from './Pages/Details';
 
 function App() {
   return (
@@ -25,8 +26,11 @@ function App() {
       <Route path="/receitas-favoritas" exact>
         <FavoriteRecipes />
       </Route>
-      <Route path="/:type/:id?/:status?">
+      <Route exact path="/:type/">
         <Main />
+      </Route>
+      <Route path="/:type/:id?/">
+        <Details />
       </Route>
     </Switch>
   );

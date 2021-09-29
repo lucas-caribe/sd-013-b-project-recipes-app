@@ -47,7 +47,7 @@ const fetchFilteredItems = (userType, userFilter, userInput) => (dispatch) => {
     filter = 'filter.php?c=';
     break;
   default:
-    filter = 'filter.php?i=';
+    filter = 'filter.php?s=';
     break;
   }
   if (userFilter === 'first-letter' && userInput.length > 1) {

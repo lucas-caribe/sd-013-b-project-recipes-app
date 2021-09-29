@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import DetailsHeader from '../Components/DetailsHeader';
 import DetailsIngredients from '../Components/DetailsIngredients';
 import DetailsInstructions from '../Components/DetailsInstructions';
@@ -11,7 +12,8 @@ import { finishRecipe as finishRecipeAction,
   editProgress as editProgressAction } from '../Redux/Actions';
 
 const Details = (props) => {
-  const { type, id, status, finishRecipe, editProgress } = props;
+  const { id, type, status } = useParams();
+  const { finishRecipe, editProgress } = props;
   const [item, setItem] = useState({});
   const [recommended, setRecommended] = useState([]);
 
@@ -36,19 +38,38 @@ const Details = (props) => {
   const url = `${baseUrl}${id}`;
 
   useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        setItem(data[db][0]);
-      });
+    const fetchURL = async () => {
+      await fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          setItem(data[db][0]);
+          console.log('linha 46', data);
+        });
+    };
+    fetchURL();
+    console.log('montando');
+  }, [db, url]);
 
-    fetch(recommendationUrl).then((res) => res.json()).then((data) => {
-      const rec = data[recommendedDb];
-      const spliceNumber = 6;
-      const sixFirst = rec.splice(0, spliceNumber);
-      setRecommended(sixFirst);
-    });
-  }, [id, db, recommendationUrl, recommendedDb, url]);
+  useEffect(() => () => {
+    console.log('desmontando');
+  });
+
+  useEffect(() => {
+    const fetchRecomendation = async () => {
+      await fetch(recommendationUrl).then((res) => res.json()).then((data) => {
+        const rec = data[recommendedDb];
+        const spliceNumber = 6;
+        const sixFirst = rec.reduce((acc, act, index) => {
+          if (index < spliceNumber) {
+            return [...acc, act];
+          }
+          return acc;
+        }, []);
+        setRecommended(sixFirst);
+      });
+    };
+    fetchRecomendation();
+  }, [item, recommendationUrl, recommendedDb]);
 
   const ingredients = [];
   const measures = [];
@@ -111,9 +132,6 @@ const Details = (props) => {
 };
 
 Details.propTypes = {
-  type: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
   finishRecipe: PropTypes.func.isRequired,
   editProgress: PropTypes.func.isRequired,
 };
