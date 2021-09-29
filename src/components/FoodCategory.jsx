@@ -17,6 +17,7 @@ export default function FoodCategory() {
 
   async function categoryAPI(category) {
     const request = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
+    console.log(request);
     const response = await request.json();
     setFoodState(response.meals);
     setClickBtn(!clickBtn);

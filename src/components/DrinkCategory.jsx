@@ -17,7 +17,8 @@ export default function DrinkCategory() {
   }, []);
 
   async function categoryAPI(c) {
-    const request = await fetch(`www.thecocktaildb.com/api/json/v1/1/filter.php?c=${c}`);
+    const request = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${c}`);
+    console.log(request);
     const response = await request.json();
     setDrinkState(response.drinks);
     setClickBtn(!clickBtn);
