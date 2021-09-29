@@ -12,11 +12,10 @@ function Bebidas() {
   const { handleMainPage } = useAuth();
   const { location: { pathname } } = useHistory();
 
-  const { hasTermAndOption, setCocktails, cocktails: { list }, cocktails } = useRecipes();
+  const { hasTermAndOption, setCocktails, cocktails: { list } } = useRecipes();
 
   useEffect(() => {
     if (hasTermAndOption === false) {
-      console.log('entrou');
       const fetchDrinks = async () => {
         const LIST_URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
         const responseList = await fetch(LIST_URL);
@@ -28,16 +27,16 @@ function Bebidas() {
         const dataCategories = await responseCategories.json();
         const drinksCategories = await dataCategories.drinks;
 
-        setCocktails({
-          ...cocktails,
+        setCocktails((prevState) => ({
+          ...prevState,
           list: drinksList,
           categories: drinksCategories,
-        });
+        }));
       };
       fetchDrinks();
     }
     return undefined;
-  }, []);
+  }, [hasTermAndOption, setCocktails]);
 
   useEffect(() => {
     handleMainPage(pathname);
@@ -49,29 +48,14 @@ function Bebidas() {
     .map((drink, index) => Card(drink.strDrink, drink.strDrinkThumb, index))
     .slice(0, MAX_ELEMENTS);
 
-  if (list.length === 0) {
-    return (
-      <main>
-        <Header pageTitle="Bebidas" showSearchIcon />
-        <FilterButtonsDrinks />
-
-        <h1>loading...</h1>
-        <Footer />
-      </main>
-    );
-  }
-
-  const readyToLoad = list.length > 0;
-  if (readyToLoad) {
-    return (
-      <div>
-        <Header pageTitle="Bebidas" showSearchIcon />
-        <FilterButtonsDrinks />
-        {mapDrinklist(list)}
-        <Footer />
-      </div>
-    );
-  }
+  return (
+    <main>
+      <Header pageTitle="Bebidas" showSearchIcon />
+      <FilterButtonsDrinks />
+      {list.length === 0 ? <h1>Loading...</h1> : mapDrinklist(list)}
+      <Footer />
+    </main>
+  );
 }
 
 export default Bebidas;

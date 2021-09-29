@@ -12,13 +12,12 @@ function Comidas() {
   const { handleMainPage } = useAuth();
   const { location: { pathname } } = useHistory();
 
-  const { hasTermAndOption, setMeals, meals: { list }, meals } = useRecipes();
+  const { hasTermAndOption, setMeals, meals: { list } } = useRecipes();
 
   const MAX_ELEMENTS = 12;
 
   useEffect(() => {
     if (hasTermAndOption === false) {
-      console.log('entrou');
       const fetchMeals = async () => {
         const API_URL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
         const responseList = await fetch(API_URL);
@@ -30,16 +29,16 @@ function Comidas() {
         const dataCategories = await responseCategories.json();
         const mealsCategories = await dataCategories.meals;
 
-        setMeals({
-          ...meals,
+        setMeals((prevState) => ({
+          ...prevState,
           list: mealsList,
           categories: mealsCategories,
-        });
+        }));
       };
       fetchMeals();
     }
     return undefined;
-  }, []);
+  }, [hasTermAndOption, setMeals]);
 
   useEffect(() => {
     handleMainPage(pathname);
@@ -50,28 +49,14 @@ function Comidas() {
   ) => Card(meal.strMeal, meal.strMealThumb, index))
     .slice(0, MAX_ELEMENTS);
 
-  if (list.length === 0) {
-    return (
-      <main>
-        <Header pageTitle="Comidas" showSearchIcon />
-        <FilterButtonsMeals />
-        <h1>loading...</h1>
-        <Footer />
-      </main>
-    );
-  }
-
-  const readyToLoad = list.length > 0;
-  if (readyToLoad) {
-    return (
-      <div>
-        <Header pageTitle="Comidas" showSearchIcon />
-        <FilterButtonsMeals />
-        {mapMeallist(list)}
-        <Footer />
-      </div>
-    );
-  }
+  return (
+    <main>
+      <Header pageTitle="Comidas" showSearchIcon />
+      <FilterButtonsMeals />
+      {list.length === 0 ? <h1>Loading...</h1> : mapMeallist(list)}
+      <Footer />
+    </main>
+  );
 }
 
 export default Comidas;
