@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 // biblioteca responsável por copiar para a área de transferência o que estiver em sua propriedade "text"
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import PropTypes from 'prop-types';
+import { isNull } from 'lodash';
 
 import Context from '../context/Context';
 import shareIcon from '../images/shareIcon.svg';
@@ -42,7 +43,7 @@ CopyToClipboardFunc.propTypes = {
       strCategory: PropTypes.string,
       strAlcoholic: PropTypes.string,
       strDrink: PropTypes.string,
-      strTags: PropTypes.bool,
+      strTags: isNull,
       date: PropTypes.string,
       type: PropTypes.string,
     },
