@@ -1,6 +1,7 @@
 // Tela de explorar bebidas ou comidas: Requisitos 70 a 74;
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function ExplorerFoods() {
@@ -53,6 +54,7 @@ function ExplorerFoods() {
       >
         Me Surpreenda!
       </button>
+      <Footer />
     </div>
   );
 }

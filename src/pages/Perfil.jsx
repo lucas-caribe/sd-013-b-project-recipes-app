@@ -1,6 +1,7 @@
 // Tela de perfil: requisito 82 a 87;
 import React from 'react';
 import { useHistory } from 'react-router';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function Perfil() {
@@ -42,6 +43,7 @@ function Perfil() {
       >
         Sair
       </button>
+      <Footer />
     </div>
   );
 }
