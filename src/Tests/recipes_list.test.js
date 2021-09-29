@@ -2,8 +2,6 @@ import { screen } from '@testing-library/dom';
 import React from 'react';
 import App from '../App';
 import renderWithRouterAndRedux from './helper/RenderWithRouterAndRedux';
-// import { fetchCategorysMeals, fetchCategorysCoctails } from '../services/fetchCategorys';
-// import fetchMock from '../../cypress/mocks/fetch';
 
 const NUMBER_OF_ELEMENTS = 12;
 

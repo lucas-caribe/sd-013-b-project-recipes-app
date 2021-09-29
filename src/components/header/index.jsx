@@ -21,7 +21,7 @@ function Header(props) {
     <div>
       <header>
         <h1 data-testid="page-title">{ titlePage }</h1>
-        <Link to="/perfil">
+        <Link to="/perfil" data-testId="link-for-perfil">
           <img
             src={ profileIcon }
             alt="userIcon"
@@ -33,6 +33,7 @@ function Header(props) {
         && (
           <button
             type="button"
+            data-testid="button-for-search"
             onClick={ handleClick }
           >
             <img

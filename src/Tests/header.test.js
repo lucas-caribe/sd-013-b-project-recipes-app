@@ -182,20 +182,19 @@ describe('Testes no componentest Header', () => {
   test('Testa se ao clicar no botão de perfil, é redirecionado', () => {
     const { history } = renderWithRouterAndRedux(<App />);
     history.push('/comidas');
-
-    expect(screen.getByRole('link')).toHaveAttribute('href', '/perfil');
-    // estrutura da linha foi pego no stackoverflow
+    const linkPerfil = screen.getByTestId('link-for-perfil');
+    expect(linkPerfil.href).toBe('http://localhost/perfil');
   });
 
   test('Testa se ao clicar no botão de busca a barra de busca aparece e some', () => {
     const { history } = renderWithRouterAndRedux(<App />);
     history.push('/comidas');
 
-    const button = screen.getByRole('button');
+    const button = screen.getByTestId('button-for-search');
 
     fireEvent.click(button);
 
-    expect(screen.getByTestId(inputSearch)).toBeInTheDocument(); // idéia de código pego no site "https://stackoverflow.com/questions/66043164/testing-click-event-in-react-testing-library"
+    expect(screen.getByTestId(inputSearch)).toBeInTheDocument();
 
     fireEvent.click(button);
 
