@@ -31,7 +31,8 @@ function Header({ setTitle, setSearchbar, search }) {
     '/comidas': renderSearchButton(),
     '/bebidas': renderSearchButton(),
     '/explorar/comidas/area': renderSearchButton(),
-    '/explorar/bebidas/ingredientes': renderSearchButton(),
+    '/explorar/bebidas/ingredientes': null,
+    '/perfil': null,
   };
 
   // function checkRouteToSearchButton(pathnamePage) {
