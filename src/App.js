@@ -6,16 +6,25 @@ import Provider from './context/Provider';
 import Login from './pages/Login';
 import Foods from './pages/Foods';
 import Profile from './pages/Profile';
+import DetailsPage from './pages/DetailsPage';
 
 function App() {
   return (
     <Provider>
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route path="/comidas" component={ Foods } />
+        <Route exact path="/comidas" component={ Foods } />
+        <Route
+          exact
+          path="/comidas/:id"
+          render={ (props) => <DetailsPage { ...props } /> }
+        />
+        <Route
+          exact
+          path="/bebidas/:id"
+          render={ (props) => <DetailsPage { ...props } /> }
+        />
         {/* <Route path="/bebidas" component={ Drinks } />
-        <Route path="/comidas/:id-da-receita" component={ FoodRecipe } />
-        <Route path="/bebidas/:id-da-receita" component={ DrinkRecipe } />
         <Route path="/comidas/:id-da-receita/in-progress" component={ FoodInProgress } />
         <Route path="/bebidas/:id-da-receita/in-progress" component={ DrinkInProgress } />
         <Route path="/explorar" component={ Explorer } />
