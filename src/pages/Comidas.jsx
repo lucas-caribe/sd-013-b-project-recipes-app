@@ -73,7 +73,7 @@ function FoodsPage({ search, setLoadFoods, radioButton, searchInput, foodsIngred
 
       {search === true ? <SearchBar
         handleSubmitButton={ () => handleSubmitFoods(
-          searchInput, setLoadFoods, radioButton,
+          searchInput, setLoadFoods, radioButton, history,
         ) }
       />
         : null}
