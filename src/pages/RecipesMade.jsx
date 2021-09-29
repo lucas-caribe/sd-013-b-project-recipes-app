@@ -145,18 +145,18 @@ function RecipesMade() {
   if (!dataFoods) {
     return (
       <>
-        <Header setTitle="Receitas Favoritas" />
+        <Header setTitle="Receitas Feitas" />
         <h1> Carregando...</h1>
       </>
     );
   }
 
-  if (doneRecipes.length === 0) { return (<Header setTitle="Receitas Favoritas" />); }
+  if (doneRecipes.length === 0) { return (<Header setTitle="Receitas Feitas" />); }
 
   if (buttonFilter === 'comida') {
     return (
       <>
-        <Header setTitle="Receitas Favoritas" />
+        <Header setTitle="Receitas Feitas" />
         <p hidden={ visibleMessage }>Link copiado!</p>
         { buttonChangeFilter(setState) }
         {
@@ -175,7 +175,7 @@ function RecipesMade() {
   if (buttonFilter === 'bebida') {
     return (
       <>
-        <Header setTitle="Receitas Favoritas" />
+        <Header setTitle="Receitas Feitas" />
         <p hidden={ visibleMessage }>Link copiado!</p>
         { buttonChangeFilter(setState) }
         {

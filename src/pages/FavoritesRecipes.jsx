@@ -134,7 +134,9 @@ function FavoritesRecipes({ loadFoods }) {
     );
   }
 
-  if (favoriteRecipes.length === 0) { return (<Header setTitle="Receitas Favoritas" />); }
+  if (!favoriteRecipes || favoriteRecipes.length === 0) {
+    return (<Header setTitle="Receitas Favoritas" />);
+  }
 
   if (buttonFilter === 'comida') {
     return (
