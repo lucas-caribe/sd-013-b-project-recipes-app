@@ -22,12 +22,12 @@ export default function Details() {
 
   useEffect(() => {
     if (pathname.includes('bebidas')) {
-      setDetails((prevState) => ({ ...prevState, recipe: 'cocktail' }));
       dispatch(fetchDetailsThunk(id, 'cocktail'));
+      setDetails((prevState) => ({ ...prevState, recipe: 'cocktail' }));
     }
     if (pathname.includes('comidas')) {
-      setDetails((prevState) => ({ ...prevState, recipe: 'meal' }));
       dispatch(fetchDetailsThunk(id, 'meal'));
+      setDetails((prevState) => ({ ...prevState, recipe: 'meal' }));
     }
   }, [details.recipe, dispatch, id, pathname]);
 

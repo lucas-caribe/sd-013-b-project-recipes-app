@@ -1,85 +1,99 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useParams } from 'react-router';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
+import { fetchDetailsThunk } from '../../redux/action';
 
 export default function FavButton() {
   const [fav, setFav] = useState(whiteHeartIcon);
-  const detailsResult = useSelector((state) => state.detailsReducer.results[0]);
+  const [RecipeFavorite, setRecipeFavorite] = useState({});
+  const dispatch = useDispatch();
+  const detailsResult = useSelector((state) => state.detailsReducer.results);
   const { pathname } = useLocation();
+  const { id } = useParams();
 
   const storage = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
-  function handleType() {
-    if (pathname.includes('bebidas')) {
-      const { idDrink, strAlcoholic,
-        strDrink, strDrinkThumb, strCategory } = detailsResult;
-      return { id: idDrink,
-        type: 'bebida',
-        area: '',
-        category: strCategory,
-        alcoholicOrNot: strAlcoholic,
-        name: strDrink,
-        image: strDrinkThumb };
-    }
-    if (pathname.includes('comidas')) {
-      const { idMeal, strArea, strCategory, strMealThumb, strMeal } = detailsResult;
-      return { id: idMeal,
-        type: 'comida',
-        area: strArea,
-        category: strCategory,
-        alcoholicOrNot: '',
-        name: strMeal,
-        image: strMealThumb };
-    }
-  }
+  const createObjectMeal = (details) => {
+    console.log(details);
+    const { idMeal, strArea, strCategory, strMealThumb, strMeal } = details;
+    const obj = {
+      id: idMeal,
+      type: 'comida',
+      area: strArea,
+      category: strCategory,
+      alcoholicOrNot: '',
+      name: strMeal,
+      image: strMealThumb,
+    };
+    setRecipeFavorite(obj);
+  };
 
-  function handleUnFav() {
-    const thisRecipe = handleType();
-    const updateRecipes = storage.filter((obj) => obj.id !== thisRecipe.id);
-    localStorage.setItem('favoriteRecipes', JSON.stringify(updateRecipes));
-  }
-
-  useEffect(() => {
-    if (storage) {
-      const thisRecipe = handleType();
-      const isFav = storage.find(({ id }) => id === thisRecipe.id);
-      if (isFav) setFav(blackHeartIcon);
-    }
-  }, [detailsResult, storage]);
+  const createObjectDrink = (details) => {
+    const { idDrink, strAlcoholic,
+      strDrink, strDrinkThumb, strCategory } = details;
+    const obj = {
+      id: idDrink,
+      type: 'bebida',
+      area: '',
+      category: strCategory,
+      alcoholicOrNot: strAlcoholic,
+      name: strDrink,
+      image: strDrinkThumb,
+    };
+    setRecipeFavorite(obj);
+  };
 
   useEffect(() => {
-    if (storage) {
-      const thisRecipe = handleType();
-      const isFav = storage.find(({ id }) => id !== thisRecipe.id);
-      if (isFav) setFav(whiteHeartIcon);
+    if (detailsResult.length === 0) {
+      dispatch(fetchDetailsThunk(id, 'meal'));
     }
   }, []);
 
   useEffect(() => {
-    if (fav === blackHeartIcon && storage) {
-      const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-      const thisRecipe = handleType();
-      const updateRecipes = favRecipes;
-      updateRecipes.push(thisRecipe);
-      localStorage.setItem('favoriteRecipes', JSON.stringify(updateRecipes));
+    if (pathname.includes('comida') && detailsResult.length > 0) {
+      createObjectMeal(detailsResult[0]);
     }
-    if (fav === blackHeartIcon && !storage) {
-      const thisRecipe = handleType();
-      const updateRecipes = [];
-      updateRecipes.push(thisRecipe);
-      localStorage.setItem('favoriteRecipes', JSON.stringify(updateRecipes));
+    if (pathname.includes('bebida') && detailsResult.length > 0) {
+      createObjectDrink(detailsResult[0]);
+    }
+    if (storage) {
+      const verification = storage.some(({ id: idLocal }) => idLocal === id);
+      if (verification) setFav(blackHeartIcon);
+    }
+  }, [pathname, detailsResult]);
+
+  const saveInLocal = () => {
+    let newArrayLocal = [];
+    if (!storage) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    }
+    if (fav === blackHeartIcon && storage) {
+      const verification = storage.some(({ id: idLocal }) => (
+        idLocal === RecipeFavorite.id
+      ));
+      if (verification) {
+        newArrayLocal = [...storage];
+      } else {
+        newArrayLocal = [...storage, RecipeFavorite];
+      }
     }
     if (fav === whiteHeartIcon && storage) {
-      handleUnFav();
+      const newArray = storage.filter(({ id: idLocal }) => idLocal !== RecipeFavorite.id);
+      newArrayLocal = newArray;
     }
-  }, [fav]);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newArrayLocal));
+  };
 
-  function handleClick() {
-    if (fav === whiteHeartIcon) return setFav(blackHeartIcon);
-    if (fav === blackHeartIcon) return setFav(whiteHeartIcon);
-  }
+  const handleClickChangeColor = () => {
+    if (fav === whiteHeartIcon) setFav(blackHeartIcon);
+    if (fav === blackHeartIcon) setFav(whiteHeartIcon);
+  };
+
+  useEffect(() => {
+    saveInLocal();
+  }, [fav]);
 
   return (
     <input
@@ -87,7 +101,7 @@ export default function FavButton() {
       alt="fav-btn"
       data-testid="favorite-btn"
       src={ fav }
-      onClick={ handleClick }
+      onClick={ handleClickChangeColor }
     />
   );
 }
