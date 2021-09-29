@@ -43,3 +43,9 @@ export async function filteredFoodAPI(url) {
   const response = await request.json();
   return response.meals;
 }
+
+export async function AreaFood() {
+  const request = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list');
+  const response = await request.json();
+  return response.meals;
+}
