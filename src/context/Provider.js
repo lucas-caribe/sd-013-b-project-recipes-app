@@ -13,6 +13,11 @@ function Provider({ children }) {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
 
+  const [inputText, setInputText] = useState('');
+  const [inputRadio, setInputRadio] = useState('');
+  const [apiRadio, setApiRadio] = useState();
+  const [filter, setFilter] = useState(false);
+
   const contextValue = {
     statusLoginBtn,
     setStatusLoginBtn,
@@ -20,6 +25,12 @@ function Provider({ children }) {
     setEmailIsValid,
     passwordIsValid,
     setPasswordIsValid,
+    inputText,
+    setInputText,
+    inputRadio,
+    setInputRadio,
+    apiRadio,
+    setApiRadio,
     currentPage,
     setCurrentPage,
     login,
@@ -32,6 +43,8 @@ function Provider({ children }) {
     setCategories,
     selectedCategory,
     setSelectedCategory,
+    filter,
+    setFilter,
   };
 
   return (

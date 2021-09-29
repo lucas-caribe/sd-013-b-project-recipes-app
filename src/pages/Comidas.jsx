@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import Header from '../components/Header';
 import Context from '../context/Context';
 import Footer from '../components/Footer';
@@ -10,7 +11,15 @@ import CategoryFilter from '../components/CategoryFilter';
 export default function Comidas() {
   useCurrentPage('Comidas');
 
-  const { setAllRecipes, setCategories, selectedCategory } = useContext(Context);
+  const {
+    setAllRecipes,
+    setCategories,
+    selectedCategory,
+    apiRadio,
+    filter,
+  } = useContext(Context);
+
+  const history = useHistory();
 
   useEffect(() => {
     async function getCategories() {
@@ -39,6 +48,23 @@ export default function Comidas() {
       getByCategory();
     }
   }, [selectedCategory, setAllRecipes, setCategories]);
+
+  // NAO TENTE ENTENDER ESSE EFFECT !!
+  // PRO SEU PROPRIO BEM
+  useEffect(() => {
+    const quantidade = 12;
+    console.log(apiRadio);
+    if (filter === true && apiRadio.meals !== null) {
+      setAllRecipes(apiRadio.meals.slice(0, quantidade));
+      if (window.location.pathname === '/comidas' && apiRadio.meals.length === 1) {
+        const id = apiRadio.meals[0].idMeal;
+        history.push(`/comidas/${id}`);
+      }
+    }
+    if (apiRadio !== undefined && apiRadio.meals === null) {
+      global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    }
+  }, [apiRadio]);
 
   return (
     <div className="page">
