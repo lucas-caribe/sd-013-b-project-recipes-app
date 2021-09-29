@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import contextCreat from './contextCreate';
+import contextCreate from './contextCreate';
 
 export default function ContextProvider({ children }) {
   const [toggleSearch, setToggleSearch] = useState(true);
@@ -41,7 +41,7 @@ export default function ContextProvider({ children }) {
   }
 
   return (
-    <contextCreat.Provider
+    <contextCreate.Provider
       value={ {
         mapDrink,
         mapFood,
@@ -50,7 +50,7 @@ export default function ContextProvider({ children }) {
       } }
     >
       {children}
-    </contextCreat.Provider>
+    </contextCreate.Provider>
   );
 }
 

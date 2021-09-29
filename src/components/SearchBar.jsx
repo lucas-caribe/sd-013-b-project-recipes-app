@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import './SearchBar.css';
 import contextCreate from '../context/contextCreate';
 
@@ -9,7 +8,10 @@ const URL_DRINKS = 'https://www.thecocktaildb.com/api/json/v1/1/';
 const ERROR_MESSAGE_CHARACTER = 'Sua busca deve conter somente 1 (um) caracter';
 const ERROR_MESSAGE = 'Sinto muito, não encontramos nenhuma receita para esses filtros.';
 
-export default function SearchBar({ history }) {
+export default function SearchBar() {
+  const history = useHistory();
+  const { pathname } = useLocation();
+
   const { mapDrink, mapFood, setToggleSearch, toggleSearch } = useContext(contextCreate);
   const [searchValue, setSearchText] = useState('');
   const [radioSelect, setRadioSelect] = useState('');
@@ -19,8 +21,6 @@ export default function SearchBar({ history }) {
       resultSearch: {},
     },
   });
-
-  const { pathname } = useLocation();
 
   async function checkLength(url) {
     if (searchValue.length === 1) {
@@ -136,9 +136,3 @@ export default function SearchBar({ history }) {
     </div>
   );
 }
-
-SearchBar.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
-};

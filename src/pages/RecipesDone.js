@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
+import shareIcon from '../images/shareIcon.svg';
 
 const doneRecipesMock = [
   {
@@ -50,28 +51,44 @@ export default function RecipesDone() {
     setLoading(false);
   }
 
+  function handleTagOrAlcohol(category, index) {
+    console.log(index);
+    if (category.type.includes('comida')) {
+      return category.tags.map((tag, i) => (
+        <p key={ i } data-testid={ `${index}-${tag}-horizontal-tag` }>{tag}</p>
+      ));
+    } return (
+      <p
+        key={ index }
+        data-testid={ `${index}-horizontal-top-text` }
+      >
+        {category.alcoholicOrNot}
+      </p>
+    );
+  }
+
   function handleCards() {
-    return doneRecipes.map(({ category, image, name, doneDate, tags }, index) => (
+    return doneRecipes.map((done, index) => (
       <div key={ index }>
         <img
-          src={ image }
+          src={ done.image }
           alt=""
           data-testid={ `${index}-horizontal-image` }
         />
-        <h1 data-testid={ `${index}-horizontal-top-text` }>{category}</h1>
-        <h2 data-testid={ `${index}-horizontal-name` }>{name}</h2>
-        <h5 data-testid={ `${index}-horizontal-done-date` }>{doneDate}</h5>
+        <h1 data-testid={ `${index}-horizontal-top-text` }>
+          { done.type.includes('comida') && `${done.area} - ${done.category}`}
+        </h1>
+        <h2 data-testid={ `${index}-horizontal-name` }>{done.name}</h2>
+        <h5 data-testid={ `${index}-horizontal-done-date` }>{done.doneDate}</h5>
         <h4>
-          {tags.map((tag, i) => (
-            <p key={ i } data-testid={ `${index}-${tag}-horizontal-tag` }>{tag}</p>
-          ))}
+          { handleTagOrAlcohol(done, index)}
         </h4>
-        <button
-          type="button"
+        <input
+          type="image"
+          src={ shareIcon }
           data-testid={ `${index}-horizontal-share-btn` }
-        >
-          Share
-        </button>
+          alt=""
+        />
       </div>
     ));
   }

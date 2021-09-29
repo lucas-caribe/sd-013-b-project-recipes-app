@@ -13,7 +13,7 @@ export default function Header() {
 
   function renderFilters() {
     return (
-      <SearchBar history={ history } />
+      <SearchBar />
     );
   }
 

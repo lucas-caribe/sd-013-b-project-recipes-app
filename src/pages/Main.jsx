@@ -72,7 +72,6 @@ export default function Main() {
     }
     return recipeCards(drinkList, 'drinks');
   }
-
   function resetAll() {
     setDrink(noFilterDrinkList);
     setMeals(noFilterMealsList);
