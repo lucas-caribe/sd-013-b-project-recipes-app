@@ -1,13 +1,22 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import DrinkCard from '../components/DrinkCard';
-import DrinkMain from '../components/DrinkMain';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import DrinkCategory from '../components/DrinkCategory';
 import foodContext from '../context/FoodContext';
 
 export default function DrinkPage() {
-  const { drinkState } = useContext(foodContext);
+  const { drinkState, booleanDrink, setDrinkState } = useContext(foodContext);
+
+  useEffect(() => {
+    async function requestAPI() {
+      const request = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+      const response = await request.json();
+      setDrinkState(response.drinks);
+    }
+    if (booleanDrink === false) requestAPI();
+  }, [setDrinkState]);
+
   return (
     <div>
       <Header title="Bebidas" />
@@ -16,7 +25,6 @@ export default function DrinkPage() {
         ? <DrinkCard />
         : global
           .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.') }
-      <DrinkMain />
       <Footer />
     </div>
   );
