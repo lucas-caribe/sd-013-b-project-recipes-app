@@ -21,6 +21,7 @@ export default function FoodDetailsPage() {
   const identifier = url.slice(urlSlicePoint);
   const history = useHistory();
   const favorite = localStorage.getItem('favoriteRecipes');
+  const FAVBTN = 'favorite-btn';
 
   async function getRecipe(id) {
     const recipeDetails = await idAPI(id);
@@ -79,10 +80,16 @@ export default function FoodDetailsPage() {
         <p data-testid="instructions">{strInstructions}</p>
         <iframe className="i-frame" title="How To" data-testid="video" src={ `https://www.youtube.com/embed${videoId}` } />
         <DrinksSuggestions drinks={ drinks } />
-        <input onClick={ handleShare } data-testid="share-btn" type="image" alt="favorite" src={ shareIcon } />
+        <input
+          onClick={ handleShare }
+          data-testid="share-btn"
+          type="image"
+          alt="favorite"
+          src={ shareIcon }
+        />
         {favorite
-          ? <input data-testid="favorite-btn" type="image" alt="favorite" src={ blackHeartIcon } />
-          : <input data-testid="favorite-btn" type="image" alt="favorite" src={ whiteHeartIcon } />}
+          ? <input data-testid={ FAVBTN } type="image" alt="fa" src={ blackHeartIcon } />
+          : <input data-testid={ FAVBTN } type="image" alt="fa" src={ whiteHeartIcon } />}
         <button
           className="start-recipe-btn"
           type="button"

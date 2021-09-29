@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function IngredientsList({ ingredients, measures }) {
   return (
@@ -22,3 +23,8 @@ export default function IngredientsList({ ingredients, measures }) {
     </ul>
   );
 }
+
+IngredientsList.propTypes = {
+  ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
+  measures: PropTypes.arrayOf(PropTypes.string).isRequired,
+};

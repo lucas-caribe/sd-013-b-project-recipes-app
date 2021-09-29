@@ -19,6 +19,8 @@ function DrinkDetailsPage() {
   const identifier = url.slice(urlSlicePoint);
   const history = useHistory();
   const favorite = localStorage.getItem('favoriteRecipes');
+  const SB = 'share-btn';
+  const FB = 'favorite-btn';
 
   async function getDrink(id) {
     const answer = await idDrinkAPI(id);
@@ -35,15 +37,12 @@ function DrinkDetailsPage() {
     setHidden(true);
   }
 
-  function handleLike(favRec) {
-    localStorage.setItem('favoriteRecipes', JSON.stringify(favRec));
-  }
-
   useEffect(() => {
     getDrink(identifier)
       .then((drinkDet) => setDrinkDetails(drinkDet));
     getSuggestions()
       .then((suggestions) => setMeals(suggestions));
+    // localStorage.setItem('favoriteRecipes', JSON.stringify(array));
   }, []);
 
   if (drinkDetails && meals) {
@@ -68,10 +67,16 @@ function DrinkDetailsPage() {
         <p data-testid="instructions">{strInstructions}</p>
         <IngredientsList ingredients={ ingredients } measures={ measures } />
         <MealsSuggestions meals={ meals } />
-        <input onClick={ handleShare } data-testid="share-btn" type="image" alt="favorite" src={ shareIcon } />
+        <input
+          onClick={ handleShare }
+          data-testid={ SB }
+          type="image"
+          alt="favorite"
+          src={ shareIcon }
+        />
         {favorite
-          ? <input data-testid="favorite-btn" type="image" alt="favorite" src={ blackHeartIcon } />
-          : <input data-testid="favorite-btn" type="image" alt="favorite" src={ whiteHeartIcon } />}
+          ? <input data-testid={ FB } type="image" alt="fa" src={ blackHeartIcon } />
+          : <input data-testid={ FB } type="image" alt="fa" src={ whiteHeartIcon } />}
         <button
           className="start-recipe-btn"
           type="button"
