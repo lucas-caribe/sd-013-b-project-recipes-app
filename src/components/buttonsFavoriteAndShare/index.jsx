@@ -1,17 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ButtonShare from './buttonShare';
+import FavButton from './FavButton';
 
-export default function ButtonsFavoriteAndShare({ testIdShare, testIdFavorite }) {
+export default function ButtonsFavoriteAndShare({ testIdShare, url }) {
   return (
     <>
-      <ButtonShare datatestid={ testIdShare } />
-      <button type="button" data-testid={ testIdFavorite }>Favoritar</button>
+      <ButtonShare datatestid={ testIdShare } url={ url } />
+      <FavButton />
     </>
   );
 }
 
 ButtonsFavoriteAndShare.propTypes = {
-  testIdFavorite: PropTypes.string.isRequired,
   testIdShare: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
 };

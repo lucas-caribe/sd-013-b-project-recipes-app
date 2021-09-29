@@ -3,7 +3,6 @@ const Error = 'Sinto muito, não encontramos nenhuma receita para esses filtros.
 export function fetchMealByIngredient(type) {
   return fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${type}`)
     .then((response) => response.json())
-    .then((response) => response)
     .catch(() => global.alert(Error));
 }
 export function fetchMealByName(type) {

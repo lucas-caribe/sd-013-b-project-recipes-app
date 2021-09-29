@@ -55,7 +55,7 @@ export default function MealsInProgress(
         data-testid="recipe-photo"
       />
       <h3 data-testid="recipe-title">{Recipe.strMeal}</h3>
-      <ButtonsFavoriteAndShare testIdShare="share-btn" testIdFavorite="favorite-btn" />
+      <ButtonsFavoriteAndShare testIdShare="share-btn" url={ `http://localhost:3000/comidas/${Recipe.idMeal}` } />
       <h4 data-testid="recipe-category">{Recipe.strCategory}</h4>
       <ul>
         {renderIngredients()}

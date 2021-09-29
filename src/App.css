@@ -28,6 +28,32 @@
   width: 100%;
 }
 
+.img-details {
+  border-radius: 100%;
+  width: 70vw;
+}
+
+.recomendation-carousel {
+  display: flex;
+  overflow-y: auto;
+}
+
+.recomendation-card {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  width: 45vw;
+}
+
+.img-recomendation {
+  height: auto;
+  width: auto;
+}
+
+.start-recipe-btn {
+  bottom: 0;
+  position: fixed;
+}
 
 .main-conteiner-list {
   align-items: center;

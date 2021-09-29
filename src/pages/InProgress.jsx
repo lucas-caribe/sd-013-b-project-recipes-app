@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
+import { useDispatch } from 'react-redux';
 import { fetchCocktailDetails, fetchMealDetails } from '../services/fetchDetails';
-import getIngredientsInArray from '../helpers/getIngredientsInArray';
+import { getIngredientsInArray } from '../helpers/getIngredientsInArray';
 import MealsInProgress from '../components/mealsInProgress';
 import DrinksInProgress from '../components/drinksInProgress';
+import { fetchDetailsThunk } from '../redux/action';
 
 export default function InProgress() {
   const [Recipe, setRecipe] = useState({});
@@ -13,6 +15,7 @@ export default function InProgress() {
   const history = useHistory();
   const { location: { pathname } } = history;
   const { id } = useParams();
+  const dispatch = useDispatch();
 
   const saveInLocalStorage = ({ target: { value, checked } }) => {
     if (!JSON.parse(localStorage.getItem(id))) {
@@ -63,13 +66,15 @@ export default function InProgress() {
       if (pathname.includes('/comidas')) {
         const { meals } = await fetchMealDetails(idFetch);
         setRecipe({ ...meals[0] });
+        dispatch(fetchDetailsThunk(id, 'meal'));
       }
       if (pathname.includes('/bebidas')) {
+        dispatch(fetchDetailsThunk(id, 'cocktail'));
         const { drinks } = await fetchCocktailDetails(idFetch);
         setRecipe({ ...drinks[0] });
       }
     },
-    [setRecipe, pathname],
+    [setRecipe, pathname, dispatch],
   );
 
   useEffect(() => {

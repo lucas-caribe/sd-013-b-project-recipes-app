@@ -3,7 +3,6 @@ const Error = 'Sinto muito, não encontramos nenhuma receita para esses filtros.
 export function fetchCocktailByIngredient(type) {
   return fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${type}`)
     .then((response) => response.json())
-    .then((response) => response)
     .catch(() => global.alert(Error));
 }
 export function fetchCocktailByName(type) {
@@ -24,6 +23,5 @@ export function fetchCocktailByFirstLetter(type) {
   }
   return fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${type}`)
     .then((response) => response.json())
-    .then((response) => response)
     .catch(() => global.alert(Error));
 }

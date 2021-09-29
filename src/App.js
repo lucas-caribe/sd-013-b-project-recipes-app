@@ -14,6 +14,7 @@ import ReceitasFeitas from './pages/ReceitasFeitas';
 import InProgress from './pages/InProgress';
 import ReceitasFavoritas from './pages/ReceitasFavoritas';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Detalhes from './pages/Detalhes';
 import './App.css';
 
 function App() {
@@ -22,7 +23,9 @@ function App() {
       <Switch>
         <Route exact path="/" component={ Login } />
         <Route exact path="/comidas" component={ Comidas } />
+        <Route exact path="/comidas/:id" component={ Detalhes } />
         <Route exact path="/bebidas" component={ Bebidas } />
+        <Route exact path="/bebidas/:id" component={ Detalhes } />
         <Route exact path="/explorar" component={ Explorar } />
         <Route
           exact

@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import ButtonsFavoriteAndShare from '../buttonsFavoriteAndShare/index';
 
 export default function DrinksInProgress(
   { Recipe, ButtonDislabedFinalizRecipe, renderIngredients },
 ) {
   const history = useHistory();
-
+  const { id } = useParams();
   const handleClickFinaliz = () => {
     const d = new Date();
     const data = `${d.getDate()}/${d.getMonth()}/${d.getFullYear()}`;
@@ -51,7 +51,7 @@ export default function DrinksInProgress(
         data-testid="recipe-photo"
       />
       <h3 data-testid="recipe-title">{Recipe.strDrink}</h3>
-      <ButtonsFavoriteAndShare testIdShare="share-btn" testIdFavorite="favorite-btn" />
+      <ButtonsFavoriteAndShare testIdShare="share-btn" url={ `http://localhost:3000/bebidas/${id}` } />
       <h4 data-testid="recipe-category">{Recipe.strCategory}</h4>
       {
         renderIngredients()
