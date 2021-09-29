@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/dom';
-// import userEvent from '@testing-library/user-event';
+import { fireEvent } from '@testing-library/react';
 import React from 'react';
 import App from '../App';
 import renderWithRouterAndRedux from './helper/RenderWithRouterAndRedux';
@@ -7,8 +7,9 @@ import renderWithRouterAndRedux from './helper/RenderWithRouterAndRedux';
 const profileTestId = 'profile-top-btn';
 const pageTitleTestId = 'page-title';
 const searchTopBtnTestId = 'search-top-btn';
+const inputSearch = 'search-input';
 
-describe.only('Testes no componentest Header', () => {
+describe('Testes no componentest Header', () => {
   test('Testa se tem os data-testids', () => {
     const { history } = renderWithRouterAndRedux(<App />);
     history.push('/comidas');
@@ -182,6 +183,22 @@ describe.only('Testes no componentest Header', () => {
     const { history } = renderWithRouterAndRedux(<App />);
     history.push('/comidas');
 
-    expect(screen.getByRole('link')).toHaveAttribute('href', '/perfil'); // estrutura da linha foi pego no stackoverflow
+    expect(screen.getByRole('link')).toHaveAttribute('href', '/perfil');
+    // estrutura da linha foi pego no stackoverflow
+  });
+
+  test('Testa se ao clicar no botão de busca a barra de busca aparece e some', () => {
+    const { history } = renderWithRouterAndRedux(<App />);
+    history.push('/comidas');
+
+    const button = screen.getByRole('button');
+
+    fireEvent.click(button);
+
+    expect(screen.getByTestId(inputSearch)).toBeInTheDocument(); // idéia de código pego no site "https://stackoverflow.com/questions/66043164/testing-click-event-in-react-testing-library"
+
+    fireEvent.click(button);
+
+    expect(screen.queryByTestId(inputSearch)).not.toBeInTheDocument();
   });
 });

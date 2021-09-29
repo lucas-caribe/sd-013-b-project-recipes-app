@@ -58,10 +58,6 @@ export default function InProgress() {
     </>
   );
 
-  const handleClickFinaliz = () => {
-    history.push('/receitas-feitas');
-  };
-
   const fetchDetails = useCallback(
     async (idFetch) => {
       if (pathname.includes('/comidas')) {
@@ -106,7 +102,6 @@ export default function InProgress() {
             <MealsInProgress
               Recipe={ Recipe }
               ButtonDislabedFinalizRecipe={ ButtonDislabedFinalizRecipe }
-              handleClickFinaliz={ handleClickFinaliz }
               renderIngredients={ renderIngredients }
             />
           )
@@ -114,7 +109,6 @@ export default function InProgress() {
             <DrinksInProgress
               Recipe={ Recipe }
               ButtonDislabedFinalizRecipe={ ButtonDislabedFinalizRecipe }
-              handleClickFinaliz={ handleClickFinaliz }
               renderIngredients={ renderIngredients }
             />
           )
