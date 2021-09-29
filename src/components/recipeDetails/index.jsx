@@ -17,7 +17,7 @@ export default function Details() {
       arrayIngredients: [],
       arrayMeasure: [],
     } });
-  const detailsResult = useSelector((state) => state.detailsReducer.results[0]);
+  const detailsResult = useSelector((state) => state.detailsReducer.results);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -91,8 +91,11 @@ export default function Details() {
     if (pathname.includes('comidas')) {
       const { strMealThumb, strCategory,
         strMeal, strInstructions, strYoutube, idMeal } = detailsResult;
-      const youtubeId = strYoutube.split('=');
-      const embed = `https://www.youtube.com/embed/${youtubeId[1]}`;
+      let embed = '';
+      if (strYoutube) {
+        const youtubeId = strYoutube.split('=');
+        embed = `https://www.youtube.com/embed/${youtubeId[1]}`;
+      }
       return (
         <div>
           <img

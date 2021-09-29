@@ -45,17 +45,17 @@ export default function FavButton() {
   };
 
   useEffect(() => {
-    if (detailsResult.length === 0) {
+    if (detailsResult.length === {}) {
       dispatch(fetchDetailsThunk(id, 'meal'));
     }
   }, []);
 
   useEffect(() => {
     if (pathname.includes('comida') && detailsResult) {
-      createObjectMeal(detailsResult[0]);
+      createObjectMeal(detailsResult);
     }
     if (pathname.includes('bebida') && detailsResult) {
-      createObjectDrink(detailsResult[0]);
+      createObjectDrink(detailsResult);
     }
     if (storage) {
       const verification = storage.some(({ id: idLocal }) => idLocal === id);
