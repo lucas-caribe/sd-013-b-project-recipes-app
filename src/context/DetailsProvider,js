@@ -1,0 +1,20 @@
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import contextCreate from './contextCreate';
+
+export default function DetailsProvider({ children }) {
+  // const [toggleSearch, setToggleSearch] = useState(true);
+
+  return (
+    <contextCreate.Provider
+      value={ {
+      } }
+    >
+      {children}
+    </contextCreate.Provider>
+  );
+}
+
+DetailsProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
