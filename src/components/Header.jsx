@@ -19,7 +19,7 @@ export default function Header() {
 
   function renderInMain(title) {
     return (
-      <div>
+      <div className="header2">
         <input
           type="image"
           alt="profile"
@@ -75,7 +75,7 @@ export default function Header() {
   }
 
   return (
-    <div>
+    <div className="header">
       {handleOnLoad()}
       {showFilters ? (renderFilters()) : (<div />)}
     </div>
