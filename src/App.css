@@ -1,11 +1,10 @@
 .explore {
   margin-top: 50px;
   padding: 40px;
- 
 }
 
 .buttonExplore {
-  margin: 0 0 15px 0;
+  margin: 0 0 15px;
 }
 
 .footer {
@@ -23,12 +22,12 @@
   background-color: gray;
   color: aliceblue;
   display: flex;
-  justify-content:space-around;
+  justify-content: space-around;
   position: fixed;
-  top: 0px;
+  top: 0%;
   width: 100%;
-  
 }
+
 .cardDisplay {
   display: flex;
   flex-direction: row;
@@ -51,6 +50,7 @@
   animation: shake 1s infinite ease;
   max-height: 80vh;
 }
+
 .rota {
   align-items: center;
   display: flex;
