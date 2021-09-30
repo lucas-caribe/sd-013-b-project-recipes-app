@@ -77,12 +77,13 @@ const toggleFavorite = (item) => {
   const type = Object.keys(item).some((key) => key === 'idMeal') ? 'comidas' : 'bebidas';
   const itemToRedux = {
     id: type === 'comidas' ? item.idMeal : item.idDrink,
-    type: type === 'comidas' ? 'meals' : 'cocktails',
-    area: item.strArea,
+    type: type === 'comidas' ? 'comida' : 'bebida',
+    alcoholicOrNot: type === 'comidas' ? '' : item.strAlcoholic,
+    area: item.strArea || '',
     category: item.strCategory,
     name: type === 'comidas' ? item.strMeal : item.strDrink,
+    image: type === 'comidas' ? item.strMealThumb : item.strDrinkThumb,
   };
-  if (type === 'bebidas') itemToRedux.alcoholicOrNot = item.strAlcoholic;
   return {
     type: TOGGLE_FAVORITE,
     payload: {
@@ -105,15 +106,15 @@ const addToDone = (item) => {
   const type = Object.keys(item).some((key) => key === 'idMeal') ? 'comidas' : 'bebidas';
   const itemToRedux = {
     id: type === 'comidas' ? item.idMeal : item.idDrink,
-    type: type === 'comidas' ? 'meals' : 'cocktails',
-    area: item.strArea,
+    type: type === 'comidas' ? 'comida' : 'bebida',
     category: item.strCategory,
     name: type === 'comidas' ? item.strMeal : item.strDrink,
     doneDate: '',
+    area: item.strArea || '',
     tags: item.strTags ? item.strTags.split(',') : [],
+    alcoholicOrNot: type === 'comidas' ? '' : item.strAlcoholic,
+    image: type === 'comidas' ? item.strMealThumb : item.strDrinkThumb,
   };
-  if (type === 'bebidas') itemToRedux.alcoholicOrNot = item.strAlcoholic;
-
   return {
     type: FINISH_RECIPE,
     payload: itemToRedux,
@@ -127,6 +128,7 @@ const finishRecipe = (items) => (dispatch) => {
 
 const editProgress = (id, foodType, ingredient) => {
   const type = foodType === 'comidas' ? 'meals' : 'cocktails';
+  console.log(id, foodType, ingredient);
 
   return {
     type: EDIT_RECIPE,

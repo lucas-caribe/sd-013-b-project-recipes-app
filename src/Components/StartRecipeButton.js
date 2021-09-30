@@ -8,7 +8,7 @@ import { checkDisabled } from '../Utils/functions';
 
 const StartRecipeButton = (props) => {
   const { type, id, startRecipe, recipeStatus, status,
-    ingredients, db, actualIngredients } = props;
+    ingredients, db, actualIngredients, inProgressRecipes } = props;
   const [disabled, setDisabled] = useState(false);
   const [buttonText, setButtonText] = useState('Iniciar Receita');
   const [dataTestId, setDataTestId] = useState('start-recipe-btn');
@@ -19,18 +19,20 @@ const StartRecipeButton = (props) => {
   };
 
   useEffect(() => {
-    if (status === inProgressStr) saveItens();
+    if ((status === inProgressStr)
+    && !Object.keys(inProgressRecipes[type === 'comidas' ? 'meals' : 'cocktails'])
+      .some((item) => item === id)) startRecipe(id, type);
     if (recipeStatus === inProgressStr && !status) setButtonText('Continuar Receita');
     else if (recipeStatus === inProgressStr
       && status === inProgressStr) {
       setButtonText('Finalizar Receita');
       setDataTestId('finish-recipe-btn');
     }
-  }, [recipeStatus, status]);
+  }, [recipeStatus, status, id, inProgressRecipes, type, startRecipe]);
 
   useEffect(() => {
     setDisabled(checkDisabled(status, actualIngredients, ingredients));
-  }, [db[id]]);
+  }, [db, id, actualIngredients, ingredients, status]);
 
   const renderButton = (dataTID) => {
     const toWhere = dataTID === 'finish-recipe-btn'
@@ -67,6 +69,7 @@ StartRecipeButton.propTypes = {
   db: PropTypes.objectOf(PropTypes.object).isRequired,
   ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
   actualIngredients: PropTypes.arrayOf(PropTypes.number).isRequired,
+  inProgressRecipes: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = (state) => ({ doneRecipes: state.doneRecipes,
