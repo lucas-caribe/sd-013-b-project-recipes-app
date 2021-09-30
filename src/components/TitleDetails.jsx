@@ -10,11 +10,16 @@ export default function TitleDetails({ recipeData }) {
   case 'comidas':
     return (
       <div>
-        <img src={ recipeData.strMealThumb } alt={ recipeData.strMeal } width="200px" />
-        <h3>
+        <img
+          data-testid="recipe-photo"
+          src={ recipeData.strMealThumb }
+          alt={ recipeData.strMeal }
+          width="200px"
+        />
+        <h3 data-testid="recipe-title">
           { recipeData.strMeal }
         </h3>
-        <h6>
+        <h6 data-testid="recipe-category">
           { recipeData.strCategory }
         </h6>
       </div>
@@ -22,11 +27,16 @@ export default function TitleDetails({ recipeData }) {
   case 'bebidas':
     return (
       <div>
-        <img src={ recipeData.strDrinkThumb } alt={ recipeData.strDrink } width="200px" />
-        <h3>
+        <img
+          data-testid="recipe-photo"
+          src={ recipeData.strDrinkThumb }
+          alt={ recipeData.strDrink }
+          width="200px"
+        />
+        <h3 data-testid="recipe-title">
           { recipeData.strDrink }
         </h3>
-        <h6>
+        <h6 data-testid="recipe-category">
           { recipeData.strAlcoholic }
         </h6>
       </div>

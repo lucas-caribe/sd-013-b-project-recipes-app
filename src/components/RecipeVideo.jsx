@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router';
 
 export default function RecipeVideo({ videoPath }) {
   if (videoPath) {

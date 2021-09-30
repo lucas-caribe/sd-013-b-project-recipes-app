@@ -1,26 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import contextCreate from './contextCreate';
 import { fetchDrinkById, fetchFoodById } from '../services/fetchAPI';
 
-const URL_SEARCH_FOOD = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
-const URL_SEARCH_DRINK = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
-
-const RECOMMENDED_DRINKS = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-const RECOMMENDED_FOOD = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-
-const SIX = 6;
-
 export default function DetailsProvider({ children }) {
-  const history = useHistory();
-  const { pathname } = history.location;
+  const { pathname } = useLocation();
   const [foodOrDrink, receitaId] = pathname.split('/').slice(1);
 
   const [recipeData, setRecipeData] = useState([]);
-  // const [recommends, setRecommends] = useState([]);
   const [loading, setLoading] = useState(true);
-  // const [isRecipeDone, setIsRecipeDone] = useState(false);
 
   useEffect(() => {
     async function requestFood() {
@@ -51,6 +40,7 @@ export default function DetailsProvider({ children }) {
       value={ {
         loading,
         recipeData,
+        receitaId,
       } }
     >
       {children}
