@@ -33,6 +33,17 @@ export default function RecipeFavoriteCardAll() {
                 />
               </Link>
             </div>
+
+            <div className="recipe-card-category">
+              <div data-testid={ `${index}-horizontal-top-text` }>
+                {
+                  favoriteRecipe.type === MEAL
+                    ? `${favoriteRecipe.strArea} - ${favoriteRecipe.strCategory}`
+                    : `${favoriteRecipe.strAlcoholic}`
+                }
+              </div>
+            </div>
+
           </div>
         )) /** end map() */
     ); // end return principal
