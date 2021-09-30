@@ -44,6 +44,20 @@ export default function RecipeFavoriteCardAll() {
               </div>
             </div>
 
+            <div className="recipe-card-title">
+              <Link
+                to={
+                  favoriteRecipe.type === MEAL
+                    ? `${ROTA_COMIDAS}${favoriteRecipe.idMeal}`
+                    : `${ROTA_BEBIDAS}${favoriteRecipe.idDrink}`
+                }
+              >
+                <h4 data-testid={ `${index}-horizontal-name` }>
+                  { favoriteRecipe[`str${favoriteRecipe.type}`] }
+                </h4>
+              </Link>
+            </div>
+
           </div>
         )) /** end map() */
     ); // end return principal
