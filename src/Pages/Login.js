@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 function Login({ history }) {
@@ -15,6 +15,10 @@ function Login({ history }) {
     }
     return false;
   };
+
+  useEffect(() => {
+    localStorage.setItem('favoriteRecipes', '[]');
+  }, []);
 
   const handleSubmit = () => {
     localStorage.setItem('mealsToken', 1);

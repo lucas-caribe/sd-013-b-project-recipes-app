@@ -1,52 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import copy from 'clipboard-copy';
-import { idDrinkAPI } from '../services/drinksAPI';
-import { suggestionsAPI } from '../services/foodAPI';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import MealsSuggestions from '../components/MealsSuggestions';
 import IngredientsList from '../components/IngredientsList';
+import misc2 from '../miscellaneous/misc2';
+import handleLike from '../miscellaneous/misc3';
 import '../App.css';
 
 function DrinkDetailsPage() {
   const [drinkDetails, setDrinkDetails] = useState();
   const [meals, setMeals] = useState();
   const [hidden, setHidden] = useState(false);
+  const [local, setLocal] = useState(false);
   const url = window.location.href;
   const urlSlicePoint = 30;
   const identifier = url.slice(urlSlicePoint);
   const history = useHistory();
-  const favorite = localStorage.getItem('favoriteRecipes');
-  const SB = 'share-btn';
-  const FB = 'favorite-btn';
-
-  async function getDrink(id) {
-    const answer = await idDrinkAPI(id);
-    return answer;
-  }
-
-  async function getSuggestions() {
-    const answer = await suggestionsAPI();
-    return answer;
-  }
 
   function handleShare() {
     copy(url);
     setHidden(true);
   }
 
+  function srcSetter(obj) {
+    if (!localStorage.getItem('favoriteRecipes')) return whiteHeartIcon;
+    return JSON
+      .parse(localStorage
+        .getItem('favoriteRecipes'))
+      .some((item) => item.id === obj.id) ? blackHeartIcon : whiteHeartIcon;
+  }
+
   useEffect(() => {
-    getDrink(identifier)
-      .then((drinkDet) => setDrinkDetails(drinkDet));
-    getSuggestions()
-      .then((suggestions) => setMeals(suggestions));
-    // localStorage.setItem('favoriteRecipes', JSON.stringify(array));
-  }, []);
+    misc2({ identifier, setDrinkDetails, setMeals });
+  }, [local]);
 
   if (drinkDetails && meals) {
-    const { strDrink,
+    const { strDrink, strCategory,
       strDrinkThumb, strAlcoholic, strInstructions, idDrink } = drinkDetails.drinks[0];
 
     const ingredients = [];
@@ -59,6 +51,15 @@ function DrinkDetailsPage() {
       if (key.includes('strMeasure')) measures.push(drinkDetails.drinks[0][key]);
     });
 
+    const obj = {
+      id: idDrink,
+      type: 'drink',
+      area: 'notAvailable',
+      category: strCategory,
+      alcoholicOrNot: strAlcoholic,
+      name: strDrink,
+      image: strDrinkThumb };
+
     return (
       <div>
         <p data-testid="recipe-title">{ strDrink }</p>
@@ -69,14 +70,18 @@ function DrinkDetailsPage() {
         <MealsSuggestions meals={ meals } />
         <input
           onClick={ handleShare }
-          data-testid={ SB }
+          data-testid="share-btn"
           type="image"
           alt="favorite"
           src={ shareIcon }
         />
-        {favorite
-          ? <input data-testid={ FB } type="image" alt="fa" src={ blackHeartIcon } />
-          : <input data-testid={ FB } type="image" alt="fa" src={ whiteHeartIcon } />}
+        <input
+          data-testid="favorite-btn"
+          type="image"
+          alt="fav-btn"
+          src={ srcSetter(obj) }
+          onClick={ () => handleLike(obj, setLocal, local) }
+        />
         <button
           className="start-recipe-btn"
           type="button"
