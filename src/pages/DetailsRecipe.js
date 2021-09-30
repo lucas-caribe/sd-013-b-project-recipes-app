@@ -18,7 +18,7 @@ export default function DetailsRecipe() {
   const { pathname } = useLocation();
   const type = pathname.includes('/comidas/') ? 'foods' : 'drinks';
 
-  const { setRecipesApp, data } = useRecipesContext();
+  const { setRecipesApp, data, recipesApp } = useRecipesContext();
 
   // Executa a função "getItem" quando o componente é montado;
 
@@ -47,7 +47,7 @@ export default function DetailsRecipe() {
     .filter((key) => key.includes('strMeasure') && recipeDetails[key])
     .map((key) => recipeDetails[key]);
 
-  if (data[type].length <= 0) return <p>Loading...</p>;
+  if (data[type].length <= 0 || recipesApp.loading) return <p>Loading...</p>;
 
   return (
     <>
