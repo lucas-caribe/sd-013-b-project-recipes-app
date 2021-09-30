@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ButtonsFavoriteRecipes from '../components/ButtonsFavoriteRecipes';
 import Context from '../context/Context';
@@ -22,6 +22,7 @@ function FavoriteRecipes() {
       const filterDrink = getFavoriteRecipes.filter(({ type }) => type === 'bebida');
       setFavoriteRecipes(filterDrink);
     }
+    setCopied(false);
   };
 
   const handleShareRecipe = (id, type) => {
@@ -37,8 +38,13 @@ function FavoriteRecipes() {
       localStorage.setItem('favoriteRecipes', JSON.stringify(filterRecipe));
     }
     setFavoriteRecipes(filterRecipe);
+    setCopied(false);
     console.log(getFavoriteRecipes);
   };
+
+  useEffect(() => {
+    setCopied(false);
+  }, [setCopied]);
 
   if (getFavoriteRecipes.length > 0) {
     return (
@@ -66,7 +72,11 @@ function FavoriteRecipes() {
                     >
                       {category}
                     </p>
-                    <p>{area}</p>
+                    <p
+                      data-testid={ `${index}-horizontal-top-text` }
+                    >
+                      {area}
+                    </p>
                     <Link to={ `/comidas/${id}` }>
                       <p
                         data-testid={ `${index}-horizontal-name` }
@@ -86,7 +96,7 @@ function FavoriteRecipes() {
                     </button>
                     <button
                       type="button"
-                      data-testid={ `${index}0-horizontal-favorite-btn` }
+                      data-testid={ `${index}-horizontal-favorite-btn` }
                       onClick={ () => removeFavoriteRecipe(id) }
                     >
                       <img
@@ -116,7 +126,11 @@ function FavoriteRecipes() {
                         {name}
                       </p>
                     </Link>
-                    <p>{alcoholicOrNot}</p>
+                    <p
+                      data-testid={ `${index}-horizontal-top-text` }
+                    >
+                      {alcoholicOrNot}
+                    </p>
                     <button
                       type="button"
                       data-testid={ `${index}-horizontal-share-btn` }
@@ -129,7 +143,7 @@ function FavoriteRecipes() {
                     </button>
                     <button
                       type="button"
-                      data-testid={ `${index}0-horizontal-favorite-btn` }
+                      data-testid={ `${index}-horizontal-favorite-btn` }
                       onClick={ () => removeFavoriteRecipe(id) }
                     >
                       <img
