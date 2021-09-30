@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import Header from './Header';
 
 function RecipeDone() {
   const [recipeDone] = useState([0]);
 
   return (
     <div className="recipe-done">
-      <h1>Receitas Prontas</h1>
+      <Header />
       <button
         data-testid="filter-by-all-btn"
         type="button"

@@ -12,6 +12,7 @@ import DrinkInProgress from './pages/DrinkInProgress';
 import ExploreRecipes from './pages/ExploreRecipes';
 import ExploreIngredients from './pages/ExploreIngredients';
 import ExploreArea from './pages/ExploreArea';
+import FavoriteRecipes from './pages/FavoriteRecipes';
 import RecipeDone from './components/RecipeDone';
 
 function Routes() {
@@ -29,6 +30,7 @@ function Routes() {
         <Route exact path="/bebidas/:id/in-progress" component={ DrinkInProgress } />
         <Route exact path="/explorar/comidas" component={ ExploreRecipes } />
         <Route exact path="/explorar/bebidas" component={ ExploreRecipes } />
+        <Route exact path="/receitas-favoritas" component={ FavoriteRecipes } />
         <Route exact path="/Receitas-feitas" component={ RecipeDone } />
         <Route
           path="/explorar/comidas/ingredientes"
