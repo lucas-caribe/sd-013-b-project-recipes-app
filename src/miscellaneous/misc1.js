@@ -18,14 +18,8 @@ export default function misc1({ foodState, setMealDetails, setSuggestions, ident
       .then((mealDet) => setMealDetails(mealDet));
     getSuggestions()
       .then((answer) => setSuggestions(answer));
-    // if (localStorage.getItem('favoriteRecipes')) {
-    //   return null;
-    // } localStorage.setItem('favoriteRecipes', '[]');
   } getRecipe(identifier)
     .then((mealDet) => setMealDetails(mealDet));
   getSuggestions()
     .then((answer) => setSuggestions(answer));
-  // if (localStorage.getItem('favoriteRecipes')) {
-  //   return null;
-  // } localStorage.setItem('favoriteRecipes', '[]');
 }
