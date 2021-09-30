@@ -3,6 +3,7 @@ import React, {
   useContext,
   useState,
   useCallback,
+  useEffect,
 } from 'react';
 import PropTypes from 'prop-types';
 
@@ -18,14 +19,24 @@ const cocktailsInitialState = {
   inProgress: {}, // Objeto onde cada chave é o id da receita em andamento e o valor correspondente é o array com os ingredientes já marcados
 };
 
+// favoriteRecipes = [{
+//   id: id-da-receita,
+//   type: comida-ou-bebida,
+//   area: area-da-receita-ou-texto-vazio,
+//   category: categoria-da-receita-ou-texto-vazio,
+//   alcoholicOrNot: alcoholic-ou-non-alcoholic-ou-texto-vazio,
+//   name: nome-da-receita,
+//   image: imagem-da-receita
+// }]
+
 export const RecipesContext = createContext();
 
 export const RecipesProvider = ({ children }) => {
   const [meals, setMeals] = useState(mealsInitialState);
   const [cocktails, setCocktails] = useState(cocktailsInitialState);
-  const [finishedRecipes, setFinishedRecipes] = useState([]);
   const [ingredientsList, setIngredientsList] = useState([]);
-  // const [favoriteRecipes, setFavoriteRecipes] = useState([]);
+  const [finishedRecipes, setFinishedRecipes] = useState([]);
+  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
 
   const setMealsList = (mealsList) => {
     setMeals({
@@ -76,14 +87,85 @@ export const RecipesProvider = ({ children }) => {
     setIngredientsList([]);
   }, []);
 
+  // Referência: https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  const disfavorRecipe = (favRecipe, type) => {
+    const property = capitalizeFirstLetter(type);
+    setFavoriteRecipes((prevState) => [...prevState
+      .filter((fav) => fav.id !== favRecipe[`id${property}`])]);
+  };
+
+  const handleFavorite = (type, recipe, colorAfter) => {
+    switch (type) {
+    case 'meal': {
+      const favRecipe = {
+        id: recipe.idMeal,
+        type: 'comida',
+        area: recipe.strArea,
+        category: recipe.strCategory,
+        alcoholicOrNot: '',
+        name: recipe.strMeal,
+        image: recipe.strMealThumb,
+      };
+      if (favoriteRecipes.every((fav) => fav.id !== recipe.idMeal)) {
+        setFavoriteRecipes((prevState) => [...prevState, favRecipe]);
+      } else {
+        disfavorRecipe(recipe, type);
+      }
+      document.querySelector('.favIcon').setAttribute('src', `${colorAfter}`);
+      break;
+    }
+    case 'drink': {
+      const favRecipe = {
+        id: recipe.idDrink,
+        type: 'bebida',
+        area: '',
+        category: recipe.strCategory,
+        alcoholicOrNot: recipe.strAlcoholic,
+        name: recipe.strDrink,
+        image: recipe.strDrinkThumb,
+      };
+      if (favoriteRecipes.every((fav) => fav.id !== recipe.idDrink)) {
+        setFavoriteRecipes((prevState) => [...prevState, favRecipe]);
+      } else {
+        disfavorRecipe(recipe, type);
+      }
+      document.querySelector('.favIcon').setAttribute('src', `${colorAfter}`);
+      break;
+    }
+    default:
+      break;
+    }
+  };
+
+  useEffect(() => {
+    const getFavFromLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (getFavFromLocalStorage !== null) {
+      setFavoriteRecipes([...getFavFromLocalStorage]);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (favoriteRecipes.length === 0) {
+      localStorage.setItem('favoriteRecipes', '[]');
+    } else if (favoriteRecipes.some((fav) => fav.id)) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([...favoriteRecipes]));
+    }
+  }, [favoriteRecipes]);
+
   const context = {
     getRandomRecipe,
     setMealsList,
     setCocktailsList,
     setFinishedRecipes,
     fecthIngredients,
-    ingredientsList,
+    handleFavorite,
+    favoriteRecipes,
     finishedRecipes,
+    ingredientsList,
     meals,
     cocktails,
   };

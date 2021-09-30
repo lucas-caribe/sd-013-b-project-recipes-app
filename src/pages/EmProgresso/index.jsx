@@ -4,6 +4,7 @@ import { useLocation, useParams } from 'react-router';
 import FavoriteButton from '../../components/FavoriteButton';
 import ShareButton from '../../components/ShareButton';
 
+import { useRecipes } from '../../context';
 import { useDetails } from '../../context/DetailsContext';
 
 import blackHeart from '../../images/blackHeartIcon.svg';
@@ -19,6 +20,10 @@ function EmProgresso() {
 
   const { pathname } = useLocation();
   const { id } = useParams();
+
+  const {
+    favoriteRecipes,
+  } = useRecipes();
 
   const {
     item,
@@ -72,9 +77,10 @@ function EmProgresso() {
     </form>
   );
 
-  const checkFavorites = (recipe, type) => {
-    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    if (favorites) {
+  const checkFavorites = (recipe, type, property) => {
+    const checkIfIsFavorite = favoriteRecipes
+      .some((fav) => fav.id === recipe[`id${property}`]);
+    if (checkIfIsFavorite) {
       return (
         <FavoriteButton
           colorBeforeClick={ blackHeart }
@@ -83,8 +89,7 @@ function EmProgresso() {
           type={ type }
         />
       );
-    }
-    return (
+    } return (
       <FavoriteButton
         colorBeforeClick={ whiteHeart }
         colorAfterClick={ blackHeart }
@@ -115,7 +120,7 @@ function EmProgresso() {
           icon={ shareIcon }
           handleCopy={ handleCopy }
         />
-        {checkFavorites(item[type][0], type)}
+        {checkFavorites(item[type][0], type, property)}
         {isCopied && <p>Link copiado!</p> }
         <h2 data-testid="recipe-category">
           { item[type][0].strAlcoholic

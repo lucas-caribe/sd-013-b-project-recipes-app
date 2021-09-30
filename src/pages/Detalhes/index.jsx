@@ -28,7 +28,10 @@ function Detalhes() {
     fetchRecommendations,
   } = useDetails();
 
-  const { finishedRecipes } = useRecipes();
+  const {
+    finishedRecipes,
+    favoriteRecipes,
+  } = useRecipes();
 
   useEffect(() => {
     fetchRecommendations(pathname);
@@ -78,9 +81,10 @@ function Detalhes() {
     );
   };
 
-  const checkFavorites = (recipe, type) => {
-    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    if (favorites) {
+  const checkFavorites = (recipe, type, property) => {
+    const checkIfIsFavorite = favoriteRecipes
+      .some((fav) => fav.id === recipe[`id${property}`]);
+    if (checkIfIsFavorite) {
       return (
         <FavoriteButton
           colorBeforeClick={ blackHeart }
@@ -89,8 +93,7 @@ function Detalhes() {
           type={ type }
         />
       );
-    }
-    return (
+    } return (
       <FavoriteButton
         colorBeforeClick={ whiteHeart }
         colorAfterClick={ blackHeart }
@@ -121,7 +124,7 @@ function Detalhes() {
           icon={ shareIcon }
           handleCopy={ handleCopy }
         />
-        {checkFavorites(item[type][0], type)}
+        {checkFavorites(item[type][0], type, property)}
         {isCopied && <p>Link copiado!</p> }
         <h2 data-testid="recipe-category">
           { item[type][0].strAlcoholic
