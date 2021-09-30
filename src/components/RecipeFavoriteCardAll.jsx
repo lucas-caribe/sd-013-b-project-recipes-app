@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Context from '../context/Context';
+import CopyToClipboardFunc from './CopyToClipboard';
 
 const MEAL = 'Meal';
 const ROTA_COMIDAS = '/comidas/';
@@ -56,6 +57,10 @@ export default function RecipeFavoriteCardAll() {
                   { favoriteRecipe[`str${favoriteRecipe.type}`] }
                 </h4>
               </Link>
+            </div>
+
+            <div className="recipe-card-share-btn">
+              <CopyToClipboardFunc recipe={ favoriteRecipe } index={ index } />
             </div>
 
           </div>
