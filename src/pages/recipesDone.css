@@ -4,16 +4,16 @@
 }
 
 .card {
+  border-radius: solid, black, 1px;
   display: flex;
   flex-wrap: wrap;
-  width: 300px;
   height: 150px;
-  border-radius: solid, black, 1px;
+  width: 300px;
 }
 
 .imgCard {
-  width: 100px;
   height: 100px;
+  width: 100px;
 }
 
 .textClass {
