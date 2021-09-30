@@ -53,8 +53,8 @@ function DrinkDetailsPage() {
 
     const obj = {
       id: idDrink,
-      type: 'drink',
-      area: 'notAvailable',
+      type: 'bebida',
+      area: '',
       category: strCategory,
       alcoholicOrNot: strAlcoholic,
       name: strDrink,
