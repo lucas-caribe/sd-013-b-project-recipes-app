@@ -6,6 +6,7 @@ const LOCAL_STORAGE_KEY = 'inProgressRecipes';
 
 function Provider({ children }) {
   const [startedRecipes, setStartedRecipes] = useState({ meals: [], cocktails: [] });
+  const [copied, setCopied] = useState(false);
 
   const localState = localStorage.getItem(LOCAL_STORAGE_KEY);
 
@@ -30,7 +31,13 @@ function Provider({ children }) {
       .setItem(LOCAL_STORAGE_KEY, JSON.stringify(startedRecipes));
   }
 
-  const contextValue = { startedRecipes, setStartedRecipes };
+  function handleShare() {
+    navigator.clipboard.writeText(window.location.href);
+    setCopied(true);
+  }
+
+  const contextValue = {
+    startedRecipes, setCopied, copied, setStartedRecipes, handleShare };
 
   return (
     <Context.Provider value={ contextValue }>

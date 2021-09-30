@@ -51,11 +51,12 @@ const RecipeDetails = () => {
   const width = '250';
   const [object, setObject] = useState();
   const [featured, setFeatured] = useState();
-  const [copied, setCopied] = useState(false);
+  // const [copied, setCopied] = useState(false);
   const [favorite, setFavorite] = useState(false);
   const history = useHistory();
   const { id } = useParams();
   const context = useContext(Context);
+  const { handleShare, copied } = useContext(Context);
   const type = window.location.href.includes('comida') ? 'comida' : 'bebida';
   const featType = type === 'comida' ? 'bebida' : 'comida';
   const key = type === 'comida' ? 'meals' : 'cocktails';
@@ -74,10 +75,10 @@ const RecipeDetails = () => {
     setWidth('10rem');
   }); */
 
-  function handleShare() {
-    navigator.clipboard.writeText(window.location.href);
-    setCopied(true);
-  }
+  // function handleShare() {
+  //   navigator.clipboard.writeText(window.location.href);
+  //   setCopied(true);
+  // }
 
   let icon = whiteHeartIcon;
   const localFavorites = localStorage.getItem('favoriteRecipes');
