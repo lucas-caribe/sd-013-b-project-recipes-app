@@ -22,11 +22,10 @@ export default function MealsSuggestions({ meals }) {
           <img alt="drink-pic" className="imgs" src={ meal.strMealThumb } />
         </div>
       ) : null))}
-      {/* {console.log(suggs)} */}
     </div>
   );
 }
 
 MealsSuggestions.propTypes = {
-  meals: PropTypes.arrayOf(PropTypes.object).isRequired,
+  meals: PropTypes.arrayOf(PropTypes.array).isRequired,
 };

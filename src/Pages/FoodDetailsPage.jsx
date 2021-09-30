@@ -5,10 +5,10 @@ import foodContext from '../context/FoodContext';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
-import { idAPI } from '../services/foodAPI';
-import { suggestionsAPI } from '../services/drinksAPI';
 import DrinksSuggestions from '../components/DrinksSuggestions';
 import IngredientsList from '../components/IngredientsList';
+import misc1 from '../miscellaneous/misc1';
+import handleLike from '../miscellaneous/misc3';
 import '../App.css';
 
 export default function FoodDetailsPage() {
@@ -16,49 +16,44 @@ export default function FoodDetailsPage() {
   const [mealDetails, setMealDetails] = useState();
   const [suggestions, setSuggestions] = useState();
   const [hidden, setHidden] = useState(false);
+  const [local, setLocal] = useState(false);
   const url = window.location.href;
   const urlSlicePoint = 30;
   const identifier = url.slice(urlSlicePoint);
   const history = useHistory();
-  const favorite = localStorage.getItem('favoriteRecipes');
-  const FAVBTN = 'favorite-btn';
-
-  async function getRecipe(id) {
-    const recipeDetails = await idAPI(id);
-    return recipeDetails;
-  }
-
-  async function getSuggestions() {
-    const answer = await suggestionsAPI();
-    return answer;
-  }
 
   function handleShare() {
     copy(url);
     setHidden(true);
   }
 
+  function srcSetter(obj) {
+    if (!localStorage.getItem('favoriteRecipes')) return whiteHeartIcon;
+    return JSON
+      .parse(localStorage
+        .getItem('favoriteRecipes'))
+      .some((item) => item.id === obj.id) ? blackHeartIcon : whiteHeartIcon;
+  }
+
   useEffect(() => {
-    if (foodState[0]) {
-      const { idMeal } = foodState[0];
-      getRecipe(idMeal)
-        .then((mealDet) => setMealDetails(mealDet));
-      getSuggestions()
-        .then((answer) => setSuggestions(answer));
-    } getRecipe(identifier)
-      .then((mealDet) => setMealDetails(mealDet));
-    getSuggestions()
-      .then((answer) => setSuggestions(answer));
-  }, []);
+    misc1({ foodState, setMealDetails, setSuggestions, identifier });
+  }, [local]);
 
   if (mealDetails && suggestions) {
     const { strMeal,
-      strMealThumb, strCategory,
+      strMealThumb, strCategory, strArea,
       strInstructions, strYoutube, idMeal } = mealDetails.meals[0];
     const { drinks } = suggestions;
-
     const youTubeUrlSlicePoint = 23;
     const videoId = strYoutube.slice(youTubeUrlSlicePoint);
+    const obj = {
+      id: idMeal,
+      type: 'comida',
+      area: strArea,
+      category: strCategory,
+      alcoholicOrNot: '',
+      name: strMeal,
+      image: strMealThumb };
 
     const ingredients = [];
     Object.keys(mealDetails.meals[0]).forEach((key) => {
@@ -72,7 +67,6 @@ export default function FoodDetailsPage() {
 
     return (
       <div>
-        {console.log(mealDetails.meals[0])}
         <IngredientsList ingredients={ ingredients } measures={ measures } />
         <p data-testid="recipe-title">{ strMeal }</p>
         <img data-testid="recipe-photo" src={ strMealThumb } alt="foto" />
@@ -87,9 +81,13 @@ export default function FoodDetailsPage() {
           alt="favorite"
           src={ shareIcon }
         />
-        {favorite
-          ? <input data-testid={ FAVBTN } type="image" alt="fa" src={ blackHeartIcon } />
-          : <input data-testid={ FAVBTN } type="image" alt="fa" src={ whiteHeartIcon } />}
+        <input
+          data-testid="favorite-btn"
+          type="image"
+          alt="fav-btn"
+          src={ srcSetter(obj) }
+          onClick={ () => handleLike(obj, setLocal, local) }
+        />
         <button
           className="start-recipe-btn"
           type="button"
