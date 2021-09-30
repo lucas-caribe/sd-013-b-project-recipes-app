@@ -13,6 +13,7 @@ class ExploreDrinkIngredientes extends Component {
   }
 
   render() {
+    console.log('oi');
     return (
       <div>
         <HeaderExplore titlePage="Explorar Ingredientes" explore />

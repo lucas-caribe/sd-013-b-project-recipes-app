@@ -30,6 +30,7 @@ class Recipes extends Component {
     this.redirectDetails(api, data);
     const { type } = this.props;
     const limitImgs = 12;
+
     return (
       <section>
         {
@@ -37,6 +38,7 @@ class Recipes extends Component {
             if (index < limitImgs) {
               const ingredientsURL = `https://www.${endpoint}.com/images/ingredients/`;
               const key = `str${api}`;
+              console.log(curr, key, curr[key]);
               const src = page !== 'ingredient'
                 ? curr[`str${api}Thumb`]
                 : `${ingredientsURL}${curr[key].split(' ')

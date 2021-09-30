@@ -10,9 +10,11 @@ class ExploreFoodIngredientes extends Component {
   componentDidMount() {
     const { fetchFood } = this.props;
     fetchFood('list.php?i=', 'list');
+    console.log('say hi');
   }
 
   render() {
+    console.log('11');
     return (
       <div>
         <HeaderExplore titlePage="Explorar Ingredientes" />
