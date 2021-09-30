@@ -28,28 +28,30 @@ export default function Profile() {
   return (
     <div>
       <Header />
-      <h5 data-testid="profile-email">{emailLocalStorage()}</h5>
-      <button
-        type="button"
-        data-testid="profile-done-btn"
-        onClick={ doneBtn }
-      >
-        Receitas Feitas
-      </button>
-      <button
-        type="button"
-        data-testid="profile-favorite-btn"
-        onClick={ favoriteBtn }
-      >
-        Receitas Favoritas
-      </button>
-      <button
-        type="button"
-        data-testid="profile-logout-btn"
-        onClick={ logoutBtn }
-      >
-        Sair
-      </button>
+      <div className="perfilEmail">
+        <h5 data-testid="profile-email">{emailLocalStorage()}</h5>
+        <button
+          type="button"
+          data-testid="profile-done-btn"
+          onClick={ doneBtn }
+        >
+          Receitas Feitas
+        </button>
+        <button
+          type="button"
+          data-testid="profile-favorite-btn"
+          onClick={ favoriteBtn }
+        >
+          Receitas Favoritas
+        </button>
+        <button
+          type="button"
+          data-testid="profile-logout-btn"
+          onClick={ logoutBtn }
+        >
+          Sair
+        </button>
+      </div>
       <Footer />
 
     </div>

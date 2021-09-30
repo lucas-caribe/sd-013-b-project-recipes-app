@@ -71,7 +71,7 @@ export default function SearchBar({ history }) {
   }
 
   return (
-    <div>
+    <div className="search">
       <div>
         <input
           type="text"
