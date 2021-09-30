@@ -36,6 +36,10 @@ function Provider({ children }) {
   ]);
   const [filterRecipeDone, setFilterRecipeDone] = useState([]);
   const [linkCopied, setLinkCopied] = useState(false);
+
+  const [favoritesRecipes, setFavoritesRecipes] = useState([]);
+  const [filterFavoritesRecipes, setFilterFavoritesRecipes] = useState([]);
+
   const [inputText, setInputText] = useState('');
   const [inputRadio, setInputRadio] = useState('');
   const [apiRadio, setApiRadio] = useState();
@@ -68,6 +72,10 @@ function Provider({ children }) {
     setFilterRecipeDone,
     linkCopied,
     setLinkCopied,
+    favoritesRecipes,
+    setFavoritesRecipes,
+    filterFavoritesRecipes,
+    setFilterFavoritesRecipes,
     filter,
     setFilter,
   };
