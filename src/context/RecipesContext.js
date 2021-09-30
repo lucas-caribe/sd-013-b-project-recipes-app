@@ -95,25 +95,25 @@ export const RecipesProvider = ({ children }) => {
   const disfavorRecipe = (favRecipe, type) => {
     const property = capitalizeFirstLetter(type);
     setFavoriteRecipes((prevState) => [...prevState
-      .filter((fav) => fav.id !== favRecipe[`id${property}`])]);
+      .filter((fav) => fav.id !== (favRecipe[`id${property}`] || favRecipe.id))]);
   };
 
   const handleFavorite = (type, recipe, colorAfter) => {
     switch (type) {
     case 'meal': {
       const favRecipe = {
-        id: recipe.idMeal,
+        id: (recipe.idMeal || recipe.id),
         type: 'comida',
-        area: recipe.strArea,
-        category: recipe.strCategory,
+        area: (recipe.strArea || recipe.area),
+        category: (recipe.strCategory || recipe.category),
         alcoholicOrNot: '',
-        name: recipe.strMeal,
-        image: recipe.strMealThumb,
+        name: (recipe.strMeal || recipe.name),
+        image: (recipe.strMealThumb || recipe.image),
       };
-      if (favoriteRecipes.every((fav) => fav.id !== recipe.idMeal)) {
-        setFavoriteRecipes((prevState) => [...prevState, favRecipe]);
-      } else {
+      if (favoriteRecipes.some((fav) => fav.id === (recipe.idMeal || recipe.id))) {
         disfavorRecipe(recipe, type);
+      } else {
+        setFavoriteRecipes((prevState) => [...prevState, favRecipe]);
       }
       document.querySelector('.favIcon').setAttribute('src', `${colorAfter}`);
       break;
@@ -128,10 +128,11 @@ export const RecipesProvider = ({ children }) => {
         name: recipe.strDrink,
         image: recipe.strDrinkThumb,
       };
-      if (favoriteRecipes.every((fav) => fav.id !== recipe.idDrink)) {
-        setFavoriteRecipes((prevState) => [...prevState, favRecipe]);
-      } else {
+      if (favoriteRecipes.some((fav) => fav.id === (recipe.idDrink || recipe.id))) {
+        console.log('entrou');
         disfavorRecipe(recipe, type);
+      } else {
+        setFavoriteRecipes((prevState) => [...prevState, favRecipe]);
       }
       document.querySelector('.favIcon').setAttribute('src', `${colorAfter}`);
       break;
