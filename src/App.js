@@ -18,8 +18,11 @@ import {
   Perfil,
   Feitas,
   Favoritas,
+  NotFound,
+  DetalheBebida,
+  DetalheComida,
   BebidaAleatoria,
-  NotFound } from './pages/index';
+} from './pages/index';
 
 function App() {
   return (
@@ -35,7 +38,9 @@ function App() {
           <Route exact path="/receitas-feitas" component={ Feitas } />
           <Route exact path="/receitas-favoritas" component={ Favoritas } />
           <Route exact path="/comidas/" component={ Comidas } />
+          <Route exact path="/comidas/:idRecipe" component={ DetalheComida } />
           <Route exact path="/bebidas/" component={ Bebidas } />
+          <Route exact path="/bebidas/:idRecipe" component={ DetalheBebida } />
           <Route exact path="/explorar" component={ Explorar } />
           <Route exact path="/explorar/comidas" component={ ExplorarComidas } />
           <Route

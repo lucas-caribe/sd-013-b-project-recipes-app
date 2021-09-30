@@ -10,7 +10,32 @@ function Provider({ children }) {
   const [login, setLogin] = useState('');
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [allRecipes, setAllRecipes] = useState([]);
-
+  // ESSE ESTADO TEM QUE SER SETADO NO BOTÃO 'FINALIZAR RECEITA' DA 'RECEITA EM PROGRESSO'
+  const [allRecipesDone, setAllRecipesDone] = useState([
+    // OBJETOS MOCKADOS PARA FINS DE TESTE
+    {
+      idMeal: 52771,
+      strMealThumb: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+      strCategory: 'Vegetarian',
+      strMeal: 'Spicy Arrabiata Penne',
+      strTags: 'Pasta, Curry, Macarrão',
+      strArea: 'Italian',
+      date: '23/06/2020',
+      type: 'Meal',
+    },
+    {
+      idDrink: 178319,
+      strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
+      strCategory: 'Ordinary Drink',
+      strAlcoholic: 'Alcoholic',
+      strDrink: 'Aquamarine',
+      strTags: null,
+      date: '23/06/2020',
+      type: 'Drink',
+    },
+  ]);
+  const [filterRecipeDone, setFilterRecipeDone] = useState([]);
+  const [linkCopied, setLinkCopied] = useState(false);
   const [inputText, setInputText] = useState('');
   const [inputRadio, setInputRadio] = useState('');
   const [apiRadio, setApiRadio] = useState();
@@ -37,6 +62,12 @@ function Provider({ children }) {
     setShowSearchBar,
     allRecipes,
     setAllRecipes,
+    allRecipesDone,
+    setAllRecipesDone,
+    filterRecipeDone,
+    setFilterRecipeDone,
+    linkCopied,
+    setLinkCopied,
     filter,
     setFilter,
   };

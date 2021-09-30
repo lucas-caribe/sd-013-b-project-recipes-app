@@ -18,6 +18,8 @@ function Bebidas() {
     async function getRecipes() {
       const quantidade = 12;
       const { drinks } = await fetchAllRecipes('drinks');
+      console.log('console abaixo em bebidas linhas 18,19');
+      console.log(drinks);
       setAllRecipes(drinks.slice(0, quantidade));
     }
 
