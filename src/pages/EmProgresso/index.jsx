@@ -94,6 +94,8 @@ function EmProgresso() {
     );
   };
 
+  const VIDEO_ID = 32;
+
   const renderDetails = (path, type, property) => {
     if (!item[type]) {
       return <span>Carregando...</span>;
@@ -124,7 +126,7 @@ function EmProgresso() {
         {item[type][0].strYoutube
         && <iframe
           data-testid="video"
-          src={ item[type][0].strYoutube }
+          src={ `http://www.youtube.com/embed/${item[type][0].strYoutube.slice(VIDEO_ID)}` }
           title={ item[type][0][`str${property}`] }
           frameBorder="0"
         />}
