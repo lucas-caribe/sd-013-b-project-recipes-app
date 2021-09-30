@@ -29,8 +29,8 @@ export default function DetailsRecipe() {
       const [details] = item.meals || item.drinks;
 
       // Salva os detalhes recebidos pela API no estado;
-      setRecipesApp((prevState) => ({ ...prevState, loading: false }));
       setRecipeDetails(details);
+      setRecipesApp((prevState) => ({ ...prevState, loading: false }));
     };
     getItem(type, id);
   }, [id, setRecipeDetails, type, setRecipesApp]);
@@ -103,8 +103,8 @@ export default function DetailsRecipe() {
         <button type="button" data-testid="start-recipe-btn" className="start-recipe-btn">
           Iniciar Receita
         </button>
-        <hr />
         <RecipesRecommendation type={ type } />
+        <hr />
       </div>
     </>
   );

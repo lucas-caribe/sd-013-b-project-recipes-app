@@ -1,23 +1,29 @@
 import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
-import searchIcon from '../images/searchIcon.svg';
+import { fetchApiRecipes as fetchFood } from '../services';
 import { useRecipesContext } from '../context/Provider';
 
-export default function SearchInput({ fetchFood, typeLowCase, typeUpperCase }) {
+import searchIcon from '../images/searchIcon.svg';
+
+export default function SearchInput() {
+  const { recipesApp, setRecipesApp } = useRecipesContext();
+  const history = useHistory();
+
   const [headerFilterBar, setHeaderFilterBar] = useState({
     search: '',
     radioSelect: '',
     typeRecipe: [],
   });
-  const history = useHistory();
+  const [toggleInput, setToggleInput] = useState(false);
 
   // Verifica o caminho atual da pagina para fazer a requisicao de acordo com o tipo da pagina;
   const { pathname } = useLocation();
-  const currentePageType = pathname.includes('comidas') ? 'foods' : 'drinks';
+  const currentePageType = pathname.includes('/comidas') ? 'foods' : 'drinks';
 
-  const { recipesApp, setRecipesApp } = useRecipesContext();
+  // Define as constantes que serao utilizadas durante a requisicao;
+  const typeLowCase = pathname.includes('/comidas') ? 'meals' : 'drinks';
+  const typeUpperCase = pathname.includes('/comidas') ? 'Meal' : 'Drink';
 
   function handleSearchBar({ target }) {
     const { name, value } = target;
@@ -35,7 +41,7 @@ export default function SearchInput({ fetchFood, typeLowCase, typeUpperCase }) {
           history.push(`${pathname}/${typeRecipe[0][`id${typeUpperCase}`]}`);
         } else {
           setRecipesApp({
-            ...recipesApp, dataCategoryFoodAPI: typeRecipe, loading: false,
+            ...recipesApp, dataCategoryFoodAPI: typeRecipe, loading: false, filtrar: true,
           });
         }
       })
@@ -103,7 +109,7 @@ export default function SearchInput({ fetchFood, typeLowCase, typeUpperCase }) {
       </div>
     );
   }
-  const [toggleInput, setToggleInput] = useState(false);
+
   return (
     <div>
       <button type="button" onClick={ () => setToggleInput(!toggleInput) }>
@@ -113,9 +119,3 @@ export default function SearchInput({ fetchFood, typeLowCase, typeUpperCase }) {
     </div>
   );
 }
-
-SearchInput.propTypes = {
-  fetchFood: PropTypes.func.isRequired,
-  typeLowCase: PropTypes.string.isRequired,
-  typeUpperCase: PropTypes.string.isRequired,
-};

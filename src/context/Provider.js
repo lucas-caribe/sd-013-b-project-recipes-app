@@ -6,7 +6,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { getDefaultData } from '../services';
+import { getCategories, getDefaultData } from '../services';
 
 // Cria a context e exporta o uso dela atraves do useContext();
 // Para utilizar basta importar 'useRecipesContext' e desestruturar da forma tradicional;
@@ -14,16 +14,6 @@ import { getDefaultData } from '../services';
 // const { recipesApp, setRecipesApp } = useRecipesContext();
 const RecipesContext = createContext();
 export const useRecipesContext = () => useContext(RecipesContext);
-
-// const linkAPI = {
-//   categoryFoodAPI: 'https://www.themealdb.com/api/json/v1/1/list.php?c=list',
-//   areasFoodAPI: 'https://www.themealdb.com/api/json/v1/1/list.php?a=list',
-//   ingredientsFoodAPI: 'https://www.themealdb.com/api/json/v1/1/list.php?i=list',
-// };
-
-// const function imageIngredients() {
-//   const imageIngrendientsAPI = `https://www.themealdb.com/images/ingredients/${fetchFood.strIngredient}.png`;
-// }
 
 function Provider({ children }) {
   const [login, setLogin] = useState(
@@ -44,7 +34,6 @@ function Provider({ children }) {
     },
     loading: true,
     ingredientsDrink: [],
-    // dataAreasFoodAPI: {},
   });
 
   // Armazena os dados de comida e bebida recebidos da API;
@@ -52,8 +41,25 @@ function Provider({ children }) {
     foods: [],
     drinks: [],
   });
+
   const [ingredientsMeal, setIngredientsMeal] = useState([]);
   const [ingredientDrink, setIngredientsDrinks] = useState([]);
+
+  // Estado que guardará as categorias dos botoes de cada tipo de pagina;
+  const [categoryButtons, setCategoryButtons] = useState({
+    foods: [],
+    drinks: [],
+  });
+
+  // Funcao que seta as categorias retornadas da API;
+  const setCategories = useCallback(async () => {
+    setRecipesApp((prevState) => ({ ...prevState, loading: true }));
+    const { meals } = await getCategories('foods');
+    const { drinks } = await getCategories('drinks');
+    setCategoryButtons((prevState) => ({ ...prevState, foods: meals, drinks }));
+    setRecipesApp((prevState) => ({ ...prevState, loading: false }));
+  }, []);
+  useEffect(setCategories, [setCategories]);
 
   // Seta o estado inicial "data";
   const setInitialData = useCallback(async () => {
@@ -63,27 +69,25 @@ function Provider({ children }) {
     setData((prevData) => ({ ...prevData, foods: meals, drinks }));
     setRecipesApp((prevState) => ({ ...prevState, loading: false }));
   }, []);
-  useEffect(() => { setInitialData(); }, [setInitialData]);
-  // useEffect(() => {
-  //   async function fetchApiFood() {
+  useEffect(setInitialData, [setInitialData]);
 
-  //   }
-  // }, []);
-
-  const obj = {
+  const contextValue = {
     login,
     data,
     recipesApp,
-    setLogin,
-    setRecipesApp,
     ingredientsMeal,
-    setIngredientsMeal,
     ingredientDrink,
+    categoryButtons,
+    setLogin,
+    setData,
+    setRecipesApp,
+    setIngredientsMeal,
     setIngredientsDrinks,
+    setCategoryButtons,
   };
 
   return (
-    <RecipesContext.Provider value={ obj }>
+    <RecipesContext.Provider value={ contextValue }>
       {children}
     </RecipesContext.Provider>
   );

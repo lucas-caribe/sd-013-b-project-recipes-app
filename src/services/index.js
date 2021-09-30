@@ -23,9 +23,10 @@ export const getDefaultData = (type) => {
 // Funcao que realizará uma requisicao para a API com os parametros selecionados e retornará o resultado ou um erro;
 export async function fetchApiRecipes(filterSelect, text, type) {
   let url = `${endPoints[type]}search.php?`;
-  if (filterSelect === 'i') url = `${endPoints[type]}filter.php?`;
+  if (filterSelect === 'i' || filterSelect === 'c') url = `${endPoints[type]}filter.php?`;
 
   const fetchUrl = `${url}${filterSelect}=${text}`;
+  console.log(fetchUrl);
   return getResponse(fetchUrl);
 }
 
@@ -34,4 +35,10 @@ export async function getDetails(type, id) {
   const URL = endPoints[type];
 
   return getResponse(`${URL}lookup.php?i=${id}`);
+}
+
+// Funcao que retorna todas e apenas as categorias disponiveis da API;
+export async function getCategories(type) {
+  const URL = endPoints[type];
+  return getResponse(`${URL}list.php?c=list`);
 }

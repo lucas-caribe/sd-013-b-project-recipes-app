@@ -1,8 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
 import Provider from '../context/Provider';
-import FoodRecipes from './FoodRecipes';
-import DrinkRecipes from './DrinkRecipes';
+import HomeRecipes from './HomeRecipes';
 import Explore from './Explore';
 import Login from './Login';
 import ExploreFood from './ExploreFood';
@@ -23,14 +22,14 @@ export default function Recipes() {
       <Provider>
         <Switch>
           <Route exact path="/" component={ Login } />
-          <Route exact path="/comidas" component={ FoodRecipes } />
-          <Route exact path="/bebidas" component={ DrinkRecipes } />
-          <Route exact path="/comidas/:id">
-            <DetailsRecipe />
-          </Route>
-          <Route exact path="/bebidas/:id">
-            <DetailsRecipe />
-          </Route>
+          {/*
+            HomeRecipes agora é uma pagina dinamica,
+            servindo tanto para a pagina de bebidas, quanto para a de comidas */}
+          <Route exact path="/comidas" component={ HomeRecipes } />
+          <Route exact path="/bebidas" component={ HomeRecipes } />
+          {/* O mesmo acontece na pagina de Detalhes da receita */}
+          <Route exact path="/comidas/:id" component={ DetailsRecipe } />
+          <Route exact path="/bebidas/:id" component={ DetailsRecipe } />
           <Route
             exact
             path="/comidas/:id/in-progress"
