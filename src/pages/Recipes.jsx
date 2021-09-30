@@ -24,6 +24,7 @@ export default function Recipes(props) {
       <button type="button" data-testid="share-btn">Compartilhar</button>
       <button type="button" data-testid="favorite-btn">Favoritar</button>
       { CardIngredients() }
+      {/* <CardIngredients ingredients={ ingredients(recipeData) } /> */}
       <p data-testid="instructions">{instructions}</p>
       <button type="button" data-testid="finish-recipe-btn">Finalizar</button>
     </div>

@@ -4,8 +4,6 @@ import { Switch, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './pages/Login';
 import Details from './pages/Details';
-import Drinks from './pages/Drinks';
-import Meals from './pages/Meals';
 import Explore from './pages/Explore';
 import Main from './pages/Main';
 import Profile from './pages/Profile';
@@ -20,8 +18,8 @@ function App() {
         <Route exact path="/" component={ Login } />
         <Route exact path="/comidas" component={ Main } />
         <Route exact path="/bebidas" component={ Main } />
-        <Route exact path="/comidas/:receitaId" component={ Meals } />
-        <Route exact path="/bebidas/:receitaId" component={ Drinks } />
+        <Route exact path="/comidas/:receitaId" component={ Details } />
+        <Route exact path="/bebidas/:receitaId" component={ Details } />
         <Route exact path="/comidas/:receitaId/in-progress" component={ Recipes } />
         <Route exact path="/bebidas/:receitaId/in-progress" component={ Recipes } />
         <Route exact path="/receitas-feitas" component={ Recipes } />

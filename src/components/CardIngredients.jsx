@@ -1,31 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { loadProgressRecipeById, getPageArgs } from '../services/Service';
-import { fetchFoodById, fetchDrinkById } from '../services/fetchAPI';
-import ingredients from '../services/Ingredients';
 
-export default function CardIngredients() {
-  const [recipe, setRecipe] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
+export default function CardIngredients({ ingredients }) {
   const history = useHistory();
   const args = getPageArgs(history);
   const [page, id, inProgress] = args;
-
-  useEffect(() => {
-    async function fetchRecipe() {
-      if (page === 'comidas') {
-        setRecipe(await fetchFoodById(id));
-      } else {
-        setRecipe(await fetchDrinkById(id));
-      }
-    }
-    fetchRecipe();
-    setIsLoading(false);
-  }, [page, id]);
-
-  const ingredientsList = ingredients(recipe);
-  console.log(page, id, inProgress, ingredientsList);
 
   function toggleCheckbox(e) {
     const change = e.target;
@@ -38,12 +19,11 @@ export default function CardIngredients() {
 
   function loadIfProgressPage() {
     const verifyIngs = loadProgressRecipeById(id);
-    console.log(verifyIngs);
     return (
       <div>
         <div>Ingredients InProgress list</div>
         <ul>
-          {ingredientsList.map((ingre, ingreIndex) => (
+          {ingredients.map((ingre, ingreIndex) => (
             Object.entries(ingre).map((entrie) => {
               if (entrie[1] === '') {
                 return (
@@ -88,7 +68,7 @@ export default function CardIngredients() {
   function loadOnRecipePage() {
     return (
       <ul>
-        {ingredientsList.map((ingre, ingreIndex) => (
+        {ingredients.map((ingre, ingreIndex) => (
           Object.entries(ingre).map((entrie) => {
             if (entrie[1] === '') {
               return (
@@ -111,11 +91,13 @@ export default function CardIngredients() {
     );
   }
 
-  if (!isLoading) {
-    return (
-      <div>
-        { inProgress ? loadIfProgressPage() : loadOnRecipePage() }
-      </div>
-    );
-  }
+  return (
+    <div>
+      { inProgress ? loadIfProgressPage() : loadOnRecipePage() }
+    </div>
+  );
 }
+
+CardIngredients.propTypes = {
+  ingredients: PropTypes.object,
+}.isRequired;
