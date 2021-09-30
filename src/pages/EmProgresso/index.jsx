@@ -32,16 +32,28 @@ function EmProgresso() {
   } = useDetails();
 
   useEffect(() => {
+    const handleCheck = () => setIngredientsChecked(JSON
+      .parse(localStorage.getItem('checkedIngredients')));
+
+    const checkLocalStorage = () => {
+      const checkboxStatus = JSON
+        .parse(localStorage.getItem('checkedIngredients'));
+      if (checkboxStatus && Object.values(checkboxStatus)
+        .every((checkbox) => checkbox === true)
+      ) {
+        setAllChecked((prevState) => !prevState);
+      }
+    };
+
+    handleCheck();
+    checkLocalStorage();
+  }, []);
+
+  useEffect(() => {
     fetchRecipe(pathname, id);
 
     return setIsCopied(false);
   }, [pathname, id, fetchRecipe]);
-
-  useEffect(() => {
-    const handleCheck = () => setIngredientsChecked(JSON
-      .parse(localStorage.getItem('checkedIngredients')));
-    handleCheck();
-  }, []);
 
   useEffect(() => {
     localStorage.setItem('checkedIngredients', JSON.stringify({ ...ingredientsChecked }));
@@ -49,17 +61,6 @@ function EmProgresso() {
 
   const handleCopy = (bool) => {
     setIsCopied(bool);
-  };
-
-  // Referência para implementar lógica de checar as checkbox: https://stackoverflow.com/questions/5541387/check-if-all-checkboxes-are-selected
-  const checkAllCheckbox = () => {
-    const allCheckbox = document.querySelectorAll('.ingredient-checkbox');
-    const allCheckboxChecked = document.querySelectorAll('.ingredient-checkbox:checked');
-    if (allCheckboxChecked.length === allCheckbox.length) {
-      setAllChecked(true);
-    } else {
-      setAllChecked(false);
-    }
   };
 
   const renderIngredients = () => (
@@ -71,7 +72,7 @@ function EmProgresso() {
           index={ index }
           ingredientsChecked={ ingredientsChecked }
           setIngredientsChecked={ setIngredientsChecked }
-          checkAllCheckbox={ checkAllCheckbox }
+          setAllChecked={ setAllChecked }
         />
       ))}
     </form>
