@@ -52,7 +52,7 @@
 //   strVideo: null,
 // };
 
-function Ingredients(recipeData) {
+function ingredients(recipeData) {
   return Object.keys(recipeData).reduce((accumulator, key) => {
     if (key.includes('strIngredient') && recipeData[key]) {
       const ingNumber = key.split('strIngredient')[1];
@@ -64,5 +64,5 @@ function Ingredients(recipeData) {
   }, []);
 }
 
-export default Ingredients;
+export default ingredients;
 // console.log(IngredientAndMeasure(DATA));
