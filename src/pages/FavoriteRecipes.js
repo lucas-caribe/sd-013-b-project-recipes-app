@@ -4,6 +4,7 @@ import ButtonsFavoriteRecipes from '../components/ButtonsFavoriteRecipes';
 import Context from '../context/Context';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import Header from '../components/Header';
 
 function FavoriteRecipes() {
   const getFavoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
@@ -30,45 +31,52 @@ function FavoriteRecipes() {
   };
 
   const removeFavoriteRecipe = (id) => {
-    // const filterRecipe = getFavoriteRecipes.filter((favoriteRecipe) => favoriteRecipe.id !== id);
-    const findFavoriteRecipe = getFavoriteRecipes
-      .find((favoriteRecipe) => favoriteRecipe.id === id);
-    const indexFavoriteRecipe = getFavoriteRecipes.indexOf(findFavoriteRecipe);
-    // console.log(indexFavoriteRecipe);
-    // console.log(getFavoriteRecipes[indexFavoriteRecipe]);
-    // const favoriteRecipesResults = getFavoriteRecipes;
-    delete getFavoriteRecipes[indexFavoriteRecipe];
-    console.log(findFavoriteRecipe);
+    const filterRecipe = getFavoriteRecipes
+      .filter((favoriteRecipe) => favoriteRecipe.id !== id);
+    if (getFavoriteRecipes) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify(filterRecipe));
+    }
+    setFavoriteRecipes(filterRecipe);
     console.log(getFavoriteRecipes);
-    setFavoriteRecipes(getFavoriteRecipes);
   };
 
-  if (getFavoriteRecipes) {
+  if (getFavoriteRecipes.length > 0) {
     return (
       <div>
+        <Header />
         {copied && <h1>Link copiado!</h1>}
         <ButtonsFavoriteRecipes filterFavoriteRecipe={ filterFavoriteRecipe } />
         {
           favoriteRecipes
-            .map(({ id, alcoholicOrNot, type, image, name, category, area }) => (
+            .map(({ id, alcoholicOrNot, type, image, name, category, area }, index) => (
               type === 'comida' ? (
                 <div key={ id }>
                   <div className="image-food">
                     <Link to={ `/comidas/${id}` }>
                       <img
+                        data-testid={ `${index}-horizontal-image` }
                         src={ image }
                         alt="imagem da receita"
                       />
                     </Link>
                   </div>
                   <div className="infos-foods">
-                    <Link to={ `/comidas/${id}` }>
-                      <p>{name}</p>
-                    </Link>
-                    <p>{category}</p>
+                    <p
+                      data-testid={ `${index}-horizontal-top-text` }
+                    >
+                      {category}
+                    </p>
                     <p>{area}</p>
+                    <Link to={ `/comidas/${id}` }>
+                      <p
+                        data-testid={ `${index}-horizontal-name` }
+                      >
+                        {name}
+                      </p>
+                    </Link>
                     <button
                       type="button"
+                      data-testid={ `${index}-horizontal-share-btn` }
                       onClick={ () => handleShareRecipe(id, type) }
                     >
                       <img
@@ -78,10 +86,10 @@ function FavoriteRecipes() {
                     </button>
                     <button
                       type="button"
+                      data-testid={ `${index}0-horizontal-favorite-btn` }
                       onClick={ () => removeFavoriteRecipe(id) }
                     >
                       <img
-                        data-testid="favorite-btn"
                         src={ blackHeartIcon }
                         alt="blackHeart icon"
                         id={ id }
@@ -94,6 +102,7 @@ function FavoriteRecipes() {
                   <div className="image-drink">
                     <Link to={ `/bebidas/${id}` }>
                       <img
+                        data-testid={ `${index}-horizontal-image` }
                         src={ image }
                         alt="imagem da receita"
                       />
@@ -101,11 +110,16 @@ function FavoriteRecipes() {
                   </div>
                   <div className="infos-drinks">
                     <Link to={ `/bebidas/${id}` }>
-                      <p>{name}</p>
+                      <p
+                        data-testid={ `${index}-horizontal-name` }
+                      >
+                        {name}
+                      </p>
                     </Link>
                     <p>{alcoholicOrNot}</p>
                     <button
                       type="button"
+                      data-testid={ `${index}-horizontal-share-btn` }
                       onClick={ () => handleShareRecipe(id, type) }
                     >
                       <img
@@ -115,6 +129,7 @@ function FavoriteRecipes() {
                     </button>
                     <button
                       type="button"
+                      data-testid={ `${index}0-horizontal-favorite-btn` }
                       onClick={ () => removeFavoriteRecipe(id) }
                     >
                       <img
@@ -133,7 +148,10 @@ function FavoriteRecipes() {
     );
   }
   return (
-    <h1>Não há receitas favoritas</h1>
+    <div>
+      <Header />
+      <h1>Não há receitas favoritas</h1>
+    </div>
   );
 }
 

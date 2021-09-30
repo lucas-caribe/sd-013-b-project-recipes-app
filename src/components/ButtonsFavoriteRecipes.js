@@ -6,6 +6,7 @@ function ButtonsFavoriteRecipes({ filterFavoriteRecipe }) {
     <div>
       <button
         type="button"
+        data-testid="filter-by-all-btn"
         onClick={ () => filterFavoriteRecipe('All') }
       >
         All
@@ -13,6 +14,7 @@ function ButtonsFavoriteRecipes({ filterFavoriteRecipe }) {
 
       <button
         type="button"
+        data-testid="filter-by-food-btn"
         onClick={ () => filterFavoriteRecipe('Food') }
       >
         Food
@@ -20,6 +22,7 @@ function ButtonsFavoriteRecipes({ filterFavoriteRecipe }) {
 
       <button
         type="button"
+        data-testid="filter-by-drink-btn"
         onClick={ () => filterFavoriteRecipe('Drink') }
       >
         Drinks
