@@ -1,13 +1,8 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-
 import PropTypes from 'prop-types';
 
-import { useRecipesContext } from '../context/Provider';
-
 export default function RenderCardSearch({ cards }) {
-  const { recipesApp } = useRecipesContext();
-
   const MAX_CARDS = 12;
 
   // Define o tipo da string quer será adicionado as propriedades e o
