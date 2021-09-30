@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 function IngredientCheckbox({
@@ -19,6 +19,23 @@ function IngredientCheckbox({
     }
   };
 
+  const checkStyle = () => {
+    const getCheckedFromLocalStorage = localStorage.getItem('checkedIngredients');
+    if (getCheckedFromLocalStorage && Object.values(ingredientsChecked)) {
+      const checkboxStatus = Object
+        .values(JSON.parse(getCheckedFromLocalStorage));
+      const ingredientsCheckedStatus = Object.values(ingredientsChecked);
+      if (checkboxStatus[index] || ingredientsCheckedStatus[index]) {
+        return { textDecoration: 'line-through' };
+      }
+      return { textDecoration: 'none' };
+    }
+  };
+
+  useEffect(() => {
+    checkAllCheckbox();
+  }, []);
+
   const checkIngredient = (target) => {
     if (!target.checked) {
       setIngredientsChecked({
@@ -35,15 +52,6 @@ function IngredientCheckbox({
       target.parentElement.style.textDecoration = 'line-through';
       checkAllCheckbox();
     }
-  };
-
-  const checkStyle = () => {
-    const checkboxStatus = Object
-      .values(JSON.parse(localStorage.getItem('checkedIngredients')));
-    if (checkboxStatus[index]) {
-      return { textDecoration: 'line-through' };
-    }
-    return { textDecoration: 'none' };
   };
 
   return (

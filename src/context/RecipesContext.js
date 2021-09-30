@@ -129,7 +129,6 @@ export const RecipesProvider = ({ children }) => {
         image: recipe.strDrinkThumb,
       };
       if (favoriteRecipes.some((fav) => fav.id === (recipe.idDrink || recipe.id))) {
-        console.log('entrou');
         disfavorRecipe(recipe, type);
       } else {
         setFavoriteRecipes((prevState) => [...prevState, favRecipe]);
@@ -141,6 +140,27 @@ export const RecipesProvider = ({ children }) => {
       break;
     }
   };
+
+  // const finishedTypes = {
+  //   meal: () => {
+  //     const doneRecipe = {
+  //       id: (recipe.idMeal || recipe.id),
+  //       type: 'comida',
+  //       area: (recipe.strArea || recipe.area),
+  //       category: (recipe.strCategory || recipe.category),
+  //       alcoholicOrNot: '',
+  //       name: (recipe.strMeal || recipe.name),
+  //       image: (recipe.strMealThumb || recipe.image),
+  //       doneDate: new Date().getDay(),
+  //       tags: ((recipe.strTags || recipe.tags ? recipe.strTags || recipe.tags : [] )),
+  //     }
+  //   }
+  //   drink:
+  // }
+
+  // const handleFinished = (type, recipe, ingredients) => {
+
+  // };
 
   useEffect(() => {
     const getFavFromLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));

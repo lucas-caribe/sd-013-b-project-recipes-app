@@ -32,21 +32,17 @@ function EmProgresso() {
   } = useDetails();
 
   useEffect(() => {
-    const handleCheck = () => setIngredientsChecked(JSON
-      .parse(localStorage.getItem('checkedIngredients')));
-
-    const checkLocalStorage = () => {
-      const checkboxStatus = JSON
-        .parse(localStorage.getItem('checkedIngredients'));
-      if (checkboxStatus && Object.values(checkboxStatus)
-        .every((checkbox) => checkbox === true)
-      ) {
-        setAllChecked((prevState) => !prevState);
+    const handleCheck = () => {
+      const getChecksFromLocalStorage = (localStorage.getItem('checkedIngredients'));
+      if (getChecksFromLocalStorage) {
+        setIngredientsChecked(
+          JSON.parse(localStorage.getItem('checkedIngredients')),
+        );
       }
     };
 
     handleCheck();
-    checkLocalStorage();
+    // checkStatus();
   }, []);
 
   useEffect(() => {
@@ -56,7 +52,10 @@ function EmProgresso() {
   }, [pathname, id, fetchRecipe]);
 
   useEffect(() => {
-    localStorage.setItem('checkedIngredients', JSON.stringify({ ...ingredientsChecked }));
+    if (Object.keys(ingredientsChecked).length > 0) {
+      localStorage
+        .setItem('checkedIngredients', JSON.stringify({ ...ingredientsChecked }));
+    }
   }, [ingredientsChecked]);
 
   const handleCopy = (bool) => {
@@ -136,7 +135,11 @@ function EmProgresso() {
           title={ item[type][0][`str${property}`] }
           frameBorder="0"
         />}
-        <FinishRecipeButton enableBtn={ !allChecked } />
+        <FinishRecipeButton
+          enableBtn={ !allChecked }
+          // recipe={ item[type][0] }
+          // type={ type }
+        />
       </main>
     );
   };
