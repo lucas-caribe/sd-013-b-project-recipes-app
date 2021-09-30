@@ -28,7 +28,6 @@ export function loadProgressRecipes() {
 export function loadProgressRecipeById(type, id) {
   const stored = loadProgressRecipes();
   const recipeType = translateType(type);
-  console.log(stored[recipeType]);
   if (!stored[recipeType][id]) {
     return [];
   }

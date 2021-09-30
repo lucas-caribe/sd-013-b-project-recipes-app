@@ -4,11 +4,11 @@ const URL_DRINKS = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
 export async function fetchFoodById(id) {
   const { meals } = await (await fetch(`${URL_FOODS}${id}`))
     .json();
-  return meals;
+  return meals[0];
 }
 
 export async function fetchDrinkById(id) {
   const { drinks } = await (await fetch(`${URL_DRINKS}${id}`))
     .json();
-  return drinks;
+  return drinks[0];
 }
