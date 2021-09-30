@@ -37,7 +37,29 @@ function Provider({ children }) {
   const [filterRecipeDone, setFilterRecipeDone] = useState([]);
   const [linkCopied, setLinkCopied] = useState(false);
 
-  const [favoritesRecipes, setFavoritesRecipes] = useState([]);
+  const [favoritesRecipes, setFavoritesRecipes] = useState([
+    // OBJETOS MOCKADOS PARA FINS DE TESTE
+    {
+      idMeal: 52771,
+      strMealThumb: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+      strCategory: 'Vegetarian',
+      strMeal: 'Spicy Arrabiata Penne',
+      strTags: 'Pasta, Curry, Macarrão',
+      strArea: 'Italian',
+      date: '23/06/2020',
+      type: 'Meal',
+    },
+    {
+      idDrink: 178319,
+      strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
+      strCategory: 'Ordinary Drink',
+      strAlcoholic: 'Alcoholic',
+      strDrink: 'Aquamarine',
+      strTags: null,
+      date: '23/06/2020',
+      type: 'Drink',
+    },
+  ]);
   const [filterFavoritesRecipes, setFilterFavoritesRecipes] = useState([]);
 
   const [inputText, setInputText] = useState('');
