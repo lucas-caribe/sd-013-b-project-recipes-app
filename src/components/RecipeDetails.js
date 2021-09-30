@@ -19,7 +19,7 @@ let RECIPE_DATA = {
   video: '',
   area: '',
   category: '',
-  alcoholicOrNot: '',
+  alcoholicOprNot: '',
 };
 
 // const bodyWidth = document.body.offsetWidth;

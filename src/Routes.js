@@ -7,11 +7,13 @@ import Drinks from './pages/Drinks';
 import Profile from './pages/Profile';
 import Details from './pages/Details';
 import Explore from './pages/Explore';
-import InProgress from './pages/InProgress';
+import FoodInProgress from './pages/FoodInProgress';
+import DrinkInProgress from './pages/DrinkInProgress';
 import ExploreRecipes from './pages/ExploreRecipes';
 import ExploreIngredients from './pages/ExploreIngredients';
 import ExploreArea from './pages/ExploreArea';
 import FavoriteRecipes from './pages/FavoriteRecipes';
+import RecipeDone from './components/RecipeDone';
 
 function Routes() {
   return (
@@ -23,12 +25,13 @@ function Routes() {
         <Route exact path="/perfil" component={ Profile } />
         <Route exact path="/explorar" component={ Explore } />
         <Route exact path="/comidas/:id" component={ Details } />
-        <Route exact path="/comidas/:id/in-progress" component={ InProgress } />
+        <Route exact path="/comidas/:id/in-progress" component={ FoodInProgress } />
         <Route exact path="/bebidas/:id" component={ Details } />
-        <Route exact path="/bebidas/:id/in-progress" component={ InProgress } />
+        <Route exact path="/bebidas/:id/in-progress" component={ DrinkInProgress } />
         <Route exact path="/explorar/comidas" component={ ExploreRecipes } />
         <Route exact path="/explorar/bebidas" component={ ExploreRecipes } />
         <Route exact path="/receitas-favoritas" component={ FavoriteRecipes } />
+        <Route exact path="/Receitas-feitas" component={ RecipeDone } />
         <Route
           path="/explorar/comidas/ingredientes"
           component={ ExploreIngredients }
