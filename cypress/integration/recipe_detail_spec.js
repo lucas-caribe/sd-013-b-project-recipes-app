@@ -611,7 +611,7 @@ describe('46 - Salve as receitas favoritas no `localStorage` na chave `favoriteR
           image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
         },
       ];
-
+//
       expect(favoriteRecipes).to.deep.eq(expectedFavoriteRecipes);
     });
   });
