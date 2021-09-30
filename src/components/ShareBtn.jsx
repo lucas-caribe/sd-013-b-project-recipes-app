@@ -3,7 +3,7 @@ import ClipboardCopy from 'clipboard-copy';
 import { useHistory } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 
-const THREE_SEC = 3000;
+const FIVE_SEC = 5000;
 
 export default function ShareBtn() {
   const history = useHistory();
@@ -15,7 +15,7 @@ export default function ShareBtn() {
     e.preventDefault();
     ClipboardCopy(`http://localhost:3000${pathname}`);
     setCopy(true);
-    setTimeout(() => setCopy(false), THREE_SEC);
+    setTimeout(() => setCopy(false), FIVE_SEC);
   }
 
   return (
@@ -27,7 +27,7 @@ export default function ShareBtn() {
       >
         <img src={ shareIcon } alt="Compatilhar" />
       </button>
-      { copy ? <p>Link Copiado!</p> : '' }
+      { copy ? <p>Link copiado!</p> : '' }
     </div>
   );
 }
