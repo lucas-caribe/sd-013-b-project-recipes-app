@@ -1,7 +1,42 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import Context from '../context/Context';
+
+const MEAL = 'Meal';
+const ROTA_COMIDAS = '/comidas/';
+const ROTA_BEBIDAS = '/bebidas/';
 
 export default function RecipeFavoriteCardAll() {
-  return (
-    <div>RecipeFavoriteCardAll</div>
-  );
+  const { favoritesRecipes } = useContext(Context);
+
+  if (favoritesRecipes.length !== 0) {
+    return (
+      favoritesRecipes
+        .map((favoriteRecipe, index) => (
+          <div
+            key={ index }
+            data-testid={ `${index}-recipe-card` }
+            className="recipe-favorite-card"
+          >
+            <div className="recipe-card-img">
+              <Link
+                to={
+                  favoriteRecipe.type === MEAL
+                    ? `${ROTA_COMIDAS}${favoriteRecipe.idMeal}`
+                    : `${ROTA_BEBIDAS}${favoriteRecipe.idDrink}`
+                }
+              >
+                <img
+                  data-testid={ `${index}-horizontal-image` }
+                  src={ favoriteRecipe[`str${favoriteRecipe.type}Thumb`] }
+                  alt="thumbnail"
+                />
+              </Link>
+            </div>
+          </div>
+        )) /** end map() */
+    ); // end return principal
+  } // end if()
+
+  return null;
 }
