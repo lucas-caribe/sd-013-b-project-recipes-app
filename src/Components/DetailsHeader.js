@@ -1,11 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Icon from './Icon';
 import { toggleFavorite as toggleFavoriteAction } from '../Redux/Actions';
 
 const DetailsHeader = (props) => {
-  const { imgSrc, title, subTitle, item, toggleFavorite } = props;
+  const { imgSrc, title, subTitle, item, toggleFavorite, favoriteRecipes, id } = props;
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [copyClicked, setCopyClicked] = useState(false);
+
+  const shareClick = () => {
+    const ONZE = -11;
+    const DOZE = -12;
+    let link = window.location.href;
+    if (link.slice(ONZE) === 'in-progress') link = link.slice(0, DOZE);
+    navigator.clipboard.writeText(link);
+    setCopyClicked(true);
+  };
+
+  useEffect(() => {
+    setIsFavorite(false);
+
+    if (favoriteRecipes.length > 0) {
+      favoriteRecipes.forEach((x) => {
+        if (x.id === id) setIsFavorite(true);
+      });
+    }
+  }, [isFavorite, favoriteRecipes, id]);
   return (
     <div>
 
@@ -17,11 +38,10 @@ const DetailsHeader = (props) => {
 
       <div>
         <h2 data-testid="recipe-title">{title}</h2>
-        <Icon icon="share" testid="share-btn" />
-        <Icon
-          icon="whiteheart"
-          testid="favorite-btn"
-        />
+        <button type="button" onClick={ shareClick }>
+          {copyClicked ? 'Link copiado!' : <Icon icon="share" testid="share-btn" /> }
+        </button>
+
         <button
           type="button"
           onClick={ () => {
@@ -38,7 +58,10 @@ const DetailsHeader = (props) => {
             // }
           } }
         >
-          Teste
+          <Icon
+            icon={ isFavorite === true ? 'blackheart' : 'whiteheart' }
+            testid="favorite-btn"
+          />
 
         </button>
       </div>
@@ -62,10 +85,14 @@ DetailsHeader.propTypes = {
   subTitle: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   toggleFavorite: PropTypes.func.isRequired,
+  favoriteRecipes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  id: PropTypes.string.isRequired,
 };
+
+const mapStateToProps = (state) => ({ favoriteRecipes: state.favoriteRecipes });
 
 const mapDispatchToProps = (dispatch) => ({
   toggleFavorite: (item) => dispatch(toggleFavoriteAction(item)),
 });
 
-export default connect(null, mapDispatchToProps)(DetailsHeader);
+export default connect(mapStateToProps, mapDispatchToProps)(DetailsHeader);

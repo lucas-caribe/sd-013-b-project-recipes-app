@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import DetailsHeader from '../Components/DetailsHeader';
 import DetailsIngredients from '../Components/DetailsIngredients';
 import DetailsInstructions from '../Components/DetailsInstructions';
@@ -10,12 +9,24 @@ import DetailsRecommended from '../Components/DetailsRecommended';
 import StartRecipeButton from '../Components/StartRecipeButton';
 import { finishRecipe as finishRecipeAction,
   editProgress as editProgressAction } from '../Redux/Actions';
+import { checkRecipeStatus, fetchRecomendation } from '../Utils/functions';
 
 const Details = (props) => {
-  const { id, type, status } = useParams();
-  const { finishRecipe, editProgress } = props;
+  const MINUSONE = -1;
+  const { type, id, status, finishRecipe,
+    editProgress, doneRecipes, inProgressRecipes } = props;
+  const [actualIngredients, setActualIngredients] = useState([]);
   const [item, setItem] = useState({});
+  // Cada receita vai ter um recipeStatus:
+  // - default: receita não iniciada
+  // - in-progress: receita iniciada
+  // - done: receita finalizada
+  const [recipeStatus, setRecipeStatus] = useState('default');
+  // Cada receita vai ter um isFavorite (true) ou (false)
   const [recommended, setRecommended] = useState([]);
+
+  const ingDB = type === 'comidas'
+    ? inProgressRecipes.meals : inProgressRecipes.cocktails;
 
   let baseUrl;
   let recommendationUrl;
@@ -37,39 +48,29 @@ const Details = (props) => {
   }
   const url = `${baseUrl}${id}`;
 
+  const actualIngredientsChange = (ingredient) => {
+    const actIng = [...actualIngredients];
+    if (actIng.indexOf(ingredient) === MINUSONE) actIng.push(ingredient);
+    else actIng.splice(actIng.indexOf(ingredient), 1);
+    setActualIngredients(actIng);
+  };
+
   useEffect(() => {
     const fetchURL = async () => {
       await fetch(url)
         .then((res) => res.json())
         .then((data) => {
           setItem(data[db][0]);
-          console.log('linha 46', data);
         });
     };
     fetchURL();
-    console.log('montando');
-  }, [db, url]);
 
-  useEffect(() => () => {
-    console.log('desmontando');
-  });
+    fetchRecomendation(recommendationUrl, recommendedDb, setRecommended);
 
-  useEffect(() => {
-    const fetchRecomendation = async () => {
-      await fetch(recommendationUrl).then((res) => res.json()).then((data) => {
-        const rec = data[recommendedDb];
-        const spliceNumber = 6;
-        const sixFirst = rec.reduce((acc, act, index) => {
-          if (index < spliceNumber) {
-            return [...acc, act];
-          }
-          return acc;
-        }, []);
-        setRecommended(sixFirst);
-      });
-    };
-    fetchRecomendation();
-  }, [item, recommendationUrl, recommendedDb]);
+    const actualStatus = checkRecipeStatus(type, id, inProgressRecipes, doneRecipes);
+    setRecipeStatus(actualStatus);
+  }, [id, db, recommendationUrl,
+    recommendedDb, url, doneRecipes, inProgressRecipes, type, recipeStatus]);
 
   const ingredients = [];
   const measures = [];
@@ -86,6 +87,8 @@ const Details = (props) => {
   const subTitle = type === 'comidas' ? item.strCategory : item.strAlcoholic;
   const instructions = item.strInstructions;
   const videoUrl = item.strYoutube;
+
+  if (Object.keys(item).length === 0) return <div>loading...</div>;
   return (
 
     <div>
@@ -95,6 +98,7 @@ const Details = (props) => {
         title={ title }
         subTitle={ subTitle }
         type={ type }
+        id={ id }
       />
       <button
         type="button"
@@ -121,20 +125,40 @@ const Details = (props) => {
         ingredients={ ingredients }
         measures={ measures }
         status={ status }
+        type={ type }
+        id={ id }
+        actualIngredients={ actualIngredients }
+        actualIngredientsChange={ actualIngredientsChange }
       />
       <DetailsInstructions instructions={ instructions } />
       {type === 'comidas' && <DetailsVideo videoUrl={ videoUrl } />}
       <DetailsRecommended recommended={ recommended } recommendedDb={ recommendedDb } />
-      <StartRecipeButton type={ type } id={ id } />
+      <StartRecipeButton
+        type={ type }
+        id={ id }
+        status={ status }
+        recipeStatus={ recipeStatus }
+        ingredients={ ingredients }
+        db={ ingDB }
+        actualIngredients={ actualIngredients }
+      />
 
     </div>
   );
 };
 
 Details.propTypes = {
+  type: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
   finishRecipe: PropTypes.func.isRequired,
   editProgress: PropTypes.func.isRequired,
+  doneRecipes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  inProgressRecipes: PropTypes.objectOf(PropTypes.object).isRequired,
 };
+
+const mapStateToProps = (state) => ({ doneRecipes: state.doneRecipes,
+  inProgressRecipes: state.inProgressRecipes });
 
 const mapDispatchToProps = (dispatch) => ({
   finishRecipe: (items) => dispatch(finishRecipeAction(items)),
@@ -143,4 +167,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(null, mapDispatchToProps)(Details);
+export default connect(mapStateToProps, mapDispatchToProps)(Details);

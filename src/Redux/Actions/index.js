@@ -55,7 +55,6 @@ const fetchFilteredItems = (userType, userFilter, userInput) => (dispatch) => {
   if (userFilter === 'first-letter' && userInput.length > 1) {
     global.alert('Sua busca deve conter somente 1 (um) caracter');
   } else {
-    console.log(`https://www.${type}.com/api/json/v1/1/${filter}${userInput}`);
     fetch(`https://www.${type}.com/api/json/v1/1/${filter}${userInput}`)
       .then((result) => result.json())
       .then((obj) => {
@@ -78,12 +77,13 @@ const toggleFavorite = (item) => {
   const type = Object.keys(item).some((key) => key === 'idMeal') ? 'comidas' : 'bebidas';
   const itemToRedux = {
     id: type === 'comidas' ? item.idMeal : item.idDrink,
-    type: type === 'comidas' ? 'meals' : 'cocktails',
-    area: item.strArea,
+    type: type === 'comidas' ? 'comida' : 'bebida',
+    alcoholicOrNot: type === 'comidas' ? '' : item.strAlcoholic,
+    area: item.strArea || '',
     category: item.strCategory,
     name: type === 'comidas' ? item.strMeal : item.strDrink,
+    image: type === 'comidas' ? item.strMealThumb : item.strDrinkThumb,
   };
-  if (type === 'bebidas') itemToRedux.alcoholicOrNot = item.strAlcoholic;
   return {
     type: TOGGLE_FAVORITE,
     payload: {
@@ -96,7 +96,6 @@ const removeInProgress = (items) => {
   const id = Object.keys(items).some((key) => key === 'idMeal')
     ? items.idMeal : items.idDrink;
   const type = Object.keys(items).some((key) => key === 'idMeal') ? 'meals' : 'cocktails';
-  console.log(type);
   return {
     type: REMOVE_FROM_IN_PROGRESS,
     payload: { id, type },
@@ -107,15 +106,15 @@ const addToDone = (item) => {
   const type = Object.keys(item).some((key) => key === 'idMeal') ? 'comidas' : 'bebidas';
   const itemToRedux = {
     id: type === 'comidas' ? item.idMeal : item.idDrink,
-    type: type === 'comidas' ? 'meals' : 'cocktails',
-    area: item.strArea,
+    type: type === 'comidas' ? 'comida' : 'bebida',
     category: item.strCategory,
     name: type === 'comidas' ? item.strMeal : item.strDrink,
     doneDate: '',
+    area: item.strArea || '',
     tags: item.strTags ? item.strTags.split(',') : [],
+    alcoholicOrNot: type === 'comidas' ? '' : item.strAlcoholic,
+    image: type === 'comidas' ? item.strMealThumb : item.strDrinkThumb,
   };
-  if (type === 'bebidas') itemToRedux.alcoholicOrNot = item.strAlcoholic;
-
   return {
     type: FINISH_RECIPE,
     payload: itemToRedux,
@@ -129,6 +128,7 @@ const finishRecipe = (items) => (dispatch) => {
 
 const editProgress = (id, foodType, ingredient) => {
   const type = foodType === 'comidas' ? 'meals' : 'cocktails';
+  console.log(id, foodType, ingredient);
 
   return {
     type: EDIT_RECIPE,

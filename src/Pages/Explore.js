@@ -6,7 +6,6 @@ import LowerMenu from '../Components/LowerMenu';
 
 const Explore = () => {
   const { type, filter } = useParams();
-  console.log(`type: ${type}\nfilter: ${filter}`);
 
   let main;
   if (!filter && type === 'comidas') main = 'Explorar Comidas';
