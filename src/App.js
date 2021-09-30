@@ -22,7 +22,6 @@ import {
   DetalheBebida,
   DetalheComida,
   BebidaAleatoria,
-  NotFound,
 } from './pages/index';
 
 function App() {
