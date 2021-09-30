@@ -1,3 +1,12 @@
+.explore {
+  margin-top: 50px;
+  padding: 40px;
+}
+
+.buttonExplore {
+  margin: 0 0 15px;
+}
+
 .footer {
   background-color: hsl(0, 0%, 77%);
   bottom: 0;
@@ -6,6 +15,23 @@
   padding: 10px;
   position: fixed;
   width: 100%;
+}
+
+.header2 {
+  align-items: center;
+  background-color: gray;
+  color: aliceblue;
+  display: flex;
+  justify-content: space-around;
+  position: fixed;
+  top: 0%;
+  width: 100%;
+}
+
+.cardDisplay {
+  display: flex;
+  flex-direction: row;
+  margin-top: 40px;
 }
 
 .meals {
@@ -23,6 +49,12 @@
 .rocksGlass {
   animation: shake 1s infinite ease;
   max-height: 80vh;
+}
+
+.rota {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
 /*
