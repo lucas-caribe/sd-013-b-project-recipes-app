@@ -41,7 +41,7 @@ export default function Login() {
 
   return (
     <div>
-      <h2>Login</h2>
+      <h2 id="text">Login</h2>
       <label htmlFor="login">
         Email:
         <input

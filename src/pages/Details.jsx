@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './details.css';
-import Meals from '../components/Details/Meals';
-import Drinks from '../components/Details/Drinks';
+// import Meals from '../components/Details/Meals';
+// import Drinks from './Drinks';
 
 const URL_SEARCH_FOOD = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
 const URL_SEARCH_DRINK = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
@@ -66,10 +66,12 @@ export default function Details({ match }) {
 
   switch (foodOrDrink) {
   case 'comidas':
-    return <Meals receitaId={receitaId} recipeData={recipeData} recommends={recommends} isRecipeDone={isRecipeDone} />;
+    // return <Meals receitaId={receitaId} recipeData={recipeData} recommends={recommends} isRecipeDone={isRecipeDone} />;
+    return (<p> comidas </p>);
   case 'bebidas':
     console.log(recipeData);
-    return <Drinks receitaId={receitaId} recipeData={recipeData} recommends={recommends} isRecipeDone={isRecipeDone} />;
+    return (<p> bebidas </p>);
+    // return <Drinks receitaId={receitaId} recipeData={recipeData} recommends={recommends} isRecipeDone={isRecipeDone} />;
   default:
     return (<p>Página invalida</p>);
   }
