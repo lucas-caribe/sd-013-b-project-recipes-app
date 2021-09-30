@@ -1,34 +1,86 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { loadProgressRecipeById, getPageArgs } from '../services/Service';
-// import ingredients from '../services/Ingredients';
-import { fetchFoodById } from '../services/fetchAPI';
-
-const FAKEID = 52771;
-const index = 0;
+import { fetchFoodById, fetchDrinkById } from '../services/fetchAPI';
+import ingredients from '../services/Ingredients';
 
 export default function CardIngredients() {
+  const [recipe, setRecipe] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   const history = useHistory();
   const args = getPageArgs(history);
   const [page, id, inProgress] = args;
 
-  let recipe = {};
   useEffect(() => {
-    recipe = fetchFoodById(FAKEID);
-    console.log(recipe);
-  }, []);
+    async function fetchRecipe() {
+      if (page === 'comidas') {
+        setRecipe(await fetchFoodById(id));
+      } else {
+        setRecipe(await fetchDrinkById(id));
+      }
+    }
+    fetchRecipe();
+    setIsLoading(false);
+  }, [page, id]);
 
-  // const ingredientsList = ingredients(recipe[0]);
-  const ingredientsList = recipe;
+  const ingredientsList = ingredients(recipe);
   console.log(page, id, inProgress, ingredientsList);
 
+  function toggleCheckbox(e) {
+    const change = e.target;
+    if (change.checked === true) {
+      change.setAttribute('style', 'text-decoration: line-through');
+    } else {
+      change.setAttribute('style', '');
+    }
+  }
+
   function loadIfProgressPage() {
-    const verifyIngs = loadProgressRecipeById(FAKEID);
+    const verifyIngs = loadProgressRecipeById(id);
     console.log(verifyIngs);
     return (
       <div>
         <div>Ingredients InProgress list</div>
-        <li data-testid={ `${index}-ingredient-step` }>{ FAKEID }</li>
+        <ul>
+          {ingredientsList.map((ingre, ingreIndex) => (
+            Object.entries(ingre).map((entrie) => {
+              if (entrie[1] === '') {
+                return (
+                  <li data-testid={ `${ingreIndex}-ingredient-step` }>
+                    <input
+                      type="checkbox"
+                      id={ `${ingreIndex}checkIng` }
+                      onChange={ toggleCheckbox }
+                    />
+                    <label
+                      htmlFor={ `${ingreIndex}checkIng` }
+                    >
+                      {entrie[0]}
+                    </label>
+                  </li>
+                );
+              }
+              return (
+                <li
+                  data-testid={ `${ingreIndex}-ingredient-step` }
+                  key={ entrie[0] }
+                >
+                  <input
+                    type="checkbox"
+                    id={ `${ingreIndex}checkIng` }
+                    onChange={ (e) => toggleCheckbox(e) }
+                  />
+                  <label
+                    htmlFor={ `${ingreIndex}checkIng` }
+                  >
+                    {`${entrie[1]} - ${entrie[0]}`}
+                  </label>
+                </li>
+              );
+            })
+          ))}
+        </ul>
       </div>
     );
   }
@@ -59,7 +111,11 @@ export default function CardIngredients() {
     );
   }
 
-  return (
-    <div>{ inProgress !== 'in-progress' ? loadIfProgressPage() : loadOnRecipePage() }</div>
-  );
+  if (!isLoading) {
+    return (
+      <div>
+        { inProgress ? loadIfProgressPage() : loadOnRecipePage() }
+      </div>
+    );
+  }
 }
