@@ -14,5 +14,5 @@ export default function RecipeFavoriteCard() {
 
   if (favoritesRecipes.length !== 0) return (<RecipeFavoriteCardAll />);
 
-  return (<p>Você não não favoritou nenhuma receita.</p>);
+  return (<p>Você não favoritou nenhuma receita.</p>);
 }
