@@ -25,7 +25,7 @@ export default function ShareBtn() {
         data-testid="share-btn"
         onClick={ copyUrl }
       >
-        <img src={ shareIcon } alt="Compatilhar" />
+        <img src={ shareIcon } alt="Compatilhar" width="30px" />
       </button>
       { copy ? <p>Link copiado!</p> : '' }
     </div>

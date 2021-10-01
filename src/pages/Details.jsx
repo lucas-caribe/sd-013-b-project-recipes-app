@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import MealsDetails from './MealsDetails';
-import DrinksDetails from './DrinksDetails';
+import MealsDetails from './Details/MealsDetails';
+import DrinksDetails from './Details/DrinksDetails';
 import DetailsProvider from '../context/DetailsProvider';
 import contextCreate from '../context/contextCreate';
 import './details.css';
