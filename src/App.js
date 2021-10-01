@@ -10,9 +10,11 @@ import Login from './pages/Login';
 import Perfil from './pages/Perfil';
 import Explorar from './pages/Explorar';
 import ExplorarComidas from './pages/ExplorarComidas';
-import ExplorarIngredientes from './pages/ExplorarIngredientes';
 import ExplorarOrigem from './pages/ExplorarOrigem';
 import ExplorarBebidas from './pages/ExplorarBebidas';
+import NotFound from './pages/NotFound';
+import ExpBebidaIngredientes from './pages/ExpBebidasIngredientes';
+import ExpComidaIngredientes from './pages/ExpComidasIngredintes';
 import ReceitasFeitas from './pages/ReceitasFeitas';
 import InProgress from './components/InProgress';
 import FavoritesRe from './FavoritesRecipes';
@@ -33,15 +35,16 @@ function App() {
         <Route
           exact
           path="/explorar/comidas/ingredientes"
-          component={ ExplorarIngredientes }
+          component={ ExpComidaIngredientes }
         />
         <Route exact path="/explorar/comidas/area" component={ ExplorarOrigem } />
         <Route exact path="/explorar/bebidas" component={ ExplorarBebidas } />
         <Route
           exact
           path="/explorar/bebidas/ingredientes"
-          component={ ExplorarIngredientes }
+          component={ ExpBebidaIngredientes }
         />
+        <Route exact path="/explorar/bebidas/area" component={ NotFound } />
         <Route exact path="/receitas-feitas" component={ ReceitasFeitas } />
         <Route exact path="/receitas-favoritas" component={ FavoritesRe } />
         <Route exact path="/" component={ Login } />

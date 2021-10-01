@@ -30,3 +30,18 @@ export const requestByFirstLetter = async (firstLetter, domain) => {
     console.log(err.message);
   }
 };
+
+// AREA //
+
+export async function fetchMealsCountries() {
+  const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list');
+  const { meals } = await response.json();
+  return meals;
+}
+
+export async function fetchSearchMealByCountry(country) {
+  const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${country}`);
+  const { meals } = await response.json();
+  console.log(meals);
+  return meals;
+}
