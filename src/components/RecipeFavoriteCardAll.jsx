@@ -14,16 +14,19 @@ export default function RecipeFavoriteCardAll() {
   const {
     linkCopied,
     favoritesRecipes,
+    setFavoritesRecipes,
   } = useContext(Context);
 
-  if (favoritesRecipes.length !== 0) {
-    return (
-      <div className="recipes-favorites">
-        { linkCopied
+  return (
+    <div className="recipes-favorites">
+      {
+        linkCopied
           ? <div className="alert alert-success" role="alert"> Link copiado!</div>
-          : null }
+          : null
+      }
 
-        { favoritesRecipes
+      {
+        favoritesRecipes
           .map((favoriteRecipe, index) => (
             <div
               key={ index }
@@ -65,7 +68,7 @@ export default function RecipeFavoriteCardAll() {
                   }
                 >
                   <h4 data-testid={ `${index}-horizontal-name` }>
-                    { favoriteRecipe[`str${favoriteRecipe.type}`] }
+                    {favoriteRecipe[`str${favoriteRecipe.type}`]}
                   </h4>
                 </Link>
               </div>
@@ -79,16 +82,28 @@ export default function RecipeFavoriteCardAll() {
                   type="button"
                   data-testid={ `${index}-horizontal-favorite-btn` }
                   src={ blackHeartIcon }
+                  onClick={ () => {
+                    // recuperar do localStorage
+                    const allRecipe = JSON.parse(localStorage.getItem('favoriteRecipes'));
+                    // remover a receita
+                    // allRecipe[index] = retorna o objeto na posição index que o map está
+                    // allRecipe.indexOf() = localiza no array o índice desse objeto
+                    // allRecipe.splice() = remove do array 1 posição, começando a partir desse índice
+                    // ou seja, remove o índice localizado, remove então o objeto todo do índice
+                    allRecipe.splice(allRecipe.indexOf(allRecipe[index]), 1);
+                    // setar um novo localStorage
+                    localStorage.setItem('favoriteRecipes', JSON.stringify(allRecipe));
+                    // e setar um novo estado
+                    setFavoritesRecipes(allRecipe);
+                  } }
                 >
                   <img src={ blackHeartIcon } alt="dislike" />
                 </button>
               </div>
 
             </div>
-          )) /** end map() */ }
-      </div> // end recipes-favorites
-    ); // end return principal
-  } // end if()
-
-  return null;
+          )) /** end map() */
+      }
+    </div> // end recipes-favorites
+  ); // end return principal
 }

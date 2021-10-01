@@ -18,7 +18,7 @@ function Favoritas() {
 
   function filterRecipes(foodType) {
     let recipesFiltereds = [];
-    if (favoritesRecipes !== null) {
+    if (favoritesRecipes.length !== 0) {
       recipesFiltereds = favoritesRecipes.filter((recipe) => recipe.type === foodType);
       setFilterFavoritesRecipes([...recipesFiltereds]);
     }
