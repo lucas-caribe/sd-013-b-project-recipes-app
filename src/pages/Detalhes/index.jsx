@@ -12,6 +12,8 @@ import blackHeart from '../../images/blackHeartIcon.svg';
 import whiteHeart from '../../images/whiteHeartIcon.svg';
 import shareIcon from '../../images/shareIcon.svg';
 import ShareButton from '../../components/ShareButton';
+import VideoPlayer from '../../components/VideoPlayer';
+import RecipeCategory from '../../components/RecipeCategory';
 
 function Detalhes() {
   const history = useHistory();
@@ -31,6 +33,9 @@ function Detalhes() {
   const {
     finishedRecipes,
     favoriteRecipes,
+    handleInProgress,
+    meals: { inProgress: mealsInProgress },
+    cocktails: { inProgress: cocktailsInProgress },
   } = useRecipes();
 
   useEffect(() => {
@@ -65,21 +70,32 @@ function Detalhes() {
     </div>
   );
 
-  const checkRecipeStatus = (path) => {
-    const recipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const checkId = finishedRecipes.some((recipe) => recipe.id === id);
-    if (!checkId && !recipes) {
+  const handleButton = (inProgress, path) => {
+    const checkIfIsFinished = finishedRecipes.some((finished) => finished.id === id);
+    if (!checkIfIsFinished && !inProgress[id]) {
       return (
         <StartOrContinueButton
-          onClick={ () => history.push(`/${path}/${id}/in-progress`) }
+          onClick={ () => {
+            handleInProgress(path, id, ingredients);
+            history.push(`/${path}/${id}/in-progress`);
+          } }
           buttonDescription="Iniciar Receita"
         />
       );
+    } if (inProgress[id]) {
+      return (
+        <StartOrContinueButton buttonDescription="Continuar Receita" />
+      );
     }
-    return (
-      <StartOrContinueButton buttonDescription="Continuar Receita" />
-    );
+    return null;
   };
+
+  const typeOptions = {
+    comidas: (inProgress, path) => handleButton(inProgress, path),
+    bebidas: (inProgress, path) => handleButton(inProgress, path),
+  };
+
+  const checkRecipeStatus = (inProgress, path) => typeOptions[path](inProgress, path);
 
   const checkFavorites = (recipe, type, property) => {
     const checkIfIsFavorite = favoriteRecipes
@@ -103,9 +119,7 @@ function Detalhes() {
     );
   };
 
-  const VIDEO_ID = 32;
-
-  const renderDetails = (path, type, property) => {
+  const renderDetails = (path, type, property, inProgress) => {
     if (!item[type]) {
       return <span>Carregando...</span>;
     } return (
@@ -126,31 +140,27 @@ function Detalhes() {
         />
         {checkFavorites(item[type][0], type, property)}
         {isCopied && <p>Link copiado!</p> }
-        <h2 data-testid="recipe-category">
+        <RecipeCategory item={ item } type={ type } />
+        {/* <h2 data-testid="recipe-category">
           { item[type][0].strAlcoholic
             ? item[type][0].strAlcoholic : item[type][0].strCategory }
-        </h2>
+        </h2> */}
         <ul>
           {renderIngredients()}
         </ul>
         <p data-testid="instructions">{item[type][0].strInstructions}</p>
-        {item[type][0].strYoutube
-        && <iframe
-          data-testid="video"
-          src={ `http://www.youtube.com/embed/${item[type][0].strYoutube.slice(VIDEO_ID)}` }
-          title={ item[type][0][`str${property}`] }
-          frameBorder="0"
-        />}
+        {type === 'meal'
+        && <VideoPlayer item={ item } type={ type } property={ property } />}
         {renderRecommendations()}
-        {checkRecipeStatus(path)}
+        {checkRecipeStatus(inProgress, path)}
       </main>
     );
   };
 
   if (pathname.includes('comidas')) {
-    return renderDetails('comidas', 'meal', 'Meal');
+    return renderDetails('comidas', 'meal', 'Meal', mealsInProgress);
   }
-  return renderDetails('bebidas', 'drink', 'Drink');
+  return renderDetails('bebidas', 'drink', 'Drink', cocktailsInProgress);
 }
 
 export default Detalhes;

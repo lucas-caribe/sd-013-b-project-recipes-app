@@ -12,39 +12,24 @@ const mealsInitialState = {
   list: [], // Lista de comidas recuperadas pela API
   inProgress: {}, // Objeto onde cada chave é o id da receita em andamento e o valor correspondente é o array com os ingredientes já marcados
 };
-
 const cocktailsInitialState = {
   categories: [], // Lista de categorias recuperadas pela API
   list: [], // Lista de comidas recuperadas pela API
   inProgress: {}, // Objeto onde cada chave é o id da receita em andamento e o valor correspondente é o array com os ingredientes já marcados
 };
-
-// favoriteRecipes = [{
-//   id: id-da-receita,
-//   type: comida-ou-bebida,
-//   area: area-da-receita-ou-texto-vazio,
-//   category: categoria-da-receita-ou-texto-vazio,
-//   alcoholicOrNot: alcoholic-ou-non-alcoholic-ou-texto-vazio,
-//   name: nome-da-receita,
-//   image: imagem-da-receita
-// }]
-
 export const RecipesContext = createContext();
-
 export const RecipesProvider = ({ children }) => {
   const [meals, setMeals] = useState(mealsInitialState);
   const [cocktails, setCocktails] = useState(cocktailsInitialState);
   const [ingredientsList, setIngredientsList] = useState([]);
   const [finishedRecipes, setFinishedRecipes] = useState([]);
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
-
   const setMealsList = (mealsList) => {
     setMeals({
       ...meals,
       list: mealsList,
     });
   };
-
   const setCocktailsList = (cocktailsList) => {
     setCocktails({
       ...cocktails,
@@ -98,9 +83,8 @@ export const RecipesProvider = ({ children }) => {
       .filter((fav) => fav.id !== (favRecipe[`id${property}`] || favRecipe.id))]);
   };
 
-  const handleFavorite = (type, recipe, colorAfter) => {
-    switch (type) {
-    case 'meal': {
+  const favoriteTypes = {
+    meal: (type, recipe, colorAfter) => {
       const favRecipe = {
         id: (recipe.idMeal || recipe.id),
         type: 'comida',
@@ -114,58 +98,108 @@ export const RecipesProvider = ({ children }) => {
         disfavorRecipe(recipe, type);
       } else {
         setFavoriteRecipes((prevState) => [...prevState, favRecipe]);
-      }
-      document.querySelector('.favIcon').setAttribute('src', `${colorAfter}`);
-      break;
-    }
-    case 'drink': {
+      } document.querySelector('.favIcon').setAttribute('src', `${colorAfter}`);
+    },
+    drink: (type, recipe, colorAfter) => {
       const favRecipe = {
-        id: recipe.idDrink,
+        id: (recipe.idDrink || recipe.id),
         type: 'bebida',
         area: '',
-        category: recipe.strCategory,
-        alcoholicOrNot: recipe.strAlcoholic,
-        name: recipe.strDrink,
-        image: recipe.strDrinkThumb,
+        category: (recipe.strCategory || recipe.category),
+        alcoholicOrNot: (recipe.strAlcoholic || recipe.alcoholicOrNot),
+        name: (recipe.strDrink || recipe.name),
+        image: (recipe.strDrinkThumb || recipe.image),
       };
       if (favoriteRecipes.some((fav) => fav.id === (recipe.idDrink || recipe.id))) {
         disfavorRecipe(recipe, type);
       } else {
         setFavoriteRecipes((prevState) => [...prevState, favRecipe]);
-      }
-      document.querySelector('.favIcon').setAttribute('src', `${colorAfter}`);
-      break;
-    }
-    default:
-      break;
-    }
+      } document.querySelector('.favIcon').setAttribute('src', `${colorAfter}`);
+    },
   };
 
-  // const finishedTypes = {
-  //   meal: () => {
-  //     const doneRecipe = {
-  //       id: (recipe.idMeal || recipe.id),
-  //       type: 'comida',
-  //       area: (recipe.strArea || recipe.area),
-  //       category: (recipe.strCategory || recipe.category),
-  //       alcoholicOrNot: '',
-  //       name: (recipe.strMeal || recipe.name),
-  //       image: (recipe.strMealThumb || recipe.image),
-  //       doneDate: new Date().getDay(),
-  //       tags: ((recipe.strTags || recipe.tags ? recipe.strTags || recipe.tags : [] )),
-  //     }
-  //   }
-  //   drink:
-  // }
+  const handleFavorite = (type,
+    recipe,
+    colorAfter) => favoriteTypes[type](type, recipe, colorAfter);
 
-  // const handleFinished = (type, recipe, ingredients) => {
+  // Referência para capturar a data: https://stackoverflow.com/questions/11971130/converting-a-date-to-european-format
 
-  // };
+  const finishedTypes = {
+    meal: (recipe) => {
+      const doneRecipe = {
+        id: (recipe.idMeal || recipe.id),
+        type: 'comida',
+        area: (recipe.strArea || recipe.area),
+        category: (recipe.strCategory || recipe.category),
+        alcoholicOrNot: '',
+        name: (recipe.strMeal || recipe.name),
+        image: (recipe.strMealThumb || recipe.image),
+        doneDate: new Date().toLocaleDateString('en-GB'),
+        tags: ((recipe.strTags || recipe.tags)
+          ? ([...recipe.strTags.split(',')] || [...recipe.tags.split(',')]) : []),
+      };
+      setFinishedRecipes((prevState) => [...prevState, doneRecipe]);
+    },
+    drink: (recipe) => {
+      const doneRecipe = {
+        id: (recipe.idDrink || recipe.id),
+        type: 'bebida',
+        area: '',
+        category: (recipe.strCategory || recipe.category),
+        alcoholicOrNot: (recipe.strAlcoholic || recipe.alcoholicOrNot),
+        name: (recipe.strDrink || recipe.name),
+        image: (recipe.strDrinkThumb || recipe.image),
+        doneDate: new Date().toLocaleDateString('en-GB'),
+        tags: ((recipe.strTags || recipe.tags)
+          ? ([...recipe.strTags.split(',')] || [...recipe.tags.split(',')]) : []),
+      };
+      setFinishedRecipes((prevState) => [...prevState, doneRecipe]);
+    },
+  };
+
+  const handleFinished = (type, recipe) => finishedTypes[type](recipe);
+
+  const setInProgress = (obj, id, ingredients) => ({
+    ...obj,
+    inProgress: {
+      ...obj.inProgress,
+      [id]: ingredients,
+    },
+  });
+
+  const inProgressTypes = {
+    bebidas: (id, ingredients) => {
+      setCocktails((prevState) => setInProgress(prevState, id, ingredients));
+    },
+    comidas: (id, ingredients) => {
+      setMeals((prevState) => setInProgress(prevState, id, ingredients));
+    },
+  };
+
+  const handleInProgress = (type,
+    id,
+    ingredients) => inProgressTypes[type](id, ingredients);
 
   useEffect(() => {
     const getFavFromLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (getFavFromLocalStorage !== null) {
       setFavoriteRecipes([...getFavFromLocalStorage]);
+    }
+    const getDoneFromLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (getDoneFromLocalStorage !== null) {
+      setFinishedRecipes([...getDoneFromLocalStorage]);
+    }
+    const getInProgressFromLocalStorage = JSON
+      .parse(localStorage.getItem('inProgressRecipes'));
+    if (getInProgressFromLocalStorage !== null) {
+      setMeals((prevState) => ({
+        ...prevState,
+        inProgress: getInProgressFromLocalStorage.meals,
+      }));
+      setCocktails((prevState) => ({
+        ...prevState,
+        inProgress: getInProgressFromLocalStorage.cocktails,
+      }));
     }
   }, []);
 
@@ -177,6 +211,14 @@ export const RecipesProvider = ({ children }) => {
     }
   }, [favoriteRecipes]);
 
+  useEffect(() => {
+    if (finishedRecipes.length === 0) {
+      localStorage.setItem('doneRecipes', '[]');
+    } else if (finishedRecipes.some((done) => done.id)) {
+      localStorage.setItem('doneRecipes', JSON.stringify([...finishedRecipes]));
+    }
+  }, [finishedRecipes]);
+
   const context = {
     getRandomRecipe,
     setMealsList,
@@ -184,6 +226,8 @@ export const RecipesProvider = ({ children }) => {
     setFinishedRecipes,
     fecthIngredients,
     handleFavorite,
+    handleFinished,
+    handleInProgress,
     favoriteRecipes,
     finishedRecipes,
     ingredientsList,

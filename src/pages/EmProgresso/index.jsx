@@ -23,6 +23,7 @@ function EmProgresso() {
 
   const {
     favoriteRecipes,
+    handleFinished,
   } = useRecipes();
 
   const {
@@ -137,8 +138,9 @@ function EmProgresso() {
         />}
         <FinishRecipeButton
           enableBtn={ !allChecked }
-          // recipe={ item[type][0] }
-          // type={ type }
+          handleFinished={ handleFinished }
+          recipe={ item[type][0] }
+          type={ type }
         />
       </main>
     );
