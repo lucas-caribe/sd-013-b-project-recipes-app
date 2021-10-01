@@ -5,14 +5,14 @@ import userEvent from '@testing-library/user-event';
 import renderWithRouterAndRedux from './support/RenderWithRouterAndRedux';
 import ingredientsList, { filterByIngredientMock } from './support/IngredientsList';
 import App from '../App';
-import * as fetchs from '../services/fetchRadioComidas';
+import * as fetchs from '../services/fetchRadioBebidas';
 // Referencia de como mockar uma funçao read-only:
 // https://medium.com/@chris.marshall/mocking-read-only-functions-which-return-functions-in-jest-enzyme-4d2f2a97c168
 
-const { meals } = ingredientsList;
-const { mealsList } = filterByIngredientMock;
-const URL = '/explorar/comidas/ingredientes';
-const RECIPE_LIMIT = 11;
+const { drinks } = ingredientsList;
+const { drinksList } = filterByIngredientMock;
+const URL = '/explorar/bebidas/ingredientes';
+const RECIPE_LIMIT = 2;
 const INGREDIENT_LIMIT = 12;
 const INGREDIENT_CARD = /-ingredient-card/;
 const INGREDIENT_IMG = /-card-img/;
@@ -22,7 +22,7 @@ let HISTORY;
 describe('Explore by Ingredients tests', () => {
   beforeEach(async () => {
     global.fetch = jest.fn(async () => ({
-      json: async () => ({ meals }),
+      json: async () => ({ drinks }),
     }));
 
     await act(async () => {
@@ -50,30 +50,30 @@ describe('Explore by Ingredients tests', () => {
     cards.forEach((card, index) => {
       expect(card).toBeInTheDocument();
       expect(Image[index]).toBeInTheDocument();
-      expect(Image[index].src).toContain(meals[index].strIngredient.replace(/ /g, '%20'));
+      expect(Image[index].src)
+        .toContain(drinks[index].strIngredient1.replace(/ /g, '%20'));
       expect(names[index]).toBeInTheDocument();
-      expect(names[index].innerHTML).toBe(meals[index].strIngredient);
+      expect(names[index].innerHTML).toBe(drinks[index].strIngredient1);
     });
   });
 
   test('As funcionalidas ao clicar no ingrediente', async () => {
-    fetchs.fetchIngrediente = jest.fn(() => mealsList);
+    fetchs.fetchIngredienteBeb = jest.fn(() => drinksList);
 
     const cards = await screen.findAllByTestId(INGREDIENT_CARD);
 
     expect(cards[0]).toBeInTheDocument();
-    expect(cards[0].lastChild.innerHTML).toBe('Chicken');
-    await act(async () => userEvent.click(cards[0]));
+    expect(cards[0].lastChild.innerHTML).toBe('Light rum');
+    await act(async () => userEvent.click(cards[1]));
 
-    expect(HISTORY.location.pathname).toBe('/comidas');
+    expect(HISTORY.location.pathname).toBe('/bebidas');
     const recipeCards = await screen.findAllByTestId(/-recipe-card/);
 
     expect(recipeCards).toHaveLength(RECIPE_LIMIT);
 
     recipeCards.forEach((recipe, index) => {
       expect(recipe).toBeInTheDocument();
-      expect(recipe.lastChild.innerHTML.replace(/amp;/g, ''))
-        .toBe(mealsList[index].strMeal);
+      expect(recipe.lastChild.innerHTML).toBe(drinksList[index].strDrink);
     });
   });
 });
