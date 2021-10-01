@@ -5,6 +5,7 @@ import Context from '../context/Context';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import Header from '../components/Header';
+import '../styles/favorite-recipes.css';
 
 function FavoriteRecipes() {
   const getFavoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
@@ -46,7 +47,7 @@ function FavoriteRecipes() {
     setCopied(false);
   }, [setCopied]);
 
-  if (getFavoriteRecipes.length > 0) {
+  if (getFavoriteRecipes) {
     return (
       <div>
         <Header />
@@ -57,7 +58,7 @@ function FavoriteRecipes() {
             .map(({ id, alcoholicOrNot, type, image, name, category, area }, index) => (
               type === 'comida' ? (
                 <div key={ id }>
-                  <div className="image-food">
+                  <div className="image-recipe">
                     <Link to={ `/comidas/${id}` }>
                       <img
                         data-testid={ `${index}-horizontal-image` }
@@ -86,20 +87,20 @@ function FavoriteRecipes() {
                     </Link>
                     <button
                       type="button"
-                      data-testid={ `${index}-horizontal-share-btn` }
                       onClick={ () => handleShareRecipe(id, type) }
                     >
                       <img
+                        data-testid={ `${index}-horizontal-share-btn` }
                         src={ shareIcon }
                         alt="share icon"
                       />
                     </button>
                     <button
                       type="button"
-                      data-testid={ `${index}-horizontal-favorite-btn` }
                       onClick={ () => removeFavoriteRecipe(id) }
                     >
                       <img
+                        data-testid={ `${index}-horizontal-favorite-btn` }
                         src={ blackHeartIcon }
                         alt="blackHeart icon"
                       />
@@ -108,7 +109,7 @@ function FavoriteRecipes() {
                 </div>
               ) : (
                 <div key={ id }>
-                  <div className="image-drink">
+                  <div className="image-recipe">
                     <Link to={ `/bebidas/${id}` }>
                       <img
                         data-testid={ `${index}-horizontal-image` }
