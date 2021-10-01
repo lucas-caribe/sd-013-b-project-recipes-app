@@ -33,15 +33,29 @@ export default function FavoriteBtn() {
     }
   }, [recipeId]);
 
+  function handleClick() {
+    setIsFavorite(!isFavorite);
+  }
+
   const unfavorited = () => (
-    <button type="button">
-      <img data-testid="favorite-btn" src={ whiteHeartIcon } alt="unfavorite" width="30px" />
+    <button type="button" onClick={ handleClick }>
+      <img
+        data-testid="favorite-btn"
+        src={ whiteHeartIcon }
+        alt="unfavorite"
+        width="30px"
+      />
     </button>
   );
 
   const favorited = () => (
-    <button type="button">
-      <img data-testid="favorite-btn" src={ blackHeartIcon } alt="favorite" width="30px" />
+    <button type="button" onClick={ handleClick }>
+      <img
+        data-testid="favorite-btn"
+        src={ blackHeartIcon }
+        alt="favorite"
+        width="30px"
+      />
     </button>
   );
 
