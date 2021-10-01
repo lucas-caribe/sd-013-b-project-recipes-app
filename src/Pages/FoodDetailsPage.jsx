@@ -78,7 +78,7 @@ export default function FoodDetailsPage() {
           onClick={ handleShare }
           data-testid="share-btn"
           type="image"
-          alt="favorite"
+          alt="share"
           src={ shareIcon }
         />
         <input

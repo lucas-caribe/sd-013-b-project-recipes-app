@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import copy from 'clipboard-copy';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -8,7 +9,8 @@ import handleLike from '../miscellaneous/misc3';
 export default function FavoriteRecipes() {
   const favRec = JSON.parse(localStorage.getItem('favoriteRecipes'));
   const [local, setLocal] = useState();
-
+  const [hidden, setHidden] = useState();
+ 
   function srcSetter(obj) {
     if (!localStorage.getItem('favoriteRecipes')) return whiteHeartIcon;
     return JSON
@@ -17,10 +19,15 @@ export default function FavoriteRecipes() {
       .some((item) => item.id === obj.id) ? blackHeartIcon : whiteHeartIcon;
   }
 
-  // function handleShare() {
-  //   copy(url);
-  //   setHidden(true);
-  // }
+  function handleShareComida(id) {
+    copy(`http://localhost:3000/comidas/${id}`);
+    setHidden(true);
+  }
+
+  function handleShareBebida(id) {
+    copy(`http://localhost:3000/bebidas/${id}`);
+    setHidden(true);
+  }
 
   return (
     <>
@@ -46,10 +53,10 @@ export default function FavoriteRecipes() {
                     data-testid={ `${index}-horizontal-image` }
                   />
                   <input
-                    onClick={ () => console.log('clicou') }
+                    onClick={ () => handleShareComida(rec.id) }
                     data-testid={ `${index}-horizontal-share-btn` }
                     type="image"
-                    alt="favorite"
+                    alt="share"
                     src={ shareIcon }
                   />
                   <input
@@ -76,10 +83,10 @@ export default function FavoriteRecipes() {
                   data-testid={ `${index}-horizontal-image` }
                 />
                 <input
-                  onClick={ () => console.log('clicou') }
+                  onClick={ () => handleShareBebida(rec.id) }
                   data-testid={ `${index}-horizontal-share-btn` }
                   type="image"
-                  alt="favorite"
+                  alt="share"
                   src={ shareIcon }
                 />
                 <input
@@ -92,6 +99,7 @@ export default function FavoriteRecipes() {
               </div>);
           })}
         </div>
+        {hidden ? <div>Link copiado!</div> : null}
       </div>
     </>
   );
