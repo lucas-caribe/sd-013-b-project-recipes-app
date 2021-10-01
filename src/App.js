@@ -10,7 +10,6 @@ import Explorar from './pages/Explorar';
 import ExplorarComidas from './pages/ExplorarComidas';
 import receitasFeitas from './components/testes/receitas feitas';
 import receitasFavoritas from './components/testes/receitas favoritas';
-// import ExplorarIngredientes from './pages/ExplorarIngredientes';
 import ExplorarOrigem from './pages/ExplorarOrigem';
 import ExplorarBebidas from './pages/ExplorarBebidas';
 import NotFound from './pages/NotFound';

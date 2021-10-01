@@ -9,7 +9,7 @@ function ExpBebidaIngredientes() {
 
   return (
     <>
-      <Header title="Explorar Ingredientes" searchBtn={ false } />
+      <Header title="Explorar Ingredientes" displaySearchBtn={ false } />
       <div>
         {
           drinksIngredients.map((ingredient, index) => (
