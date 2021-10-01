@@ -14,8 +14,12 @@ class FoodRecipes extends Component {
   }
 
   componentDidMount() {
-    const { fetchFood } = this.props;
-    return fetchFood('search.php?s=', '');
+    const { fetchFood, location: { state } } = this.props;
+    if (state) {
+      fetchFood('filter.php?i=', state);
+    } else {
+      fetchFood('search.php?s=', '');
+    }
   }
 
   redirectDetailsFood(id) {
@@ -40,6 +44,7 @@ class FoodRecipes extends Component {
 FoodRecipes.propTypes = {
   fetchFood: PropTypes.func.isRequired,
   history: PropTypes.string.isRequired,
+  location: PropTypes.objectOf(PropTypes.node).isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
