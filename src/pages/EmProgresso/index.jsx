@@ -4,6 +4,7 @@ import { useLocation, useParams } from 'react-router';
 import FavoriteButton from '../../components/FavoriteButton';
 import ShareButton from '../../components/ShareButton';
 
+import { useRecipes } from '../../context';
 import { useDetails } from '../../context/DetailsContext';
 
 import blackHeart from '../../images/blackHeartIcon.svg';
@@ -21,10 +22,29 @@ function EmProgresso() {
   const { id } = useParams();
 
   const {
+    favoriteRecipes,
+    handleFinished,
+  } = useRecipes();
+
+  const {
     item,
     ingredients,
     fetchRecipe,
   } = useDetails();
+
+  useEffect(() => {
+    const handleCheck = () => {
+      const getChecksFromLocalStorage = (localStorage.getItem('checkedIngredients'));
+      if (getChecksFromLocalStorage) {
+        setIngredientsChecked(
+          JSON.parse(localStorage.getItem('checkedIngredients')),
+        );
+      }
+    };
+
+    handleCheck();
+    // checkStatus();
+  }, []);
 
   useEffect(() => {
     fetchRecipe(pathname, id);
@@ -33,28 +53,14 @@ function EmProgresso() {
   }, [pathname, id, fetchRecipe]);
 
   useEffect(() => {
-    const handleCheck = () => setIngredientsChecked(JSON
-      .parse(localStorage.getItem('checkedIngredients')));
-    handleCheck();
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('checkedIngredients', JSON.stringify({ ...ingredientsChecked }));
+    if (Object.keys(ingredientsChecked).length > 0) {
+      localStorage
+        .setItem('checkedIngredients', JSON.stringify({ ...ingredientsChecked }));
+    }
   }, [ingredientsChecked]);
 
   const handleCopy = (bool) => {
     setIsCopied(bool);
-  };
-
-  // Referência para implementar lógica de checar as checkbox: https://stackoverflow.com/questions/5541387/check-if-all-checkboxes-are-selected
-  const checkAllCheckbox = () => {
-    const allCheckbox = document.querySelectorAll('.ingredient-checkbox');
-    const allCheckboxChecked = document.querySelectorAll('.ingredient-checkbox:checked');
-    if (allCheckboxChecked.length === allCheckbox.length) {
-      setAllChecked(true);
-    } else {
-      setAllChecked(false);
-    }
   };
 
   const renderIngredients = () => (
@@ -66,15 +72,16 @@ function EmProgresso() {
           index={ index }
           ingredientsChecked={ ingredientsChecked }
           setIngredientsChecked={ setIngredientsChecked }
-          checkAllCheckbox={ checkAllCheckbox }
+          setAllChecked={ setAllChecked }
         />
       ))}
     </form>
   );
 
-  const checkFavorites = (recipe, type) => {
-    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    if (favorites) {
+  const checkFavorites = (recipe, type, property) => {
+    const checkIfIsFavorite = favoriteRecipes
+      .some((fav) => fav.id === recipe[`id${property}`]);
+    if (checkIfIsFavorite) {
       return (
         <FavoriteButton
           colorBeforeClick={ blackHeart }
@@ -83,8 +90,7 @@ function EmProgresso() {
           type={ type }
         />
       );
-    }
-    return (
+    } return (
       <FavoriteButton
         colorBeforeClick={ whiteHeart }
         colorAfterClick={ blackHeart }
@@ -93,6 +99,8 @@ function EmProgresso() {
       />
     );
   };
+
+  const VIDEO_ID = 32;
 
   const renderDetails = (path, type, property) => {
     if (!item[type]) {
@@ -113,7 +121,7 @@ function EmProgresso() {
           icon={ shareIcon }
           handleCopy={ handleCopy }
         />
-        {checkFavorites(item[type][0], type)}
+        {checkFavorites(item[type][0], type, property)}
         {isCopied && <p>Link copiado!</p> }
         <h2 data-testid="recipe-category">
           { item[type][0].strAlcoholic
@@ -124,11 +132,16 @@ function EmProgresso() {
         {item[type][0].strYoutube
         && <iframe
           data-testid="video"
-          src={ item[type][0].strYoutube }
+          src={ `http://www.youtube.com/embed/${item[type][0].strYoutube.slice(VIDEO_ID)}` }
           title={ item[type][0][`str${property}`] }
           frameBorder="0"
         />}
-        <FinishRecipeButton enableBtn={ !allChecked } />
+        <FinishRecipeButton
+          enableBtn={ !allChecked }
+          handleFinished={ handleFinished }
+          recipe={ item[type][0] }
+          type={ type }
+        />
       </main>
     );
   };
