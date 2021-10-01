@@ -17,8 +17,8 @@ class ExploreFoodIngredientes extends Component {
     console.log('11');
     return (
       <div>
-        <HeaderExplore titlePage="Explorar Ingredientes" />
-        <Recipes type="explore-ingrediente" />
+        <HeaderExplore titlePage="Explorar Ingredientes" explore />
+        <Recipes type="explore-food" />
         <Footer />
       </div>
     );

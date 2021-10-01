@@ -5,6 +5,9 @@ const actions = {
   REQUEST_DRINK_API: 'REQUEST_DRINK_API',
   SET_DRINK_DATA: 'SET_DRINK_DATA',
   SET_FOOD_DATA: 'SET_FOOD_DATA',
+  SET_FOOD_INGREDIENTS: 'SET_FOOD_INGREDIENTS',
+  SET_DRINKS_INGREDIENTS: 'SET_DRINKS_INGREDIENTS',
+  SET_FOOD_AREA: 'SET_FOOD_AREA',
   FAILED_REQUEST: 'FAILED_REQUEST',
   FILTER_FOOD: 'FILTER_FOOD',
   FILTER_DRINK: 'FILTER_DRINK',
@@ -40,6 +43,18 @@ export const requestFoodApi = (payload) => ({
   type: actions.SET_FOOD_DATA, payload,
 });
 
+export const requestFoodIngredients = (payload) => ({
+  type: actions.SET_FOOD_INGREDIENTS, payload,
+});
+
+export const requestFoodArea = (payload) => ({
+  type: actions.SET_FOOD_AREA, payload,
+});
+
+export const requestDrinksIngredients = (payload) => ({
+  type: actions.SET_DRINKS_INGREDIENTS, payload,
+});
+
 export const requestDrinkApi = (payload) => ({
   type: actions.SET_DRINK_DATA, payload,
 });
@@ -52,7 +67,13 @@ export const fetchFoodApi = (payload1, payload2) => async (dispatch) => {
   dispatch(requestApiFood());
   try {
     const { meals } = await getFoodApi(payload1, payload2);
-    dispatch(requestFoodApi(meals));
+    if (payload1 === 'list.php?i=') {
+      dispatch(requestFoodIngredients(meals));
+    } else if (payload1 === 'list.php?a=') {
+      dispatch(requestFoodArea(meals));
+    } else {
+      dispatch(requestFoodApi(meals));
+    }
   } catch (error) {
     dispatch(failedRequest(error.message));
   }
@@ -61,7 +82,11 @@ export const fetchDrinkApi = (payload1, payload2) => async (dispatch) => {
   dispatch(requestApiDrink());
   try {
     const { drinks } = await getDrinksApi(payload1, payload2);
-    dispatch(requestDrinkApi(drinks));
+    if (payload1 === 'list.php?i=') {
+      dispatch(requestDrinksIngredients(drinks));
+    } else {
+      dispatch(requestDrinkApi(drinks));
+    }
   } catch (error) {
     dispatch(failedRequest(error.message));
   }

@@ -1,8 +1,10 @@
 import actions from '../actions';
 
 const INITIAL_STATE = {
-  data: {},
+  data: [],
   loading: false,
+  foodIngredients: [],
+  foodArea: [],
 };
 
 function foodReducer(state = INITIAL_STATE, action) {
@@ -11,6 +13,10 @@ function foodReducer(state = INITIAL_STATE, action) {
     return { ...state, loading: true };
   case actions.SET_FOOD_DATA:
     return { ...state, loading: false, data: action.payload };
+  case actions.SET_FOOD_AREA:
+    return { ...state, loading: false, foodArea: action.payload };
+  case actions.SET_FOOD_INGREDIENTS:
+    return { ...state, loading: false, foodIngredients: action.payload };
   case actions.FAILED_REQUEST:
     return { ...state, loading: false, error: action.payload };
   case actions.FILTER_FOOD:
