@@ -14,6 +14,7 @@ import Login from './pages/Login';
 import Perfil from './pages/Perfil';
 import ReceipeInProgress from './pages/ReceipeInProgress';
 import RecipesMade from './pages/RecipesMade';
+import NotFound from './pages/NotFound';
 
 class App extends Component {
   render() {
@@ -62,7 +63,8 @@ class App extends Component {
           path="/bebidas/:id/in-progress"
           render={ (props) => <ReceipeInProgress { ...props } /> }
         />
-        <Route path="/" component={ Login } />
+        <Route exact path="/" component={ Login } />
+        <Route path={ undefined } component={ NotFound } />
       </Switch>
     );
   }

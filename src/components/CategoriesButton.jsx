@@ -134,7 +134,6 @@ CategoriesButton.propTypes = {
         if (i <= four) {
           const resp = await getFoodApi(`filter.php?c=${cat.strCategory}`, '');
           arrayAllFood = [...arrayAllFood, ...resp.meals];
-          console.log(arrayAllFood);
         }
         return undefined;
       });

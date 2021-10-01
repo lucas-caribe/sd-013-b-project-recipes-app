@@ -17,12 +17,9 @@ export default class Header extends Component {
   }
 
   handleSearchBar() {
-    this.setState((prevState) => {
-      console.log(prevState);
-      return {
-        showSearchBar: !prevState.showSearchBar,
-      };
-    });
+    this.setState((prevState) => ({
+      showSearchBar: !prevState.showSearchBar,
+    }));
   }
 
   render() {
