@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import Context from './Context';
 
 function Provider({ children }) {
-  // RECEITAS MOCKADAS PARA FINS DE TESTE EM "Receitas Feitas e Favoritas"
-  // 01/10/2021 - remover se der certo setar esse array pelo useEffect
+  // RECEITAS MOCKADAS PARA FINS DE TESTE EM "Receitas Feitas"
   const RECEITAS_MOCK = [
     {
       idMeal: 52771,
@@ -13,6 +12,7 @@ function Provider({ children }) {
       strMeal: 'Spicy Arrabiata Penne',
       strTags: 'Pasta, Curry, Macarrão',
       strArea: 'Italian',
+      date: '23/06/2020',
       type: 'Meal',
     },
     {
@@ -22,6 +22,7 @@ function Provider({ children }) {
       strAlcoholic: 'Alcoholic',
       strDrink: 'Aquamarine',
       strTags: '',
+      date: '23/06/2020',
       type: 'Drink',
     },
   ];
@@ -34,10 +35,11 @@ function Provider({ children }) {
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [allRecipes, setAllRecipes] = useState([]);
 
-  const [linkCopied, setLinkCopied] = useState(false);
-  // ESSE ESTADO TEM QUE SER SETADO NO BOTÃO 'FINALIZAR RECEITA' DA 'RECEITA EM PROGRESSO'
+  // ESSE ESTADO TEM QUE SER SETADO NO BOTÃO 'FINALIZAR RECEITA' DA  PÁG. 'RECEITA EM PROGRESSO'
   const [allRecipesDone, setAllRecipesDone] = useState(RECEITAS_MOCK);
   const [filterRecipeDone, setFilterRecipeDone] = useState([]);
+
+  const [linkCopied, setLinkCopied] = useState(false);
 
   const [favoritesRecipes, setFavoritesRecipes] = useState([]);
   const [filterFavoritesRecipes, setFilterFavoritesRecipes] = useState([]);
@@ -84,7 +86,7 @@ function Provider({ children }) {
 
   return (
     <Context.Provider value={ contextValue }>
-      {children}
+      { children }
     </Context.Provider>
   );
 }
