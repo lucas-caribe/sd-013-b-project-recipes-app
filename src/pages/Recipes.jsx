@@ -1,5 +1,5 @@
 import React from 'react';
-import CardIngredients from '../components/CardIngredients';
+// import CardIngredients from '../components/CardIngredients';
 import { getPageArgs } from '../services/Service';
 
 export default function Recipes(props) {

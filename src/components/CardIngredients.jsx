@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import { loadProgressRecipeById, getPageArgs } from '../services/Service';
+// import { loadProgressRecipeById, getPageArgs } from '../services/Service';
+import { getPageArgs } from '../services/Service';
 
 export default function CardIngredients({ ingredients }) {
   const history = useHistory();
   const args = getPageArgs(history);
-  const [page, id, inProgress] = args;
+  // const [page, id, inProgress] = args;
+  const [inProgress] = args.slice(2);
 
   function toggleCheckbox(e) {
     const change = e.target;
@@ -18,7 +20,7 @@ export default function CardIngredients({ ingredients }) {
   }
 
   function loadIfProgressPage() {
-    const verifyIngs = loadProgressRecipeById(id);
+    // const verifyIngs = loadProgressRecipeById(id);
     return (
       <div>
         <div>Ingredients InProgress list</div>
