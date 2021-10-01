@@ -17,6 +17,11 @@ export default function FavoriteRecipes() {
       .some((item) => item.id === obj.id) ? blackHeartIcon : whiteHeartIcon;
   }
 
+  // function handleShare() {
+  //   copy(url);
+  //   setHidden(true);
+  // }
+
   return (
     <>
       <Header title="Favorites" />
@@ -29,7 +34,11 @@ export default function FavoriteRecipes() {
             if (rec.type === 'comida') {
               return (
                 <div key={ index }>
-                  <h3 data-testid={ `${index}-horizontal-top-text` }>{`${rec.area} - ${rec.category}`}</h3>
+                  <h3
+                    data-testid={ `${index}-horizontal-top-text` }
+                  >
+                    {`${rec.area} - ${rec.category}`}
+                  </h3>
                   <h2 data-testid={ `${index}-horizontal-name` }>{rec.name}</h2>
                   <img
                     src={ rec.image }
@@ -53,29 +62,34 @@ export default function FavoriteRecipes() {
                 </div>
               );
             }
-            return (<div key={ index }>
-              <h3 data-testid={ `${index}-horizontal-top-text` }>{`${rec.alcoholicOrNot} - ${rec.category}`}</h3>
-              <h2 data-testid={ `${index}-horizontal-name` }>{rec.name}</h2>
-              <img
-                src={ rec.image }
-                alt="rec"
-                data-testid={ `${index}-horizontal-image` }
-              />
-              <input
-                onClick={ () => console.log('clicou') }
-                data-testid={ `${index}-horizontal-share-btn` }
-                type="image"
-                alt="favorite"
-                src={ shareIcon }
-              />
-              <input
-                data-testid={ `${index}-horizontal-favorite-btn` }
-                type="image"
-                alt="fav-btn"
-                src={ srcSetter(rec) }
-                onClick={ () => handleLike(rec, setLocal, local) }
-              />
-            </div>);
+            return (
+              <div key={ index }>
+                <h3
+                  data-testid={ `${index}-horizontal-top-text` }
+                >
+                  {`${rec.alcoholicOrNot} - ${rec.category}`}
+                </h3>
+                <h2 data-testid={ `${index}-horizontal-name` }>{rec.name}</h2>
+                <img
+                  src={ rec.image }
+                  alt="rec"
+                  data-testid={ `${index}-horizontal-image` }
+                />
+                <input
+                  onClick={ () => console.log('clicou') }
+                  data-testid={ `${index}-horizontal-share-btn` }
+                  type="image"
+                  alt="favorite"
+                  src={ shareIcon }
+                />
+                <input
+                  data-testid={ `${index}-horizontal-favorite-btn` }
+                  type="image"
+                  alt="fav-btn"
+                  src={ srcSetter(rec) }
+                  onClick={ () => handleLike(rec, setLocal, local) }
+                />
+              </div>);
           })}
         </div>
       </div>
