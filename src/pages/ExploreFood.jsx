@@ -8,7 +8,6 @@ export default class ExploreFood extends Component {
     return (
       <div>
         <HeaderExplore titlePage="Explorar Comidas" />
-        Explorar comidas
         <Link to="/explorar/comidas/ingredientes">
           <h3>Por Ingredientes</h3>
         </Link>

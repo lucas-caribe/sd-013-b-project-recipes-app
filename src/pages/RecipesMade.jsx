@@ -6,7 +6,6 @@ class RecipesMade extends Component {
     return (
       <div>
         <HeaderExplore titlePage="Receitas Feitas" />
-        Recipes Made
       </div>
     );
   }

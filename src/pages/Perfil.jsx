@@ -44,7 +44,6 @@ export default function Profile() {
   return (
     <>
       <HeaderExplore titlePage="Perfil" />
-      Perfil
       <h3
         data-testid="profile-email"
       >

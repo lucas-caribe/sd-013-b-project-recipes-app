@@ -11,22 +11,17 @@ class Recipes extends Component {
   }
 
   redirectDetails(type, data) {
-    if (type === 'Drink') {
+    if (type === 'Drink' && data.length === 1) {
       const { redirectDetailsDrink } = this.props;
-      if (data.length === 1) {
-        return redirectDetailsDrink(data[0].idDrink);
-      }
+      return redirectDetailsDrink(data[0].idDrink);
     }
-    if (type === 'Meal') {
+    if (type === 'Meal' && data.length === 1 && data[0].idMeal !== '52968') {
       const { redirectDetailsFood } = this.props;
-      if (data.length === 1 && data[0].idMeal !== '52968') {
-        return redirectDetailsFood(data[0].idMeal);
-      }
+      return redirectDetailsFood(data[0].idMeal);
     }
-    return undefined;
   }
 
-  renderRecipes(data, api, page, endpoint, path) {
+  renderRecipes(data, api, page, endpoint) {
     this.redirectDetails(api, data);
     const { type } = this.props;
     const limitImgs = 12;
@@ -37,14 +32,13 @@ class Recipes extends Component {
             if (index < limitImgs) {
               const ingredientsURL = `https://www.${endpoint}.com/images/ingredients/`;
               const key = `str${api}`;
+              console.log(curr, key, curr[key]);
               const src = page !== 'ingredient'
                 ? curr[`str${api}Thumb`]
                 : `${ingredientsURL}${curr[key].split(' ')
                   .join(' ')}-Small.png`;
-                const linkTo = page !== 'ingredient' 
-                  ?  `/${type.toLowerCase()}/${curr[`id${api}`]}` : path;
               return (
-                <Link to={ linkTo }>
+                <Link to={ `/${type.toLowerCase()}/${curr[`id${api}`]}` }>
                   <div key={ index } data-testid={ `${index}-${page}-card` }>
                     <img
                       src={ src }
@@ -83,11 +77,11 @@ class Recipes extends Component {
           : '' }
         {type === 'explore-drinks' && drinks.length
           ? this
-            .renderRecipes(drinks, 'Ingredient1', 'ingredient', 'thecocktaildb', '/bebidas')
+            .renderRecipes(drinks, 'Ingredient1', 'ingredient', 'thecocktaildb')
           : '' }
         {type === 'explore-ingrediente' && data.length
           ? this
-            .renderRecipes(data, 'Ingredient', 'ingredient', 'themealdb', '/comidas')
+            .renderRecipes(data, 'Ingredient', 'ingredient', 'themealdb')
           : '' }
       </div>
     );

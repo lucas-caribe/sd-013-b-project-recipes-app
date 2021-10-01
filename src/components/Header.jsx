@@ -17,12 +17,9 @@ export default class Header extends Component {
   }
 
   handleSearchBar() {
-    this.setState((prevState) => {
-      console.log(prevState);
-      return {
-        showSearchBar: !prevState.showSearchBar,
-      };
-    });
+    this.setState((prevState) => ({
+      showSearchBar: !prevState.showSearchBar,
+    }));
   }
 
   render() {
@@ -31,7 +28,7 @@ export default class Header extends Component {
     return (
       <div>
         <header className="header-home-page">
-          <Link to="/perfil">
+          <Link to="/perfil" data-testid="profile-link">
             <img
               src={ profileIcon }
               alt="profileIcon"
@@ -42,6 +39,7 @@ export default class Header extends Component {
             { titlePage }
           </h2>
           <button
+            data-testid="search-button"
             type="button"
             onClick={ this.handleSearchBar }
           >

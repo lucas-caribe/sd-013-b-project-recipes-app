@@ -6,7 +6,6 @@ class Favorites extends Component {
     return (
       <div>
         <HeaderExplore titlePage="Receitas Favoritas" />
-        Favorites
       </div>
     );
   }

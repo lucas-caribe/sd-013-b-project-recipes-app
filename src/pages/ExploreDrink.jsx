@@ -8,7 +8,6 @@ export default class ExploreDrink extends Component {
     return (
       <div>
         <HeaderExplore titlePage="Explorar Bebidas" />
-        Explorar Bebidas
         <Link to="/explorar/bebidas/ingredientes">
           <h3>Por Ingredientes</h3>
         </Link>
