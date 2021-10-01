@@ -5,6 +5,7 @@ import RecipeCard from '../components/RecipeCard';
 import Footer from '../components/Footer';
 import { fetchInitialMeals } from '../services/fetchMeals';
 import FilteringMealsButtons from '../components/FilteringMealsButtons';
+import './css/Comidas.css';
 
 function Comidas() {
   const { meals, setMeals } = useContext(RecipesContext);
@@ -29,12 +30,13 @@ function Comidas() {
   );
 
   return (
-    <div>
+    <div className="main-container">
       <Header pageTitle="Comidas" haveHeader="active" />
-      <div>comidas</div>
-      { meals && renderMeals() }
-      <Footer />
+      <div className="recipes-cards-wrapper">
+        { meals && renderMeals() }
+      </div>
       <FilteringMealsButtons />
+      <Footer />
     </div>
   );
 }

@@ -39,7 +39,7 @@ function GenerateButtons(filterButtons, type) {
 
   const categories = filterButtons.map(({ strCategory }) => strCategory);
   return (
-    <div>
+    <div className="filter-recipes-btns">
       <button
         type="button"
         data-testid="All-category-filter"

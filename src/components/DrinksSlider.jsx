@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './css/DrinksSlider.css';
 
 function DrinksSlider({ type, suggestedRecipes }) {
   const sliderContent = [];

@@ -5,7 +5,7 @@ import RecipesContext from '../context/RecipesContext';
 import fetchDrinks from '../services/fetchDrinks';
 import fetchMeals from '../services/fetchMeals';
 
-function SearchBar({ pageTitle }) {
+function SearchBar({ pageTitle, setSearchBarActive }) {
   const history = useHistory();
   const { setMeals, setDrinks } = useContext(RecipesContext);
   const [inputValue, setInputValue] = useState('');
@@ -21,6 +21,7 @@ function SearchBar({ pageTitle }) {
         + 'receita para esses filtros.');
       }
       if (data.length === 1) history.push(`comidas/${data[0].idMeal}`);
+      setSearchBarActive(false);
       return;
     }
     if (pageTitle === 'Bebidas') {
@@ -31,18 +32,24 @@ function SearchBar({ pageTitle }) {
         + 'receita para esses filtros.');
       }
       if (data.length === 1) history.push(`bebidas/${data[0].idDrink}`);
+      setSearchBarActive(false);
     }
   };
 
   return (
     <div>
-      <form onSubmit={ handleSubmit }>
-        <input
-          data-testid="search-input"
-          onChange={ ({ target }) => setInputValue(target.value) }
-          value={ inputValue }
-        />
-        <div onChange={ ({ target }) => setRadioValue(target.value) }>
+      <form className="search-from" onSubmit={ handleSubmit }>
+        <div className="search-input-wrapper">
+          <input
+            data-testid="search-input"
+            onChange={ ({ target }) => setInputValue(target.value) }
+            value={ inputValue }
+          />
+        </div>
+        <div
+          className="search-btns-wrapper"
+          onChange={ ({ target }) => setRadioValue(target.value) }
+        >
           <label htmlFor="ingredient-search">
             <input
               data-testid="ingredient-search-radio"

@@ -29,12 +29,11 @@ function Bebidas() {
   );
 
   return (
-    <div>
+    <div className="main-container">
       <Header pageTitle="Bebidas" haveHeader="active" />
-      <div>Bebidas</div>
-
-      { drinks && renderDrinks() }
-
+      <div className="recipes-cards-wrapper">
+        { drinks && renderDrinks() }
+      </div>
       <Footer />
       <FilteringDrinkButtons />
     </div>

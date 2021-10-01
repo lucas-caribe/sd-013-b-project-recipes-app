@@ -9,7 +9,7 @@ import FavoriteBtn from '../components/FavoriteBtn';
 import RecipeImage from '../components/RecipeImage';
 import { fetchInitialMeals, fetchMealsById } from '../services/fetchMeals';
 import { fetchInitialDrinks, fetchDrinksById } from '../services/fetchDrinks';
-import './css/MealDetails.css';
+import './css/Detalhes.css';
 
 const copy = require('clipboard-copy');
 
@@ -53,7 +53,9 @@ function RecipeDetail({ match: { params: { id } }, type }) {
   }, [id, type]);
 
   const handleShareClick = () => {
+    const visibleTime = 1500;
     setModal('Link copiado!');
+    setTimeout(() => setModal(false), visibleTime);
     if (type === 'meals') return copy(`http://localhost:3000/comidas/${id}`);
     copy(`http://localhost:3000/bebidas/${id}`);
   };
@@ -62,32 +64,41 @@ function RecipeDetail({ match: { params: { id } }, type }) {
     return (
       <div>
         { selectedRecipe.map((recipe, i) => (
-          <div key={ i }>
+          <div className="details-container" key={ i }>
             <RecipeImage type={ type } recipe={ recipe } />
-            <h2
-              data-testid="recipe-title"
-            >
-              { type === 'meals' ? recipe.strMeal : recipe.strDrink }
-            </h2>
-            <div>
-              <button data-testid="share-btn" type="button" onClick={ handleShareClick }>
-                <img src={ shareIcon } alt="icone de compartilhar" />
-              </button>
-              { modal }
-              <FavoriteBtn
-                id={ id }
-                type={ type }
-                favorited={ favorited }
-                selectedRecipe={ selectedRecipe }
-                setFavorited={ setFavorited }
-              />
+            <div className="details-buttons-and-titles-container">
+              <div>
+                <h2
+                  data-testid="recipe-title"
+                >
+                  { type === 'meals' ? recipe.strMeal : recipe.strDrink }
+                </h2>
+                <h4
+                  data-testid="recipe-category"
+                >
+                  { type === 'meals' ? recipe.strCategory : recipe.strAlcoholic}
+                </h4>
+              </div>
+              <div className="details-buttons-container">
+                <button
+                  data-testid="share-btn"
+                  type="button"
+                  onClick={ handleShareClick }
+                >
+                  <img src={ shareIcon } alt="icone de compartilhar" />
+                </button>
+                { modal }
+                <FavoriteBtn
+                  id={ id }
+                  type={ type }
+                  favorited={ favorited }
+                  selectedRecipe={ selectedRecipe }
+                  setFavorited={ setFavorited }
+                />
+              </div>
             </div>
-            <h4
-              data-testid="recipe-category"
-            >
-              { type === 'meals' ? recipe.strCategory : recipe.strAlcoholic}
-            </h4>
-            <div>
+            <div className="detail-ingredients-container">
+              <h4>Ingredientes</h4>
               { getIngredients(selectedRecipe).map((ingredient, index) => (
                 <p
                   data-testid={ `${index}-ingredient-name-and-measure` }
@@ -97,7 +108,14 @@ function RecipeDetail({ match: { params: { id } }, type }) {
                 </p>
               ))}
             </div>
-            <p data-testid="instructions">{ recipe.strInstructions }</p>
+            <div className="detail-instructions-container">
+              <h4>Instruções</h4>
+              <p
+                data-testid="instructions"
+              >
+                { recipe.strInstructions }
+              </p>
+            </div>
             <FrameVideo type={ type } recipe={ recipe } />
             <DrinksSlider type={ type } suggestedRecipes={ suggestedRecipes } />
             <RecipeButton type={ type } id={ id } />
