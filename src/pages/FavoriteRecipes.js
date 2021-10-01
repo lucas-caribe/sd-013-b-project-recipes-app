@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-// import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import ButtonsFavoriteRecipes from '../components/ButtonsFavoriteRecipes';
 import Context from '../context/Context';
 import shareIcon from '../images/shareIcon.svg';
@@ -8,7 +7,6 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 import Header from '../components/Header';
 
 function FavoriteRecipes() {
-  const history = useHistory();
   const getFavoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
   const [favoriteRecipes, setFavoriteRecipes] = useState(getFavoriteRecipes);
@@ -60,42 +58,32 @@ function FavoriteRecipes() {
               type === 'comida' ? (
                 <div key={ id }>
                   <div className="image-food">
-                    {/* <Link to={ `/comidas/${id}` }> */}
-                    <button
-                      type="button"
-                      onClick={ () => history.push(`/comidas/${id}`) }
-                    >
+                    <Link to={ `/comidas/${id}` }>
                       <img
                         data-testid={ `${index}-horizontal-image` }
                         src={ image }
                         alt="imagem da receita"
                       />
-                    </button>
-                    {/* </Link> */}
+                    </Link>
                   </div>
                   <div className="infos-foods">
                     <p
                       data-testid={ `${index}-horizontal-top-text` }
                     >
-                      {category}
+                      {`${area} - ${category}`}
                     </p>
-                    <p
+                    {/* <p
                       data-testid={ `${index}-horizontal-top-text` }
                     >
                       {area}
-                    </p>
-                    {/* <Link to={ `/comidas/${id}` }> */}
-                    <button
-                      type="button"
-                      onClick={ () => history.push(`/comidas/${id}`) }
-                    >
+                    </p> */}
+                    <Link to={ `/comidas/${id}` }>
                       <p
                         data-testid={ `${index}-horizontal-name` }
                       >
                         {name}
                       </p>
-                    </button>
-                    {/* </Link> */}
+                    </Link>
                     <button
                       type="button"
                       data-testid={ `${index}-horizontal-share-btn` }
@@ -114,7 +102,6 @@ function FavoriteRecipes() {
                       <img
                         src={ blackHeartIcon }
                         alt="blackHeart icon"
-                        // id={ id }
                       />
                     </button>
                   </div>
@@ -122,32 +109,22 @@ function FavoriteRecipes() {
               ) : (
                 <div key={ id }>
                   <div className="image-drink">
-                    {/* <Link to={ `/bebidas/${id}` }> */}
-                    <button
-                      type="button"
-                      onClick={ () => history.push(`/bebidas/${id}`) }
-                    >
+                    <Link to={ `/bebidas/${id}` }>
                       <img
                         data-testid={ `${index}-horizontal-image` }
                         src={ image }
                         alt="imagem da receita"
                       />
-                    </button>
-                    {/* </Link> */}
+                    </Link>
                   </div>
                   <div className="infos-drinks">
-                    {/* <Link to={ `/bebidas/${id}` }> */}
-                    <button
-                      type="button"
-                      onClick={ () => history.push(`/bebidas/${id}`) }
-                    >
+                    <Link to={ `/bebidas/${id}` }>
                       <p
                         data-testid={ `${index}-horizontal-name` }
                       >
                         {name}
                       </p>
-                    </button>
-                    {/* </Link> */}
+                    </Link>
                     <p
                       data-testid={ `${index}-horizontal-top-text` }
                     >
@@ -155,24 +132,22 @@ function FavoriteRecipes() {
                     </p>
                     <button
                       type="button"
-                      data-testid={ `${index}-horizontal-share-btn` }
                       onClick={ () => handleShareRecipe(id, type) }
                     >
                       <img
+                        data-testid={ `${index}-horizontal-share-btn` }
                         src={ shareIcon }
                         alt="share icon"
                       />
                     </button>
                     <button
                       type="button"
-                      data-testid={ `${index}-horizontal-favorite-btn` }
                       onClick={ () => removeFavoriteRecipe(id) }
                     >
                       <img
-                        data-testid="favorite-btn"
+                        data-testid={ `${index}-horizontal-favorite-btn` }
                         src={ blackHeartIcon }
                         alt="blackHeart icon"
-                        // id={ id }
                       />
                     </button>
                   </div>
