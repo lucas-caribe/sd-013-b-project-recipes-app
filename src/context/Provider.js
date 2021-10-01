@@ -4,6 +4,7 @@ import Context from './Context';
 
 function Provider({ children }) {
   // RECEITAS MOCKADAS PARA FINS DE TESTE EM "Receitas Feitas e Favoritas"
+  // 01/10/2021 - remover se der certo setar esse array pelo useEffect
   const RECEITAS_MOCK = [
     {
       idMeal: 52771,
@@ -12,7 +13,6 @@ function Provider({ children }) {
       strMeal: 'Spicy Arrabiata Penne',
       strTags: 'Pasta, Curry, Macarrão',
       strArea: 'Italian',
-      date: '23/06/2020',
       type: 'Meal',
     },
     {
@@ -21,8 +21,7 @@ function Provider({ children }) {
       strCategory: 'Ordinary Drink',
       strAlcoholic: 'Alcoholic',
       strDrink: 'Aquamarine',
-      strTags: null,
-      date: '23/06/2020',
+      strTags: '',
       type: 'Drink',
     },
   ];
@@ -40,7 +39,7 @@ function Provider({ children }) {
   const [allRecipesDone, setAllRecipesDone] = useState(RECEITAS_MOCK);
   const [filterRecipeDone, setFilterRecipeDone] = useState([]);
 
-  const [favoritesRecipes, setFavoritesRecipes] = useState(RECEITAS_MOCK);
+  const [favoritesRecipes, setFavoritesRecipes] = useState([]);
   const [filterFavoritesRecipes, setFilterFavoritesRecipes] = useState([]);
 
   const [inputText, setInputText] = useState('');
