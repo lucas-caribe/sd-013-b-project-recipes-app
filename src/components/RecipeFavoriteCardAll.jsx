@@ -83,17 +83,17 @@ export default function RecipeFavoriteCardAll() {
                   data-testid={ `${index}-horizontal-favorite-btn` }
                   src={ blackHeartIcon }
                   onClick={ () => {
-                    // recuperar do localStorage
+                    // RECUPERAR DO LOCAL STORAGE O ARRAY DE RECEITAS FAVORITAS
                     const allRecipe = JSON.parse(localStorage.getItem('favoriteRecipes'));
-                    // remover a receita
+                    // REMOVER A RECEITA (DISLIKE) DO ARRAY
                     // allRecipe[index] = retorna o objeto na posição index que o map está
                     // allRecipe.indexOf() = localiza no array o índice desse objeto
                     // allRecipe.splice() = remove do array 1 posição, começando a partir desse índice
                     // ou seja, remove o índice localizado, remove então o objeto todo do índice
                     allRecipe.splice(allRecipe.indexOf(allRecipe[index]), 1);
-                    // setar um novo localStorage
+                    // SOBRESCREVER O LOCAL STORAGE, ATUALIZANDO-O COM O ARRAY
                     localStorage.setItem('favoriteRecipes', JSON.stringify(allRecipe));
-                    // e setar um novo estado
+                    // E SETAR O ESTADO COM O ARRAY ATUALIZADO
                     setFavoritesRecipes(allRecipe);
                   } }
                 >
