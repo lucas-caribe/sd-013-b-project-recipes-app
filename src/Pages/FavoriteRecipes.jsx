@@ -10,7 +10,7 @@ export default function FavoriteRecipes() {
   const favRec = JSON.parse(localStorage.getItem('favoriteRecipes'));
   const [local, setLocal] = useState();
   const [hidden, setHidden] = useState();
- 
+
   function srcSetter(obj) {
     if (!localStorage.getItem('favoriteRecipes')) return whiteHeartIcon;
     return JSON
