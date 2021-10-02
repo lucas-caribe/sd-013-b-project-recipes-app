@@ -19,11 +19,3 @@
   height: 40px;
   width: 40px;
 }
-
-.copied-message {
-  font-size: 25px;
-  font-weight: 800;
-  margin-top: 50px;
-  position: absolute;
-  text-align: center;
-}

@@ -64,7 +64,7 @@ function ShareAndFavButton({ recipeInfos:
         </button>
       </div>
 
-      {copiedText && <span className="copied-message">Link copiado!</span>}
+      {copiedText && <span>Link copiado!</span>}
     </div>
   );
 }
