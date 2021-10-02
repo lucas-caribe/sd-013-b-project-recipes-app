@@ -17,6 +17,8 @@ import ReceitasFavoritas from './pages/ReceitasFavoritas';
 import RecipeDetail from './pages/RecipeDetail';
 import ReceitasInProgress from './pages/ReceitasInProgress';
 
+
+
 function App() {
   return (
     <Provider>
