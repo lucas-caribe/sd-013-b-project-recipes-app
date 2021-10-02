@@ -99,6 +99,5 @@ export default function FoodDetailsPage() {
         {hidden ? <span>Link copiado!</span> : null}
       </div>
     );
-  }
-  return <span>Loading!!!</span>;
+  } return <span>Loading!!!</span>;
 }
