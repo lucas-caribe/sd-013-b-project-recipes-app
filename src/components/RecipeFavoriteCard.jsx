@@ -13,7 +13,7 @@ export default function RecipeFavoriteCard() {
 
   useEffect(() => {
     // CONST CRIADA PARA FINS DE TESTE. DEVE SER SETADA NO BOTÃO DE "FAVORITAR RECEITA"
-    const RECEITAS_MOCK = [
+    const RECEITAS_FAV_MOCK = [
       {
         idMeal: 52771,
         strMealThumb: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
@@ -35,13 +35,19 @@ export default function RecipeFavoriteCard() {
     ];
     // AS 'RECEITAS FAVORITAS' SÃO SETADAS NO LOCAL STORAGE NAS PÁGS: DETALHES E PROGRESSO
     // APAGAR ESSE SET ITEM, APÓS A IMPLEMENTAÇÃO DE FAVORITAR RECEITA ESTIVER CONCLUÍDA
-    localStorage.setItem('favoriteRecipes', JSON.stringify(RECEITAS_MOCK));
+    // if (localStorage.getItem('favoriteRecipes') === null) { [ISSO QUEBRA O TESTE]
+    localStorage.setItem('favoriteRecipes', JSON.stringify(RECEITAS_FAV_MOCK));
+    // }
 
     // POIS O CORRETO É:
     // 1.OBTER OS DADOS DO LOCALSTORAGE
     const recipesFavorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
     // 2.SETAR ESSES DADOS NO ESTADO, USANDO setFavoritesRecipes()
     setFavoritesRecipes(recipesFavorites);
+    // NO ENTANTO ISSO VAI OCORRER TODA VEZ QUE A PÁGINA FOR CARREGADA, ISSO ATRAPALHA O TESTE DO
+    // BOTÃO DISLIKE, POIS O CYPRESS RECARREGA A PÁGINA, LOGO O LOCAL STORAGE É SETADO AQUI DE NOVO
+    // SUBSTITUINDO A LÓGICA CRIADA NO BOTÃO DISLIKE (QUE ESTÁ FUNCIONANDO)
+    // COMO RESOLVER???
   }, [setFavoritesRecipes]);
 
   if (filterFavoritesRecipes.length !== 0) return (<RecipeFavoriteCardFilter />);
