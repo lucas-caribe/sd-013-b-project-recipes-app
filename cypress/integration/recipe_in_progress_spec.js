@@ -166,7 +166,7 @@ describe('51 - Desenvolva a lógica de favoritar e compartilhar, a lógica da te
 
   it('verifica a mensagem "Link copiado!" e se o link da receita da comida foi copiado para o clipboard', () => {
     cy.visit('http://localhost:3000/comidas/52771/in-progress', {
-      onBeforeLoad(win) {
+      onBeforeLoad(win) { 
         win.fetch = fetchMock;
       },
     });

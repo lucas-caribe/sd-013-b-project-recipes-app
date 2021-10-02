@@ -1,0 +1,22 @@
+
+> recipes-app-test@0.1.0 cy
+> cypress run
+
+
+====================================================================================================
+
+  (Run Starting)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Cypress:    3.8.3                                                                              │
+  │ Browser:    Electron 78 (headless)                                                             │
+  │ Specs:      15 found (done_recipes_spec.js, explore_by_area_spec.js, explore_by_ingredient_spe │
+  │             c.js, explore_drinks_or_meals_spec.js, explore_spec.js, favorite_recipes_spec.js,  │
+  │             footer_spec.js, header_search_bar_spec.js, header_spec.js, login_spec.js, profile_ │
+  │             spec.js, re...)                                                                    │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  done_recipes_spec.js                                                           (1 of 15)
