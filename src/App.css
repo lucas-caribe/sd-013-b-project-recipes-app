@@ -32,3 +32,8 @@
 .i-frame {
   width: 360px;
 }
+
+img {
+  width: 200px;
+  height: 200px;
+}
