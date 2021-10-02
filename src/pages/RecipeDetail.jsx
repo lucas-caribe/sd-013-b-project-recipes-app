@@ -60,71 +60,70 @@ function RecipeDetail({ match: { params: { id } }, type }) {
     copy(`http://localhost:3000/bebidas/${id}`);
   };
 
-  if (selectedRecipe) {
-    return (
-      <div>
-        { selectedRecipe.map((recipe, i) => (
-          <div className="details-container" key={ i }>
-            <RecipeImage type={ type } recipe={ recipe } />
-            <div className="details-buttons-and-titles-container">
-              <div>
-                <h2
-                  data-testid="recipe-title"
-                >
-                  { type === 'meals' ? recipe.strMeal : recipe.strDrink }
-                </h2>
-                <h4
-                  data-testid="recipe-category"
-                >
-                  { type === 'meals' ? recipe.strCategory : recipe.strAlcoholic}
-                </h4>
-              </div>
-              <div className="details-buttons-container">
-                <button
-                  data-testid="share-btn"
-                  type="button"
-                  onClick={ handleShareClick }
-                >
-                  <img src={ shareIcon } alt="icone de compartilhar" />
-                </button>
-                { modal }
-                <FavoriteBtn
-                  id={ id }
-                  type={ type }
-                  favorited={ favorited }
-                  selectedRecipe={ selectedRecipe }
-                  setFavorited={ setFavorited }
-                />
-              </div>
-            </div>
-            <div className="detail-ingredients-container">
-              <h4>Ingredientes</h4>
-              { getIngredients(selectedRecipe).map((ingredient, index) => (
-                <p
-                  data-testid={ `${index}-ingredient-name-and-measure` }
-                  key={ ingredient }
-                >
-                  { ingredient }
-                </p>
-              ))}
-            </div>
-            <div className="detail-instructions-container">
-              <h4>Instruções</h4>
-              <p
-                data-testid="instructions"
+  if (!selectedRecipe) return <p>Loading...</p>;
+
+  return (
+    <div>
+      { selectedRecipe.map((recipe, i) => (
+        <div className="details-container" key={ i }>
+          <RecipeImage type={ type } recipe={ recipe } />
+          <div className="details-buttons-and-titles-container">
+            <div>
+              <h2
+                data-testid="recipe-title"
               >
-                { recipe.strInstructions }
-              </p>
+                { type === 'meals' ? recipe.strMeal : recipe.strDrink }
+              </h2>
+              <h4
+                data-testid="recipe-category"
+              >
+                { type === 'meals' ? recipe.strCategory : recipe.strAlcoholic}
+              </h4>
             </div>
-            <FrameVideo type={ type } recipe={ recipe } />
-            <DrinksSlider type={ type } suggestedRecipes={ suggestedRecipes } />
-            <RecipeButton type={ type } id={ id } />
+            <div className="details-buttons-container">
+              <button
+                data-testid="share-btn"
+                type="button"
+                onClick={ handleShareClick }
+              >
+                <img src={ shareIcon } alt="icone de compartilhar" />
+              </button>
+              { modal }
+              <FavoriteBtn
+                id={ id }
+                type={ type }
+                favorited={ favorited }
+                selectedRecipe={ selectedRecipe }
+                setFavorited={ setFavorited }
+              />
+            </div>
           </div>
-        ))}
-      </div>
-    );
-  }
-  return null;
+          <div className="detail-ingredients-container">
+            <h4>Ingredientes</h4>
+            { getIngredients(selectedRecipe).map((ingredient, index) => (
+              <p
+                data-testid={ `${index}-ingredient-name-and-measure` }
+                key={ ingredient }
+              >
+                { ingredient }
+              </p>
+            ))}
+          </div>
+          <div className="detail-instructions-container">
+            <h4>Instruções</h4>
+            <p
+              data-testid="instructions"
+            >
+              { recipe.strInstructions }
+            </p>
+          </div>
+          <FrameVideo type={ type } recipe={ recipe } />
+          <DrinksSlider type={ type } suggestedRecipes={ suggestedRecipes } />
+          <RecipeButton type={ type } id={ id } />
+        </div>
+      ))}
+    </div>
+  );
 }
 
 export default RecipeDetail;
