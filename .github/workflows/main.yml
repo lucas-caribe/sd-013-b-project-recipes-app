@@ -18,9 +18,3 @@ jobs:
           repository-test-branch: 'master'
           npm-start: true
           browser: 'electron'
-      - name: Store evaluation step
-        uses: betrybe/store-evaluation-action@v2
-        with:
-          evaluation-data: ${{ steps.evaluator.outputs.result }}
-          environment: production
-          pr-number: ${{ steps.evaluator.outputs.pr-number }}
