@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 import { setFilterTypeAndText } from '../redux/actions';
+import '../css/ExploreByIngredient.css';
 
 function ExploreByIngredients({ ingredients, type, SetFilterByIngrdients }) {
   const history = useHistory();
@@ -29,13 +30,14 @@ function ExploreByIngredients({ ingredients, type, SetFilterByIngrdients }) {
   };
 
   return (
-    <>
+    <main className="explore-by-ingredients">
       {ingredients.map((ingredient, index) => (
         <button
           type="button"
           key={ index }
           data-testid={ `${index}-ingredient-card` }
           onClick={ () => handleClick(ingredient[strIngredient[type]]) }
+          className="ingredients-cards"
         >
           <img
             src={ checkType(ingredient[strIngredient[type]]) }
@@ -49,7 +51,7 @@ function ExploreByIngredients({ ingredients, type, SetFilterByIngrdients }) {
           </span>
         </button>
       ))}
-    </>
+    </main>
   );
 }
 

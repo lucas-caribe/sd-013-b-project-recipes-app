@@ -6,6 +6,7 @@ import { shareButtonFunc,
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import '../css/ShareAndFavButton.css';
 
 function ShareAndFavButton({ recipeInfos:
   { id, tipo, area, category, alcoholic, title, image } }) {
@@ -42,26 +43,28 @@ function ShareAndFavButton({ recipeInfos:
   };
 
   return (
-    <div>
-      <button
-        type="button"
-        src={ shareIcon }
-        data-testid="share-btn"
-        onClick={ handleShare }
-      >
-        <img src={ shareIcon } alt="Share Icon" />
-      </button>
+    <div className="share-fav-main">
+      <div className="share-fav-container">
+        <button
+          type="button"
+          src={ shareIcon }
+          data-testid="share-btn"
+          onClick={ handleShare }
+        >
+          <img src={ shareIcon } alt="Share Icon" />
+        </button>
 
-      <button
-        type="button"
-        src={ favorite ? blackHeartIcon : whiteHeartIcon }
-        data-testid="favorite-btn"
-        onClick={ handleFavorite }
-      >
-        <img src={ favorite ? blackHeartIcon : whiteHeartIcon } alt="Favorite icon" />
-      </button>
+        <button
+          type="button"
+          src={ favorite ? blackHeartIcon : whiteHeartIcon }
+          data-testid="favorite-btn"
+          onClick={ handleFavorite }
+        >
+          <img src={ favorite ? blackHeartIcon : whiteHeartIcon } alt="Favorite icon" />
+        </button>
+      </div>
 
-      {copiedText && <span>Link copiado!</span>}
+      {copiedText && <span className="copied-message">Link copiado!</span>}
     </div>
   );
 }

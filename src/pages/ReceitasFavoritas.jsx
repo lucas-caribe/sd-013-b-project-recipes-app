@@ -74,7 +74,7 @@ export default function ReceitasFavoritas() {
     setFavoritesFromStorage(newFavorite);
   };
   return (
-    <div>
+    <main className="main-content">
       <Header pageTitle="Receitas Favoritas" searchButton={ false } />
       <div>
         {buttonsFilters()}
@@ -128,6 +128,6 @@ export default function ReceitasFavoritas() {
           <p>{copyOk ? 'Link copiado!' : null}</p>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

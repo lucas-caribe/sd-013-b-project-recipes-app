@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ProgressRecipe from '../components/ProgressRecipe';
 import fetchIdBebidas from '../services/fetchIdBebidas';
 import { modifyDrinkRecipeInfo } from '../GlobalFuncs/modifyRecipeInfo';
+import '../css/RecipeInProgress.css';
 
 function ProgressoBebida({ match: { params: { id } } }) {
   const [recipeInfo, setRecipeInfo] = useState(undefined);
@@ -24,7 +25,7 @@ function ProgressoBebida({ match: { params: { id } } }) {
   }
 
   return (
-    <main>
+    <main className="recipe-in-progress-main">
       <ProgressRecipe recipe={ modifyDrinkRecipeInfo(recipeInfo) } />
     </main>
   );

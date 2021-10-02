@@ -29,6 +29,7 @@ function Header({
         onClick={ () => setToggleButtonSearch((prevState) => !prevState) }
         data-testid="search-top-btn"
         src={ searchIcon }
+        className="search-btn"
       >
         <img alt="icone-search" src={ searchIcon } />
       </button>
@@ -37,47 +38,50 @@ function Header({
 
   function displaySearchInput() {
     return (
-      <div>
+      <div className="filter-main">
         <input
           onChange={ ({ target }) => setSearchInput(target.value) }
           data-testid="search-input"
           type="text"
         />
-        <div>
-          <label htmlFor="ingredient">
-            Ingrediente
-            <input
-              type="radio"
-              value="ingrediente"
-              data-testid="ingredient-search-radio"
-              onChange={ ({ target }) => setRadioSelecionado(target.value) }
-              name="radio"
-            />
-          </label>
-          <label htmlFor="name">
-            Nome
-            <input
-              type="radio"
-              value="nome"
-              data-testid="name-search-radio"
-              name="radio"
-              onChange={ ({ target }) => setRadioSelecionado(target.value) }
-            />
-          </label>
-          <label htmlFor="ingredient">
-            Primeira letra
-            <input
-              type="radio"
-              value="firstLetter"
-              data-testid="first-letter-search-radio"
-              onChange={ ({ target }) => setRadioSelecionado(target.value) }
-              name="radio"
-            />
-          </label>
+        <div className="filter-container">
+          <div className="radio-btn-container">
+            <label htmlFor="ingredient" className="radios-input">
+              <input
+                type="radio"
+                value="ingrediente"
+                data-testid="ingredient-search-radio"
+                onChange={ ({ target }) => setRadioSelecionado(target.value) }
+                name="radio"
+              />
+              Ingrediente
+            </label>
+            <label htmlFor="name" className="radios-input">
+              <input
+                type="radio"
+                value="nome"
+                data-testid="name-search-radio"
+                name="radio"
+                onChange={ ({ target }) => setRadioSelecionado(target.value) }
+              />
+              Nome
+            </label>
+            <label htmlFor="ingredient" className="radios-input">
+              <input
+                type="radio"
+                value="firstLetter"
+                data-testid="first-letter-search-radio"
+                onChange={ ({ target }) => setRadioSelecionado(target.value) }
+                name="radio"
+              />
+              Primeira letra
+            </label>
+          </div>
           <button
             type="button"
             onClick={ () => verificaRadioFetch(inputHeader.inputHeader) }
             data-testid="exec-search-btn"
+            className="filter-finish-btn"
           >
             Buscar
           </button>
@@ -94,6 +98,7 @@ function Header({
           data-testid="profile-top-btn"
           src={ profileIcon }
           onClick={ () => history.push('/perfil') }
+          className="profile-btn"
         >
           <img alt="icone-profile" src={ profileIcon } />
         </button>
