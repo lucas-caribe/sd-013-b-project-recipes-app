@@ -22,7 +22,7 @@ jobs:
         id: evaluator
         uses: betrybe/cypress-evaluator-action@v5
         with:
-          repository-test-name: 'betrybe/sd-0x-recipes-app-n-tests'
+          repository-test-name: 'lucas-caribe/recipes-app-tests'
           repository-test-branch: 'master'
           npm-start: true
           browser: 'electron'
