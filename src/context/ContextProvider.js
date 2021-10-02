@@ -1,11 +1,42 @@
-import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import contextCreate from './contextCreate';
+import { fetchDrinkById, fetchFoodById } from '../services/fetchAPI';
 
 export default function ContextProvider({ children }) {
   const [toggleSearch, setToggleSearch] = useState(true);
+  const { pathname } = useLocation();
+  const [foodOrDrink, receitaId] = pathname.split('/').slice(1);
 
+  const [recipeData, setRecipeData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function requestFood() {
+      const food = await fetchFoodById(receitaId);
+      setRecipeData(food);
+      setLoading(false);
+    }
+
+    async function requestDrink() {
+      const drink = await fetchDrinkById(receitaId);
+      setRecipeData(drink);
+      setLoading(false);
+    }
+
+    switch (foodOrDrink) {
+    case 'comidas':
+      requestFood();
+      break;
+    case 'bebidas':
+      requestDrink();
+      break;
+    default:
+      break;
+    }
+  }, [foodOrDrink, receitaId]);
   function mapFood(slicingTwelve) {
     return slicingTwelve.map((card, index) => (
       <div className="card" key={ index }>
@@ -47,6 +78,8 @@ export default function ContextProvider({ children }) {
         mapFood,
         setToggleSearch,
         toggleSearch,
+        recipeData,
+        loading,
       } }
     >
       {children}

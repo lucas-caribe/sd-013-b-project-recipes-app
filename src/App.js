@@ -7,6 +7,7 @@ import Details from './pages/Details';
 import Explore from './pages/Explore';
 import Main from './pages/Main';
 import Profile from './pages/Profile';
+import InProgress from './pages/InProgress';
 import Recipes from './pages/Recipes';
 import Loading from './components/Loading';
 import ContextProvider from './context/ContextProvider';
@@ -20,8 +21,8 @@ function App() {
         <Route exact path="/bebidas" component={ Main } />
         <Route exact path="/comidas/:receitaId" component={ Details } />
         <Route exact path="/bebidas/:receitaId" component={ Details } />
-        <Route exact path="/comidas/:receitaId/in-progress" component={ Recipes } />
-        <Route exact path="/bebidas/:receitaId/in-progress" component={ Recipes } />
+        <Route exact path="/comidas/:receitaId/in-progress" component={ InProgress } />
+        <Route exact path="/bebidas/:receitaId/in-progress" component={ InProgress } />
         <Route exact path="/receitas-feitas" component={ Recipes } />
         <Route exact path="/receitas-favoritas" component={ Recipes } />
         <Route exact path="/explorar" component={ Explore } />

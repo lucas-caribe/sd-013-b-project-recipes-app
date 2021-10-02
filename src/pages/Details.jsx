@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import MealsDetails from './Details/MealsDetails';
 import DrinksDetails from './Details/DrinksDetails';
-import DetailsProvider from '../context/DetailsProvider';
 import contextCreate from '../context/contextCreate';
 import './details.css';
 
@@ -20,15 +19,11 @@ export default function Details() {
   switch (foodOrDrink) {
   case 'comidas':
     return (
-      <DetailsProvider>
-        <MealsDetails />
-      </DetailsProvider>
+      <MealsDetails />
     );
   case 'bebidas':
     return (
-      <DetailsProvider>
-        <DrinksDetails />
-      </DetailsProvider>
+      <DrinksDetails />
     );
   default:
     return (<p>Página Invalida</p>);
