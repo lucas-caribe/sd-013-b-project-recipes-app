@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import '../css/RecipeInProgress.css';
 
 function HandleIngredients({ recipeInfos: { ingredients, measure, id, type },
   checkFinishCondition }) {
@@ -39,14 +40,15 @@ function HandleIngredients({ recipeInfos: { ingredients, measure, id, type },
   };
 
   return (
-    <section>
-      <h3>Ingredients</h3>
+    <section className="ingredients-section">
+      <h2>Ingredients</h2>
       <ul>
         {ingredients.map((ingrdient, index) => (
           <label
             key={ index }
             htmlFor={ `${index}-ingredient-step` }
             data-testid={ `${index}-ingredient-step` }
+            className={ ingredientsStatus[`${index}-ingredient-step`] ? 'marked' : '' }
           >
             <input
               id={ `${index}-ingredient-step` }

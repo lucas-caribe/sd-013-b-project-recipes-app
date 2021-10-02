@@ -4,6 +4,7 @@ import { useHistory } from 'react-router';
 import HandleIngredients from './HandleIngredients';
 import ShareAndFavButton from './ShareAndFavButton';
 import { getDate, finishRecipe } from '../GlobalFuncs/finishButtonFuncs';
+import '../css/RecipeInProgress.css';
 
 function ProgressRecipe({ recipe:
   {
@@ -51,25 +52,26 @@ function ProgressRecipe({ recipe:
 
   return (
     <>
-      <header>
+      <header className="in-progress-header">
         <img data-testid="recipe-photo" src={ image } alt="Recipe Imagem" />
       </header>
 
-      <section>
-        <h2 data-testid="recipe-title">{ title }</h2>
-        <h5 data-testid="recipe-category">{ category }</h5>
+      <section className="in-progress-title-section">
+        <div>
+          <h2 data-testid="recipe-title">{ title }</h2>
+          <h5 data-testid="recipe-category">{ category }</h5>
+        </div>
+        <ShareAndFavButton
+          recipeInfos={ { id, tipo, area, category, alcoholic, title, image } }
+        />
       </section>
-
-      <ShareAndFavButton
-        recipeInfos={ { id, tipo, area, category, alcoholic, title, image } }
-      />
 
       <HandleIngredients
         recipeInfos={ { ingredients, measure, type, id } }
         checkFinishCondition={ checkFinishCondition }
       />
-      <section>
-        <h3>Instructions</h3>
+      <section className="insrtuctions-section">
+        <h2>Instructions</h2>
         <p data-testid="instructions">
           { instructions }
         </p>
@@ -80,6 +82,7 @@ function ProgressRecipe({ recipe:
         type="button"
         disabled={ finishButtonCondition }
         onClick={ handleFinishClick }
+        className={ `in-progress-finish-btn ${!finishButtonCondition ? 'finished' : ''}` }
       >
         Finish Recipe
       </button>

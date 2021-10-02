@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { fetchIngrediente, fetchName,
   fetchPrimeiraLetra, getMealCategoriesList,
   getMealCategoryFilter } from '../services/fetchRadioComidas';
@@ -10,21 +12,29 @@ import Category from '../components/Category';
 
 const QUANTIDADE_RECEITAS = 12;
 
-function Comidas() {
+function Comidas({ inputTextInitialValue }) {
   const [radioSelecionado, setRadioSelecionado] = useState('');
   const [resultFetch, setResultFetch] = useState([]);
   const { push } = useHistory();
   const [categoryList, setCategoryList] = useState([]);
   const [alreadySelectedCategory, setAlreadySelectedCategory] = useState('');
 
-  const componentLoad = async () => {
+  const componentLoad = useCallback(async () => {
     setCategoryList(await getMealCategoriesList());
     setResultFetch(await fetchName(''));
-  };
+  }, []);
+
+  const getByIngredient = useCallback(async () => {
+    setResultFetch(await fetchIngrediente(inputTextInitialValue));
+  }, [inputTextInitialValue]);
 
   useEffect(() => {
-    componentLoad();
-  }, []);
+    if (inputTextInitialValue.length > 0) {
+      getByIngredient();
+    } else {
+      componentLoad();
+    }
+  }, [componentLoad, getByIngredient, inputTextInitialValue]);
 
   const selectCategoryFilter = async (category) => {
     if (alreadySelectedCategory === category) {
@@ -61,7 +71,7 @@ function Comidas() {
   function enviarAlerta() {
     return (
       <main className="main-content">
-        <Header pageTitle="Comida" />
+        <Header pageTitle="Bebida" />
         {global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.')}
         <Footer />
       </main>
@@ -90,4 +100,12 @@ function Comidas() {
   } return enviarAlerta();
 }
 
-export default Comidas;
+Comidas.propTypes = {
+  inputTextInitialValue: PropTypes.string.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  inputTextInitialValue: state.reducerFilter.text,
+});
+
+export default connect(mapStateToProps)(Comidas);

@@ -12,4 +12,9 @@ export const actionInputHeader = (inpHeader) => ({
   },
 });
 
+export const setFilterTypeAndText = (payload) => ({
+  type: 'SET_FILTER_TYPE_AND_TEXT',
+  payload,
+});
+
 export default actionLogin;

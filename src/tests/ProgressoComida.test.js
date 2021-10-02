@@ -145,7 +145,8 @@ describe('Progress Recipe tests', () => {
         alcoholicOrNot: '',
         area: 'Italian',
         category: 'Vegetarian',
-        doneDate: '27/08/2021',
+        doneDate: `${new Date()
+          .getDate()}/0${new Date().getMonth()}/${new Date().getFullYear()}`,
         id: '52771',
         image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
         name: 'Spicy Arrabiata Penne',
