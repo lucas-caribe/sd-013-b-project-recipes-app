@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import copy from 'clipboard-copy';
-import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -14,7 +14,6 @@ export default function FavoriteRecipes() {
   const [hidden, setHidden] = useState();
   const [filter, setFilter] = useState('off');
   const [renderFilter, setRenderFilter] = useState(false);
-  const history = useHistory();
 
   function srcSetter(obj) {
     if (!localStorage.getItem('favoriteRecipes')) return whiteHeartIcon;
@@ -68,13 +67,16 @@ export default function FavoriteRecipes() {
                   >
                     {`${rec.area} - ${rec.category}`}
                   </h3>
-                  <h2 onClick={ () => history.push(`/comidas/${rec.id}`) } data-testid={ `${index}-horizontal-name` }>{rec.name}</h2>
-                  <img
-                    onClick={ () => history.push(`/comidas/${rec.id}`) }
-                    src={ rec.image }
-                    alt="rec"
-                    data-testid={ `${index}-horizontal-image` }
-                  />
+                  <Link to={ `/comidas/${rec.id}` }>
+                    <h2 data-testid={ `${index}-horizontal-name` }>{rec.name}</h2>
+                  </Link>
+                  <Link to={ `/comidas/${rec.id}` }>
+                    <img
+                      src={ rec.image }
+                      alt="rec"
+                      data-testid={ `${index}-horizontal-image` }
+                    />
+                  </Link>
                   <input
                     onClick={ () => handleShareComida(rec.id) }
                     data-testid={ `${index}-horizontal-share-btn` }
@@ -99,13 +101,16 @@ export default function FavoriteRecipes() {
                 >
                   {`${rec.alcoholicOrNot} - ${rec.category}`}
                 </h3>
-                <h2 onClick={ () => history.push(`/bebidas/${rec.id}`) } data-testid={ `${index}-horizontal-name` }>{rec.name}</h2>
-                <img
-                  src={ rec.image }
-                  alt="rec"
-                  data-testid={ `${index}-horizontal-image` }
-                  onClick={ () => history.push(`/bebidas/${rec.id}`) }
-                />
+                <Link to={ `/bebidas/${rec.id}` }>
+                  <h2 data-testid={ `${index}-horizontal-name` }>{rec.name}</h2>
+                </Link>
+                <Link to={ `/bebidas/${rec.id}` }>
+                  <img
+                    src={ rec.image }
+                    alt="rec"
+                    data-testid={ `${index}-horizontal-image` }
+                  />
+                </Link>
                 <input
                   onClick={ () => handleShareBebida(rec.id) }
                   data-testid={ `${index}-horizontal-share-btn` }
@@ -134,13 +139,16 @@ export default function FavoriteRecipes() {
                 >
                   {`${rec.area} - ${rec.category}`}
                 </h3>
-                <h2 onClick={ () => history.push(`/comidas/${rec.id}`) } data-testid={ `${index}-horizontal-name` }>{rec.name}</h2>
-                <img
-                  onClick={ () => history.push(`/comidas/${rec.id}`) }
-                  src={ rec.image }
-                  alt="rec"
-                  data-testid={ `${index}-horizontal-image` }
-                />
+                <Link to={ `/comidas/${rec.id}` }>
+                  <h2 data-testid={ `${index}-horizontal-name` }>{rec.name}</h2>
+                </Link>
+                <Link to={ `/comidas/${rec.id}` }>
+                  <img
+                    src={ rec.image }
+                    alt="rec"
+                    data-testid={ `${index}-horizontal-image` }
+                  />
+                </Link>
                 <input
                   onClick={ () => handleShareComida(rec.id) }
                   data-testid={ `${index}-horizontal-share-btn` }
@@ -165,13 +173,16 @@ export default function FavoriteRecipes() {
               >
                 {`${rec.alcoholicOrNot} - ${rec.category}`}
               </h3>
-              <h2 onClick={ () => history.push(`/bebidas/${rec.id}`) } data-testid={ `${index}-horizontal-name` }>{rec.name}</h2>
-              <img
-                onClick={ () => history.push(`/bebidas/${rec.id}`) }
-                src={ rec.image }
-                alt="rec"
-                data-testid={ `${index}-horizontal-image` }
-              />
+              <Link to={ `/bebidas/${rec.id}` }>
+                <h2 data-testid={ `${index}-horizontal-name` }>{rec.name}</h2>
+              </Link>
+              <Link to={ `/bebidas/${rec.id}` }>
+                <img
+                  src={ rec.image }
+                  alt="rec"
+                  data-testid={ `${index}-horizontal-image` }
+                />
+              </Link>
               <input
                 onClick={ () => handleShareBebida(rec.id) }
                 data-testid={ `${index}-horizontal-share-btn` }
@@ -195,9 +206,27 @@ export default function FavoriteRecipes() {
     <>
       <Header title="Favorites" />
       <div>
-        <button type="button" onClick={ () => allFavs(favRec) } data-testid="filter-by-all-btn">All</button>
-        <button type="button" onClick={ () => filterFavsFood(favRec) } data-testid="filter-by-food-btn">Food</button>
-        <button type="button" onClick={ () => filterFavsDrink(favRec) } data-testid="filter-by-drink-btn">Drinks</button>
+        <button
+          type="button"
+          onClick={ () => allFavs(favRec) }
+          data-testid="filter-by-all-btn"
+        >
+          All
+        </button>
+        <button
+          type="button"
+          onClick={ () => filterFavsFood(favRec) }
+          data-testid="filter-by-food-btn"
+        >
+          Food
+        </button>
+        <button
+          type="button"
+          onClick={ () => filterFavsDrink(favRec) }
+          data-testid="filter-by-drink-btn"
+        >
+          Drinks
+        </button>
         {renderFavs()}
         {hidden ? <div>Link copiado!</div> : null}
       </div>
